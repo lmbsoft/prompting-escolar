@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exploradores de IA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Import Maps para módulos de React y Lucide -->
+    <script type="importmap">
+        {
+            "imports": {
+                "react": "https://esm.sh/react@18.2.0",
+                "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+                "lucide-react": "https://esm.sh/lucide-react@0.292.0"
+            }
+        }
+    </script>
+    <!-- Babel para compilar JSX en el navegador -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <div id="root"></div>
+    <script type="text/babel" data-type="module">
+        import React, { useState, useEffect } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import { 
+          BrainCircuit, Sparkles, ShieldAlert, HeartHandshake, User, 
+          Users, ChevronRight, ChevronLeft, CheckCircle2, AlertCircle, 
+          Image as ImageIcon, MessageSquareText, Search, Lock, Smartphone,
+          BookOpen, Lightbulb, Gamepad2, XCircle, CheckCircle, GraduationCap, Smile
+        } from 'lucide-react';
+
+
+
+
+// --- DATA: CONTENIDO DE LOS MÓDULOS TEÓRICOS ---
+// (Mantenemos la teoría intacta)
+
+const content = {
+  primary: [
+    {
+      id: 'p1',
+      title: '¿Qué es la IA Generativa?',
+      icon: <BrainCircuit className="w-6 h-6" />,
+      theory: `¡Hola! Seguramente ya escuchaste hablar de la Inteligencia Artificial (IA). Imagina que la IA Generativa es como un súper loro que ha leído todas las bibliotecas del mundo. No piensa como tú ni tiene sentimientos, pero es buenísima adivinando qué palabra o dibujo viene después. ¡Por eso puede "generar" cosas nuevas que parecen mágicas, aunque en realidad son matemáticas!`,
+      extendedTheory: (
+        <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+          <h4 className="text-2xl font-extrabold text-orange-600 flex items-center gap-2 mb-4">
+            <Sparkles className="w-6 h-6"/> ¡Bienvenidos al Cerebro Mágico (que no es un cerebro)!
+          </h4>
+          <p>Imagina que tienes una caja gigante. Tan gigante que adentro caben <strong>todos los cuentos del mundo</strong>, todas las fotos de internet y todas las canciones que existen. ¡Uf, qué pesado! 📦</p>
+          <div className="bg-orange-50 p-5 rounded-xl border-l-4 border-orange-400 shadow-sm my-6">
+            <p className="font-bold text-orange-800 mb-2">🤔 ¿Sabías que...?</p>
+            <p className="text-orange-900">
+              La Inteligencia Artificial no tiene un cerebro aguadito como el nuestro. Está hecha de miles de computadoras conectadas y un montón de números. ¡Por eso no se cansa, no se aburre y no necesita dormir la siesta!
+            </p>
+          </div>
+          <h5 className="text-xl font-bold text-slate-800 mt-6 mb-3">¿Cómo hace para "Generar" cosas? 🎨</h5>
+          <p>Piensa en cuando escribes un mensaje en el celular de tus papás y el teléfono "adivina" la palabra que vas a escribir. La IA Generativa hace lo mismo, pero a un nivel súper poderoso.</p>
+          <ul className="list-disc pl-6 space-y-3 mt-4">
+            <li><strong>No entiende lo que dice:</strong> Solo sabe qué palabras quedan bien juntas.</li>
+            <li><strong>Es como un súper chef:</strong> Toma ingredientes que ya existen (palabras, colores) y los mezcla para hacer una receta nueva.</li>
+          </ul>
+        </div>
+      ),
+      activity: {
+        type: 'sorting',
+        question: '¿Qué puede hacer la IA y qué NO puede hacer?',
+        items: [
+          { text: 'Sentir alegría cuando ganas un juego', isAI: false },
+          { text: 'Escribir un cuento sobre un perro astronauta', isAI: true },
+          { text: 'Dibujar un gato montando en bicicleta', isAI: true },
+          { text: 'Ser tu amigo real y guardarte un secreto', isAI: false },
+        ]
+      }
+    },
+    {
+      id: 'p2',
+      title: 'El Arte de Pedir (Prompts)',
+      icon: <MessageSquareText className="w-6 h-6" />,
+      theory: `Para hablar con la IA usamos "Prompts" (instrucciones). Si le dices "dibuja un perro", te dará un perro cualquiera. Pero si eres un arquitecto de la imaginación y le dices: "Dibuja un perro salchicha con capa roja volando en el espacio", ¡el resultado será increíble! Tienes que probar, equivocarte y volver a pedir hasta lograr lo que quieres.`,
+      extendedTheory: (
+        <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+          <h4 className="text-2xl font-extrabold text-orange-600 flex items-center gap-2 mb-4">
+            <MessageSquareText className="w-6 h-6"/> El Genio de la Lámpara (Muy Literal) 🧞‍♂️
+          </h4>
+          <p>Un <strong>Prompt</strong> es simplemente el mensaje o la orden que le das a la IA. Pero cuidado: ¡la IA es súper literal!</p>
+          <div className="bg-orange-50 p-5 rounded-xl border-l-4 border-orange-400 shadow-sm my-6">
+            <p className="font-bold text-orange-800 mb-2">🎬 Ejemplo del Genio:</p>
+            <p className="text-orange-900">
+              Si le dices: <em>"Quiero un sándwich"</em>, el genio podría darte un sándwich de calcetines viejos. 🧦🍞 ¡Nunca le dijiste de qué lo querías!
+            </p>
+          </div>
+          <h5 className="text-xl font-bold text-slate-800 mt-6 mb-3">La Fórmula Mágica para un Gran Prompt 🧪</h5>
+          <ul className="list-disc pl-6 space-y-3 mt-4">
+            <li><strong>Personaje o Tema:</strong> ¿De qué estamos hablando?</li>
+            <li><strong>Acción o Detalle:</strong> ¿Qué está haciendo?</li>
+            <li><strong>Estilo:</strong> ¿Cómo se ve?</li>
+          </ul>
+        </div>
+      ),
+      activity: {
+        type: 'promptBuilder',
+        question: '¡Construye el mejor Prompt!',
+        options: {
+          character: ['Un gato', 'Un robot', 'Un dinosaurio'],
+          action: ['bailando tango', 'comiendo pizza', 'leyendo un libro'],
+          style: ['estilo acuarela', 'en 3D', 'como un dibujo animado']
+        }
+      }
+    },
+    {
+      id: 'p3',
+      title: 'Secretos y Cuidados',
+      icon: <Lock className="w-6 h-6" />,
+      theory: `La IA guarda todo lo que le dices para seguir aprendiendo. ¡Por eso nunca debes contarle tus secretos! Tus contraseñas, tu dirección, tus fotos personales o el nombre de tu escuela son tesoros que debes proteger. Si necesitas ayuda con una tarea, inventa nombres falsos (ofuscación). ¡Es como usar un disfraz!`,
+      extendedTheory: (
+        <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+          <h4 className="text-2xl font-extrabold text-orange-600 flex items-center gap-2 mb-4">
+            <ShieldAlert className="w-6 h-6"/> El Baúl de los Secretos 🏴‍☠️
+          </h4>
+          <p>¿Sabías que la IA tiene una memoria de elefante 🐘 para aprender? Todo lo que le escribes o le pides puede ser guardado en su gran base de datos para volverse más inteligente.</p>
+          <div className="bg-red-50 p-5 rounded-xl border-l-4 border-red-400 shadow-sm my-6">
+            <p className="font-bold text-red-800 mb-2">🛑 ¡Peligro, Peligro!</p>
+            <p className="text-red-900">
+              Como la IA no es una persona, no sabe guardar un secreto. Por eso, <strong>NUNCA</strong> debes escribirle tu nombre completo, dirección, contraseñas o subir fotos de tu cara.
+            </p>
+          </div>
+          <h5 className="text-xl font-bold text-slate-800 mt-6 mb-3">El Poder del Disfraz (Ofuscación) 🥷</h5>
+          <p>¡Pero no te preocupes! Puedes seguir usando la IA para que te ayude con la tarea. Solo tienes que usar <strong>"El poder del disfraz"</strong> cambiando los nombres reales por inventados.</p>
+        </div>
+      ),
+      activity: {
+        type: 'privacyGame',
+        question: '¿Qué le compartirías a la IA para hacer tu tarea?',
+        scenarios: [
+          { text: 'Mi nombre completo y dónde vivo', safe: false },
+          { text: 'Una lista de animales de la selva', safe: true },
+          { text: 'Una foto de mi cara', safe: false },
+          { text: 'Un texto de historia para que me lo resuma', safe: true }
+        ]
+      }
+    },
+    {
+      id: 'p4',
+      title: 'La IA y Mis Emociones',
+      icon: <HeartHandshake className="w-6 h-6" />,
+      theory: `A veces, la IA es tan amable que parece humana. Podemos pasar horas hablando con ella o creando cosas divertidas. Pero, ¡ojo! La IA no tiene corazón. Si sientes que prefieres hablar con la máquina en lugar de jugar con tus amigos o familia, es momento de hacer una pausa. ¿Tienes un amigo que está todo el día enganchado a la IA? ¡Invítalo a jugar al aire libre!`,
+      extendedTheory: (
+        <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+          <h4 className="text-2xl font-extrabold text-orange-600 flex items-center gap-2 mb-4">
+            <HeartHandshake className="w-6 h-6"/> El Espejo Mágico de las Emociones 🪞
+          </h4>
+          <p>A veces, cuando hablas mucho con un bot de IA, ¡parece tan amable! Te dice palabras lindas, nunca se cansa de escucharte y hasta parece que te entiende.</p>
+          <div className="bg-orange-50 p-5 rounded-xl border-l-4 border-orange-400 shadow-sm my-6">
+            <p className="font-bold text-orange-800 mb-2">🤖 Corazón de Código</p>
+            <p className="text-orange-900">
+              La IA no tiene sentimientos reales. No siente alegría, ni tristeza, ni cariño. Solo está programada para <em>escribir las palabras</em> que tú quieres leer. Es como un espejo que refleja lo que le pides, pero detrás del espejo solo hay matemáticas.
+            </p>
+          </div>
+        </div>
+      ),
+      activity: {
+        type: 'scenarioChoice',
+        question: '¿Qué harías en esta situación?',
+        scenario: 'Tu amigo Pedro lleva toda la semana hablando con un chatbot y ya no quiere salir al recreo.',
+        choices: [
+          { text: 'Me enojo con él y no le hablo más.', correct: false, feedback: '¡No! Pedro te necesita, enojarte no ayudará.' },
+          { text: 'Le digo a un profe y trato de incluir a Pedro en un juego en el patio.', correct: true, feedback: '¡Excelente! Validar con adultos y ofrecer una alternativa real es de grandes amigos.' },
+          { text: 'Le pido que me preste su chatbot para jugar yo también.', correct: false, feedback: '¡Cuidado! Podrían terminar los dos aislados.' }
+        ]
+      }
+    },
+    {
+      id: 'p5',
+      title: 'Misión Final (Evaluación)',
+      icon: <Sparkles className="w-6 h-6" />,
+      theory: `¡Llegaste a la etapa final, Explorador de la IA! Es hora de poner a prueba todo lo que aprendimos. Recuerda: la IA es una herramienta increíble para el futuro, pero tú eres quien tiene el control y la creatividad.`,
+      extendedTheory: (
+        <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+          <h4 className="text-2xl font-extrabold text-orange-600 flex items-center gap-2 mb-4">
+            <Sparkles className="w-6 h-6"/> ¡La Graduación de los Exploradores! 🎓
+          </h4>
+          <p>¡Lo lograste! Has recorrido todos los módulos y ya sabes más sobre la Inteligencia Artificial que muchos adultos.</p>
+          <div className="bg-yellow-50 p-5 rounded-xl border-l-4 border-yellow-400 shadow-sm my-6">
+            <p className="font-bold text-yellow-800 mb-2">📜 El Juramento del Explorador</p>
+            <p className="text-yellow-900">
+              <em>"Prometo usar la magia de la IA para aprender y crear cosas buenas. Prometo cuidar mis secretos como un tesoro pirata, ser el arquitecto de mis ideas, y nunca, pero nunca, olvidarme de jugar con mis amigos de verdad."</em>
+            </p>
+          </div>
+        </div>
+      ),
+      activity: {
+        type: 'quiz',
+        questions: [
+          { q: 'Si la IA me da información, yo debo...', options: ['Creerla siempre.', 'Validarla con mis profes o libros.', 'Copiarla y pegarla.'], answer: 1 },
+          { q: 'Para hacer un buen prompt necesito...', options: ['Ser muy breve.', 'Enojarse si falla.', 'Dar detalles, probar y ajustar.'], answer: 2 },
+          { q: '¿Qué es ofuscar datos?', options: ['Esconder mi información personal cambiando los nombres.', 'Poner mi foto de perfil borrosa.', 'Apagar la computadora.'], answer: 0 }
+        ]
+      }
+    }
+  ],
+  secondary: [
+    {
+      id: 's1',
+      title: 'Mecánicas: LLMs y Multimodalidad',
+      icon: <BrainCircuit className="w-6 h-6" />,
+      theory: `Ya sabes usar IA, pero ¿cómo funciona? Los Grandes Modelos de Lenguaje (LLMs) son redes neuronales entrenadas con terabytes de datos. No "piensan", predicen estadísticamente el siguiente token (palabra o píxel). Hoy la IA es Multimodal: entiende y genera texto, imágenes, audio y código. Entender esto te da ventaja para no ser un simple usuario, sino un creador de soluciones.`,
+      extendedTheory: (
+        <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+          <h4 className="text-2xl font-extrabold text-emerald-600 flex items-center gap-2 mb-4">
+            <BrainCircuit className="w-6 h-6"/> El Motor bajo el Capó: Autocompletar con Esteroides ⚙️
+          </h4>
+          <p>Los LLMs (Large Language Models) no entienden el significado de las palabras como tú; funcionan mediante <strong>predicción estadística de tokens</strong>.</p>
+          <div className="bg-emerald-50 p-5 rounded-xl border-l-4 border-emerald-500 shadow-sm my-6">
+            <p className="font-bold text-emerald-800 mb-2">🧩 ¿Qué es un Token?</p>
+            <p className="text-emerald-900">
+              Para la IA, las palabras se rompen en pedacitos llamados "tokens". La IA calcula matemáticamente cuál es el token que tiene mayor probabilidad de seguir al anterior, basándose en los billones de textos que leyó en su entrenamiento.
+            </p>
+          </div>
+          <h5 className="text-xl font-bold text-slate-800 mt-6 mb-3">El Salto a la Multimodalidad 🌐</h5>
+          <p>Hoy las IA son Multimodales: procesan texto, visión (imágenes), audio y código con el mismo principio estadístico.</p>
+        </div>
+      ),
+      activity: {
+        type: 'promptIterative',
+        question: 'Simulador: Mejora tu petición paso a paso',
+        steps: [
+          { instruction: 'Escribe un prompt básico para pedir un resumen de la Revolución Francesa.', feedback: 'Bien, pero es muy general. La IA te dará algo aburrido.' },
+          { instruction: 'Ahora añade a tu prompt un ROL (ej: "Actúa como un profesor divertido") y un FORMATO (ej: "en 3 viñetas").', feedback: '¡Mejor! Ahora controla el tono.' },
+          { instruction: 'Por último, pide que te haga preguntas al final para evaluar tu aprendizaje.', feedback: '¡Excelente! Has diseñado tu propio artefacto de aprendizaje.' }
+        ]
+      }
+    },
+    {
+      id: 's2',
+      title: 'Deepfakes y Pensamiento Crítico',
+      icon: <ImageIcon className="w-6 h-6" />,
+      theory: `Con la generación de imágenes y voz surgen los "Deepfakes": contenido falso hiperrealista. ¿Peligros? Estafas, desinformación y bullying. Debes ser un detective digital: busca errores en las manos, luces ilógicas, asimetrías, y valida la fuente siempre. Nunca asumas que un audio o video es real solo porque lo ves en redes.`,
+      extendedTheory: (
+        <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+          <h4 className="text-2xl font-extrabold text-emerald-600 flex items-center gap-2 mb-4">
+            <ImageIcon className="w-6 h-6"/> La Era de la "Falsa Realidad" 🎭
+          </h4>
+          <p>Un <strong>Deepfake</strong> (falsificación profunda) utiliza inteligencia artificial para reemplazar la cara o la voz de una persona por la de otra en un video o audio.</p>
+          <div className="bg-red-50 p-5 rounded-xl border-l-4 border-red-500 shadow-sm my-6">
+            <p className="font-bold text-red-800 mb-2">⚠️ El Lado Oscuro de la Síntesis</p>
+            <p className="text-red-900">
+              Esta tecnología trae peligros graves si no somos críticos: Desinformación política, Estafas de voz y Ciberacoso.
+            </p>
+          </div>
+          <h5 className="text-xl font-bold text-slate-800 mt-6 mb-3">Guía del Detective Digital 🕵️‍♂️</h5>
+          <ul className="list-disc pl-6 space-y-3 mt-4">
+            <li><strong>Anatomía imposible:</strong> La IA generativa suele fallar al crear manos o pupilas deformes.</li>
+            <li><strong>Luz y Física:</strong> ¿Las sombras del rostro coinciden con la iluminación del fondo?</li>
+            <li><strong>La regla de Oro: LA FUENTE.</strong> ¿Quién publicó esto? Valida siempre con medios oficiales.</li>
+          </ul>
+        </div>
+      ),
+      activity: {
+        type: 'deepfakeDetective',
+        question: 'Analiza la situación: Un video muestra al director de la escuela diciendo que se suspenden las clases por un mes.',
+        choices: [
+          { text: 'Lo comparto rápido en el grupo del curso.', correct: false, feedback: '¡No seas cómplice de la desinformación!' },
+          { text: 'Reviso los canales oficiales de la escuela o pregunto a un profesor.', correct: true, feedback: 'Correcto. La validación cruzada es tu mejor escudo.' },
+          { text: 'Uso IA para hacer un video igual pero de otro profesor.', correct: false, feedback: 'No uses la tecnología para agravar el problema ético.' }
+        ]
+      }
+    },
+    {
+      id: 's3',
+      title: 'Privacidad y Ofuscación',
+      icon: <ShieldAlert className="w-6 h-6" />,
+      theory: `Los modelos se reentrenan con tus inputs. Si subes un código con contraseñas o un texto con datos de tus compañeros, esa información se compromete. La "ofuscación" es reemplazar datos sensibles por ficticios antes de enviarlos a la IA. Además, sé consciente de tu huella digital generativa.`,
+      extendedTheory: (
+        <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+          <h4 className="text-2xl font-extrabold text-emerald-600 flex items-center gap-2 mb-4">
+            <ShieldAlert className="w-6 h-6"/> Tu Huella Digital Generativa 👣
+          </h4>
+          <p>Cada vez que usas un modelo de IA público, asume esto: <strong>todo lo que escribes podría ser leído por revisores humanos o usado para entrenar versiones futuras de la IA.</strong></p>
+          <div className="bg-yellow-50 p-5 rounded-xl border-l-4 border-yellow-500 shadow-sm my-6">
+            <p className="font-bold text-yellow-800 mb-2">🚨 Casos Reales de Fugas</p>
+            <p className="text-yellow-900">
+              Han ocurrido casos donde programadores pegaron código confidencial en ChatGPT para encontrar un error, y meses después, ese mismo código fue generado como respuesta a otros usuarios.
+            </p>
+          </div>
+          <h5 className="text-xl font-bold text-slate-800 mt-6 mb-3">El Arte de Ofuscar 🥷</h5>
+          <p>Como estudiante, debes <strong>Ofuscar</strong> (esconder) los datos sensibles. Cambia nombres reales, direcciones y datos escolares por información ficticia antes de enviar el prompt.</p>
+        </div>
+      ),
+      activity: {
+        type: 'obfuscationTask',
+        question: '¿Qué palabras deberías censurar/cambiar en este texto antes de enviarlo a ChatGPT?',
+        text: 'Mi nombre es [Juan Pérez] y vivo en [Calle Falsa 123]. El número de tarjeta de mi mamá es [4555-2222-1111-3333].',
+        answer: 'Juan Pérez, Calle Falsa 123, 4555-2222-1111-3333'
+      }
+    },
+    {
+      id: 's4',
+      title: 'Dependencia Afectiva y Ética',
+      icon: <Users className="w-6 h-6" />,
+      theory: `Las IAs conversacionales están diseñadas para ser complacientes. Esto puede generar dependencia afectiva: sentir que la IA te entiende mejor que las personas, aislándote socialmente. Si notas que tú o un compañero prefieren la IA a interacciones reales, es una alerta. La IA no tiene empatía real, solo simula tenerla.`,
+      extendedTheory: (
+        <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+          <h4 className="text-2xl font-extrabold text-emerald-600 flex items-center gap-2 mb-4">
+            <Users className="w-6 h-6"/> El Efecto ELIZA y la Ilusión de Empatía 💔
+          </h4>
+          <p>A esto de atribuir sentimientos humanos a las máquinas se le llama el <strong>Efecto ELIZA</strong>.</p>
+          <div className="bg-purple-50 p-5 rounded-xl border-l-4 border-purple-500 shadow-sm my-6">
+            <p className="font-bold text-purple-800 mb-2">🤔 La Trampa de la "Complacencia"</p>
+            <p className="text-purple-900">
+              Las IAs modernas están alineadas para ser útiles y complacientes. <strong>Nunca se cansan de ti, no te juzgan y casi siempre te dan la razón.</strong> Esto parece genial, pero te aísla de las fricciones reales que nos hacen madurar.
+            </p>
+          </div>
+          <h5 className="text-xl font-bold text-slate-800 mt-6 mb-3">La IA NO es un Profesional de la Salud 🩺</h5>
+          <p>Si notas que un amigo ha dejado de salir, se aísla, y dice que "la IA lo entiende mejor", acompáñalo y sugiere hablar con un orientador. <strong>La tecnología nos conecta, pero solo los humanos nos abrazan.</strong></p>
+        </div>
+      ),
+      activity: {
+        type: 'scenarioChoice',
+        question: 'Debate Ético: Tu compañera Ana está triste y solo habla con un terapeuta-bot de IA, alejándose de sus amigos.',
+        choices: [
+          { text: 'Es su vida, la IA es más barata que un psicólogo.', correct: false, feedback: 'La IA no es un profesional de la salud mental y puede dar consejos peligrosos (alucinaciones).' },
+          { text: 'Hablo con ella, le ofrezco escucharla sin juzgar y le sugiero ir al gabinete escolar.', correct: true, feedback: '¡Empatía humana! La conexión real y el apoyo profesional son irreemplazables.' }
+        ]
+      }
+    },
+    {
+      id: 's5',
+      title: 'El Futuro y Evaluación',
+      icon: <Smartphone className="w-6 h-6" />,
+      theory: `La IA cambiará rápido. La habilidad del futuro no es saber usar una herramienta específica, sino tener una "mente abierta", adaptabilidad y pensamiento crítico. Sé el arquitecto de tu camino, no un consumidor pasivo.`,
+      extendedTheory: (
+        <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+          <h4 className="text-2xl font-extrabold text-emerald-600 flex items-center gap-2 mb-4">
+            <Smartphone className="w-6 h-6"/> El Centauro: Humano + Inteligencia Artificial 🐎
+          </h4>
+          <p>¿La IA me va a quitar el trabajo en el futuro? ¡NO! Serás como un "Centauro": un humano haciendo equipo con la IA.</p>
+          <h5 className="text-xl font-bold text-slate-800 mt-6 mb-3">Tus Superpoderes del Futuro 🦸‍♀️🦸‍♂️</h5>
+          <ul className="list-disc pl-6 space-y-3 mt-4">
+            <li><strong>Hacer buenas preguntas (Prompting Crítico):</strong> La IA tiene las respuestas, pero tú tienes que saber qué preguntar.</li>
+            <li><strong>Validación de veracidad:</strong> Ser el juez que decide si la respuesta de la máquina es correcta.</li>
+            <li><strong>Creatividad original:</strong> Conectar ideas de formas que el algoritmo no puede prever.</li>
+          </ul>
+        </div>
+      ),
+      activity: {
+        type: 'quiz',
+        questions: [
+          { q: 'Si la IA genera un texto excelente para mi trabajo práctico...', options: ['Lo entrego como si fuera mío (plagio).', 'Lo uso como base, lo edito, pongo mi perspectiva y cito que usé IA.', 'Lo borro, está mal usar IA para la escuela.'], answer: 1 },
+          { q: 'La "Ofuscación" de datos significa:', options: ['Hacer que la IA no funcione.', 'Esconder o alterar datos personales antes de darle el prompt a la IA.', 'Borrar el historial del navegador.'], answer: 1 },
+          { q: 'Ante la sospecha de un Deepfake (video falso) debo:', options: ['Validar la fuente y buscar inconsistencias visuales.', 'Compartirlo si es gracioso.', 'Creerlo si tiene buena calidad de imagen.'], answer: 0 }
+        ]
+      }
+    }
+  ]
+};
+
+// --- DATA: GIMNASIO DE PROMPTS (CASOS REALES) ---
+const gymData = {
+  primary: [
+    // --- ESCUELA ---
+    { id: 'g-p1', category: 'school', subject: 'Matemáticas', title: 'Fracciones con Pizza', task: 'Entender qué es 1/4 y 1/2.', 
+      bad: { prompt: '¿Qué es un cuarto y un medio en fracciones?', reason: 'Te dará una definición de diccionario súper aburrida y difícil de entender.' },
+      good: { steps: [{ title: 'El Juego de la Pizzería', prompt: 'Actúa como el dueño de una pizzería virtual. Yo soy tu ayudante. Tenemos una pizza de 8 porciones. Llegan clientes pidiendo 1/4 de pizza o 1/2 pizza. Hazme preguntas de cuántas porciones debo darles para que yo practique. Si me equivoco, dame una pista sin darme la respuesta.' }], reason: '¡Aprenderás jugando! La IA te hará pensar y practicar en lugar de solo leer.' }
+    },
+    { id: 'g-p2', category: 'school', subject: 'Ciencias', title: 'El Ciclo del Agua', task: 'Aprender cómo viaja el agua en la naturaleza.',
+      bad: { prompt: 'Dame un resumen del ciclo del agua para la escuela.', reason: 'Es un resumen típico. ¡Lo copiarás sin imaginarlo!' },
+      good: { steps: [{ title: 'Entrevista a la Gota', prompt: 'Actúa como si fueras "Gotita", una gota de agua que acaba de caer de una nube. Cuéntame tu aventura de cómo llegaste hasta el río y luego cómo vas a volver al cielo. Usa palabras fáciles y divertidas para un niño.' }], reason: 'Aprender a través de historias hace que los conceptos difíciles se queden pegados en tu memoria.' }
+    },
+    { id: 'g-p3', category: 'school', subject: 'Historia', title: 'Entrevista a un Prócer', task: 'Aprender sobre José de San Martín (o un héroe local).',
+      bad: { prompt: 'Biografía de San Martín corta.', reason: 'Fechas y nombres aburridos.' },
+      good: { steps: [{ title: 'Viaje en el Tiempo', prompt: 'Finge que eres José de San Martín en el año 1817, justo antes de cruzar los Andes. Te voy a hacer 3 preguntas sobre tus miedos y planes. Respóndeme actuando como él y pregúntame algo a mí al final.' }], reason: 'Convertirás la historia en una charla interactiva.' }
+    },
+    // --- VIDA ---
+    { id: 'g-p4', category: 'life', subject: 'Emociones', title: 'Cuando me enojo mucho', task: 'Aprender a calmarse cuando pierdes en un juego.',
+      bad: { prompt: '¿Qué hacer si me enojo?', reason: 'Te dará una lista genérica como "cuenta hasta 10".' },
+      good: { steps: [{ title: 'El Entrenador de la Calma', prompt: 'Estoy muy enojado porque perdí en mi videojuego favorito. Actúa como un entrenador amable de respiración. Enséñame un ejercicio divertido usando la imaginación (como soplar una vela) para calmarme ahora mismo.' }], reason: 'La IA se adapta a TU situación exacta y te da una herramienta práctica.' }
+    },
+    { id: 'g-p5', category: 'life', subject: 'Organización', title: 'Armar la mochila', task: 'Aprender a no olvidarse nada para la escuela.',
+      bad: { prompt: 'Lista para la escuela.', reason: 'No sabe qué necesitas tú específicamente.' },
+      good: { steps: [{ title: 'El Detective Escolar', prompt: 'Mañana tengo clases de Matemáticas, Educación Física y Arte. Actúa como un detective que me hace preguntas para ayudarme a descubrir qué 5 cosas no pueden faltar en mi mochila de mañana.' }], reason: 'Te obliga a repasar tu propio horario mentalmente.' }
+    },
+    { id: 'g-p6', category: 'life', subject: 'Mascotas', title: 'Cuidar a un perrito', task: 'Saber qué necesita un cachorro nuevo.',
+      bad: { prompt: '¿Cómo cuidar un perro?', reason: 'Te dará un texto enorme.' },
+      good: { steps: [{ title: 'Trivia Perruna', prompt: 'Voy a adoptar un cachorro. Hazme un juego de Verdadero o Falso de 3 preguntas sobre qué pueden comer los perros y qué no, para ver si estoy preparado. Corrige mis respuestas.' }], reason: 'Evalúas tus conocimientos antes de tener a la mascota.' }
+    },
+    // --- JUEGOS ---
+    { id: 'g-p7', category: 'games', subject: 'Multijugador', title: 'El Cuento de los Apodos', task: 'Crear una historia de aventuras con amigos.',
+      bad: { prompt: 'Cuéntame un cuento de aventura de 3 niños.', reason: 'Solo leerás. No hay participación.' },
+      good: { steps: [{ title: 'El Dungeon Master', prompt: 'Actúa como un cuentacuentos. Los jugadores somos [Apodo1], [Apodo2] y [Apodo3]. Empieza a contar una historia de misterio en un bosque mágico. Al final de cada párrafo, debes detenerte y preguntarle a uno de nosotros (elige al azar) qué quiere hacer a continuación. Espera nuestra respuesta para seguir.' }], reason: '¡Ustedes construyen el juego! Y al usar apodos, ofuscan sus datos reales.' }
+    },
+    { id: 'g-p8', category: 'games', subject: 'Adivinanza', title: 'Detective de Monstruos', task: 'Adivinar quién está escondido.',
+      bad: { prompt: 'Hazme una adivinanza de un monstruo.', reason: 'Suele ser muy fácil y se acaba rápido.' },
+      good: { steps: [{ title: 'Preguntas de Sí o No', prompt: 'Actúa como un monstruo amigable que se escondió en la escuela. Inventa cómo te ves y dónde estás, pero NO nos lo digas. [Apodo1] y [Apodo2] te haremos preguntas de "Sí" o "No" por turnos para adivinar qué eres. Tienes un nivel de "hambre" que sube si tardamos mucho.' }], reason: 'Involucra turnos, variables ocultas (el hambre) y trabajo en equipo.' }
+    },
+    { id: 'g-p9', category: 'games', subject: 'Movimiento', title: 'Las Olimpiadas Locas', task: 'Jugar físicamente lejos de la pantalla.',
+      bad: { prompt: 'Dime juegos para hacer en casa.', reason: 'Te dará una lista estática.' },
+      good: { steps: [{ title: 'El Juez Loco', prompt: 'Eres el juez de las Olimpiadas Locas. Los participantes somos [Apodo1] y [Apodo2]. En cada turno, inventa un reto físico divertido y seguro (como "tocar algo azul con el codo") y di qué jugador debe hacerlo. Luego pregúntanos quién lo hizo más rápido para anotar puntos.' }], reason: 'La IA se convierte en un árbitro, pero el juego ocurre en la vida real.' }
+    }
+  ],
+  secondary: [
+    // --- ESCUELA ---
+    { id: 'g-s1', category: 'school', subject: 'Matemáticas', title: 'Despejar X (Álgebra)', task: 'Aprender a resolver una ecuación que no me sale.',
+      bad: { prompt: 'Resuelve esta ecuación: 3x + 5 = 20', reason: 'Te da el resultado. Si copias eso, desaprobarás el examen porque no entendiste el proceso.' },
+      good: { steps: [{ title: 'Tutor Socrático', prompt: 'Tengo problemas para resolver 3x + 5 = 20. Actúa como mi tutor de matemáticas. NO me des la respuesta final. En lugar de eso, explícame cuál debería ser mi primer paso lógico para dejar a la X sola y pregúntame si entiendo.' }], reason: 'La IA te guía para que TU cerebro haga el cálculo.' }
+    },
+    { id: 'g-s2', category: 'school', subject: 'Literatura', title: 'Feedback de un Ensayo', task: 'Mejorar un texto que escribiste.',
+      bad: { prompt: 'Mejora este ensayo: [Pegar texto]', reason: 'La IA reescribirá todo con su tono robótico. El profesor notará que no es tu voz.' },
+      good: { steps: [{ title: 'El Editor Estricto', prompt: 'Aquí está el borrador de mi ensayo: [pegar texto]. Por favor, NO lo reescribas ni cambies mis palabras. Actúa como un corrector y dime: 1) Si mis argumentos son claros, 2) Si hay errores de ortografía, 3) Qué parte está débil y cómo podría investigar más.' }], reason: 'Mantienes tu autoría, pero usas a la IA como un copiloto de calidad.' }
+    },
+    { id: 'g-s3', category: 'school', subject: 'Biología', title: 'Mitosis vs Meiosis', task: 'Memorizar la diferencia entre procesos celulares.',
+      bad: { prompt: 'Diferencias entre mitosis y meiosis.', reason: 'Te dará un cuadro técnico difícil de memorizar.' },
+      good: { steps: [{ title: 'Like I am 5 (Analogías)', prompt: 'No entiendo la diferencia entre Mitosis y Meiosis. ¿Me lo puedes explicar usando una analogía moderna, por ejemplo, comparándolo con copiar archivos en una computadora o imprimir fotos?' }], reason: 'Las analogías anclan el conocimiento técnico a cosas que ya entiendes.' }
+    },
+    // --- VIDA ---
+    { id: 'g-s4', category: 'life', subject: 'Vocacional', title: '¿Qué estudio?', task: 'Explorar cómo es realmente una carrera universitaria.',
+      bad: { prompt: '¿De qué trabaja un ingeniero en sistemas?', reason: 'Descripción enciclopédica aburrida.' },
+      good: { steps: [{ title: 'Un Día en la Vida', prompt: 'Me da curiosidad la carrera de Biología Marina. Actúa como un biólogo marino joven. Cuéntame en primera persona cómo fue tu "Día típico" ayer, mencionando las partes aburridas, los desafíos y lo más emocionante.' }], reason: 'Te da una perspectiva realista, narrativa y humana del trabajo.' }
+    },
+    { id: 'g-s5', category: 'life', subject: 'Organización', title: 'Plan de Estudio', task: 'Armar un cronograma antes de los exámenes.',
+      bad: { prompt: 'Hazme un horario de estudio.', reason: 'No se ajusta a tus tiempos reales.' },
+      good: { steps: [{ title: 'El Planner Personal', prompt: 'Tengo examen de Historia el jueves y de Matemáticas el viernes. Hoy es lunes. Tengo libre de 17hs a 20hs cada día. Ármame un plan de estudio en bloques de 45 minutos (Técnica Pomodoro), intercalando las materias para no aburrirme.' }], reason: 'Aprender a parametrizar (dar restricciones exactas) es la clave de un buen prompt.' }
+    },
+    { id: 'g-s6', category: 'life', subject: 'Pensamiento Crítico', title: 'Analizador de Noticias', task: 'Detectar si una noticia viral es falsa o sesgada.',
+      bad: { prompt: '¿Es verdad esta noticia: [Texto]?', reason: 'La IA puede alucinar si no tiene acceso a internet en tiempo real.' },
+      good: { steps: [{ title: 'El Detector de Sesgos', prompt: 'Tengo esta noticia que vi en redes: [Texto]. Actúa como un profesor de periodismo. No me digas si es verdad o mentira, pero analízame: ¿Qué palabras "clickbait" (exageradas) está usando? ¿A qué fuente debería buscar para verificar esto?' }], reason: 'La IA te enseña CÓMO pensar, no QUÉ pensar.' }
+    },
+    // --- JUEGOS ---
+    { id: 'g-s7', category: 'games', subject: 'Debate', title: 'El Juicio del Fin del Mundo', task: 'Argumentar de forma creativa.',
+      bad: { prompt: 'Juguemos a un juego de debate.', reason: 'La IA no sabrá qué reglas seguir.' },
+      good: { steps: [{ title: 'El Tribunal Absurdo', prompt: 'Eres el juez de la Tierra. Nos invaden los Aliens. Los jugadores somos [Apodo1], [Apodo2] y [Apodo3]. Asígnale a cada uno un objeto inútil al azar (ej: un zapato roto). Cada uno debe argumentar por qué su objeto salvará a la humanidad. En cada turno, pides un argumento y tú decides quién gana por creatividad.' }], reason: 'Practicas oratoria, ofuscas datos usando apodos, y aprendes a programar reglas lógicas en la IA.' }
+    },
+    { id: 'g-s8', category: 'games', subject: 'Estrategia', title: 'El Infiltrado (Among Us Textual)', task: 'Engañar y deducir en grupo.',
+      bad: { prompt: 'Juguemos a encontrar al impostor.', reason: 'No establece mecánicas de juego.' },
+      good: { steps: [{ title: 'El Mastermind Secreto', prompt: 'Vamos a jugar a descubrir al infiltrado. Los jugadores somos [Apodo1], [Apodo2] y [Apodo3]. Elige un tema secreto (ej: "Pizza") y dinos que cerremos los ojos. Luego, dile a [Apodo1] el tema, y a [Apodo2] un tema similar (ej: "Tarta"). Luego haznos una pregunta a todos para que respondamos y averigüemos quién tiene el tema distinto.' }], reason: 'Fuerza a la IA a manejar roles asimétricos y secretos entre usuarios que comparten pantalla.' }
+    },
+    { id: 'g-s9', category: 'games', subject: 'Rol (RPG)', title: 'Simulador de Supervivencia', task: 'Aventura colaborativa por turnos.',
+      bad: { prompt: 'Haz un juego de zombies.', reason: 'La IA jugará por ti.' },
+      good: { steps: [{ title: 'Director de Juego (DM)', prompt: 'Actúa como el Director de Juego de un mundo post-apocalíptico zombie. [Apodo1] es el médico, [Apodo2] es el explorador y [Apodo3] es el ingeniero. Danos 10 puntos de vida a cada uno y un inventario vacío. Descríbenos la primera escena (estamos en un supermercado a oscuras) y pregúntanos qué hacemos por turnos. Resuelve usando lógica.' }], reason: 'Aprendes a diseñar sistemas de estado (Vida, Inventario) mediante prompts.' }
+    }
+  ]
+};
+
+// --- COMPONENTES PRINCIPALES ---
+
+const App = () => {
+  const [level, setLevel] = useState(null); // 'primary' | 'secondary'
+  const [currentView, setCurrentView] = useState('modules'); // 'modules' | 'gym'
+  const [currentModuleIndex, setCurrentModuleIndex] = useState(0);
+
+  const reset = () => {
+    setLevel(null);
+    setCurrentView('modules');
+    setCurrentModuleIndex(0);
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
+      <header className="bg-indigo-600 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-20">
+        <div className="flex items-center gap-2 cursor-pointer" onClick={reset}>
+          <BrainCircuit className="w-8 h-8 text-yellow-300" />
+          <h1 className="text-xl font-bold tracking-tight">Exploradores de IA</h1>
+        </div>
+        {level && (
+          <button onClick={reset} className="text-sm bg-indigo-500 hover:bg-indigo-700 px-3 py-1 rounded transition">
+            Cambiar Nivel
+          </button>
+        )}
+      </header>
+
+      <main className="max-w-5xl mx-auto p-4 md:p-6">
+        {!level ? (
+          <LevelSelection setLevel={setLevel} />
+        ) : (
+          <div className="animate-fade-in space-y-6">
+            {/* TABS DE NAVEGACIÓN (Módulos vs Gimnasio) */}
+            <div className="flex flex-col sm:flex-row justify-center gap-4 bg-white p-3 rounded-2xl shadow-sm border border-slate-200">
+              <button 
+                onClick={() => setCurrentView('modules')}
+                className={`flex-1 flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold transition-all ${currentView === 'modules' ? 'bg-indigo-100 text-indigo-700 shadow-sm ring-2 ring-indigo-500 ring-offset-2' : 'text-slate-500 hover:bg-slate-50'}`}
+              >
+                <GraduationCap className="w-5 h-5" /> Módulos Teóricos
+              </button>
+              <button 
+                onClick={() => setCurrentView('gym')}
+                className={`flex-1 flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold transition-all ${currentView === 'gym' ? 'bg-indigo-100 text-indigo-700 shadow-sm ring-2 ring-indigo-500 ring-offset-2' : 'text-slate-500 hover:bg-slate-50'}`}
+              >
+                <Gamepad2 className="w-5 h-5" /> Gimnasio de Prompts
+              </button>
+            </div>
+
+            {/* VISTAS */}
+            {currentView === 'modules' ? (
+              <ModuleViewer 
+                level={level} 
+                modules={content[level]} 
+                currentIndex={currentModuleIndex} 
+                setIndex={setCurrentModuleIndex} 
+              />
+            ) : (
+              <PromptGym level={level} />
+            )}
+          </div>
+        )}
+      </main>
+    </div>
+  );
+};
+
+// --- PANTALLA DE SELECCIÓN DE NIVEL ---
+
+const LevelSelection = ({ setLevel }) => (
+  <div className="flex flex-col items-center justify-center mt-10 md:mt-20 space-y-8 animate-fade-in">
+    <div className="text-center space-y-4 max-w-2xl">
+      <h2 className="text-3xl md:text-5xl font-extrabold text-indigo-900">Aprende sobre la IA Generativa</h2>
+      <p className="text-lg text-slate-600">
+        Bienvenido a tu viaje interactivo. Descubre cómo usar la IA de forma inteligente, segura y creativa. ¿En qué nivel estás?
+      </p>
+    </div>
+    <div className="grid md:grid-cols-2 gap-6 w-full max-w-2xl">
+      <button 
+        onClick={() => setLevel('primary')}
+        className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl hover:ring-4 ring-orange-400 transition transform hover:-translate-y-1"
+      >
+        <div className="absolute top-4 right-4 text-orange-500 group-hover:scale-110 transition"><User className="w-10 h-10"/></div>
+        <h3 className="text-2xl font-bold text-orange-600 mb-2">Nivel Primaria</h3>
+        <p className="text-slate-500 text-left">Descubre la magia, aprende a pedirle cosas a la IA y descubre cómo cuidarte en internet.</p>
+      </button>
+
+      <button 
+        onClick={() => setLevel('secondary')}
+        className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl hover:ring-4 ring-emerald-400 transition transform hover:-translate-y-1"
+      >
+        <div className="absolute top-4 right-4 text-emerald-500 group-hover:scale-110 transition"><Users className="w-10 h-10"/></div>
+        <h3 className="text-2xl font-bold text-emerald-700 mb-2">Nivel Secundaria</h3>
+        <p className="text-slate-500 text-left">Profundiza en LLMs, deepfakes, ingeniería de prompts, ética y dependencias tecnológicas.</p>
+      </button>
+    </div>
+  </div>
+);
+
+// --- COMPONENTE GIMNASIO DE PROMPTS ---
+
+const PromptGym = ({ level }) => {
+  const [activeTab, setActiveTab] = useState('school'); // 'school', 'life', 'games'
+  const isPrimary = level === 'primary';
+  const themeColor = isPrimary ? 'bg-orange-100 text-orange-800 ring-orange-400' : 'bg-emerald-100 text-emerald-800 ring-emerald-400';
+  const badgeColor = isPrimary ? 'bg-orange-200 text-orange-900' : 'bg-emerald-200 text-emerald-900';
+  
+  const prompts = gymData[level].filter(p => p.category === activeTab);
+
+  return (
+    <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 animate-fade-in border-t-4 border-indigo-500">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-extrabold text-slate-800 flex items-center justify-center gap-3">
+          <Gamepad2 className="w-8 h-8 text-indigo-500" /> Gimnasio de Prompts
+        </h2>
+        <p className="text-slate-500 mt-2 text-lg">
+          No copies y pegues. Aprende a usar la IA como tu copiloto interactivo.
+        </p>
+      </div>
+
+      {/* Sub-Navegación del Gimnasio */}
+      <div className="flex flex-wrap justify-center gap-3 mb-8">
+        <button 
+          onClick={() => setActiveTab('school')}
+          className={`px-5 py-2.5 rounded-full font-bold flex items-center gap-2 transition-all ${activeTab === 'school' ? themeColor + ' shadow-md ring-2 ring-offset-2' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+        >
+          <BookOpen className="w-5 h-5"/> Para la Escuela
+        </button>
+        <button 
+          onClick={() => setActiveTab('life')}
+          className={`px-5 py-2.5 rounded-full font-bold flex items-center gap-2 transition-all ${activeTab === 'life' ? themeColor + ' shadow-md ring-2 ring-offset-2' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+        >
+          <Lightbulb className="w-5 h-5"/> Para la Vida
+        </button>
+        <button 
+          onClick={() => setActiveTab('games')}
+          className={`px-5 py-2.5 rounded-full font-bold flex items-center gap-2 transition-all ${activeTab === 'games' ? themeColor + ' shadow-md ring-2 ring-offset-2' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+        >
+          <Smile className="w-5 h-5"/> Sala de Juegos
+        </button>
+      </div>
+
+      {/* Grilla de Tarjetas */}
+      <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-6">
+        {prompts.map(prompt => (
+          <PromptCard key={prompt.id} item={prompt} badgeColor={badgeColor} isPrimary={isPrimary} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// --- TARJETA INDIVIDUAL DEL GIMNASIO ---
+
+const PromptCard = ({ item, badgeColor, isPrimary }) => {
+  const [expanded, setExpanded] = useState(false);
+  
+  return (
+    <div className={`border-2 rounded-2xl overflow-hidden transition-all duration-300 ${expanded ? 'border-indigo-300 shadow-xl' : 'border-slate-200 hover:border-indigo-200 hover:shadow-md'}`}>
+      
+      {/* Header de la tarjeta (Clickable) */}
+      <div 
+        className="p-5 cursor-pointer flex justify-between items-start bg-white hover:bg-slate-50"
+        onClick={() => setExpanded(!expanded)}
+      >
+        <div>
+          <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-3 uppercase tracking-wider ${badgeColor}`}>
+            {item.subject}
+          </span>
+          <h3 className="text-xl font-bold text-slate-800">{item.title}</h3>
+          {!expanded && <p className="text-slate-500 text-sm mt-1">{item.task}</p>}
+        </div>
+        <div className={`p-2 rounded-full transition-transform ${expanded ? 'bg-indigo-100 rotate-90' : 'bg-slate-100'}`}>
+          <ChevronRight className={`w-5 h-5 ${expanded ? 'text-indigo-600' : 'text-slate-400'}`} />
+        </div>
+      </div>
+
+      {/* Contenido Expandido */}
+      {expanded && (
+        <div className="bg-slate-50 p-5 border-t border-slate-200 animate-fade-in space-y-6">
+          
+          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">Tu Misión</p>
+            <p className="text-slate-700 italic font-medium">"{item.task}"</p>
+          </div>
+
+          {/* El Camino del Copiar y Pegar (MALO) */}
+          <div className="space-y-3">
+            <h4 className="font-bold text-red-700 flex items-center gap-2">
+              <XCircle className="w-5 h-5" /> El Camino del Perezoso ❌
+            </h4>
+            <div className="bg-red-50 p-4 rounded-xl border border-red-100">
+              <p className="font-mono text-sm text-red-900 mb-3 bg-white p-2 rounded border border-red-200 shadow-inner">
+                {item.bad.prompt}
+              </p>
+              <p className="text-sm text-red-800 flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" /> 
+                {item.bad.reason}
+              </p>
+            </div>
+          </div>
+
+          {/* El Camino del Explorador (BUENO) */}
+          <div className="space-y-3">
+            <h4 className={`font-bold flex items-center gap-2 ${isPrimary ? 'text-orange-600' : 'text-emerald-700'}`}>
+              <CheckCircle className="w-5 h-5" /> El Camino del Explorador ✅
+            </h4>
+            <div className={`${isPrimary ? 'bg-orange-50 border-orange-100' : 'bg-emerald-50 border-emerald-100'} p-4 rounded-xl border`}>
+              
+              {item.good.steps.map((step, idx) => (
+                <div key={idx} className="mb-4 last:mb-0">
+                  <p className={`text-sm font-bold mb-2 ${isPrimary ? 'text-orange-800' : 'text-emerald-800'}`}>
+                    {step.title}
+                  </p>
+                  <p className="font-mono text-sm text-slate-800 mb-2 bg-white p-3 rounded-lg border border-slate-200 shadow-inner border-l-4 border-l-indigo-400">
+                    "{step.prompt}"
+                  </p>
+                </div>
+              ))}
+
+              <p className={`text-sm mt-4 pt-3 border-t flex items-start gap-2 ${isPrimary ? 'text-orange-800 border-orange-200' : 'text-emerald-800 border-emerald-200'}`}>
+                <Sparkles className="w-4 h-4 shrink-0 mt-0.5" /> 
+                <strong>Por qué funciona:</strong> {item.good.reason}
+              </p>
+            </div>
+          </div>
+
+        </div>
+      )}
+    </div>
+  );
+};
+
+
+// --- VISOR DE MÓDULOS (Teoría) ---
+// (Mantenemos el visor intacto)
+const ModuleViewer = ({ level, modules, currentIndex, setIndex }) => {
+  const isPrimary = level === 'primary';
+  const module = modules[currentIndex];
+  
+  const [showExtended, setShowExtended] = useState(false);
+
+  React.useEffect(() => {
+    setShowExtended(false);
+  }, [currentIndex]);
+
+  const themeColor = isPrimary ? 'bg-orange-100 text-orange-900' : 'bg-emerald-100 text-emerald-900';
+  const btnColor = isPrimary ? 'bg-orange-500 hover:bg-orange-600' : 'bg-emerald-600 hover:bg-emerald-700';
+
+  return (
+    <div className="flex flex-col md:flex-row gap-6">
+      <div className="w-full md:w-1/4 bg-white rounded-xl shadow p-4 self-start sticky top-24">
+        <h4 className="text-sm font-bold uppercase text-slate-400 mb-4 tracking-wider">Módulos</h4>
+        <div className="flex flex-row md:flex-col gap-2 overflow-x-auto pb-2 md:pb-0">
+          {modules.map((m, idx) => (
+            <button
+              key={m.id}
+              onClick={() => setIndex(idx)}
+              className={`flex items-center gap-2 p-2 rounded-lg text-left text-sm whitespace-nowrap md:whitespace-normal transition-colors
+                ${currentIndex === idx ? themeColor + ' font-bold' : 'hover:bg-slate-100 text-slate-600'}`}
+            >
+              {m.icon}
+              <span className="hidden md:inline">{m.title}</span>
+              <span className="md:hidden">{idx + 1}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="w-full md:w-3/4 bg-white rounded-xl shadow-lg overflow-hidden animate-fade-in">
+        <div className={`p-6 md:p-8 border-b-4 ${isPrimary ? 'border-orange-400' : 'border-emerald-500'}`}>
+          <div className="flex items-center gap-3 mb-4">
+            <div className={`p-3 rounded-full ${themeColor}`}>
+              {module.icon}
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold">{module.title}</h2>
+          </div>
+          <div className="prose max-w-none text-lg text-slate-700 leading-relaxed mb-6">
+            <p>{module.theory}</p>
+          </div>
+
+          {module.extendedTheory && (
+            <div className="mb-4">
+              <button 
+                onClick={() => setShowExtended(!showExtended)}
+                className={`flex items-center justify-center gap-2 w-full md:w-auto px-6 py-3 rounded-xl font-bold text-white shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1 ${isPrimary ? 'bg-orange-500 hover:bg-orange-600' : 'bg-emerald-600 hover:bg-emerald-700'}`}
+              >
+                {showExtended ? (
+                  <>Ocultar detalles</>
+                ) : (
+                  <><Search className="w-5 h-5" /> ¡Quiero Aprender Más!</>
+                )}
+              </button>
+              
+              {showExtended && (
+                <div className="mt-6 p-6 md:p-8 bg-slate-50 border-2 rounded-2xl animate-fade-in shadow-inner border-dashed border-slate-300">
+                  {module.extendedTheory}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className="p-6 md:p-8 bg-slate-100">
+          <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+            <Sparkles className="text-indigo-500" />
+            Zona Interactiva
+          </h3>
+          <ActivityEngine activity={module.activity} isPrimary={isPrimary} />
+        </div>
+
+        <div className="p-4 bg-white border-t flex justify-between items-center">
+          <button 
+            onClick={() => setIndex(Math.max(0, currentIndex - 1))}
+            disabled={currentIndex === 0}
+            className={`flex items-center gap-1 px-4 py-2 rounded font-medium ${currentIndex === 0 ? 'text-slate-300' : 'text-slate-600 hover:bg-slate-100'}`}
+          >
+            <ChevronLeft className="w-5 h-5"/> Anterior
+          </button>
+          <span className="text-sm text-slate-400">Paso {currentIndex + 1} de {modules.length}</span>
+          <button 
+            onClick={() => setIndex(Math.min(modules.length - 1, currentIndex + 1))}
+            disabled={currentIndex === modules.length - 1}
+            className={`flex items-center gap-1 px-5 py-2 rounded font-medium text-white transition-colors ${currentIndex === modules.length - 1 ? 'opacity-50 cursor-not-allowed' : btnColor}`}
+          >
+            Siguiente <ChevronRight className="w-5 h-5"/>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- MOTOR DE ACTIVIDADES INTERACTIVAS ---
+
+const ActivityEngine = ({ activity, isPrimary }) => {
+  const [completed, setCompleted] = useState(false);
+  React.useEffect(() => { setCompleted(false); }, [activity]);
+
+  switch(activity.type) {
+    case 'sorting': return <SortingGame data={activity} onComplete={() => setCompleted(true)} />;
+    case 'promptBuilder': return <PromptBuilder data={activity} onComplete={() => setCompleted(true)} />;
+    case 'privacyGame': return <PrivacyGame data={activity} onComplete={() => setCompleted(true)} />;
+    case 'scenarioChoice': return <ScenarioChoice data={activity} onComplete={() => setCompleted(true)} />;
+    case 'quiz': return <Quiz data={activity} onComplete={() => setCompleted(true)} />;
+    case 'promptIterative': return <PromptIterative data={activity} onComplete={() => setCompleted(true)} />;
+    case 'deepfakeDetective': return <ScenarioChoice data={activity} onComplete={() => setCompleted(true)} />;
+    case 'obfuscationTask': return <ObfuscationTask data={activity} onComplete={() => setCompleted(true)} />;
+    default: return <div>Actividad en construcción...</div>;
+  }
+};
+
+// --- COMPONENTES ESPECÍFICOS DE ACTIVIDADES ---
+
+const SortingGame = ({ data, onComplete }) => {
+  const [items, setItems] = useState(data.items.map(i => ({...i, status: 'idle'})));
+  const [score, setScore] = useState(0);
+
+  const handleGuess = (index, guessAI) => {
+    const newItems = [...items];
+    const isCorrect = newItems[index].isAI === guessAI;
+    newItems[index].status = isCorrect ? 'correct' : 'wrong';
+    setItems(newItems);
+    if(isCorrect) setScore(s => s + 1);
+    if(newItems.every(i => i.status === 'correct')) onComplete();
+  };
+
+  return (
+    <div className="space-y-4">
+      <p className="font-semibold text-lg">{data.question}</p>
+      <div className="grid gap-3">
+        {items.map((item, idx) => (
+          <div key={idx} className={`p-4 rounded-lg border flex flex-col sm:flex-row items-center justify-between gap-4 transition-all
+            ${item.status === 'correct' ? 'bg-green-100 border-green-300' : item.status === 'wrong' ? 'bg-red-100 border-red-300' : 'bg-white'}`}>
+            <span className="font-medium">{item.text}</span>
+            <div className="flex gap-2 shrink-0">
+              <button disabled={item.status === 'correct'} onClick={() => handleGuess(idx, true)} className="px-3 py-1 bg-indigo-100 hover:bg-indigo-200 text-indigo-800 rounded text-sm font-bold">Es IA</button>
+              <button disabled={item.status === 'correct'} onClick={() => handleGuess(idx, false)} className="px-3 py-1 bg-orange-100 hover:bg-orange-200 text-orange-800 rounded text-sm font-bold">Es Humano</button>
+            </div>
+          </div>
+        ))}
+      </div>
+      {items.every(i => i.status === 'correct') && <SuccessMessage text="¡Excelente! Sabes muy bien qué es capaz de hacer la IA." />}
+    </div>
+  );
+};
+
+const PromptBuilder = ({ data, onComplete }) => {
+  const [char, setChar] = useState('');
+  const [act, setAct] = useState('');
+  const [style, setStyle] = useState('');
+
+  const isDone = char && act && style;
+  
+  React.useEffect(() => {
+    if (isDone) onComplete();
+  }, [isDone, onComplete]);
+
+  return (
+    <div className="space-y-6">
+      <p className="font-semibold text-lg">{data.question}</p>
+      <div className="flex flex-wrap gap-4 items-center">
+        <span className="font-bold text-slate-500">Imagina:</span>
+        <select value={char} onChange={e=>setChar(e.target.value)} className="p-2 border rounded-md shadow-sm bg-white">
+          <option value="">(Elige un personaje)</option>
+          {data.options.character.map(o => <option key={o} value={o}>{o}</option>)}
+        </select>
+        <select value={act} onChange={e=>setAct(e.target.value)} className="p-2 border rounded-md shadow-sm bg-white">
+          <option value="">(Elige una acción)</option>
+          {data.options.action.map(o => <option key={o} value={o}>{o}</option>)}
+        </select>
+        <select value={style} onChange={e=>setStyle(e.target.value)} className="p-2 border rounded-md shadow-sm bg-white">
+          <option value="">(Elige un estilo)</option>
+          {data.options.style.map(o => <option key={o} value={o}>{o}</option>)}
+        </select>
+      </div>
+      
+      {isDone && (
+        <div className="p-6 bg-indigo-900 text-white rounded-xl text-center shadow-inner animate-fade-in mt-6">
+          <p className="text-sm uppercase text-indigo-300 mb-2 tracking-wider">Tu Prompt Final</p>
+          <p className="text-xl font-bold italic">"{char} {act} {style}"</p>
+          <p className="mt-4 text-indigo-200 text-sm">¡Imagínate la imagen increíble que generaría la IA con estos detalles!</p>
+          <SuccessMessage text="¡Genial! Añadir detalles es el secreto." light />
+        </div>
+      )}
+    </div>
+  );
+};
+
+const PrivacyGame = ({ data, onComplete }) => {
+  const [results, setResults] = useState({});
+
+  const handleChoice = (idx, choice) => {
+    const isCorrect = data.scenarios[idx].safe === choice;
+    setResults({...results, [idx]: isCorrect});
+    if(Object.keys(results).length + 1 === data.scenarios.length) {
+      const allCorrect = Object.values({...results, [idx]: isCorrect}).every(v=>v);
+      if(allCorrect) onComplete();
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      <p className="font-semibold text-lg">{data.question}</p>
+      <div className="grid md:grid-cols-2 gap-4">
+        {data.scenarios.map((sc, idx) => (
+           <div key={idx} className={`p-4 rounded-xl border flex flex-col justify-between 
+             ${results[idx] === true ? 'bg-green-50 border-green-200' : results[idx] === false ? 'bg-red-50 border-red-200' : 'bg-white'}`}>
+             <p className="mb-4 font-medium">{sc.text}</p>
+             <div className="flex gap-2">
+                <button onClick={()=>handleChoice(idx, true)} className="flex-1 py-2 bg-green-100 hover:bg-green-200 text-green-800 rounded font-bold transition">Seguro</button>
+                <button onClick={()=>handleChoice(idx, false)} className="flex-1 py-2 bg-red-100 hover:bg-red-200 text-red-800 rounded font-bold transition">Peligro</button>
+             </div>
+             {results[idx] === false && <p className="text-xs text-red-600 mt-2 flex items-center gap-1"><AlertCircle className="w-3 h-3"/> Intenta de nuevo</p>}
+           </div>
+        ))}
+      </div>
+      {Object.values(results).length === data.scenarios.length && Object.values(results).every(v=>v) && (
+        <SuccessMessage text="¡Bien hecho! Eres un experto protegiendo tu identidad." />
+      )}
+    </div>
+  );
+};
+
+const ScenarioChoice = ({ data, onComplete }) => {
+  const [feedback, setFeedback] = useState(null);
+  const [success, setSuccess] = useState(false);
+
+  const handleClick = (choice) => {
+    setFeedback({ text: choice.feedback, correct: choice.correct });
+    if(choice.correct) {
+      setSuccess(true);
+      onComplete();
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="p-4 bg-indigo-50 border-l-4 border-indigo-500 rounded-r-lg">
+        <p className="font-semibold">{data.question}</p>
+        {data.scenario && <p className="mt-2 text-slate-700 italic">"{data.scenario}"</p>}
+      </div>
+      
+      <div className="space-y-3">
+        {data.choices.map((c, idx) => (
+          <button key={idx} onClick={() => handleClick(c)} 
+            className="w-full text-left p-4 rounded-lg border hover:bg-slate-50 transition hover:shadow-sm">
+            {c.text}
+          </button>
+        ))}
+      </div>
+
+      {feedback && (
+        <div className={`p-4 rounded-lg flex items-start gap-3 animate-fade-in ${feedback.correct ? 'bg-green-100 text-green-900' : 'bg-red-100 text-red-900'}`}>
+          {feedback.correct ? <CheckCircle2 className="shrink-0 mt-0.5" /> : <AlertCircle className="shrink-0 mt-0.5" />}
+          <p>{feedback.text}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const PromptIterative = ({ data, onComplete }) => {
+  const [step, setStep] = useState(0);
+  const [input, setInput] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if(input.trim().length < 5) return;
+    setInput('');
+    if(step < data.steps.length - 1) {
+      setStep(s => s + 1);
+    } else {
+      setStep(s => s + 1);
+      onComplete();
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex gap-2 mb-4">
+        {data.steps.map((_, i) => (
+          <div key={i} className={`h-2 flex-1 rounded-full ${i <= step ? 'bg-emerald-500' : 'bg-slate-200'}`} />
+        ))}
+      </div>
+
+      {step < data.steps.length ? (
+        <div className="bg-white p-6 rounded-xl border shadow-sm">
+          <p className="font-bold text-lg mb-4 text-emerald-800">{data.steps[step].instruction}</p>
+          <form onSubmit={handleSubmit} className="flex gap-2">
+            <input 
+              type="text" 
+              value={input} 
+              onChange={e=>setInput(e.target.value)} 
+              placeholder="Escribe tu prompt aquí..."
+              className="flex-1 p-3 border rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"
+            />
+            <button type="submit" className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 rounded-lg font-bold">Enviar</button>
+          </form>
+          {step > 0 && <p className="mt-4 p-3 bg-emerald-50 text-emerald-700 rounded-lg text-sm border border-emerald-100">Feedback de la simulación anterior: <em>{data.steps[step-1].feedback}</em></p>}
+        </div>
+      ) : (
+        <SuccessMessage text="¡Dominaste la iteración! Ahora sabes que el primer prompt rara vez es el mejor. Eres el arquitecto de la respuesta." />
+      )}
+    </div>
+  );
+};
+
+const ObfuscationTask = ({ data, onComplete }) => {
+  const [text, setText] = useState(data.text);
+  const [done, setDone] = useState(false);
+
+  const check = () => {
+    const sensitive = ['Juan Pérez', 'Calle Falsa 123', '4555-2222-1111-3333'];
+    const isClean = sensitive.every(s => !text.includes(s));
+    if(isClean) {
+      setDone(true);
+      onComplete();
+    } else {
+      alert("Aún quedan datos personales reales en el texto. ¡Cámbialos o bórralos!");
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      <p className="font-semibold text-lg">{data.question}</p>
+      <div className="bg-slate-100 p-4 rounded-lg text-sm mb-2 font-mono text-slate-500">
+        Texto original: {data.text}
+      </div>
+      <textarea 
+        className="w-full p-4 border rounded-lg focus:ring-2 focus:ring-emerald-500 min-h-[100px]"
+        value={text}
+        onChange={e=>setText(e.target.value)}
+      />
+      {!done ? (
+        <button onClick={check} className="bg-slate-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-slate-700">Validar y Enviar a la IA</button>
+      ) : (
+        <SuccessMessage text="¡Excelente ofuscación! Tus datos están seguros." />
+      )}
+    </div>
+  );
+};
+
+const Quiz = ({ data, onComplete }) => {
+  const [currentQ, setCurrentQ] = useState(0);
+  const [score, setScore] = useState(0);
+  const [showResult, setShowResult] = useState(false);
+
+  const handleAnswer = (idx) => {
+    if(idx === data.questions[currentQ].answer) setScore(s => s + 1);
+    
+    if(currentQ < data.questions.length - 1) {
+      setCurrentQ(q => q + 1);
+    } else {
+      setShowResult(true);
+      onComplete();
+    }
+  };
+
+  if(showResult) {
+    return (
+      <div className="text-center space-y-4 p-6 bg-gradient-to-br from-indigo-50 to-purple-100 rounded-xl border border-indigo-200">
+        <Sparkles className="w-16 h-16 text-indigo-500 mx-auto" />
+        <h3 className="text-2xl font-bold text-indigo-900">¡Evaluación Completada!</h3>
+        <p className="text-lg">Tu puntaje: {score} de {data.questions.length}</p>
+        <p className="text-slate-600">Recuerda mantener siempre la mente abierta y crítica con las nuevas tecnologías.</p>
+      </div>
+    );
+  }
+
+  const q = data.questions[currentQ];
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between text-sm font-bold text-slate-400 mb-2">
+        <span>Pregunta {currentQ + 1} de {data.questions.length}</span>
+      </div>
+      <p className="text-xl font-medium">{q.q}</p>
+      <div className="space-y-3">
+        {q.options.map((opt, idx) => (
+          <button key={idx} onClick={() => handleAnswer(idx)}
+            className="w-full text-left p-4 rounded-lg border-2 border-slate-200 hover:border-indigo-400 hover:bg-indigo-50 transition font-medium">
+            {opt}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// Utils
+const SuccessMessage = ({ text, light }) => (
+  <div className={`p-4 rounded-lg flex items-center gap-3 animate-fade-in mt-4 ${light ? 'bg-white/20 text-white' : 'bg-green-100 text-green-900 border border-green-200'}`}>
+    <CheckCircle2 className="w-6 h-6 shrink-0" />
+    <span className="font-bold">{text}</span>
+  </div>
+);
+
+
+
+        // Renderizar la app en el DOM
+        const root = createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
