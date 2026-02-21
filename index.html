@@ -500,106 +500,321 @@
     // --- DATA: GIMNASIO DE PROMPTS (CASOS REALES) ---
     const gymData = {
       primary: [
-        // --- ESCUELA ---
+        // --- ESCUELA (Primaria) ---
         {
           id: 'g-p1', category: 'school', subject: 'Matemáticas', title: 'Fracciones con Pizza', task: 'Entender qué es 1/4 y 1/2.',
-          bad: { prompt: '¿Qué es un cuarto y un medio en fracciones?', reason: 'Te dará una definición de diccionario súper aburrida y difícil de entender.' },
-          good: { steps: [{ title: 'El Juego de la Pizzería', prompt: 'Actúa como el dueño de una pizzería virtual. Yo soy tu ayudante. Tenemos una pizza de 8 porciones. Llegan clientes pidiendo 1/4 de pizza o 1/2 pizza. Hazme preguntas de cuántas porciones debo darles para que yo practique. Si me equivoco, dame una pista sin darme la respuesta.' }], reason: '¡Aprenderás jugando! La IA te hará pensar y practicar en lugar de solo leer.' }
+          bad: { prompt: '¿Qué es un cuarto y un medio en fracciones?', reason: 'Te dará una definición de diccionario aburrida y difícil.' },
+          good: { steps: [{ title: 'El Juego de la Pizzería', prompt: 'Actúa como el dueño de una pizzería virtual. Yo soy tu ayudante. Tenemos una pizza de 8 porciones. Llegan clientes pidiendo 1/4 o 1/2 pizza. Hazme preguntas de cuántas porciones debo darles para practicar. Si me equivoco, dame una pista.' }], reason: '¡Aprenderás jugando! La IA te hará pensar y practicar.' }
         },
         {
-          id: 'g-p2', category: 'school', subject: 'Ciencias', title: 'El Ciclo del Agua', task: 'Aprender cómo viaja el agua en la naturaleza.',
+          id: 'g-p2', category: 'school', subject: 'Matemáticas', title: 'Tablas de Multiplicar', task: 'Practicar la tabla del 7.',
+          bad: { prompt: 'Escribe la tabla del 7.', reason: 'Solo la leerás, pero no la practicarás.' },
+          good: { steps: [{ title: 'La Tienda Mágica', prompt: 'Eres el vendedor de una tienda mágica donde todo se vende en paquetes de 7 (7 pociones, 7 varitas). Soy un cliente. Hazme 5 preguntas de multiplicación seguidas para ver cuánto te debo pagar en total. ¡No me des las respuestas!' }], reason: 'Aplica las matemáticas a un escenario imaginario y divertido.' }
+        },
+        {
+          id: 'g-p3', category: 'school', subject: 'Ciencias', title: 'El Ciclo del Agua', task: 'Aprender cómo viaja el agua en la naturaleza.',
           bad: { prompt: 'Dame un resumen del ciclo del agua para la escuela.', reason: 'Es un resumen típico. ¡Lo copiarás sin imaginarlo!' },
-          good: { steps: [{ title: 'Entrevista a la Gota', prompt: 'Actúa como si fueras "Gotita", una gota de agua que acaba de caer de una nube. Cuéntame tu aventura de cómo llegaste hasta el río y luego cómo vas a volver al cielo. Usa palabras fáciles y divertidas para un niño.' }], reason: 'Aprender a través de historias hace que los conceptos difíciles se queden pegados en tu memoria.' }
+          good: { steps: [{ title: 'Entrevista a la Gota', prompt: 'Actúa como si fueras "Gotita", una gota de agua que acaba de caer de una nube. Cuéntame tu aventura de cómo llegaste hasta el río y cómo vas a volver al cielo. Usa palabras fáciles para un niño.' }], reason: 'Aprender a través de historias de personajes hace que sea inolvidable.' }
         },
         {
-          id: 'g-p3', category: 'school', subject: 'Historia', title: 'Entrevista a un Prócer', task: 'Aprender sobre José de San Martín (o un héroe local).',
+          id: 'g-p4', category: 'school', subject: 'Ciencias', title: 'El Sistema Solar', task: 'Aprender el orden de los planetas.',
+          bad: { prompt: '¿Cuál es el orden de los planetas?', reason: 'Te dará una lista plana.' },
+          good: { steps: [{ title: 'El Capitán Espacial', prompt: 'Soy el Capitán de una nave. Vamos a viajar desde el Sol hasta el final del Sistema Solar. En cada parada, dime el nombre del planeta, una curiosidad cortita y pregúntame si quiero seguir al siguiente.' }], reason: 'Convierte el aprendizaje en un viaje de exploración paso a paso.' }
+        },
+        {
+          id: 'g-p5', category: 'school', subject: 'Historia', title: 'Entrevista a un Prócer', task: 'Aprender sobre José de San Martín (o héroe local).',
           bad: { prompt: 'Biografía de San Martín corta.', reason: 'Fechas y nombres aburridos.' },
-          good: { steps: [{ title: 'Viaje en el Tiempo', prompt: 'Finge que eres José de San Martín en el año 1817, justo antes de cruzar los Andes. Te voy a hacer 3 preguntas sobre tus miedos y planes. Respóndeme actuando como él y pregúntame algo a mí al final.' }], reason: 'Convertirás la historia en una charla interactiva.' }
+          good: { steps: [{ title: 'Viaje en el Tiempo', prompt: 'Finge que eres José de San Martín en el año 1817, justo antes de cruzar los Andes. Te voy a hacer 3 preguntas sobre tus miedos y planes. Respóndeme actuando como él y pregúntame algo a mí al final.' }], reason: 'Convertirás la historia en una charla interactiva en primera persona.' }
         },
-        // --- VIDA ---
         {
-          id: 'g-p4', category: 'life', subject: 'Emociones', title: 'Cuando me enojo mucho', task: 'Aprender a calmarse cuando pierdes en un juego.',
+          id: 'g-p6', category: 'school', subject: 'Lengua', title: 'Reglas de Ortografía (B y V)', task: 'Entender cuándo usar B y cuándo V.',
+          bad: { prompt: 'Reglas de la B y la V.', reason: 'Demasiadas reglas teóricas para memorizar.' },
+          good: { steps: [{ title: 'El Cuento Incompleto', prompt: 'Escribe un cuento muy cortito sobre un pirata. Pero deja espacios en blanco [ _ ] en las palabras que llevan B o V (como _arco o _ela). Yo tengo que adivinar qué letra va en cada espacio. Corrígeme al final.' }], reason: 'Aprendes completando un desafío activo en lugar de memorizar.' }
+        },
+        {
+          id: 'g-p7', category: 'school', subject: 'Lengua', title: 'Ideas para un Cuento', task: 'Inspiración para tarea de redacción.',
+          bad: { prompt: 'Escribe un cuento sobre un dragón para mi tarea.', reason: '¡Eso es trampa! No practicas tu escritura.' },
+          good: { steps: [{ title: 'Lluvia de Ideas', prompt: 'Tengo que escribir un cuento sobre un dragón, pero no sé cómo empezar. Dame 3 ideas de LUGARES extraños donde podría vivir y 3 ideas de PROBLEMAS graciosos que podría tener. NO escribas la historia.' }], reason: 'La IA te da los ingredientes, pero TÚ cocinas la historia.' }
+        },
+        {
+          id: 'g-p8', category: 'school', subject: 'Inglés', title: 'Practicar Vocabulario', task: 'Aprender nombres de animales en inglés.',
+          bad: { prompt: 'Traduce estos 5 animales al inglés.', reason: 'Solo lees y te olvidas rápido.' },
+          good: { steps: [{ title: 'Adivina en Inglés', prompt: 'Vamos a jugar. Dame la descripción física de un animal en español, y yo tengo que responderte adivinando el nombre de ese animal en INGLÉS. Hagamos 5 rondas.' }], reason: 'El cerebro aprende mejor cuando tiene que recuperar la información (recordar) como en un juego.' }
+        },
+        {
+          id: 'g-p9', category: 'school', subject: 'Geografía', title: 'Aprender los Continentes', task: 'Recordar nombres de continentes o países.',
+          bad: { prompt: 'Lista de continentes.', reason: 'No te ayuda a memorizar.' },
+          good: { steps: [{ title: 'La Regla Mnemotécnica', prompt: 'Me cuesta recordar los nombres de los 6 continentes. Invéntame una canción de rap cortita o una frase graciosa con las iniciales para que me sea fácil memorizarlos.' }], reason: 'Usas el poder creativo de la IA para crear atajos mentales.' }
+        },
+        {
+          id: 'g-p10', category: 'school', subject: 'Ciencias', title: 'La Fotosíntesis', task: 'Entender cómo se alimentan las plantas.',
+          bad: { prompt: '¿Qué es la fotosíntesis?', reason: 'Palabras técnicas como cloroplastos que te confundirán.' },
+          good: { steps: [{ title: 'La Planta Chef', prompt: 'Explícame la fotosíntesis como si la planta fuera un Chef preparando su comida en la cocina. Dime qué ingredientes usa (Sol, agua) y cuál es el platillo final.' }], reason: 'Las analogías hacen que lo invisible sea fácil de imaginar.' }
+        },
+
+        // --- VIDA (Primaria) ---
+        {
+          id: 'g-p11', category: 'life', subject: 'Emociones', title: 'Cuando me enojo mucho', task: 'Aprender a calmarse cuando pierdes en un juego.',
           bad: { prompt: '¿Qué hacer si me enojo?', reason: 'Te dará una lista genérica como "cuenta hasta 10".' },
-          good: { steps: [{ title: 'El Entrenador de la Calma', prompt: 'Estoy muy enojado porque perdí en mi videojuego favorito. Actúa como un entrenador amable de respiración. Enséñame un ejercicio divertido usando la imaginación (como soplar una vela) para calmarme ahora mismo.' }], reason: 'La IA se adapta a TU situación exacta y te da una herramienta práctica.' }
+          good: { steps: [{ title: 'El Entrenador de la Calma', prompt: 'Estoy enojado porque perdí en mi videojuego. Actúa como un entrenador amable. Enséñame un ejercicio divertido usando la imaginación (como soplar un globo gigante) para calmarme ahora mismo.' }], reason: 'La IA se adapta a TU situación exacta y te da una herramienta práctica.' }
         },
         {
-          id: 'g-p5', category: 'life', subject: 'Organización', title: 'Armar la mochila', task: 'Aprender a no olvidarse nada para la escuela.',
+          id: 'g-p12', category: 'life', subject: 'Organización', title: 'Armar la mochila', task: 'Aprender a no olvidarse nada para la escuela.',
           bad: { prompt: 'Lista para la escuela.', reason: 'No sabe qué necesitas tú específicamente.' },
-          good: { steps: [{ title: 'El Detective Escolar', prompt: 'Mañana tengo clases de Matemáticas, Educación Física y Arte. Actúa como un detective que me hace preguntas para ayudarme a descubrir qué 5 cosas no pueden faltar en mi mochila de mañana.' }], reason: 'Te obliga a repasar tu propio horario mentalmente.' }
+          good: { steps: [{ title: 'El Detective Escolar', prompt: 'Mañana tengo Matemáticas, Educación Física y Arte. Actúa como un detective que me hace preguntas para ayudarme a descubrir qué 5 cosas no pueden faltar en mi mochila. Una por una.' }], reason: 'Te obliga a repasar tu propio horario mentalmente.' }
         },
         {
-          id: 'g-p6', category: 'life', subject: 'Mascotas', title: 'Cuidar a un perrito', task: 'Saber qué necesita un cachorro nuevo.',
-          bad: { prompt: '¿Cómo cuidar un perro?', reason: 'Te dará un texto enorme.' },
-          good: { steps: [{ title: 'Trivia Perruna', prompt: 'Voy a adoptar un cachorro. Hazme un juego de Verdadero o Falso de 3 preguntas sobre qué pueden comer los perros y qué no, para ver si estoy preparado. Corrige mis respuestas.' }], reason: 'Evalúas tus conocimientos antes de tener a la mascota.' }
-        },
-        // --- JUEGOS ---
-        {
-          id: 'g-p7', category: 'games', subject: 'Multijugador', title: 'El Cuento de los Apodos', task: 'Crear una historia de aventuras con amigos.',
-          bad: { prompt: 'Cuéntame un cuento de aventura de 3 niños.', reason: 'Solo leerás. No hay participación.' },
-          good: { steps: [{ title: 'El Dungeon Master', prompt: 'Actúa como un cuentacuentos. Los jugadores somos [Apodo1], [Apodo2] y [Apodo3]. Empieza a contar una historia de misterio en un bosque mágico. Al final de cada párrafo, debes detenerte y preguntarle a uno de nosotros (elige al azar) qué quiere hacer a continuación. Espera nuestra respuesta para seguir.' }], reason: '¡Ustedes construyen el juego! Y al usar apodos, ofuscan sus datos reales.' }
+          id: 'g-p13', category: 'life', subject: 'Mascotas', title: 'Cuidar a un perrito', task: 'Saber qué necesita un cachorro nuevo.',
+          bad: { prompt: '¿Cómo cuidar un perro?', reason: 'Te dará un texto enorme que no leerás.' },
+          good: { steps: [{ title: 'Trivia Perruna', prompt: 'Voy a adoptar un cachorro. Hazme un juego de Verdadero o Falso de 4 preguntas sobre qué pueden comer los perros, para ver si estoy preparado. Corrige mis respuestas.' }], reason: 'Evalúas tus conocimientos antes de tener a la mascota real.' }
         },
         {
-          id: 'g-p8', category: 'games', subject: 'Adivinanza', title: 'Detective de Monstruos', task: 'Adivinar quién está escondido.',
-          bad: { prompt: 'Hazme una adivinanza de un monstruo.', reason: 'Suele ser muy fácil y se acaba rápido.' },
-          good: { steps: [{ title: 'Preguntas de Sí o No', prompt: 'Actúa como un monstruo amigable que se escondió en la escuela. Inventa cómo te ves y dónde estás, pero NO nos lo digas. [Apodo1] y [Apodo2] te haremos preguntas de "Sí" o "No" por turnos para adivinar qué eres. Tienes un nivel de "hambre" que sube si tardamos mucho.' }], reason: 'Involucra turnos, variables ocultas (el hambre) y trabajo en equipo.' }
+          id: 'g-p14', category: 'life', subject: 'Resolución de Conflictos', title: 'Pedir Perdón', task: 'Saber cómo disculparse con un amigo.',
+          bad: { prompt: 'Escribe un mensaje de perdón para mi amigo.', reason: 'No es genuino si lo escribe una máquina.' },
+          good: { steps: [{ title: 'El Consejero Amistoso', prompt: 'Le rompí un juguete sin querer a mi amigo y está triste. No sé cómo pedirle perdón porque me da vergüenza. Dame 3 consejos de cosas amables que puedo decirle en persona para que sepa que lo siento mucho.' }], reason: 'Te da el valor y las palabras para que TÚ enfrentes la situación.' }
         },
         {
-          id: 'g-p9', category: 'games', subject: 'Movimiento', title: 'Las Olimpiadas Locas', task: 'Jugar físicamente lejos de la pantalla.',
+          id: 'g-p15', category: 'life', subject: 'Hábitos', title: 'Lavarse los Dientes', task: 'Hacer divertida una rutina aburrida.',
+          bad: { prompt: '¿Por qué hay que lavarse los dientes?', reason: 'Te hablará de caries y dentistas.' },
+          good: { steps: [{ title: 'Canción del Cepillo', prompt: 'Escríbeme una canción muy graciosa sobre un cepillo de dientes que lucha contra los "Monstruos del Azúcar". Que dure unos 2 minutos para que yo la cante en mi mente mientras me cepillo.' }], reason: 'Usas la generación de texto para crear un juego personal.' }
+        },
+        {
+          id: 'g-p16', category: 'life', subject: 'Arte', title: 'Ideas de Dibujo', task: 'Qué hacer cuando estás aburrido.',
+          bad: { prompt: 'Genera una imagen de un monstruo.', reason: 'La IA hace el arte, no tú.' },
+          good: { steps: [{ title: 'El Generador de Ideas Locas', prompt: 'Tengo lápices de colores y estoy aburrido. Dame 3 ideas de mezclas raras para dibujar. Por ejemplo: Un animal mezclado con un medio de transporte. ¡Sé muy creativo!' }], reason: 'La IA actúa como tu musa inspiradora, pero tus manos hacen el trabajo.' }
+        },
+        {
+          id: 'g-p17', category: 'life', subject: 'Ahorro', title: 'Guardar dinero', task: 'Aprender para qué sirve una alcancía.',
+          bad: { prompt: '¿Cómo ahorrar dinero?', reason: 'Lenguaje de adultos sobre finanzas.' },
+          good: { steps: [{ title: 'El Cerdito Consejero', prompt: 'Actúa como mi alcancía de cerdito. Quiero comprarme un juguete que cuesta 500, pero mis papás me dan 50 por semana. Hazme un plan divertido de cuántas semanas debo guardar mi dinero.' }], reason: 'Visualizas metas a corto plazo con un personaje amigable.' }
+        },
+        {
+          id: 'g-p18', category: 'life', subject: 'Música', title: 'Crear Instrumentos', task: 'Hacer una manualidad musical.',
+          bad: { prompt: 'Manualidades musicales.', reason: 'Te pedirá materiales que no tienes.' },
+          good: { steps: [{ title: 'El Inventor de Basura', prompt: 'Quiero armar un instrumento musical pero solo tengo: botellas vacías, arroz, ligas elásticas y una caja de zapatos. Dime 2 instrumentos que puedo inventar paso a paso con esto.' }], reason: 'Le das tus restricciones (materiales) y la IA soluciona el problema.' }
+        },
+        {
+          id: 'g-p19', category: 'life', subject: 'Cocina Segura', title: 'Snacks Saludables', task: 'Ayudar a preparar la merienda.',
+          bad: { prompt: 'Recetas de meriendas.', reason: 'Puede darte recetas que requieren usar fuego o cuchillos peligrosos.' },
+          good: { steps: [{ title: 'El Mini Chef', prompt: 'Quiero hacerle una sorpresa a mis padres y preparar una merienda saludable. Tengo manzanas, mantequilla de maní y pasas. Dame una idea divertida (como hacer formas de animales) SIN usar cuchillos afilados ni la estufa.' }], reason: 'Previenes riesgos parametrizando el nivel de seguridad del prompt.' }
+        },
+        {
+          id: 'g-p20', category: 'life', subject: 'Dormir', title: 'Rutina de Sueño', task: 'Relajarse antes de ir a la cama.',
+          bad: { prompt: 'No puedo dormir.', reason: 'Te dirá que apagues las pantallas.' },
+          good: { steps: [{ title: 'El Cuento Relajante', prompt: 'Actúa como un oso perezoso muy, muy lento. Cuéntame una historia muy tranquila sobre cómo las hojas caen de los árboles, usando palabras suaves para que me dé sueño.' }], reason: 'Ajustas el tono de la IA para que sirva de apoyo emocional/relajación.' }
+        },
+
+        // --- JUEGOS (Primaria) ---
+        {
+          id: 'g-p21', category: 'games', subject: 'Multijugador', title: 'El Cuento de los Apodos', task: 'Crear una historia con amigos.',
+          bad: { prompt: 'Cuéntame un cuento de aventura de 3 niños.', reason: 'Solo leerás pasivamente.' },
+          good: { steps: [{ title: 'El Dungeon Master', prompt: 'Actúa como un cuentacuentos. Los jugadores somos [Apodo1], [Apodo2] y [Apodo3]. Cuenta una historia en un castillo. Al final de cada párrafo, pregúntale a uno de nosotros (al azar) qué quiere hacer. Espera respuesta.' }], reason: '¡Ustedes construyen el juego! Usar apodos ofusca datos reales.' }
+        },
+        {
+          id: 'g-p22', category: 'games', subject: 'Adivinanza', title: 'Detective de Monstruos', task: 'Adivinar quién está escondido.',
+          bad: { prompt: 'Hazme una adivinanza de un monstruo.', reason: 'Suele ser muy fácil.' },
+          good: { steps: [{ title: 'Preguntas de Sí/No', prompt: 'Eres un monstruo amigable escondido en la escuela. Inventa cómo te ves pero NO nos lo digas. [Apodo1] y [Apodo2] te haremos preguntas de "Sí" o "No" por turnos para adivinar qué eres. Tienes un nivel de "hambre" que sube.' }], reason: 'Involucra turnos, variables ocultas (el hambre) y deducción grupal.' }
+        },
+        {
+          id: 'g-p23', category: 'games', subject: 'Movimiento', title: 'Las Olimpiadas Locas', task: 'Jugar físicamente lejos de la pantalla.',
           bad: { prompt: 'Dime juegos para hacer en casa.', reason: 'Te dará una lista estática.' },
-          good: { steps: [{ title: 'El Juez Loco', prompt: 'Eres el juez de las Olimpiadas Locas. Los participantes somos [Apodo1] y [Apodo2]. En cada turno, inventa un reto físico divertido y seguro (como "tocar algo azul con el codo") y di qué jugador debe hacerlo. Luego pregúntanos quién lo hizo más rápido para anotar puntos.' }], reason: 'La IA se convierte en un árbitro, pero el juego ocurre en la vida real.' }
+          good: { steps: [{ title: 'El Juez Loco', prompt: 'Eres el juez de las Olimpiadas Locas. Participamos [Apodo1] y [Apodo2]. En cada turno, inventa un reto físico seguro (como "tocar algo azul con el codo") y di a quién le toca. Luego pregúntanos quién fue más rápido para dar puntos.' }], reason: 'La IA es un árbitro, pero el juego ocurre en la vida real.' }
+        },
+        {
+          id: 'g-p24', category: 'games', subject: 'Memoria', title: 'El Cofre Pirata', task: 'Recordar secuencias largas.',
+          bad: { prompt: 'Juguemos un juego de memoria.', reason: 'Reglas confusas.' },
+          good: { steps: [{ title: 'Fui al Mercado', prompt: 'Juguemos al cofre pirata. Tú dices "En mi cofre guardo una moneda". Yo debo repetir eso y agregar un objeto. Luego tú repites los dos y agregas un tercero. El que se equivoque en el orden, pierde. Empieza tú.' }], reason: 'Le enseñas a la IA las reglas de un juego clásico paso a paso.' }
+        },
+        {
+          id: 'g-p25', category: 'games', subject: 'Inglés/Físico', title: 'Simon Says IA', task: 'Jugar al Simón Dice tradicional.',
+          bad: { prompt: 'Juguemos Simon Says.', reason: 'Escribirá los comandos de golpe.' },
+          good: { steps: [{ title: 'Simón Dice por Turnos', prompt: 'Juguemos Simon Says. Los jugadores somos [Apodo1] y [Apodo2]. Escribe un comando en INGLÉS (ej. "Simon says jump"). Nosotros lo hacemos en la vida real, y escribimos "Hecho". Luego mandas el siguiente. A veces, NO digas "Simon says" para intentar engañarnos.' }], reason: 'Combina idiomas con atención y movimiento corporal.' }
+        },
+        {
+          id: 'g-p26', category: 'games', subject: 'Actuación', title: 'Dígalo con Mímica', task: 'Juego de charadas teatral.',
+          bad: { prompt: 'Dame palabras para mímica.', reason: 'Una simple lista de palabras.' },
+          good: { steps: [{ title: 'El Generador de Películas', prompt: 'Vamos a jugar a Dígalo con Mímica. Genera el título de una película infantil o un animal, pero guárdalo en secreto. Cuando te escriba "TURNO", envíame la palabra para que yo la actúe a mi familia. Cuando escriba "ADIVINARON", anota 1 punto y dame la siguiente.' }], reason: 'Automatiza el rol del "repartidor de tarjetas" de un juego de mesa.' }
+        },
+        {
+          id: 'g-p27', category: 'games', subject: 'Creatividad', title: 'Guerra de Chistes', task: 'Competencia de humor.',
+          bad: { prompt: 'Cuéntame chistes graciosos.', reason: 'La IA tiene un humor muy predecible.' },
+          good: { steps: [{ title: 'El Juez de Chistes', prompt: 'Eres el Rey de la Risa. Vamos a tener una guerra de chistes. Yo te cuento uno y me lo puntúas del 1 al 10. Luego tú me cuentas uno. Si tu chiste no me hace reír, yo gano. Comencemos, ¡prepárate para mi primer chiste!' }], reason: 'Fomenta tu propia creatividad para formular chistes y leer la respuesta.' }
+        },
+        {
+          id: 'g-p28', category: 'games', subject: 'Lógica', title: 'El Escape de la Habitación', task: 'Un escape room de texto básico.',
+          bad: { prompt: 'Haz un juego de escape.', reason: 'No pondrá opciones y te dará la solución rápido.' },
+          good: { steps: [{ title: 'Escape de la Cueva', prompt: 'Actúa como un juego de "Escape Room". Estoy atrapado en una cueva con 3 puertas. En mi bolsillo solo tengo un espejo y una cuerda. Descríbeme las 3 puertas y pregúntame qué hacer. Dependiendo de mi elección, usa la lógica para ver si sobrevivo o sigo atrapado.' }], reason: 'Pone a prueba tu razonamiento lógico y causa-efecto.' }
+        },
+        {
+          id: 'g-p29', category: 'games', subject: 'Letras', title: 'Palabras Encadenadas', task: 'Vocabulario y rapidez mental.',
+          bad: { prompt: 'Juguemos palabras.', reason: 'Sin reglas estrictas, la IA alucina.' },
+          good: { steps: [{ title: 'La Cadena de Letras', prompt: 'Juguemos a encadenar palabras. Yo digo una palabra (ej. Gato). Tú debes decir una palabra que empiece con la ÚLTIMA letra de mi palabra (ej. Oso). No podemos repetir palabras. Yo empiezo: Elefante.' }], reason: 'Practicas vocabulario y concentración estableciendo un sistema de reglas.' }
+        },
+        {
+          id: 'g-p30', category: 'games', subject: 'Imaginación', title: 'Creador de Superpoderes', task: 'Debate divertido sobre poderes.',
+          bad: { prompt: '¿Cuál es el mejor superpoder?', reason: 'Respuesta genérica como "volar".' },
+          good: { steps: [{ title: 'La Máquina Inútil', prompt: 'Eres una máquina de superpoderes inútiles. Genera dos poderes ridículos (ej: "Lanzar fideos por la nariz" vs "Hablar con los tomates"). Yo y [Apodo2] elegiremos uno cada uno y debatiremos por qué el nuestro es mejor. Tú decides el ganador de la ronda.' }], reason: 'Fomenta la argumentación oral basada en el absurdo.' }
         }
       ],
       secondary: [
-        // --- ESCUELA ---
+        // --- ESCUELA (Secundaria) ---
         {
-          id: 'g-s1', category: 'school', subject: 'Matemáticas', title: 'Despejar X (Álgebra)', task: 'Aprender a resolver una ecuación que no me sale.',
-          bad: { prompt: 'Resuelve esta ecuación: 3x + 5 = 20', reason: 'Te da el resultado. Si copias eso, desaprobarás el examen porque no entendiste el proceso.' },
-          good: { steps: [{ title: 'Tutor Socrático', prompt: 'Tengo problemas para resolver 3x + 5 = 20. Actúa como mi tutor de matemáticas. NO me des la respuesta final. En lugar de eso, explícame cuál debería ser mi primer paso lógico para dejar a la X sola y pregúntame si entiendo.' }], reason: 'La IA te guía para que TU cerebro haga el cálculo.' }
+          id: 'g-s1', category: 'school', subject: 'Matemáticas', title: 'Despejar X (Álgebra)', task: 'Aprender a resolver una ecuación.',
+          bad: { prompt: 'Resuelve: 3x + 5 = 20', reason: 'Te da el resultado. Si copias eso, desaprobarás el examen porque no entendiste el proceso.' },
+          good: { steps: [{ title: 'Tutor Socrático', prompt: 'Tengo problemas con 3x + 5 = 20. Actúa como mi tutor. NO me des la respuesta final. Explícame el primer paso lógico para dejar la X sola y pregúntame si lo entiendo.' }], reason: 'La IA te guía para que TU cerebro haga el cálculo.' }
         },
         {
           id: 'g-s2', category: 'school', subject: 'Literatura', title: 'Feedback de un Ensayo', task: 'Mejorar un texto que escribiste.',
-          bad: { prompt: 'Mejora este ensayo: [Pegar texto]', reason: 'La IA reescribirá todo con su tono robótico. El profesor notará que no es tu voz.' },
-          good: { steps: [{ title: 'El Editor Estricto', prompt: 'Aquí está el borrador de mi ensayo: [pegar texto]. Por favor, NO lo reescribas ni cambies mis palabras. Actúa como un corrector y dime: 1) Si mis argumentos son claros, 2) Si hay errores de ortografía, 3) Qué parte está débil y cómo podría investigar más.' }], reason: 'Mantienes tu autoría, pero usas a la IA como un copiloto de calidad.' }
+          bad: { prompt: 'Mejora este ensayo: [Pegar texto]', reason: 'La IA reescribirá todo. El profesor notará que no es tu voz.' },
+          good: { steps: [{ title: 'El Editor Estricto', prompt: 'Borrador: [texto]. NO lo reescribas ni cambies mis palabras. Actúa como corrector y dime: 1) Si mis argumentos son claros, 2) Errores de ortografía, 3) Qué parte está débil.' }], reason: 'Mantienes tu autoría, pero usas a la IA como copiloto.' }
         },
         {
-          id: 'g-s3', category: 'school', subject: 'Biología', title: 'Mitosis vs Meiosis', task: 'Memorizar la diferencia entre procesos celulares.',
+          id: 'g-s3', category: 'school', subject: 'Biología', title: 'Mitosis vs Meiosis', task: 'Memorizar procesos celulares.',
           bad: { prompt: 'Diferencias entre mitosis y meiosis.', reason: 'Te dará un cuadro técnico difícil de memorizar.' },
-          good: { steps: [{ title: 'Like I am 5 (Analogías)', prompt: 'No entiendo la diferencia entre Mitosis y Meiosis. ¿Me lo puedes explicar usando una analogía moderna, por ejemplo, comparándolo con copiar archivos en una computadora o imprimir fotos?' }], reason: 'Las analogías anclan el conocimiento técnico a cosas que ya entiendes.' }
-        },
-        // --- VIDA ---
-        {
-          id: 'g-s4', category: 'life', subject: 'Vocacional', title: '¿Qué estudio?', task: 'Explorar cómo es realmente una carrera universitaria.',
-          bad: { prompt: '¿De qué trabaja un ingeniero en sistemas?', reason: 'Descripción enciclopédica aburrida.' },
-          good: { steps: [{ title: 'Un Día en la Vida', prompt: 'Me da curiosidad la carrera de Biología Marina. Actúa como un biólogo marino joven. Cuéntame en primera persona cómo fue tu "Día típico" ayer, mencionando las partes aburridas, los desafíos y lo más emocionante.' }], reason: 'Te da una perspectiva realista, narrativa y humana del trabajo.' }
+          good: { steps: [{ title: 'Analogías Modernas', prompt: 'No entiendo Mitosis vs Meiosis. Explícamelo usando una analogía, por ejemplo, comparándolo con copiar archivos en una PC o imprimir fotos. Hazlo simple.' }], reason: 'Las analogías anclan el conocimiento a cosas que ya entiendes.' }
         },
         {
-          id: 'g-s5', category: 'life', subject: 'Organización', title: 'Plan de Estudio', task: 'Armar un cronograma antes de los exámenes.',
-          bad: { prompt: 'Hazme un horario de estudio.', reason: 'No se ajusta a tus tiempos reales.' },
-          good: { steps: [{ title: 'El Planner Personal', prompt: 'Tengo examen de Historia el jueves y de Matemáticas el viernes. Hoy es lunes. Tengo libre de 17hs a 20hs cada día. Ármame un plan de estudio en bloques de 45 minutos (Técnica Pomodoro), intercalando las materias para no aburrirme.' }], reason: 'Aprender a parametrizar (dar restricciones exactas) es la clave de un buen prompt.' }
+          id: 'g-s4', category: 'school', subject: 'Programación', title: 'Debugger Amigable', task: 'Encontrar un error en código (Python/JS).',
+          bad: { prompt: 'Arregla este código: [código]', reason: 'Te da la solución y no aprendes a pescar el error.' },
+          good: { steps: [{ title: 'El Patito de Goma Inteligente', prompt: 'Mi código [lenguaje] está tirando un error. Aquí está: [código]. Actúa como un profesor. NO escribas el código corregido. Solo dime en qué línea está el problema conceptual y dame una pista para que yo lo resuelva.' }], reason: 'Fomenta la habilidad vital de la depuración (debugging).' }
         },
         {
-          id: 'g-s6', category: 'life', subject: 'Pensamiento Crítico', title: 'Analizador de Noticias', task: 'Detectar si una noticia viral es falsa o sesgada.',
-          bad: { prompt: '¿Es verdad esta noticia: [Texto]?', reason: 'La IA puede alucinar si no tiene acceso a internet en tiempo real.' },
-          good: { steps: [{ title: 'El Detector de Sesgos', prompt: 'Tengo esta noticia que vi en redes: [Texto]. Actúa como un profesor de periodismo. No me digas si es verdad o mentira, pero analízame: ¿Qué palabras "clickbait" (exageradas) está usando? ¿A qué fuente debería buscar para verificar esto?' }], reason: 'La IA te enseña CÓMO pensar, no QUÉ pensar.' }
-        },
-        // --- JUEGOS ---
-        {
-          id: 'g-s7', category: 'games', subject: 'Debate', title: 'El Juicio del Fin del Mundo', task: 'Argumentar de forma creativa.',
-          bad: { prompt: 'Juguemos a un juego de debate.', reason: 'La IA no sabrá qué reglas seguir.' },
-          good: { steps: [{ title: 'El Tribunal Absurdo', prompt: 'Eres el juez de la Tierra. Nos invaden los Aliens. Los jugadores somos [Apodo1], [Apodo2] y [Apodo3]. Asígnale a cada uno un objeto inútil al azar (ej: un zapato roto). Cada uno debe argumentar por qué su objeto salvará a la humanidad. En cada turno, pides un argumento y tú decides quién gana por creatividad.' }], reason: 'Practicas oratoria, ofuscas datos usando apodos, y aprendes a programar reglas lógicas en la IA.' }
+          id: 'g-s5', category: 'school', subject: 'Historia', title: 'Debate de Perspectivas', task: 'Entender ambos lados de la Primera Guerra Mundial.',
+          bad: { prompt: 'Causas de la Primera Guerra.', reason: 'Resumen enciclopédico de un solo punto de vista.' },
+          good: { steps: [{ title: 'El Simulador de Debate', prompt: 'Tengo que entender la Primera Guerra Mundial. Actúa como un diplomático de las Potencias Centrales y justifícame por qué están yendo a la guerra. Luego, cuando te lo pida, cambia tu rol a un diplomático de los Aliados.' }], reason: 'Comprendes la historia como un conflicto de intereses reales.' }
         },
         {
-          id: 'g-s8', category: 'games', subject: 'Estrategia', title: 'El Infiltrado (Among Us Textual)', task: 'Engañar y deducir en grupo.',
-          bad: { prompt: 'Juguemos a encontrar al impostor.', reason: 'No establece mecánicas de juego.' },
-          good: { steps: [{ title: 'El Mastermind Secreto', prompt: 'Vamos a jugar a descubrir al infiltrado. Los jugadores somos [Apodo1], [Apodo2] y [Apodo3]. Elige un tema secreto (ej: "Pizza") y dinos que cerremos los ojos. Luego, dile a [Apodo1] el tema, y a [Apodo2] un tema similar (ej: "Tarta"). Luego haznos una pregunta a todos para que respondamos y averigüemos quién tiene el tema distinto.' }], reason: 'Fuerza a la IA a manejar roles asimétricos y secretos entre usuarios que comparten pantalla.' }
+          id: 'g-s6', category: 'school', subject: 'Química', title: 'Balanceo de Ecuaciones', task: 'Aprender a balancear sin calculadora química.',
+          bad: { prompt: 'Balancea H2 + O2 = H2O', reason: 'Respuestas automáticas impiden el razonamiento.' },
+          good: { steps: [{ title: 'La Balanza Invisible', prompt: 'Quiero aprender a balancear ecuaciones. Usa la analogía de una balanza de cocina y explícame paso a paso cómo balancear H2 + O2 -> H2O, pero déjame a mí hacer la última multiplicación.' }], reason: 'Guía paso a paso interactiva.' }
         },
         {
-          id: 'g-s9', category: 'games', subject: 'Rol (RPG)', title: 'Simulador de Supervivencia', task: 'Aventura colaborativa por turnos.',
-          bad: { prompt: 'Haz un juego de zombies.', reason: 'La IA jugará por ti.' },
-          good: { steps: [{ title: 'Director de Juego (DM)', prompt: 'Actúa como el Director de Juego de un mundo post-apocalíptico zombie. [Apodo1] es el médico, [Apodo2] es el explorador y [Apodo3] es el ingeniero. Danos 10 puntos de vida a cada uno y un inventario vacío. Descríbenos la primera escena (estamos en un supermercado a oscuras) y pregúntanos qué hacemos por turnos. Resuelve usando lógica.' }], reason: 'Aprendes a diseñar sistemas de estado (Vida, Inventario) mediante prompts.' }
+          id: 'g-s7', category: 'school', subject: 'Literatura', title: 'Análisis de Poesía', task: 'Encontrar figuras retóricas.',
+          bad: { prompt: 'Analiza este poema.', reason: 'La IA hace todo el trabajo de interpretation.' },
+          good: { steps: [{ title: 'El Detector de Metáforas', prompt: 'Tengo que analizar este poema. Primero, defíneme qué es una metáfora. Luego, no me des la respuesta, pero ayúdame dándome una pista sobre en qué estrofa podría haber una metáfora escondida sobre "el paso del tiempo".' }], reason: 'Entrena tu ojo analítico con andamiaje (ayuda guiada).' }
+        },
+        {
+          id: 'g-s8', category: 'school', subject: 'Filosofía', title: 'Dilemas Éticos', task: 'Aprender a argumentar.',
+          bad: { prompt: 'Resumen del dilema del tranvía.', reason: 'Lectura pasiva.' },
+          good: { steps: [{ title: 'El Tribunal Ético', prompt: 'Plantéame el Dilema del Tranvía. Yo te daré mi respuesta de qué haría. Luego, toma la posición del Abogado del Diablo e intenta destruir mi argumento usando principios de Kant. Hagamos un debate corto.' }], reason: 'Pone en práctica la teoría filosófica en tiempo real.' }
+        },
+        {
+          id: 'g-s9', category: 'school', subject: 'Investigación', title: 'Formato APA', task: 'Aprender a citar bibliografía.',
+          bad: { prompt: 'Pon esto en formato APA: [Link]', reason: 'La IA suele alucinar formatos o equivocarse de edición.' },
+          good: { steps: [{ title: 'Plantilla de Citación', prompt: 'No me hagas la cita, enséñame. Dame la fórmula exacta (plantilla) para citar un artículo de periódico online en Formato APA 7ma edición, y dame un ejemplo inventado con colores o negritas indicando cada parte.' }], reason: 'Te da la regla para que la apliques tú con precisión.' }
+        },
+        {
+          id: 'g-s10', category: 'school', subject: 'Economía', title: 'Oferta y Demanda', task: 'Entender conceptos económicos básicos.',
+          bad: { prompt: 'Explica oferta y demanda.', reason: 'Términos académicos y gráficos aburridos.' },
+          good: { steps: [{ title: 'La Economía Gamer', prompt: 'Explícame la Ley de Oferta y Demanda usando como ejemplo la economía dentro de mi videojuego favorito (ej: Fortnite o Minecraft) cuando sale un item nuevo muy raro.' }], reason: 'Aterriza conceptos abstractos a tu realidad de consumo.' }
+        },
+
+        // --- VIDA (Secundaria) ---
+        {
+          id: 'g-s11', category: 'life', subject: 'Vocacional', title: '¿Qué estudio?', task: 'Explorar una carrera.',
+          bad: { prompt: '¿De qué trabaja un ingeniero?', reason: 'Descripción enciclopédica.' },
+          good: { steps: [{ title: 'Un Día en la Vida', prompt: 'Me da curiosidad la carrera de Biología Marina. Actúa como un joven profesional. Cuéntame en primera persona cómo fue tu "Día típico" ayer, las partes aburridas, los desafíos y lo más emocionante.' }], reason: 'Te da una perspectiva realista y humana del trabajo.' }
+        },
+        {
+          id: 'g-s12', category: 'life', subject: 'Organización', title: 'Plan de Estudio', task: 'Armar un cronograma.',
+          bad: { prompt: 'Hazme un horario de estudio.', reason: 'No se ajusta a tus tiempos.' },
+          good: { steps: [{ title: 'El Planner Personal', prompt: 'Examen de Historia el jueves y Matemáticas el viernes. Hoy es lunes. Tengo libre de 17 a 20hs. Ármame un plan usando la Técnica Pomodoro, intercalando materias para no aburrirme.' }], reason: 'Aprender a parametrizar (dar restricciones) es clave en prompting.' }
+        },
+        {
+          id: 'g-s13', category: 'life', subject: 'Pensamiento Crítico', title: 'Analizador de Fake News', task: 'Detectar sesgos virales.',
+          bad: { prompt: '¿Es verdad esta noticia: [Texto]?', reason: 'La IA puede alucinar o carecer de contexto actual.' },
+          good: { steps: [{ title: 'El Detector de Sesgos', prompt: 'Tengo esta noticia: [Texto]. Actúa como profesor de periodismo. No me digas si es verdad, pero analízame: ¿Qué palabras "clickbait" usa? ¿A qué fuente oficial debería buscar para verificar esto?' }], reason: 'La IA te enseña CÓMO pensar y validar, no QUÉ pensar.' }
+        },
+        {
+          id: 'g-s14', category: 'life', subject: 'Preparación', title: 'Entrevista Laboral Mock', task: 'Entrenar para el primer trabajo.',
+          bad: { prompt: 'Preguntas comunes de entrevista.', reason: 'Lista plana.' },
+          good: { steps: [{ title: 'El Reclutador Exigente', prompt: 'Actúa como el gerente de un café. Buscan un mesero para el fin de semana. Es mi primer trabajo. Hazme 3 preguntas de entrevista, una por una. Evalúa mis respuestas y dame feedback sobre mi tono profesional.' }], reason: 'Simulación inmersiva que reduce la ansiedad del mundo real.' }
+        },
+        {
+          id: 'g-s15', category: 'life', subject: 'Técnica de Estudio', title: 'Evaluación Feynman', task: 'Confirmar si aprendiste un tema.',
+          bad: { prompt: 'Resúmeme el tema X.', reason: 'Recibes información sin procesarla.' },
+          good: { steps: [{ title: 'El Evaluador Feynman', prompt: 'Quiero comprobar si entendí el concepto de "Inflación". Yo te lo voy a explicar con mis propias palabras. Tú debes evaluar mi explicación. Si usé jerga innecesaria o dije algo erróneo, corrígeme y pregúntame de nuevo.' }], reason: 'Tú generas el contenido, la IA solo valida. Es el mejor método de estudio.' }
+        },
+        {
+          id: 'g-s16', category: 'life', subject: 'Oratoria', title: 'Preparar una Exposición', task: 'Mejorar hablar en público.',
+          bad: { prompt: 'Escribe mi presentación sobre...', reason: 'Leer un guion escrito por IA suena artificial.' },
+          good: { steps: [{ title: 'El Coach de Oratoria', prompt: 'Tengo que dar una exposición oral de 5 minutos sobre la Contaminación. Dame una estructura de 3 puntos clave. Además, sugiero una "pregunta gancho" inicial para captar la atención de la clase y una conclusión fuerte.' }], reason: 'Te da el esqueleto, pero tú pones el músculo (tus palabras).' }
+        },
+        {
+          id: 'g-s17', category: 'life', subject: 'Finanzas', title: 'Presupuesto Personal', task: 'Administrar primeros ahorros.',
+          bad: { prompt: '¿Cómo hago un presupuesto?', reason: 'Te dará reglas financieras complejas (50/30/20).' },
+          good: { steps: [{ title: 'El Asesor Juvenil', prompt: 'Ahorro $2000 al mes de mesada. Quiero comprar unos audífonos de $8000, pero también gasto en salidas con amigos. Ayúdame a armar un presupuesto mensual realista para comprar los audífonos en 5 meses sin dejar de salir.' }], reason: 'Matemática aplicada a necesidades adolescentes.' }
+        },
+        {
+          id: 'g-s18', category: 'life', subject: 'Comunicación', title: 'Email a un Profesor', task: 'Redactar correos formales.',
+          bad: { prompt: 'Escribe un mail pidiendo prórroga.', reason: 'Suele usar tono demasiado solemne o robotizado.' },
+          good: { steps: [{ title: 'El Traductor Formal', prompt: 'Necesito pedirle más tiempo a mi profesor para entregar el trabajo porque estuve enfermo. Yo escribiría esto: "Profe no llego, estaba enfermo, me da más tiempo?". Transfórmalo a un tono educado, formal y respetuoso, pero que suene a un estudiante normal.' }], reason: 'Aprender la habilidad de adecuar el registro comunicativo.' }
+        },
+        {
+          id: 'g-s19', category: 'life', subject: 'Resolución de Conflictos', title: 'Problema de Grupo', task: 'Manejar trabajos en equipo difíciles.',
+          bad: { prompt: 'Un compañero no trabaja, ¿qué hago?', reason: 'Consejo genérico.' },
+          good: { steps: [{ title: 'El Mediador', prompt: 'Estamos en un grupo de 4. Un compañero no hace su parte y el líder está a punto de gritarle. Actúa como mediador y dame un guion (qué decir) para acercarme al que no trabaja y preguntarle si necesita ayuda, sin sonar acusador.' }], reason: 'Fomenta la inteligencia emocional y el liderazgo.' }
+        },
+        {
+          id: 'g-s20', category: 'life', subject: 'Tecnología', title: 'Seguridad Digital', task: 'Evitar hackeos.',
+          bad: { prompt: 'Tips de ciberseguridad.', reason: 'Listas aburridas sobre antivirus.' },
+          good: { steps: [{ title: 'Auditoría de Contraseñas', prompt: 'NO te voy a dar mi contraseña real. Pero si mi contraseña fuera "NombreMascota123", analiza qué tan rápido un hacker la descifraría y enséñame una fórmula mnemotécnica para crear contraseñas largas, memorables pero indescifrables.' }], reason: 'Concientización y ofuscación de datos integrada.' }
+        },
+
+        // --- JUEGOS (Secundaria) ---
+        {
+          id: 'g-s21', category: 'games', subject: 'Debate', title: 'El Juicio del Fin del Mundo', task: 'Argumentar de forma creativa.',
+          bad: { prompt: 'Juguemos a un juego de debate.', reason: 'Sin mecánicas, la IA se pierde.' },
+          good: { steps: [{ title: 'El Tribunal Absurdo', prompt: 'Eres el juez de la Tierra. Nos invaden los Aliens. Los jugadores somos [Apodo1] y [Apodo2]. Asígnale a cada uno un objeto inútil al azar (ej: un zapato). Cada uno debe argumentar por qué su objeto salvará a la humanidad. Tú decides quién gana.' }], reason: 'Oratoria, uso de apodos (ofuscación) y programación de reglas lógicas.' }
+        },
+        {
+          id: 'g-s22', category: 'games', subject: 'Estrategia', title: 'El Infiltrado (Among Us)', task: 'Engañar y deducir en grupo.',
+          bad: { prompt: 'Juguemos a encontrar al impostor.', reason: 'No establece mecánicas de pantalla única.' },
+          good: { steps: [{ title: 'El Mastermind Secreto', prompt: 'Los jugadores somos [Apodo1] y [Apodo2]. Elige un tema secreto (ej: "Pizza"). Dile a [Apodo1] el tema (los demás cierran los ojos), y a [Apodo2] un tema similar ("Tarta"). Haznos una pregunta a todos para averiguar quién tiene el tema distinto.' }], reason: 'Maneja roles asimétricos y secretos en un mismo dispositivo.' }
+        },
+        {
+          id: 'g-s23', category: 'games', subject: 'Rol (RPG)', title: 'Simulador de Supervivencia', task: 'Aventura colaborativa por turnos.',
+          bad: { prompt: 'Haz un juego de zombies.', reason: 'La IA jugará sola.' },
+          good: { steps: [{ title: 'Director de Juego (DM)', prompt: 'Actúa como DM de un mundo zombie. [Apodo1] es médico y [Apodo2] explorador. Danos 10 de vida y un inventario vacío. Describe la primera escena (un supermercado) y pregúntanos qué hacemos por turnos. Resuelve usando lógica y restando vida si fallamos.' }], reason: 'Diseño de sistemas de estado (Vida, Inventario) mediante prompts.' }
+        },
+        {
+          id: 'g-s24', category: 'games', subject: 'Psicología', title: 'Tribunal de Mentiras', task: 'Leer el comportamiento.',
+          bad: { prompt: 'Juguemos dos verdades y una mentira.', reason: 'Suele jugarlo ella misma.' },
+          good: { steps: [{ title: 'El Polígrafo IA', prompt: 'Yo, [Apodo1], escribiré tres datos sobre mí (2 verdades, 1 mentira). Tú, como IA de análisis psicológico, debes hacer 3 preguntas cruzadas a mi compañero [Apodo2] intentando deducir cuál es mi mentira según sus respuestas.' }], reason: 'Juego social de mesa asistido por un "agente externo".' }
+        },
+        {
+          id: 'g-s25', category: 'games', subject: 'Creatividad', title: 'Shark Tank Absurdo', task: 'Inventar productos y venderlos.',
+          bad: { prompt: 'Dame ideas de inventos.', reason: 'No es un juego interactivo.' },
+          good: { steps: [{ title: 'Inversores Despiadados', prompt: 'Actúa como un panel de 3 inversores muy exigentes pero graciosos. Yo soy un inventor. Te presentaré mi invento: "Un paraguas con agujeros para ver el cielo". Hazme preguntas difíciles sobre mi modelo de negocio y dime si inviertes.' }], reason: 'Practica el "Pitching" (venta de ideas) y la defensa de proyectos.' }
+        },
+        {
+          id: 'g-s26', category: 'games', subject: 'Lógica Lógica', title: 'Paradoja del Tiempo', task: 'Evitar destruir el universo.',
+          bad: { prompt: 'Un juego de viajes en el tiempo.', reason: 'Aburrido y lineal.' },
+          good: { steps: [{ title: 'La Policía Temporal', prompt: 'Soy un viajero del tiempo que acaba de viajar a 1910 y tiré un vaso de agua en un laboratorio. Tú eres la computadora que calcula el "Efecto Mariposa". Descíbeme 3 consecuencias desastrosas en el futuro y dame 2 opciones difíciles para solucionarlo.' }], reason: 'Pensamiento lateral y resolución de problemas complejos.' }
+        },
+        {
+          id: 'g-s27', category: 'games', subject: 'Cultura', title: 'Traductor Alienígena', task: 'Explicar la humanidad.',
+          bad: { prompt: 'Habla como alien.', reason: 'Suele usar emojis sin sentido.' },
+          good: { steps: [{ title: 'El Extraterrestre Confundido', prompt: 'Actúa como un alienígena que acaba de ver un partido de Fútbol por primera vez. Hazme preguntas desde la más absoluta ignorancia sobre por qué "22 humanos corren detrás de una esfera". Yo trataré de explicártelo de forma lógica.' }], reason: 'Desautomatiza la percepción. Tienes que explicar lo obvio.' }
+        },
+        {
+          id: 'g-s28', category: 'games', subject: 'Misterio', title: 'Cena de Asesinato (Clue)', task: 'Resolver un crimen con pistas.',
+          bad: { prompt: 'Crea un misterio.', reason: 'Cuenta la historia de una vez.' },
+          good: { steps: [{ title: 'El Detective Privado', prompt: 'Genera un caso de misterio tipo "Clue" en una mansión. Hay 4 sospechosos. NO me digas quién es el culpable. Dime la escena del crimen y dame la opción de interrogar a un sospechoso o revisar una habitación por turno.' }], reason: 'Estructuración de datos no lineales y gestión de información retenida.' }
+        },
+        {
+          id: 'g-s29', category: 'games', subject: 'Escritura', title: 'Novela Colaborativa', task: 'Escribir a cuatro manos.',
+          bad: { prompt: 'Escribe un capítulo de libro.', reason: 'Lectura pasiva.' },
+          good: { steps: [{ title: 'Párrafo a Párrafo', prompt: 'Vamos a escribir un thriller policíaco juntos. Yo escribo el primer párrafo. Tú escribes el segundo, y así sucesivamente. Regla estricta: Cada vez que te toque escribir, debes introducir un giro inesperado que cambie el rumbo de la historia. Empiezo: Era una noche fría...' }], reason: 'Fomenta la creatividad reactiva y la adaptación.' }
+        },
+        {
+          id: 'g-s30', category: 'games', subject: 'Humor Crítico', title: 'El Diccionario de Mentiras', task: 'Redefinir conceptos comunes.',
+          bad: { prompt: 'Dime definiciones graciosas.', reason: 'Humor de almanaque.' },
+          good: { steps: [{ title: 'Sátira Social', prompt: 'Juguemos a inventar un diccionario satírico. Yo te daré una palabra común (ej: Adolescencia) y tú debes darme una definición real y una definición irónica/graciosa. Luego te toca a ti darme una palabra para que yo la defina.' }], reason: 'Estimula el pensamiento crítico y el uso de recursos retóricos como la ironía.' }
         }
       ]
     };
+
 
     // --- COMPONENTES PRINCIPALES ---
 
