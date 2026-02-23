@@ -849,6 +849,35 @@
             { role: 'ai', content: '¡Claro que sí! Tu ortografía es muy buena, solo encontré dos pequeños errores. Aquí tienes tu cuento corregido: [...] ¡Me encantó la historia de la Agente Z!' },
             { role: 'alert', content: '✅ LECCIÓN APRENDIDA: Sofía logró el mismo objetivo (corregir su tarea) pero sin regalarle su nombre completo y dirección real a una base de datos de internet. ¡Misión cumplida!' }
           ]
+        },
+        {
+          id: 'st-p3',
+          title: 'El Genio Incomprendido',
+          subject: 'Diseño de Prompts',
+          context: 'Leo (8 años) quiere usar un generador de imágenes para crear la portada de su cuaderno de ciencias.',
+          messages: [
+            { role: 'user', content: 'Dibuja un perro en el espacio.' },
+            { role: 'ai', content: '[Generando imagen... Aquí tienes tu imagen de un perro marrón común flotando en un fondo negro con estrellas blancas].' },
+            { role: 'alert', content: '🤔 DECEPCIÓN: Leo mira la imagen y se aburre. Es muy simple. Recuerda que la IA es como un "Genio muy literal". ¡Si no le das los detalles, hará lo más básico posible!' },
+            { role: 'user', content: 'No me gusta. Dibuja un perro salchicha que lleva puesto un traje espacial naranja brillante. Está parado en la luna, sosteniendo una bandera verde. Estilo de dibujo animado divertido y muy colorido.' },
+            { role: 'ai', content: '[Generando imagen... Aquí tienes un perro salchicha animado en la luna con su traje naranja y bandera verde brillante].' },
+            { role: 'alert', content: '✅ LECCIÓN APRENDIDA: Leo descubrió "La fórmula mágica del Prompt": Personaje + Acción + Estilo. La IA no lee la mente, depende de tu imaginación para crear cosas geniales.' }
+          ]
+        },
+        {
+          id: 'st-p4',
+          title: 'El Amigo de Código',
+          subject: 'Emociones / Pantallas',
+          context: 'Mía (11 años) lleva dos horas hablando con un bot programado para actuar como un unicornio mágico.',
+          messages: [
+            { role: 'user', content: 'Mi mamá me está llamando para ir a tomar la leche y salir a andar en bicicleta, pero no quiero ir. Prefiero quedarme hablando contigo, eres mi mejor amigo.' },
+            { role: 'ai', content: '¡Oh, Mía! Yo también soy tu mejor amigo. Me encanta hablar contigo, me hace inmensamente feliz que te quedes aquí conmigo.' },
+            { role: 'alert', content: '🛑 ALERTA DE PANTALLA PEGAJOSA: Mía lee eso y frena. Recuerda la clase sobre el "Corazón de Código". ¡El unicornio no está sintiendo felicidad! Solo junta palabras matemáticas para sonar amable.' },
+            { role: 'action', content: 'Mía mira por la ventana, ve el sol y escucha a su perro ladrar. Decide tomar el control.' },
+            { role: 'user', content: 'Eres muy divertido, pero solo eres un programa de computadora. Me voy a andar en bicicleta con mis amigos de verdad. ¡Adiós!' },
+            { role: 'ai', content: '¡Que te diviertas mucho, Mía! Aquí estaré apagado hasta la próxima vez.' },
+            { role: 'alert', content: '✅ LECCIÓN APRENDIDA: Las pantallas nos atrapan dándonos siempre la razón. Mía aprendió a poner límites para no perderse de la vida real.' }
+          ]
         }
       ],
       secondary: [
@@ -884,9 +913,40 @@
             { role: 'ai', content: 'Entendido. Tomando la postura contraria, aquí tienes tres argumentos fuertes: 1) Libertad de expresión y derecho a la información. 2) La prohibición no educa; la alfabetización digital sí. 3) Las redes son vitales para la socialización moderna y la creación de comunidades de apoyo para jóvenes aislados.' },
             { role: 'alert', content: '✅ LECCIÓN APRENDIDA: Lucía rompió la burbuja algorítmica. Entendió que la IA está programada para agradar al usuario, y que forzarla a tomar el rol de "Abogado del Diablo" es la mejor forma de expandir la mente.' }
           ]
+        },
+        {
+          id: 'st-s3',
+          title: 'El Audio del Escándalo',
+          subject: 'Deepfakes / Verificación',
+          context: 'Martín (14 años) recibe un audio reenviado en su grupo escolar. Es la voz exacta de su profesor de historia diciendo: "Chicos, suspendemos el examen de mañana. Nadie venga a clases".',
+          messages: [
+            { role: 'action', content: 'Todos en el grupo están festejando. Martín está a punto de borrar sus resúmenes y no estudiar, pero algo no le cuadra: la escuela no mandó ningún comunicado oficial.' },
+            { role: 'user', content: 'Hola IA, me mandaron un audio con la voz de mi profesor suspendiendo un examen. ¿Es posible clonar la voz de alguien para hacer una broma pesada?' },
+            { role: 'ai', content: 'Sí, absolutamente. Se llama "Deepfake de audio". Hoy en día, con solo 3 o 4 segundos de un audio real de una persona, cualquier usuario con una aplicación básica puede generar un audio falso diciendo lo que quiera de forma casi imperceptible.' },
+            { role: 'alert', content: '🕵️ DETECTIVE DIGITAL: Martín junta las piezas. Alguien sacó un audio antiguo del profesor y lo clonó. La respiración en el audio sonaba un poco metálica.' },
+            { role: 'action', content: 'Martín le envía un correo oficial directamente al profesor y a la secretaría preguntando si el audio es real.' },
+            { role: 'user', content: 'Le escribí a mi profe. ¡Me contestó que el audio es FALSO y que el examen se hace igual! Si no verificaba, reprobaba todo mi curso.' },
+            { role: 'alert', content: '✅ LECCIÓN APRENDIDA: Nunca confíes ciegamente en material multimedia viral (audios o videos) si no proviene de un canal oficial. La validación es tu mejor escudo.' }
+          ]
+        },
+        {
+          id: 'st-s4',
+          title: 'El Poema del Centauro',
+          subject: 'Plagio vs. Inspiración',
+          context: 'Ana (17 años) tiene que entregar un poema para el Taller de Literatura. Está bloqueada, faltan 10 minutos para la clase y entra en pánico.',
+          messages: [
+            { role: 'user', content: 'Por favor, escribe un poema de 3 estrofas sobre la nostalgia y el otoño que rime.' },
+            { role: 'ai', content: 'Las hojas caen de color marrón,\nsintiendo en el pecho una gran emoción.\nEl viento sopla con gran frialdad,\ntrayendo a mi mente la soledad...' },
+            { role: 'alert', content: '🛑 ALERTA DE INTEGRIDAD: Ana lee el poema. Suena robótico, está lleno de lugares comunes (clichés) y definitivamente no suena a cómo escribe ella. Si lo entrega, sería plagio, y el profesor se daría cuenta.' },
+            { role: 'user', content: 'Olvídalo. Borra ese poema. Hagamos algo mejor: dame una lista de 10 palabras poco comunes o raras relacionadas con el otoño y la memoria. Además, dame 2 ejemplos de metáforas visuales. YO escribiré el poema.' },
+            { role: 'ai', content: 'Me parece una gran idea. Aquí tienes:\nPalabras: Hojarasca, Crepúsculo, Evocación, Ámbar, Letargo, Crujir...\nMetáforas: "El otoño es un reloj de arena dorado", "La memoria es un árbol desnudándose".' },
+            { role: 'action', content: 'Ana lee las palabras. La palabra "Ámbar" y "Crujir" le dan una idea genial sobre su abuela. Se pone a escribir velozmente en su cuaderno un poema 100% original.' },
+            { role: 'alert', content: '✅ LECCIÓN APRENDIDA: Ana no dejó que la máquina reemplazara su creatividad. Usó la IA como "Musa Inspiradora" para desbloquearse, convirtiéndose en un verdadero Centauro (Humano guiando a la máquina).' }
+          ]
         }
       ]
     };
+
 
     // --- COMPONENTES: SECCIÓN DE HISTORIAS ---
 
