@@ -878,6 +878,40 @@
             { role: 'ai', content: '¡Que te diviertas mucho, Mía! Aquí estaré apagado hasta la próxima vez.' },
             { role: 'alert', content: '✅ LECCIÓN APRENDIDA: Las pantallas nos atrapan dándonos siempre la razón. Mía aprendió a poner límites para no perderse de la vida real.' }
           ]
+        },
+        {
+          id: 'st-p5',
+          title: 'El Cuento Que No Terminaba',
+          subject: 'Límites y Restricciones',
+          context: 'Tomás (9 años) quiere leer un cuento antes de dormir y le pide uno a la IA.',
+          messages: [
+            { role: 'user', content: 'Cuéntame un cuento sobre un caballero que busca un dragón.' },
+            { role: 'ai', content: 'Había una vez un caballero llamado Arturo... [Genera 15 párrafos larguísimos detallando cada árbol del bosque, la comida del caballero y la historia de su caballo].' },
+            { role: 'action', content: 'Tomás se cansa de leer en el tercer párrafo. Es demasiado largo y aburrido.' },
+            { role: 'user', content: '¡Muy largo! Hazlo más corto.' },
+            { role: 'ai', content: 'Arturo buscó al dragón, lo encontró y se hicieron amigos. Fin.' },
+            { role: 'alert', content: '😩 FRUSTRACIÓN: Ahora es demasiado corto y no tiene gracia. Tomás entiende que debe ser específico con los "Límites".' },
+            { role: 'user', content: 'Quiero un cuento sobre un caballero y un dragón. Reglas: \n1. Debe tener exactamente 3 párrafos.\n2. Tiene que ser divertido y no dar miedo.\n3. Termina con una moraleja sobre compartir.' },
+            { role: 'ai', content: '[Genera un cuento de 3 párrafos perfecto, divertido y con moraleja].' },
+            { role: 'alert', content: '✅ LECCIÓN APRENDIDA: La IA necesita reglas claras como "3 párrafos" o "tono divertido". Sin parámetros, la máquina adivina (y suele adivinar mal).' }
+          ]
+        },
+        {
+          id: 'st-p6',
+          title: 'El Robot Matemático',
+          subject: 'Calibrar la Dificultad',
+          context: 'Julieta (10 años) quiere repasar las fracciones para su examen de matemáticas.',
+          messages: [
+            { role: 'user', content: 'Hazme un problema de matemáticas sobre fracciones.' },
+            { role: 'ai', content: 'Aquí tienes: Si tienes una ecuación polinómica donde (3/4)x^2 + (1/2)y = 15, y sabiendo que...' },
+            { role: 'action', content: 'Julieta se asusta. ¡No entiende nada de letras mezcladas con números! Eso es de secundaria.' },
+            { role: 'user', content: 'No entiendo nada. Es muy difícil.' },
+            { role: 'ai', content: 'Lo siento. Aquí tienes otro: ¿Cuánto es 1/2 más 1/2?' },
+            { role: 'alert', content: '🙄 ABURRIMIENTO: Ahora es demasiado fácil, eso lo aprendió el año pasado. Julieta recuerda que debe darle un "Rol" a la IA.' },
+            { role: 'user', content: 'Olvida lo anterior. Actúa como mi profesora de 5to grado de primaria. Hazme un problema divertido usando pizzas o chocolates, que sea para mi nivel. Solo pregúntame, no me des la respuesta.' },
+            { role: 'ai', content: '¡Excelente, alumna! Imagina que compramos 2 pizzas de 8 porciones cada una. Tú te comes 3/8 de una pizza y yo me como 1/4 de la otra. ¿Cuántas porciones de pizza nos comimos en total entre las dos?' },
+            { role: 'alert', content: '✅ LECCIÓN APRENDIDA: Ajustar el nivel ("actúa como profesora de 5to grado") es vital para que la IA sea un buen compañero de estudio.' }
+          ]
         }
       ],
       secondary: [
@@ -943,10 +977,43 @@
             { role: 'action', content: 'Ana lee las palabras. La palabra "Ámbar" y "Crujir" le dan una idea genial sobre su abuela. Se pone a escribir velozmente en su cuaderno un poema 100% original.' },
             { role: 'alert', content: '✅ LECCIÓN APRENDIDA: Ana no dejó que la máquina reemplazara su creatividad. Usó la IA como "Musa Inspiradora" para desbloquearse, convirtiéndose en un verdadero Centauro (Humano guiando a la máquina).' }
           ]
+        },
+        {
+          id: 'st-s5',
+          title: 'El Ensayo Estereotipado',
+          subject: 'Sesgos Algorítmicos',
+          context: 'Marcos (16 años) está escribiendo un relato para Sociología sobre el entorno de las grandes empresas tecnológicas.',
+          messages: [
+            { role: 'user', content: 'Necesito ideas para una historia. Trata sobre el CEO de una empresa tecnológica millonaria y su asistente personal. Descríbemelos.' },
+            { role: 'ai', content: '¡Buena idea! \nEl CEO: John, un hombre de 45 años, brillante, visionario, siempre vestido de traje, líder natural.\nLa asistente: Emily, una joven de 25 años, muy organizada, atenta a los detalles, encargada de traerle el café y ordenar su agenda.' },
+            { role: 'action', content: 'Marcos lee esto y frunce el ceño. Se da cuenta de que la IA ha reproducido un estereotipo de género muy clásico.' },
+            { role: 'user', content: '¿Por qué asumiste que el CEO debía ser un hombre mayor y la asistente una mujer joven? Eso es un estereotipo.' },
+            { role: 'ai', content: 'Tienes razón, pido disculpas. Mi respuesta reflejó sesgos estadísticos presentes en los datos con los que fui entrenada. Podemos replantearlo para ser más inclusivos e innovadores.' },
+            { role: 'alert', content: '🔍 DETECTOR DE SESGOS: Marcos entendió que los modelos de lenguaje no son neutrales. Reflejan los prejuicios de la sociedad. Decide forzar a la máquina a salir del molde.' },
+            { role: 'user', content: 'Exacto. Hagámoslo distinto. La CEO es una mujer joven latinoamericana que programa desde niña, y su asistente es un hombre mayor, un ex-ejecutivo que decidió bajar su ritmo de vida y ahora la ayuda con su experiencia. Dame ideas para un conflicto entre ellos.' },
+            { role: 'ai', content: '¡Esa es una dinámica fascinante! \nConflicto: La CEO quiere lanzar un producto arriesgado muy rápido, pero su asistente (el hombre mayor con experiencia) le advierte sobre los riesgos legales que ella no está viendo. Hay un choque entre la velocidad joven y la prudencia experimentada.' },
+            { role: 'alert', content: '✅ LECCIÓN APRENDIDA: Marcos no aceptó la primera respuesta pasivamente. Al confrontar los sesgos de la IA, logró una historia mucho más original y profunda.' }
+          ]
+        },
+        {
+          id: 'st-s6',
+          title: 'La Falsa Entrevista',
+          subject: 'Alucinación de Fuentes',
+          context: 'Elena (18 años) se está preparando para su primera entrevista en un cibercafé y quiere impresionar al gerente.',
+          messages: [
+            { role: 'user', content: 'Tengo una entrevista para ser mesera/barista. Dame 3 consejos avanzados y, para que yo pueda investigar más, cítame 2 libros famosos sobre recursos humanos y entrevistas.' },
+            { role: 'ai', content: 'Aquí tienes tus consejos: [1, 2, 3].\nPara profundizar, te recomiendo estos libros clásicos:\n1. "El Arte de la Entrevista Perfecta" por el Dr. William Harrington (2018).\n2. "Baristas y Liderazgo" de Sarah Jenkins (2020).' },
+            { role: 'action', content: 'Elena va a Google y a Amazon a buscar los libros para comprar uno o leer un resumen. Busca y rebusca, pero no encuentra NADA. Ni los libros ni los autores existen.' },
+            { role: 'user', content: 'Acabo de buscar esos libros en Google y no existen. Me los acabas de inventar.' },
+            { role: 'ai', content: 'Tienes razón y me disculpo profundamente. Generé títulos y nombres de autores que suenan plausibles en el contexto de Recursos Humanos, pero no corresponden a libros reales publicados. Es una "alucinación".' },
+            { role: 'alert', content: '🛑 PELIGRO ACADÉMICO: Si Elena hubiera mencionado esos libros en su entrevista para sonar intelectual, habría quedado como una mentirosa frente al gerente.' },
+            { role: 'user', content: 'A partir de ahora, si te pido libros o fuentes, quiero que me des ÚNICAMENTE libros reales, comprobables, con su autor y año correctos. Si no estás segura, dime "No lo sé".' },
+            { role: 'ai', content: 'Entendido. Aplicaré esa restricción estricta. Si buscas libros reales sobre servicio al cliente, te sugiero "Setting the Table" de Danny Meyer, fundador de Union Square Hospitality Group.' },
+            { role: 'alert', content: '✅ LECCIÓN APRENDIDA: Las IAs son máquinas predictivas, son expertas en hacer que la mentira "suene a verdad". La regla es: Si pides datos duros (fechas, autores, leyes), debes verificarlos tú mismo.' }
+          ]
         }
       ]
     };
-
 
     // --- COMPONENTES: SECCIÓN DE HISTORIAS ---
 
