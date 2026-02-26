@@ -23,8 +23,20 @@
   <!-- Babel para compilar JSX en el navegador -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
-    body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #0f172a; }
-    #root { width: 100%; height: 100%; }
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #0f172a;
+    }
+
+    #root {
+      width: 100%;
+      height: 100%;
+    }
   </style>
 </head>
 
@@ -42,22 +54,6 @@
       Image as ImageIcon, MessageSquare, Search, Lock, Smartphone,
       BookOpen, Lightbulb, Gamepad2, XCircle, CheckCircle, GraduationCap, Smile,
       MessageCircle, PlayCircle, Info, ArrowLeft, X
-    } from 'lucide-react';
-    import * as THREE from 'three';
-    import {
-      BrainCircuit, Sparkles, ShieldAlert, HeartHandshake, User,
-      Users, ChevronRight, ChevronLeft, CheckCircle2, AlertCircle,
-      Image as ImageIcon, MessageSquare, Search, Lock, Smartphone,
-      BookOpen, Lightbulb, Gamepad2, XCircle, CheckCircle, GraduationCap, Smile,
-      MessageCircle, PlayCircle, Info, ArrowLeft
-    } from 'lucide-react';
-    
-    import {
-      BrainCircuit, Sparkles, ShieldAlert, HeartHandshake, User,
-      Users, ChevronRight, ChevronLeft, CheckCircle2, AlertCircle,
-      Image as ImageIcon, MessageSquare, Search, Lock, Smartphone,
-      BookOpen, Lightbulb, Gamepad2, XCircle, CheckCircle, GraduationCap, Smile,
-      MessageCircle, PlayCircle, Info, ArrowLeft
     } from 'lucide-react';
 
     // --- DATA: CONTENIDO DE LOS MÓDULOS TEÓRICOS ---
@@ -1169,6 +1165,262 @@
     };
 
     // --- COMPONENTES PRINCIPALES ---
+    // --- 3D MUSEUM COMPONENTS ---
+
+    // Constants for positions
+    const POS = {
+      primary: [-4, 0, -5],
+      secondary: [4, 0, -5],
+      theory: [-3, 1, -10],
+      gym: [0, 1, -12],
+      stories: [3, 1, -10]
+    };
+
+    const Portal = ({ position, label, color, onClick, isHovered, setHovered }) => {
+      return (
+        <group position={position}>
+          <mesh
+            onClick={(e) => { e.stopPropagation(); onClick(); }}
+            onPointerOver={(e) => { e.stopPropagation(); setHovered(true); }}
+            onPointerOut={(e) => { e.stopPropagation(); setHovered(false); }}
+          >
+            <boxGeometry args={[3, 4, 0.5]} />
+            <meshStandardMaterial color={isHovered ? 'white' : color} emissive={color} emissiveIntensity={isHovered ? 0.8 : 0.2} roughness={0.2} metalness={0.8} />
+          </mesh>
+          <Text position={[0, 2.5, 0]} fontSize={0.6} color="white" anchorX="center" anchorY="bottom">
+            {label}
+          </Text>
+        </group>
+      );
+    };
+
+    const CategoryNode = ({ position, label, icon: IconComponent, color, onClick, isHovered, setHovered }) => {
+      const ref = useRef();
+      useFrame((state) => {
+        if (ref.current) ref.current.rotation.y = Math.sin(state.clock.elapsedTime) * 0.2;
+      });
+
+      return (
+        <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
+          <group
+            position={position}
+            onClick={(e) => { e.stopPropagation(); onClick(); }}
+            onPointerOver={(e) => { e.stopPropagation(); setHovered(true); }}
+            onPointerOut={(e) => { e.stopPropagation(); setHovered(false); }}
+          >
+            <mesh ref={ref}>
+              <octahedronGeometry args={[1, 0]} />
+              <meshStandardMaterial color={color} wireframe={!isHovered} emissive={color} emissiveIntensity={0.5} />
+            </mesh>
+            <Html center position={[0, 1.5, 0]}>
+              <div className="flex flex-col items-center justify-center pointer-events-none">
+                <div className={`p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-xl ${isHovered ? 'scale-125' : 'scale-100'} transition-transform`}>
+                  <IconComponent className={`w-8 h-8 text-${color}-400 drop-shadow-lg`} />
+                </div>
+                <span className={`mt-2 font-bold text-lg text-white drop-shadow-md bg-black/50 px-3 py-1 rounded-full ${isHovered ? 'scale-110' : 'scale-100'} transition-transform`}>{label}</span>
+              </div>
+            </Html>
+          </group>
+        </Float>
+      );
+    };
+
+    const ItemCard = ({ position, item, onClick, isHovered, setHovered, colorClass }) => {
+      const startPos = useRef({ x: 0, y: 0 });
+
+      const handlePointerDown = (e) => {
+        startPos.current = { x: e.clientX, y: e.clientY };
+      };
+
+      const handlePointerUp = (e) => {
+        e.stopPropagation();
+        const distance = Math.hypot(e.clientX - startPos.current.x, e.clientY - startPos.current.y);
+        if (distance < 5) { // If it moved less than 5 pixels, it's a click
+          onClick(item);
+        }
+      };
+
+      return (
+        <Float speed={1.5} rotationIntensity={0.1} floatIntensity={0.5}>
+          <group position={position}>
+            <Html transform center portal={container} style={{ width: '300px' }}>
+              <div
+                className={`p-4 rounded-xl border-2 cursor-pointer transition-all transform ${isHovered ? 'scale-105 shadow-2xl z-50' : 'scale-100 shadow-lg'} bg-white ${colorClass.border}`}
+                onPointerDown={handlePointerDown}
+                onPointerUp={handlePointerUp}
+                onPointerEnter={(e) => { e.stopPropagation(); setHovered(true); }}
+                onPointerLeave={(e) => { e.stopPropagation(); setHovered(false); }}
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  <div className={`p-2 rounded-full ${colorClass.bg} ${colorClass.text}`}>
+                    {item.icon ? item.icon : <BookOpen className="w-5 h-5" />}
+                  </div>
+                  <h3 className="font-bold text-lg leading-tight text-slate-800">{item.title}</h3>
+                </div>
+                {item.task && <p className="text-sm text-slate-500 line-clamp-2 mt-2">{item.task}</p>}
+                {item.context && <p className="text-sm text-slate-500 line-clamp-2 mt-2">{item.context}</p>}
+                {item.subject && (
+                  <span className={`inline-block mt-3 px-2 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${colorClass.bg} ${colorClass.text}`}>
+                    {item.subject}
+                  </span>
+                )}
+              </div>
+            </Html>
+          </group>
+        </Float>
+      );
+    };
+
+    // Global container ref for Html portals to ensure they render on top properly in 3D space
+    let container;
+
+    const SceneOptions = ({ level, category, setStage, activeItem, setActiveItem }) => {
+      const isPrimary = level === 'primary';
+      const colors = isPrimary ? { bg: 'bg-orange-100', text: 'text-orange-900', border: 'border-orange-200', hex: '#f97316' }
+        : { bg: 'bg-emerald-100', text: 'text-emerald-900', border: 'border-emerald-200', hex: '#10b981' };
+
+      const [hoveredIndex, setHoveredIndex] = useState(null);
+      useCursor(hoveredIndex !== null);
+
+      if (category === 'modules') {
+        const items = content[level];
+        return (
+          <group position={[0, 0, -20]}>
+            {items.map((item, idx) => {
+              const x = (idx - (items.length - 1) / 2) * 4;
+              return (
+                <ItemCard
+                  key={item.id} position={[x, 0, idx % 2 === 0 ? 0 : 2]}
+                  item={item} onClick={setActiveItem}
+                  isHovered={hoveredIndex === item.id} setHovered={(st) => setHoveredIndex(st ? item.id : null)}
+                  colorClass={colors}
+                />
+              )
+            })}
+          </group>
+        )
+      }
+
+      if (category === 'gym') {
+        const items = gymData[level];
+        // Truncating for 3D space, showing a few
+        const displayItems = items.slice(0, 5);
+        return (
+          <group position={[0, 0, -20]}>
+            {displayItems.map((item, idx) => {
+              const angle = (idx / displayItems.length) * Math.PI * 2;
+              const radius = 6;
+              return (
+                <ItemCard
+                  key={item.id} position={[Math.cos(angle) * radius, 0, Math.sin(angle) * radius - 2]}
+                  item={item} onClick={setActiveItem}
+                  isHovered={hoveredIndex === item.id} setHovered={(st) => setHoveredIndex(st ? item.id : null)}
+                  colorClass={colors}
+                />
+              )
+            })}
+            <Text position={[0, 4, 0]} fontSize={1} color="white" anchorX="center" anchorY="bottom">
+              Selecciona un Reto
+            </Text>
+          </group>
+        )
+      }
+
+      if (category === 'stories') {
+        const items = storiesData[level];
+        return (
+          <group position={[0, 0, -20]}>
+            {items.map((item, idx) => {
+              const x = (idx - (items.length - 1) / 2) * 5;
+              return (
+                <ItemCard
+                  key={item.id} position={[x, Math.sin(x) * 2, 0]}
+                  item={item} onClick={setActiveItem}
+                  isHovered={hoveredIndex === item.id} setHovered={(st) => setHoveredIndex(st ? item.id : null)}
+                  colorClass={colors}
+                />
+              )
+            })}
+          </group>
+        )
+      }
+
+      return null;
+    };
+
+    const MainScene = ({ stage, setStage, level, setLevel, category, setCategory, activeItem, setActiveItem }) => {
+      const controlsRef = useRef();
+      const [hoveredPortal, setHoveredPortal] = useState(null);
+      useCursor(hoveredPortal !== null);
+
+      // Camera transitions
+      useEffect(() => {
+        if (!controlsRef.current) return;
+        const ctrl = controlsRef.current;
+
+        if (stage === 'hall') {
+          ctrl.setLookAt(0, 2, 5, 0, 0, 0, true);
+        } else if (stage === 'level_selection' && !category) {
+          ctrl.setLookAt(0, 3, -2, 0, 1, -10, true);
+        } else if (stage === 'category_selection' && !activeItem) {
+          ctrl.setLookAt(0, 5, -10, 0, 0, -20, true);
+        }
+      }, [stage, category, activeItem]);
+
+      return (
+        <>
+          <CameraControls ref={controlsRef} makeDefault minDistance={2} maxDistance={20} />
+          <ambientLight intensity={0.4} />
+          <directionalLight position={[10, 10, 5]} intensity={1} />
+          <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+
+          <ContactShadows position={[0, -2, 0]} opacity={0.5} scale={50} blur={2} far={10} />
+
+          {/* HALL - Level Selection */}
+          {stage === 'hall' && (
+            <group>
+              <Portal
+                position={POS.primary} color="#f28500" label="Primaria"
+                isHovered={hoveredPortal === 'primary'} setHovered={(s) => setHoveredPortal(s ? 'primary' : null)}
+                onClick={() => { setLevel('primary'); setStage('level_selection'); }}
+              />
+              <Portal
+                position={POS.secondary} color="#10b981" label="Secundaria"
+                isHovered={hoveredPortal === 'secondary'} setHovered={(s) => setHoveredPortal(s ? 'secondary' : null)}
+                onClick={() => { setLevel('secondary'); setStage('level_selection'); }}
+              />
+            </group>
+          )}
+
+          {/* LEVEL SELECTION - Category Selection */}
+          {(stage === 'level_selection' || stage === 'category_selection') && (
+            <group position={[0, 0, -5]}>
+              <CategoryNode
+                position={POS.theory} color="#8b5cf6" label="Teoría" icon={GraduationCap}
+                isHovered={hoveredPortal === 'theory'} setHovered={(s) => setHoveredPortal(s ? 'theory' : null)}
+                onClick={() => { setCategory('modules'); setStage('category_selection'); }}
+              />
+              <CategoryNode
+                position={POS.gym} color="#ec4899" label="Gimnasio" icon={Gamepad2}
+                isHovered={hoveredPortal === 'gym'} setHovered={(s) => setHoveredPortal(s ? 'gym' : null)}
+                onClick={() => { setCategory('gym'); setStage('category_selection'); }}
+              />
+              <CategoryNode
+                position={POS.stories} color="#3b82f6" label="Historias" icon={MessageCircle}
+                isHovered={hoveredPortal === 'stories'} setHovered={(s) => setHoveredPortal(s ? 'stories' : null)}
+                onClick={() => { setCategory('stories'); setStage('category_selection'); }}
+              />
+            </group>
+          )}
+
+          {/* CATEGORY SELECTION - Display Items */}
+          {stage === 'category_selection' && category && (
+            <SceneOptions level={level} category={category} setStage={setStage} activeItem={activeItem} setActiveItem={setActiveItem} />
+          )}
+
+        </>
+      );
+    }
 
     const App = () => {
       const [stage, setStage] = useState('hall'); // hall | level_selection | category_selection
@@ -1203,170 +1455,170 @@
               <BrainCircuit className="w-8 h-8 text-yellow-300" />
               <h1 className="text-xl font-bold tracking-tight text-white drop-shadow-md hidden sm:block">Exploradores de IA - Museo 3D</h1>
             </div>
-            
+
             <div className="flex gap-2 pointer-events-auto">
               {level && (
-                 <button onClick={() => {setLevel(null); setCategory(null); setStage('hall');}} className="text-sm bg-indigo-500/80 hover:bg-indigo-600 px-4 py-2 rounded-full font-bold text-white backdrop-blur shadow-lg transition">
-                   Cambiar Nivel
-                 </button>
+                <button onClick={() => { setLevel(null); setCategory(null); setStage('hall'); }} className="text-sm bg-indigo-500/80 hover:bg-indigo-600 px-4 py-2 rounded-full font-bold text-white backdrop-blur shadow-lg transition">
+                  Cambiar Nivel
+                </button>
               )}
             </div>
           </header>
 
           {/* Contextual CTAs */}
           {!showOverlay && (
-             <div className="absolute bottom-10 left-0 right-0 flex justify-center z-10 pointer-events-none animate-bounce">
-                <div className="bg-black/50 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 shadow-2xl">
-                   <p className="text-white font-bold text-lg flex items-center gap-2">
-                     <Info className="w-5 h-5 text-yellow-400" />
-                     {stage === 'hall' && "Toca un portal para entrar al museo"}
-                     {stage === 'level_selection' && "¿Qué quieres explorar hoy? Toca una categoría"}
-                     {stage === 'category_selection' && "Selecciona un elemento para leer"}
-                   </p>
-                </div>
-             </div>
+            <div className="absolute bottom-10 left-0 right-0 flex justify-center z-10 pointer-events-none animate-bounce">
+              <div className="bg-black/50 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 shadow-2xl">
+                <p className="text-white font-bold text-lg flex items-center gap-2">
+                  <Info className="w-5 h-5 text-yellow-400" />
+                  {stage === 'hall' && "Toca un portal para entrar al museo"}
+                  {stage === 'level_selection' && "¿Qué quieres explorar hoy? Toca una categoría"}
+                  {stage === 'category_selection' && "Selecciona un elemento para leer"}
+                </p>
+              </div>
+            </div>
           )}
 
           {/* 3D Canvas */}
-          <div className="w-full h-full bg-slate-900" ref={c => {if (c) container = c}}>
+          <div className="w-full h-full bg-slate-900" ref={c => { if (c) container = c }}>
             <Canvas camera={{ position: [0, 2, 8], fov: 60 }} shadows>
-               <Suspense fallback={null}>
-                  <MainScene 
-                     stage={stage} setStage={setStage} 
-                     level={level} setLevel={setLevel} 
-                     category={category} setCategory={setCategory} 
-                     activeItem={activeItem} setActiveItem={handleItemClick}
-                  />
-               </Suspense>
+              <Suspense fallback={null}>
+                <MainScene
+                  stage={stage} setStage={setStage}
+                  level={level} setLevel={setLevel}
+                  category={category} setCategory={setCategory}
+                  activeItem={activeItem} setActiveItem={handleItemClick}
+                />
+              </Suspense>
             </Canvas>
           </div>
 
           {/* 2D Overlay for content */}
           {showOverlay && activeItem && (
-             <div className="absolute inset-0 bg-black/60 backdrop-blur-md z-50 flex items-center justify-center p-4 sm:p-8 animate-fade-in overflow-y-auto">
-                <div className="bg-white w-full max-w-4xl rounded-2xl shadow-2xl flex flex-col max-h-full overflow-hidden border-4 border-indigo-400 relative">
-                   <button onClick={closeOverlay} className="absolute top-4 right-4 p-2 bg-slate-100 hover:bg-red-100 hover:text-red-600 rounded-full transition-colors z-50">
-                      <X className="w-6 h-6" />
-                   </button>
-                   
-                   <div className="flex-1 overflow-y-auto p-6 md:p-10">
-                      {category === 'modules' && (
-                         <div className="prose max-w-none">
-                            <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                               {activeItem.icon} {activeItem.title}
-                            </h2>
-                            <p className="text-xl text-slate-700 leading-relaxed mb-8">{activeItem.theory}</p>
-                            
-                            {activeItem.extendedTheory && (
-                               <div className="mt-8 p-6 md:p-8 bg-slate-50 border-2 rounded-2xl shadow-inner border-dashed border-slate-300">
-                                  {activeItem.extendedTheory}
-                               </div>
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 sm:p-8 animate-fade-in overflow-y-auto" style={{ zIndex: 99999999 }}>
+              <div className="bg-white w-full max-w-4xl rounded-2xl shadow-2xl flex flex-col max-h-full overflow-hidden border-4 border-indigo-400 relative">
+                <button onClick={closeOverlay} className="absolute top-4 right-4 p-2 bg-slate-100 hover:bg-red-100 hover:text-red-600 rounded-full transition-colors z-50">
+                  <X className="w-6 h-6" />
+                </button>
+
+                <div className="flex-1 overflow-y-auto p-6 md:p-10">
+                  {category === 'modules' && (
+                    <div className="prose max-w-none">
+                      <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
+                        {activeItem.icon} {activeItem.title}
+                      </h2>
+                      <p className="text-xl text-slate-700 leading-relaxed mb-8">{activeItem.theory}</p>
+
+                      {activeItem.extendedTheory && (
+                        <div className="mt-8 p-6 md:p-8 bg-slate-50 border-2 rounded-2xl shadow-inner border-dashed border-slate-300">
+                          {activeItem.extendedTheory}
+                        </div>
+                      )}
+
+                      <div className="mt-10 p-6 md:p-8 bg-slate-100 rounded-2xl border border-slate-200">
+                        <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-indigo-700">
+                          <Sparkles className="text-indigo-500" />
+                          Zona Interactiva
+                        </h3>
+                        <ActivityEngine activity={activeItem.activity} isPrimary={level === 'primary'} />
+                      </div>
+                    </div>
+                  )}
+
+                  {category === 'gym' && (
+                    <div className="space-y-6">
+                      <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-indigo-100 text-indigo-800">
+                        {activeItem.subject}
+                      </span>
+                      <h2 className="text-3xl font-bold text-slate-800">{activeItem.title}</h2>
+                      <div className="bg-indigo-50 p-4 rounded-xl border border-indigo-200">
+                        <p className="text-slate-700 italic font-medium">"{activeItem.task}"</p>
+                      </div>
+
+                      <div className="space-y-4">
+                        <h4 className="font-bold text-red-700 flex items-center gap-2">
+                          <XCircle className="w-5 h-5" /> El Camino del Perezoso ❌
+                        </h4>
+                        <div className="bg-red-50 p-4 rounded-xl border border-red-100">
+                          <p className="font-mono text-sm text-red-900 mb-3 bg-white p-2 rounded border border-red-200 shadow-inner">
+                            {activeItem.bad.prompt}
+                          </p>
+                          <p className="text-sm text-red-800">{activeItem.bad.reason}</p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-4 mt-6">
+                        <h4 className="font-bold text-emerald-700 flex items-center gap-2">
+                          <CheckCircle className="w-5 h-5" /> El Camino del Explorador ✅
+                        </h4>
+                        <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
+                          {activeItem.good.steps.map((step, idx) => (
+                            <div key={idx} className="mb-4 last:mb-0">
+                              <p className="text-sm font-bold text-emerald-800 mb-2">{step.title}</p>
+                              <p className="font-mono text-sm text-slate-800 mb-2 bg-white p-3 rounded-lg border border-slate-200 border-l-4 border-l-indigo-400">
+                                "{step.prompt}"
+                              </p>
+                            </div>
+                          ))}
+                          <p className="text-sm mt-4 pt-3 border-t border-emerald-200 text-emerald-800">
+                            <strong>Por qué funciona:</strong> {activeItem.good.reason}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {category === 'stories' && (
+                    <div className="space-y-6">
+                      <h2 className="text-3xl font-bold text-slate-800">{activeItem.title}</h2>
+                      <p className="text-slate-600 bg-slate-100 p-4 rounded-lg font-medium">Contexto: {activeItem.context}</p>
+
+                      <div className="bg-slate-50 rounded-2xl p-4 md:p-6 border border-slate-200 space-y-4">
+                        {activeItem.messages.map((msg, idx) => (
+                          <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : msg.role === 'ai' ? 'justify-start' : 'justify-center'}`}>
+                            {msg.role === 'user' && (
+                              <div className="max-w-[80%] p-4 rounded-2xl rounded-tr-sm bg-indigo-600 text-white shadow-md">
+                                <p className="font-medium">{msg.content}</p>
+                              </div>
                             )}
-
-                            <div className="mt-10 p-6 md:p-8 bg-slate-100 rounded-2xl border border-slate-200">
-                               <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-indigo-700">
-                                  <Sparkles className="text-indigo-500" />
-                                  Zona Interactiva
-                               </h3>
-                               <ActivityEngine activity={activeItem.activity} isPrimary={level === 'primary'} />
-                            </div>
-                         </div>
-                      )}
-
-                      {category === 'gym' && (
-                         <div className="space-y-6">
-                            <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-indigo-100 text-indigo-800">
-                               {activeItem.subject}
-                            </span>
-                            <h2 className="text-3xl font-bold text-slate-800">{activeItem.title}</h2>
-                            <div className="bg-indigo-50 p-4 rounded-xl border border-indigo-200">
-                               <p className="text-slate-700 italic font-medium">"{activeItem.task}"</p>
-                            </div>
-
-                            <div className="space-y-4">
-                               <h4 className="font-bold text-red-700 flex items-center gap-2">
-                                  <XCircle className="w-5 h-5" /> El Camino del Perezoso ❌
-                               </h4>
-                               <div className="bg-red-50 p-4 rounded-xl border border-red-100">
-                                  <p className="font-mono text-sm text-red-900 mb-3 bg-white p-2 rounded border border-red-200 shadow-inner">
-                                     {activeItem.bad.prompt}
-                                  </p>
-                                  <p className="text-sm text-red-800">{activeItem.bad.reason}</p>
-                               </div>
-                            </div>
-
-                            <div className="space-y-4 mt-6">
-                               <h4 className="font-bold text-emerald-700 flex items-center gap-2">
-                                  <CheckCircle className="w-5 h-5" /> El Camino del Explorador ✅
-                               </h4>
-                               <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
-                                  {activeItem.good.steps.map((step, idx) => (
-                                     <div key={idx} className="mb-4 last:mb-0">
-                                        <p className="text-sm font-bold text-emerald-800 mb-2">{step.title}</p>
-                                        <p className="font-mono text-sm text-slate-800 mb-2 bg-white p-3 rounded-lg border border-slate-200 border-l-4 border-l-indigo-400">
-                                           "{step.prompt}"
-                                        </p>
-                                     </div>
-                                  ))}
-                                  <p className="text-sm mt-4 pt-3 border-t border-emerald-200 text-emerald-800">
-                                     <strong>Por qué funciona:</strong> {activeItem.good.reason}
-                                  </p>
-                               </div>
-                            </div>
-                         </div>
-                      )}
-
-                      {category === 'stories' && (
-                         <div className="space-y-6">
-                            <h2 className="text-3xl font-bold text-slate-800">{activeItem.title}</h2>
-                            <p className="text-slate-600 bg-slate-100 p-4 rounded-lg font-medium">Contexto: {activeItem.context}</p>
-                            
-                            <div className="bg-slate-50 rounded-2xl p-4 md:p-6 border border-slate-200 space-y-4">
-                               {activeItem.messages.map((msg, idx) => (
-                                  <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : msg.role === 'ai' ? 'justify-start' : 'justify-center'}`}>
-                                     {msg.role === 'user' && (
-                                        <div className="max-w-[80%] p-4 rounded-2xl rounded-tr-sm bg-indigo-600 text-white shadow-md">
-                                           <p className="font-medium">{msg.content}</p>
-                                        </div>
-                                     )}
-                                     {msg.role === 'ai' && (
-                                        <div className="max-w-[80%] flex items-start gap-3">
-                                           <div className="p-2 bg-white rounded-full shadow-sm mt-1 shrink-0"><BrainCircuit className="w-5 h-5 text-indigo-600"/></div>
-                                           <div className="p-4 rounded-2xl rounded-tl-sm bg-white border border-slate-200 shadow-sm text-slate-700">
-                                              <p>{msg.content}</p>
-                                           </div>
-                                        </div>
-                                     )}
-                                     {msg.role === 'alert' && (
-                                        <div className="w-full max-w-lg my-4 p-5 bg-yellow-100 border-2 border-yellow-400 rounded-xl shadow-md rotate-1">
-                                           <p className="font-bold text-yellow-900 flex items-start gap-2">
-                                              <Info className="w-5 h-5 shrink-0 text-yellow-600 mt-0.5" />
-                                              <span>{msg.content}</span>
-                                           </p>
-                                        </div>
-                                     )}
-                                     {msg.role === 'action' && (
-                                        <div className="w-full text-center my-2">
-                                           <span className="inline-block px-4 py-2 bg-slate-200 text-slate-600 text-sm italic rounded-full border border-slate-300">
-                                              {msg.content}
-                                           </span>
-                                        </div>
-                                     )}
-                                  </div>
-                               ))}
-                            </div>
-                         </div>
-                      )}
-                   </div>
-                   
-                   {/* Overlay Footer */}
-                   <div className="bg-slate-100 p-4 border-t flex justify-end">
-                      <button onClick={closeOverlay} className="px-6 py-2 bg-indigo-600 text-white rounded-full font-bold shadow hover:bg-indigo-700 transition">
-                         Me Quedó Claro, Volver
-                      </button>
-                   </div>
+                            {msg.role === 'ai' && (
+                              <div className="max-w-[80%] flex items-start gap-3">
+                                <div className="p-2 bg-white rounded-full shadow-sm mt-1 shrink-0"><BrainCircuit className="w-5 h-5 text-indigo-600" /></div>
+                                <div className="p-4 rounded-2xl rounded-tl-sm bg-white border border-slate-200 shadow-sm text-slate-700">
+                                  <p>{msg.content}</p>
+                                </div>
+                              </div>
+                            )}
+                            {msg.role === 'alert' && (
+                              <div className="w-full max-w-lg my-4 p-5 bg-yellow-100 border-2 border-yellow-400 rounded-xl shadow-md rotate-1">
+                                <p className="font-bold text-yellow-900 flex items-start gap-2">
+                                  <Info className="w-5 h-5 shrink-0 text-yellow-600 mt-0.5" />
+                                  <span>{msg.content}</span>
+                                </p>
+                              </div>
+                            )}
+                            {msg.role === 'action' && (
+                              <div className="w-full text-center my-2">
+                                <span className="inline-block px-4 py-2 bg-slate-200 text-slate-600 text-sm italic rounded-full border border-slate-300">
+                                  {msg.content}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-             </div>
+
+                {/* Overlay Footer */}
+                <div className="bg-slate-100 p-4 border-t flex justify-end">
+                  <button onClick={closeOverlay} className="px-6 py-2 bg-indigo-600 text-white rounded-full font-bold shadow hover:bg-indigo-700 transition">
+                    Me Quedó Claro, Volver
+                  </button>
+                </div>
+              </div>
+            </div>
           )}
         </div>
       );
@@ -1376,4 +1628,5 @@
     root.render(<App />);
   </script>
 </body>
+
 </html>
