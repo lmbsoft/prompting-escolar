@@ -1892,6 +1892,18 @@
             </p>
           </div>
 
+          <div className="grid md:grid-cols-3 gap-3 mb-8">
+            <div className="bg-rose-50 border border-rose-200 rounded-xl p-3 text-xs text-rose-900">
+              <strong>Alucinaciones:</strong> si el dato importa, se verifica fuera del asistente.
+            </div>
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-900">
+              <strong>Dependencia:</strong> acompañamiento digital sí, aislamiento no.
+            </div>
+            <div className="bg-sky-50 border border-sky-200 rounded-xl p-3 text-xs text-sky-900">
+              <strong>Metacognición:</strong> comentar qué pensaron antes y después de pedir.
+            </div>
+          </div>
+
           <StoryCompanionGuide introGuide={introGuide} isPrimary={isPrimary} />
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -2053,6 +2065,16 @@
                   </button>
                 </div>
 
+                <div className="bg-white border border-slate-200 rounded-2xl p-4 md:p-5 shadow-sm">
+                  <p className="font-bold text-slate-800 mb-2">Ruta breve para aprender en dupla</p>
+                  <div className="grid md:grid-cols-4 gap-2 text-xs md:text-sm">
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-2">Definan juntos el objetivo.</div>
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-2">Intenten primero una idea propia.</div>
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-2">Pidan mejora con contexto y formato.</div>
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-2">Verifiquen datos importantes fuera del chat.</div>
+                  </div>
+                </div>
+
                 {/* VISTAS */}
                 {currentView === 'modules' && (
                   <ModuleViewer
@@ -2127,6 +2149,18 @@
           </div>
 
           <CompanionGymGuide guide={gymGuide} isPrimary={isPrimary} activeTab={activeTab} />
+
+          <div className="grid md:grid-cols-3 gap-3 mb-8">
+            <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-3 text-sm text-indigo-900">
+              <strong>1) Intento primero:</strong> antes del chat, formulen una respuesta inicial propia.
+            </div>
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm text-amber-900">
+              <strong>2) Prompt preciso:</strong> agreguen rol, contexto y formato deseado.
+            </div>
+            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-sm text-emerald-900">
+              <strong>3) Revisión conjunta:</strong> validen utilidad, sesgos y datos verificables.
+            </div>
+          </div>
 
           {/* Sub-Navegación del Gimnasio */}
           <div className="flex flex-wrap justify-center gap-3 mb-8">
@@ -2378,6 +2412,11 @@
               </div>
               <div className="prose max-w-none text-lg text-slate-700 leading-relaxed mb-6">
                 <p>{module.theory}</p>
+              </div>
+
+              <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-xl p-4 text-sm text-indigo-900">
+                <p className="font-bold mb-1">Principio de trabajo en familia</p>
+                <p>Primero piensen juntos una respuesta inicial. Después usen IA para mejorar, comparar y verificar. La decisión final siempre queda en ustedes.</p>
               </div>
 
               {module.extendedTheory && (

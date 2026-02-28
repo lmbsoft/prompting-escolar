@@ -3035,6 +3035,18 @@
             </p>
           </div>
 
+          <div className="grid md:grid-cols-3 gap-3 mb-8">
+            <div className="bg-rose-50 border border-rose-200 rounded-xl p-3 text-xs text-rose-900">
+              <strong>Alucinaciones:</strong> respuesta convincente no siempre significa respuesta correcta.
+            </div>
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-900">
+              <strong>Uso emocional:</strong> apoyo digital sí, vínculos humanos primero.
+            </div>
+            <div className="bg-sky-50 border border-sky-200 rounded-xl p-3 text-xs text-sky-900">
+              <strong>Criterio personal:</strong> la IA sugiere; tú decides y verificas.
+            </div>
+          </div>
+
           <StoryCompanionGuide introGuide={introGuide} isPrimary={isPrimary} />
 
           <div className={`p-6 rounded-2xl border-2 ${themeColor}`}>
@@ -3214,6 +3226,16 @@
                   </button>
                 </div>
 
+                <div className="bg-white border border-slate-200 rounded-2xl p-4 md:p-5 shadow-sm">
+                  <p className="font-bold text-slate-800 mb-2">Ruta breve para aprender con autonomía</p>
+                  <div className="grid md:grid-cols-4 gap-2 text-xs md:text-sm">
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-2">Define qué decisión o proyecto quieres resolver.</div>
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-2">Haz un intento inicial con tus palabras.</div>
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-2">Pide mejora con formato, límites y criterio.</div>
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-2">Verifica y conserva control sobre la decisión final.</div>
+                  </div>
+                </div>
+
                 {/* VISTAS */}
                 {currentView === 'modules' && (
                   <ModuleViewer
@@ -3293,6 +3315,18 @@
           </div>
 
           <CompanionGymGuide guide={gymGuide} isPrimary={isPrimary} activeTab={activeTab} />
+
+          <div className="grid md:grid-cols-3 gap-3 mb-8">
+            <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-3 text-sm text-indigo-900">
+              <strong>1) Intento propio:</strong> pensar primero mejora la calidad del diálogo con IA.
+            </div>
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm text-amber-900">
+              <strong>2) Prompt con intención:</strong> objetivo, contexto y formato claro.
+            </div>
+            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-sm text-emerald-900">
+              <strong>3) Revisión activa:</strong> verificar datos y decidir con criterio personal.
+            </div>
+          </div>
 
           {/* Sub-Navegación del Gimnasio */}
           <div className="flex flex-wrap justify-center gap-3 mb-8">
@@ -3546,6 +3580,11 @@
             </div>
             <div className="prose max-w-none text-lg text-slate-700 leading-relaxed mb-6">
               <p>{module.theory}</p>
+            </div>
+
+            <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-xl p-4 text-sm text-indigo-900">
+              <p className="font-bold mb-1">Principio de autonomía inteligente</p>
+              <p>Construye primero tu criterio y luego usa IA para ampliar opciones, ordenar ideas y revisar. En decisiones sensibles, valida siempre con fuentes o personas de confianza.</p>
             </div>
 
             {module.extendedTheory && (

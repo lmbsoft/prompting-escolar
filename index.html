@@ -1038,6 +1038,18 @@
             </p>
           </div>
 
+          <div className="grid md:grid-cols-3 gap-3 mb-8">
+            <div className="bg-rose-50 border border-rose-200 rounded-xl p-3 text-xs text-rose-900">
+              <strong>Alucinaciones:</strong> una respuesta segura puede estar equivocada.
+            </div>
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-900">
+              <strong>Dependencia:</strong> usa IA como apoyo, no como reemplazo de vínculos.
+            </div>
+            <div className="bg-sky-50 border border-sky-200 rounded-xl p-3 text-xs text-sky-900">
+              <strong>Criterio:</strong> director del proceso, no pasajero del resultado.
+            </div>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-6">
             {stories.map(story => (
               <div key={story.id}
@@ -1196,6 +1208,16 @@
                   </button>
                 </div>
 
+                <div className="bg-white border border-slate-200 rounded-2xl p-4 md:p-5 shadow-sm">
+                  <p className="font-bold text-slate-800 mb-2">Ruta breve para usar IA con calidad</p>
+                  <div className="grid md:grid-cols-4 gap-2 text-xs md:text-sm">
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-2">Define qué quieres lograr.</div>
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-2">Haz un intento propio breve.</div>
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-2">Pide mejora con restricciones claras.</div>
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-2">Valida y decide con criterio humano.</div>
+                  </div>
+                </div>
+
                 {/* VISTAS */}
                 {currentView === 'modules' && (
                   <ModuleViewer
@@ -1266,6 +1288,18 @@
             <p className="text-slate-500 mt-2 text-lg">
               No copies y pegues. Aprende a usar la IA como tu copiloto interactivo.
             </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-3 mb-8">
+            <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-3 text-sm text-indigo-900">
+              <strong>1) Intenta primero:</strong> escribe una idea propia antes de pedir ayuda.
+            </div>
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm text-amber-900">
+              <strong>2) Especifica mejor:</strong> define contexto, objetivo y formato de salida.
+            </div>
+            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-sm text-emerald-900">
+              <strong>3) Verifica siempre:</strong> si hay datos críticos, contrasta fuera del chat.
+            </div>
           </div>
 
           {/* Sub-Navegación del Gimnasio */}
@@ -1350,6 +1384,15 @@
                 </div>
               </div>
 
+              <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
+                <p className="font-bold text-indigo-900 mb-2">Puente de mejora (ruta sugerida)</p>
+                <ol className="list-decimal pl-5 text-sm text-indigo-900 space-y-1">
+                  <li>Haz un primer intento corto con tus palabras.</li>
+                  <li>Pide mejora con contexto, límites y formato.</li>
+                  <li>Revisa respuesta, corrige y vuelve a iterar.</li>
+                </ol>
+              </div>
+
               {/* El Camino del Explorador (BUENO) */}
               <div className="space-y-3">
                 <h4 className={`font-bold flex items-center gap-2 ${isPrimary ? 'text-orange-600' : 'text-emerald-700'}`}>
@@ -1427,6 +1470,11 @@
               </div>
               <div className="prose max-w-none text-lg text-slate-700 leading-relaxed mb-6">
                 <p>{module.theory}</p>
+              </div>
+
+              <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-xl p-4 text-sm text-indigo-900">
+                <p className="font-bold mb-1">Principio de trabajo</p>
+                <p>Primero comprende el tema con tu criterio, luego usa IA para ampliar, practicar y revisar. Si el dato es importante, verifícalo fuera del chat.</p>
               </div>
 
               {module.extendedTheory && (

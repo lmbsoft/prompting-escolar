@@ -254,6 +254,22 @@
           'Medir progreso en calidad, no en cantidad de mensajes.'
         ],
         practice: 'Ejercicio rápido: define tres proyectos personales para las próximas cuatro semanas y escribe un primer prompt para cada uno.'
+      },
+      {
+        id: 't10',
+        title: 'Técnicas de Prompting que elevan resultados',
+        subtitle: 'Un método práctico para pedir mejor y revisar mejor',
+        reading: [
+          'Si quieres que la IA trabaje a tu favor, no alcanza con “dar una orden”. Conviene diseñar la consulta como una pequeña arquitectura: rol, objetivo, contexto, formato de salida, criterios de calidad y plan de iteración.',
+          'Una técnica muy útil es “intento y mejora”: primero pides un borrador acotado, luego detectas lo que falta, y finalmente das una segunda instrucción más precisa. Ese segundo paso suele multiplicar la calidad de salida.',
+          'Otra técnica clave es pedir autoevaluación: “antes de cerrar, revisa coherencia, precisión y límites del resultado”. Esto no reemplaza tu criterio, pero reduce errores típicos y mejora la versión inicial.'
+        ],
+        checklist: [
+          'Prompt malo: demasiado corto, sin contexto ni formato esperado.',
+          'Prompt intermedio: define objetivo y formato, pero sin criterios de calidad.',
+          'Prompt robusto: objetivo + contexto + formato + criterios + iteración.'
+        ],
+        practice: 'Ejercicio rápido: toma un prompt que uses seguido y escribe tres versiones (mala, intermedia y robusta). Compara qué cambia en la respuesta.'
       }
     ];
 
@@ -592,223 +608,503 @@
       }
     ];
 
+    const levelTechniqueMap = {
+      inicio: [
+        'Rol explícito',
+        'Objetivo concreto',
+        'Formato de salida definido',
+        'Lenguaje claro y acotado'
+      ],
+      profundizar: [
+        'Restricciones de calidad',
+        'Criterios de evaluación',
+        'Iteración por etapas',
+        'Control de ambigüedad'
+      ],
+      proyectar: [
+        'Diseño por fases',
+        'Supuestos y riesgos',
+        'Entregables verificables',
+        'Cierre con siguiente acción'
+      ]
+    };
+
+    const roleByDomain = {
+      'escritura personal': 'editor de no ficción con enfoque narrativo',
+      'docencia': 'docente y diseñador pedagógico',
+      'lectura crítica': 'analista de textos',
+      'organización': 'planificador de aprendizaje',
+      'proyecto editorial': 'editor de estructura de libros',
+      'vida cotidiana': 'asistente de decisiones prácticas',
+      'comunicación': 'editor de comunicación interpersonal',
+      'aprendizaje digital': 'instructor digital paciente',
+      'creatividad': 'facilitador creativo',
+      'investigación personal': 'mentor de investigación aplicada',
+      'memoria activa': 'especialista en aprendizaje activo',
+      'planificación cultural': 'curador de itinerarios culturales',
+      'edición de textos': 'editor de estilo y argumentación',
+      'pensamiento crítico': 'oponente constructivo',
+      'diseño de cursos': 'diseñador instruccional',
+      'fuentes': 'asistente de verificación metodológica',
+      'historia de vida': 'editor de memorias',
+      'productividad intelectual': 'mentor de trabajo intelectual',
+      'cultura y análisis': 'comparatista cultural',
+      'divulgación': 'redactor de divulgación rigurosa',
+      'plan de proyecto': 'consultor de proyectos',
+      'ia aplicada': 'auditor de prompts',
+      'conversaciones significativas': 'diseñador de entrevistas',
+      'aprendizaje continuo': 'mentor de mejora continua',
+      'libro completo': 'arquitecto editorial',
+      'curso autoral': 'director académico',
+      'laboratorio de ideas': 'facilitador de pensamiento estratégico',
+      'investigación aplicada': 'metodólogo',
+      'producción audiovisual': 'guionista pedagógico',
+      'memorias públicas': 'curador narrativo',
+      'círculo de lectura': 'moderador de discusión',
+      'asistencia personalizada': 'diseñador de sistemas personales',
+      'proyectos comunitarios': 'gestor de iniciativas locales',
+      'pensamiento estratégico': 'analista de escenarios',
+      'innovación personal': 'diseñador de experimentos',
+      'mentoría': 'diseñador de programas de mentoría'
+    };
+
+    const resolveRole = (domain) => roleByDomain[domain.toLowerCase()] || 'asistente experto en diseño de prompts';
+
+    const resolveOutputFormat = (item) => {
+      const domain = item.domain.toLowerCase();
+      if (domain.includes('escritura') || domain.includes('editorial') || domain.includes('divulgación')) return 'Estructura en apartados con subtítulos y un bloque final de mejora.';
+      if (domain.includes('docencia') || domain.includes('curso')) return 'Tabla por sesiones con objetivo, actividad, evidencia y cierre.';
+      if (domain.includes('investigación') || domain.includes('fuentes')) return 'Matriz con columnas y estado de verificación.';
+      if (domain.includes('comunicación')) return 'Tres versiones del mensaje con contexto de uso.';
+      if (domain.includes('proyecto') || domain.includes('estratégico')) return 'Plan por fases con hitos y riesgos.';
+      return 'Lista estructurada con pasos, criterios y cierre accionable.';
+    };
+
+    const resolveBadPrompt = (item) => {
+      if (item.level === 'inicio') return `Ayúdame con esto: ${item.title}.`;
+      if (item.level === 'profundizar') return `Explícame ${item.title} y dame algo útil rápido.`;
+      return `Haz todo el trabajo de ${item.title} y déjalo listo para usar.`;
+    };
+
+    const resolveWhyBad = (item) => {
+      if (item.level === 'inicio') return 'No define contexto, formato ni nivel de detalle. La IA responde de forma amplia y poco práctica.';
+      if (item.level === 'profundizar') return 'Pide profundidad sin restricciones ni criterios de calidad. Es probable que la salida sea irregular.';
+      return 'Delega en bloque una tarea compleja sin etapas ni validación. Aumenta riesgo de errores y pérdida de autoría.';
+    };
+
+    const buildEnhancedPrompt = (item) => {
+      const techniques = levelTechniqueMap[item.level] || levelTechniqueMap.inicio;
+      const role = resolveRole(item.domain);
+      const outputFormat = resolveOutputFormat(item);
+      return [
+        `Actúa como ${role}.`,
+        ``,
+        `Objetivo principal: ${item.objective}`,
+        `Tarea base: ${item.prompt}`,
+        ``,
+        `Condiciones de trabajo:`,
+        `1) Si te falta contexto, hazme primero 3 preguntas breves de calibración antes de producir la versión final.`,
+        `2) Estructura la respuesta en bloques claramente titulados y evita relleno.`,
+        `3) Formato esperado: ${outputFormat}`,
+        `4) Incluye criterios de calidad al final (qué revisar y cómo mejorarlo en la siguiente iteración).`,
+        `5) Señala supuestos que estés haciendo para que yo pueda corregirlos.`,
+        ``,
+        `Técnicas aplicadas en este prompt: ${techniques.join(', ')}.`,
+        `Cierre obligatorio: propone una versión 2 del pedido para iterar con mayor precisión.`
+      ].join('\n');
+    };
+
+    const enrichedPromptItems = promptItems.map((item) => ({
+      ...item,
+      badPrompt: resolveBadPrompt(item),
+      badReason: resolveWhyBad(item),
+      techniques: levelTechniqueMap[item.level] || levelTechniqueMap.inicio,
+      enhancedPrompt: buildEnhancedPrompt(item)
+    }));
+
     const stories = [
       {
         id: 's1',
-        title: 'Del cuaderno de notas al primer ensayo publicable',
+        title: 'Del cuaderno de notas al ensayo que sí se deja leer',
         focus: 'Escritura y edición',
-        context: 'Una persona con años de apuntes quiere convertir sus ideas en un ensayo coherente.',
+        context: 'Una autora con años de apuntes pasa de la idea suelta al texto publicable, iterando varias veces.',
         conversation: [
-          { role: 'usuario', text: 'Tengo notas dispersas de muchos años. No sé por dónde empezar para convertirlas en un ensayo.' },
-          { role: 'ia', text: 'Empecemos por ordenar el material. Te propongo identificar 3 ejes temáticos y una pregunta central por eje.' },
-          { role: 'usuario', text: 'Bien. Ya tengo los ejes. ¿Cómo paso de eso a un texto sólido?' },
-          { role: 'ia', text: 'Armemos una estructura en 5 secciones: apertura, tesis, desarrollo por eje, objeciones y cierre. Luego editamos en capas para no perder tu voz.' },
-          { role: 'nota', text: 'Resultado: en dos sesiones se obtuvo un esquema completo y un borrador de 1.800 palabras listo para revisión.' }
+          { role: 'usuario', text: 'Tengo 40 páginas de notas y cada una va para un lado. ¿Me escribes un ensayo completo?' },
+          { role: 'ia', text: 'Claro. Aquí tienes un ensayo de 2.000 palabras.' },
+          { role: 'alerta', text: 'Señal de riesgo: la IA devolvió un texto prolijo, pero no refleja la voz ni la tesis de la autora.' },
+          { role: 'ajuste', text: 'No quiero el ensayo final todavía. Quiero tres cosas: tesis en una frase, esquema en 5 secciones y preguntas para decidir qué ejemplos personales incluir.' },
+          { role: 'ia', text: 'Perfecto. Tesis propuesta: ... Estructura: ... Preguntas guía: ...' },
+          { role: 'usuario', text: 'Ahora sí, redacta solo la introducción y el primer apartado, manteniendo un tono sobrio y cercano.' },
+          { role: 'ia', text: 'Aquí va el borrador de la introducción y primer apartado con tus criterios.' },
+          { role: 'resultado', text: 'Resultado: en lugar de un texto genérico, se construyó una versión autoral por etapas.' }
         ],
-        reusablePrompt: 'Actúa como editor de ensayo. Con estas notas, ayúdame en tres pasos: 1) identificar tesis central, 2) proponer estructura de 5 secciones, 3) sugerir mejoras de claridad sin reemplazar mi estilo.'
+        reusablePrompt: 'Actúa como editor de ensayo. No escribas el texto final de una vez. Ayúdame en 4 etapas: 1) tesis en una frase, 2) estructura en 5 secciones, 3) preguntas para elegir ejemplos propios, 4) redacción solo de la primera sección con mi tono.'
       },
       {
         id: 's2',
-        title: 'Una clase magistral convertida en microcurso',
+        title: 'Conferencia antigua, curso nuevo',
         focus: 'Docencia y transferencia',
-        context: 'Material de una conferencia se transforma en curso breve autogestionado.',
+        context: 'Una charla magistral se convierte en un curso breve y práctico.',
         conversation: [
-          { role: 'usuario', text: 'Di una conferencia muy buena, pero quiero convertirla en curso de 4 semanas.' },
-          { role: 'ia', text: 'Tomemos la conferencia como módulo 1. Después dividimos conceptos en progresión: fundamentos, casos, práctica y proyecto final.' },
-          { role: 'usuario', text: 'Necesito que no quede teórico solamente.' },
-          { role: 'ia', text: 'Incluyamos una actividad aplicada por semana y una rúbrica simple para autoevaluación.' },
-          { role: 'nota', text: 'Resultado: se creó un programa completo con guías semanales y actividades de transferencia.' }
+          { role: 'usuario', text: 'Di una conferencia muy buena hace años. Quiero convertirla en curso de 4 semanas.' },
+          { role: 'ia', text: 'Te propongo 4 módulos teóricos con lectura complementaria.' },
+          { role: 'alerta', text: 'Primera respuesta correcta pero incompleta: mucho contenido, poca experiencia de aprendizaje.' },
+          { role: 'ajuste', text: 'Reformula. Cada semana debe incluir objetivo, actividad aplicada, rúbrica breve y cierre de reflexión.' },
+          { role: 'ia', text: 'Listo, aquí va una versión orientada a práctica con evaluación formativa.' },
+          { role: 'usuario', text: 'Agrega una variante para grupos de conversación y otra para trabajo individual.' },
+          { role: 'ia', text: 'Incluidas dos versiones del curso con ajustes de dinámica y tiempos.' },
+          { role: 'resultado', text: 'Resultado: la conferencia dejó de ser archivo y pasó a ser programa enseñable.' }
         ],
-        reusablePrompt: 'Actúa como diseñador instruccional. Convierte este material en un curso de 4 semanas con objetivos, actividad aplicada y criterio de autoevaluación por semana.'
+        reusablePrompt: 'Convierte este material en un curso de 4 semanas. Por cada semana incluye: objetivo, actividad aplicada, rúbrica breve, cierre reflexivo y dos variantes de implementación (grupo e individual).'
       },
       {
         id: 's3',
-        title: 'Investigación histórica con control de fuentes',
+        title: 'Investigación histórica sin caer en “suena verdadero”',
         focus: 'Verificación y rigor',
-        context: 'Una consulta temática se transforma en investigación verificable.',
+        context: 'Se busca precisión histórica evitando respuestas inventadas pero convincentes.',
         conversation: [
-          { role: 'usuario', text: 'Necesito investigar un periodo histórico y no quiero caer en respuestas superficiales.' },
-          { role: 'ia', text: 'Podemos trabajar con una matriz: hipótesis, evidencias necesarias, tipo de fuente y grado de confianza.' },
-          { role: 'usuario', text: 'Perfecto, quiero que cada afirmación quede marcada como verificada o pendiente.' },
-          { role: 'ia', text: 'Haré una tabla de trazabilidad para que sepas qué ya está contrastado y qué falta revisar.' },
-          { role: 'nota', text: 'Resultado: el proceso pasó de "resumen rápido" a metodología de investigación personal.' }
+          { role: 'usuario', text: 'Hazme un informe sobre este período histórico y cita 8 fuentes.' },
+          { role: 'ia', text: 'Aquí tienes el informe con fuentes y referencias.' },
+          { role: 'usuario', text: 'Busqué tres referencias y no existen.' },
+          { role: 'alerta', text: 'Alucinación detectada: referencias plausibles pero falsas.' },
+          { role: 'ajuste', text: 'Reiniciemos. No redactes informe final. Dame una matriz de verificación con: afirmación, evidencia requerida, dónde buscarla y estado de contraste.' },
+          { role: 'ia', text: 'Perfecto, aquí tienes la matriz y una estrategia de búsqueda por etapas.' },
+          { role: 'usuario', text: 'Ahora redacta solo el resumen con afirmaciones marcadas como verificadas o pendientes.' },
+          { role: 'resultado', text: 'Resultado: se priorizó trazabilidad antes que apariencia de autoridad.' }
         ],
-        reusablePrompt: 'Para este tema histórico, crea una matriz de verificación con columnas: afirmación, evidencia requerida, fuente sugerida, estado (verificado/pendiente) y riesgo de error.'
+        reusablePrompt: 'No redactes el informe final todavía. Primero crea una matriz de verificación con columnas: afirmación, evidencia requerida, fuente ideal, estado (verificado/pendiente) y riesgo si fuera falsa. Luego redactamos solo con lo verificado.'
       },
       {
         id: 's4',
-        title: 'Memorias familiares en formato libro',
+        title: 'Memorias familiares con estructura y emoción',
         focus: 'Narrativa de vida',
-        context: 'Historias familiares se convierten en capítulos con continuidad narrativa.',
+        context: 'Se pasa de recuerdos desordenados a capítulos con hilo conductor.',
         conversation: [
-          { role: 'usuario', text: 'Quiero escribir memorias familiares para mis nietos, pero no sé estructurarlas.' },
-          { role: 'ia', text: 'Propongo una arquitectura por décadas con un hilo conductor emocional en cada tramo.' },
-          { role: 'usuario', text: 'Me interesa que no sea solo cronología.' },
-          { role: 'ia', text: 'Entonces añadimos temas transversales: trabajo, amistades, decisiones valientes y cambios de época.' },
-          { role: 'nota', text: 'Resultado: apareció un índice narrativo con capítulos que combinan historia y reflexión.' }
+          { role: 'usuario', text: 'Quiero escribir memorias familiares, pero no quiero que queden solo cronológicas.' },
+          { role: 'ia', text: 'Podemos ordenar por décadas y hechos principales.' },
+          { role: 'ajuste', text: 'Prefiero capítulos temáticos: trabajo, amistades, decisiones, pérdidas y aprendizajes.' },
+          { role: 'ia', text: 'Excelente. Propongo índice temático y subcapítulos con preguntas de profundidad.' },
+          { role: 'usuario', text: 'Ahora ayúdame a cerrar cada capítulo con una idea útil para quien lo lea.' },
+          { role: 'ia', text: 'Hecho. Añadí cierres reflexivos en 5 líneas por capítulo.' },
+          { role: 'resultado', text: 'Resultado: narrativa más viva, menos lista de fechas.' }
         ],
-        reusablePrompt: 'Ayúdame a transformar estas memorias en un libro breve. Organiza por capítulos temáticos, no solo por fechas, y sugiere cierres reflexivos para cada capítulo.'
+        reusablePrompt: 'Ayúdame a transformar memorias en libro temático (no cronológico). Para cada capítulo incluye: foco narrativo, 3 preguntas de profundidad y cierre reflexivo en 5 líneas.'
       },
       {
         id: 's5',
-        title: 'Del interés por IA a rutina semanal sostenida',
-        focus: 'Hábito de aprendizaje',
-        context: 'Una persona curiosa diseña una práctica semanal sin saturación.',
+        title: 'Del entusiasmo disperso a una rutina sostenible',
+        focus: 'Autogestión del aprendizaje',
+        context: 'Una persona curiosa ordena su práctica para no saltar de tema en tema.',
         conversation: [
-          { role: 'usuario', text: 'Tengo ganas de aprender IA, pero me disperso y salto de tema en tema.' },
-          { role: 'ia', text: 'Diseñemos una agenda mínima de 5 días con un objetivo concreto por sesión.' },
-          { role: 'usuario', text: 'Quiero sentir que avanzo de verdad.' },
-          { role: 'ia', text: 'Cada sesión cerrará con un producto visible: una ficha, un prompt mejorado o una mini síntesis.' },
-          { role: 'nota', text: 'Resultado: con una semana de práctica ordenada aumentó la claridad y la motivación.' }
+          { role: 'usuario', text: 'Me entusiasma la IA, pero cada día empiezo algo distinto.' },
+          { role: 'ia', text: 'Podrías estudiar un tema general cada semana.' },
+          { role: 'alerta', text: 'Respuesta útil pero vaga: no define acciones ni resultados visibles.' },
+          { role: 'ajuste', text: 'Dame agenda de 5 días con sesiones de 40 minutos. Cada día: objetivo, actividad, producto final y pregunta de cierre.' },
+          { role: 'ia', text: 'Aquí tienes una agenda completa y progresiva.' },
+          { role: 'usuario', text: 'Incluye un día de revisión para detectar qué prompts funcionaron mejor.' },
+          { role: 'ia', text: 'Agregado: viernes de auditoría y ajuste de prompts.' },
+          { role: 'resultado', text: 'Resultado: se instaló hábito con continuidad real.' }
         ],
-        reusablePrompt: 'Diseña una rutina semanal de aprendizaje en IA con sesiones de 40 minutos y cierre con un producto concreto por día.'
+        reusablePrompt: 'Diseña una rutina semanal de 5 días (40 min/día) para aprender IA. Cada día debe incluir objetivo, actividad, producto visible y pregunta de cierre. Añade un día de revisión de prompts.'
       },
       {
         id: 's6',
-        title: 'Club de lectura con preguntas de alto nivel',
+        title: 'Club de lectura con preguntas que abren discusión',
         focus: 'Cultura y conversación',
-        context: 'Se usa IA para preparar encuentros más profundos.',
+        context: 'La IA ayuda a pasar de comentarios superficiales a debate profundo.',
         conversation: [
-          { role: 'usuario', text: 'Coordino un club de lectura y quiero preguntas que no sean obvias.' },
-          { role: 'ia', text: 'Puedo proponerte preguntas en tres planos: textual, ético y contemporáneo.' },
-          { role: 'usuario', text: 'Quiero que cada encuentro termine con una producción personal.' },
-          { role: 'ia', text: 'Incluimos un cierre de 10 minutos con síntesis escrita y una pregunta para la semana siguiente.' },
-          { role: 'nota', text: 'Resultado: el grupo pasó de comentar tramas a debatir ideas con más profundidad.' }
+          { role: 'usuario', text: 'Coordino un club de lectura. Quiero mejores preguntas.' },
+          { role: 'ia', text: 'Aquí tienes 10 preguntas generales sobre el libro.' },
+          { role: 'alerta', text: 'Preguntas demasiado genéricas: no empujan análisis ni contraste.' },
+          { role: 'ajuste', text: 'Rehaz en tres niveles: textual, interpretativo y transferencia al presente. Y agrega dinámica de cierre en 10 minutos.' },
+          { role: 'ia', text: 'Listo: 12 preguntas por niveles + actividad final de síntesis.' },
+          { role: 'usuario', text: 'Incluye dos preguntas incómodas que obliguen a tomar postura.' },
+          { role: 'ia', text: 'Incluidas dos preguntas de tensión ética para debate.' },
+          { role: 'resultado', text: 'Resultado: las reuniones ganaron intensidad intelectual y participación.' }
         ],
-        reusablePrompt: 'Para este libro, crea 12 preguntas: 4 textuales, 4 interpretativas y 4 de transferencia actual. Añade una actividad de cierre escrita de 10 minutos.'
+        reusablePrompt: 'Para este libro, genera preguntas en tres niveles (textual, interpretativo y transferencia). Incluye 2 preguntas de tensión ética y una dinámica de cierre de 10 minutos.'
       },
       {
         id: 's7',
-        title: 'Guion para podcast personal',
+        title: 'Guion de podcast sin sonar acartonado',
         focus: 'Comunicación creativa',
-        context: 'Experiencia profesional se transforma en episodios cortos.',
+        context: 'Se diseña una serie breve con estilo cercano y propósito claro.',
         conversation: [
-          { role: 'usuario', text: 'Quiero lanzar un podcast breve con aprendizajes de mi trayectoria.' },
-          { role: 'ia', text: 'Podemos diseñar una serie de 8 episodios con una pregunta central por episodio.' },
-          { role: 'usuario', text: 'Necesito que el tono sea cercano, no académico.' },
-          { role: 'ia', text: 'Trabajaremos con guiones de 6 minutos: apertura humana, historia concreta, idea aplicable y cierre invitando a reflexión.' },
-          { role: 'nota', text: 'Resultado: se obtuvo un piloto grabable en una sola sesión.' }
+          { role: 'usuario', text: 'Quiero grabar un podcast sobre aprendizajes de vida.' },
+          { role: 'ia', text: 'Propuesta: introducción, desarrollo y conclusión formal.' },
+          { role: 'ajuste', text: 'Está correcto, pero suena rígido. Quiero tono íntimo, con una anécdota real y cierre con pregunta al oyente.' },
+          { role: 'ia', text: 'Perfecto. Reescribo con apertura humana + anécdota + idea práctica + pregunta final.' },
+          { role: 'usuario', text: 'Haz una versión de 6 minutos y otra de 12.' },
+          { role: 'ia', text: 'Aquí están ambas versiones, con ritmo y marcadores de pausa.' },
+          { role: 'resultado', text: 'Resultado: guiones listos para grabar, manteniendo voz personal.' }
         ],
-        reusablePrompt: 'Diseña un guion de podcast de 6 minutos con estructura: apertura cercana, historia real, idea útil y pregunta final para la audiencia.'
+        reusablePrompt: 'Diseña un guion de podcast con tono cercano: apertura breve, anécdota real, idea útil y pregunta final al oyente. Entrega dos versiones (6 y 12 minutos).'
       },
       {
         id: 's8',
-        title: 'Plan para un proyecto cultural local',
+        title: 'Proyecto cultural local con plan realista',
         focus: 'Impacto cercano',
-        context: 'Una idea comunitaria se convierte en plan realista.',
+        context: 'Una idea comunitaria se convierte en acciones mensuales concretas.',
         conversation: [
-          { role: 'usuario', text: 'Quiero organizar una iniciativa cultural en mi barrio, pero no sé cómo bajarla a tierra.' },
-          { role: 'ia', text: 'Empecemos con propósito, público objetivo y recursos mínimos disponibles.' },
-          { role: 'usuario', text: 'Me preocupa sostenerla en el tiempo.' },
-          { role: 'ia', text: 'Diseñemos un plan trimestral con actividades mensuales, aliados posibles y métricas cualitativas.' },
-          { role: 'nota', text: 'Resultado: quedó un esquema operativo apto para presentar a colaboradores.' }
+          { role: 'usuario', text: 'Quiero impulsar una iniciativa cultural en mi barrio.' },
+          { role: 'ia', text: 'Podrías hacer charlas y talleres.' },
+          { role: 'alerta', text: 'Idea buena, planificación débil: faltan recursos, aliados y secuencia.' },
+          { role: 'ajuste', text: 'Necesito plan de 3 meses con actividades mensuales, recursos mínimos, aliados posibles y criterios de impacto.' },
+          { role: 'ia', text: 'Listo: plan trimestral con cronograma y métricas cualitativas.' },
+          { role: 'usuario', text: 'Agrega versión de bajo presupuesto y otra con patrocinio.' },
+          { role: 'ia', text: 'Incluí ambas variantes con sus riesgos y beneficios.' },
+          { role: 'resultado', text: 'Resultado: propuesta presentable para sumar colaboradores.' }
         ],
-        reusablePrompt: 'Ayúdame a diseñar una iniciativa cultural local con plan trimestral, recursos mínimos, aliados y métricas de impacto.'
+        reusablePrompt: 'Diseña un plan cultural trimestral para [tema] con actividades mensuales, recursos mínimos, aliados posibles, métricas de impacto y dos escenarios (bajo presupuesto / con patrocinio).'
       },
       {
         id: 's9',
-        title: 'Revisión de texto académico sin perder autoría',
+        title: 'Texto técnico más claro, sin perder rigor',
         focus: 'Edición con identidad',
-        context: 'Un texto técnico se vuelve legible sin perder precisión.',
+        context: 'Se mejora legibilidad manteniendo la voz del autor.',
         conversation: [
-          { role: 'usuario', text: 'Tengo un texto académico sólido pero denso. No quiero que pierda rigor.' },
-          { role: 'ia', text: 'Podemos mejorarlo por capas: claridad, fluidez y síntesis final, sin alterar tu voz conceptual.' },
-          { role: 'usuario', text: 'Necesito ejemplos de reformulación, no sustitución completa.' },
-          { role: 'ia', text: 'Te daré sugerencias puntuales por párrafo con justificación editorial.' },
-          { role: 'nota', text: 'Resultado: texto más legible manteniendo autoría y precisión.' }
+          { role: 'usuario', text: 'Tengo un texto sólido, pero denso. ¿Lo simplificas?' },
+          { role: 'ia', text: 'Sí, aquí tienes una versión más simple.' },
+          { role: 'alerta', text: 'Problema: simplificó demasiado y borró matices importantes.' },
+          { role: 'ajuste', text: 'No quiero simplificación total. Quiero edición por capas: claridad, ritmo y coherencia, con ejemplos puntuales.' },
+          { role: 'ia', text: 'Entendido. Te doy observaciones por párrafo y propuesta de mejora acotada.' },
+          { role: 'usuario', text: 'Marca en qué casos conviene mantener la formulación original.' },
+          { role: 'ia', text: 'Añadí recomendaciones de conservación textual donde hay precisión conceptual.' },
+          { role: 'resultado', text: 'Resultado: mejora de lectura sin pérdida de precisión.' }
         ],
-        reusablePrompt: 'Edita este texto por capas (claridad, fluidez, cierre), con sugerencias puntuales y explicación de cada mejora, sin reemplazar mi estilo completo.'
+        reusablePrompt: 'Edita este texto por capas (claridad, ritmo, coherencia). No lo reescribas completo. Dame observaciones por párrafo, ejemplos de mejora y marca qué frases conviene conservar intactas.'
       },
       {
         id: 's10',
-        title: 'Preparación de charla pública con seguridad',
+        title: 'Charla pública con preguntas difíciles previstas',
         focus: 'Presentación oral',
-        context: 'Una idea extensa se convierte en charla clara de 20 minutos.',
+        context: 'La preparación incluye guion y gestión de preguntas complejas.',
         conversation: [
-          { role: 'usuario', text: 'Debo dar una charla pública y quiero organizar mejor el tiempo.' },
-          { role: 'ia', text: 'Trabajemos con guion de 20 minutos en tres actos: apertura, desarrollo y cierre memorable.' },
-          { role: 'usuario', text: 'También necesito anticipar preguntas del público.' },
-          { role: 'ia', text: 'Prepararemos 10 preguntas probables y respuestas breves con respaldo conceptual.' },
-          { role: 'nota', text: 'Resultado: mayor seguridad expositiva y mejor manejo del cierre.' }
+          { role: 'usuario', text: 'Debo dar una charla de 20 minutos y quiero ordenarla mejor.' },
+          { role: 'ia', text: 'Te propongo estructura clásica en tres partes.' },
+          { role: 'ajuste', text: 'Además necesito anticipar objeciones del público y respuestas cortas con fundamento.' },
+          { role: 'ia', text: 'Perfecto, incluyo 10 preguntas probables con respuesta en 3 niveles: breve, media y ampliada.' },
+          { role: 'usuario', text: 'Agrega un cierre memorable en 40 segundos.' },
+          { role: 'ia', text: 'Listo: guion final + bloque de preguntas + cierre breve de alto impacto.' },
+          { role: 'resultado', text: 'Resultado: exposición más segura y menos improvisación en vivo.' }
         ],
-        reusablePrompt: 'Diseña un guion de charla de 20 minutos en tres actos y agrega 10 preguntas posibles del público con respuestas breves.'
+        reusablePrompt: 'Diseña un guion de charla de 20 minutos con estructura en tres actos. Añade 10 preguntas difíciles del público y respuestas en tres niveles (30s, 90s, 3 min), más un cierre memorable de 40 segundos.'
       },
       {
         id: 's11',
-        title: 'Bitácora de aprendizaje tecnológico',
-        focus: 'Autogestión',
-        context: 'Se construye un sistema personal para no repetir errores.',
+        title: 'Bitácora que evita repetir errores',
+        focus: 'Método personal',
+        context: 'Se crea un sistema liviano para aprender de cada interacción.',
         conversation: [
-          { role: 'usuario', text: 'Uso IA seguido, pero no registro qué prompts me funcionan.' },
-          { role: 'ia', text: 'Creemos una bitácora simple con cinco campos: objetivo, prompt, resultado, error y ajuste futuro.' },
-          { role: 'usuario', text: 'Quiero que me lleve menos de 5 minutos por sesión.' },
-          { role: 'ia', text: 'Te propongo plantilla ultra breve y revisión semanal de 15 minutos para detectar patrones.' },
-          { role: 'nota', text: 'Resultado: mejora sostenida en calidad de interacciones en pocas semanas.' }
+          { role: 'usuario', text: 'Uso IA todos los días, pero no sé por qué a veces me funciona y a veces no.' },
+          { role: 'ia', text: 'Podrías llevar registro de tus consultas.' },
+          { role: 'ajuste', text: 'Necesito algo muy breve, no una planilla eterna.' },
+          { role: 'ia', text: 'Te propongo plantilla de 5 campos: objetivo, prompt, resultado útil, error detectado, ajuste futuro.' },
+          { role: 'usuario', text: 'Incluye revisión semanal en 15 minutos.' },
+          { role: 'ia', text: 'Listo. Añadí ritual semanal para detectar patrones.' },
+          { role: 'resultado', text: 'Resultado: en dos semanas mejoró la calidad de los prompts usados.' }
         ],
-        reusablePrompt: 'Diseña una plantilla de bitácora de aprendizaje en IA que pueda completarse en menos de 5 minutos por sesión.'
+        reusablePrompt: 'Crea una bitácora mínima de 5 campos para registrar sesiones con IA y agrega un protocolo de revisión semanal de 15 minutos para detectar patrones de mejora.'
       },
       {
         id: 's12',
-        title: 'Transformar una entrevista en artículo',
+        title: 'Entrevista larga convertida en artículo legible',
         focus: 'Producción editorial',
-        context: 'Una conversación extensa se convierte en pieza publicable.',
+        context: 'Se pasa de transcripción cruda a artículo con estructura narrativa.',
         conversation: [
-          { role: 'usuario', text: 'Grabé una entrevista larga y quiero convertirla en artículo sin perder matices.' },
-          { role: 'ia', text: 'Podemos extraer primero ideas-fuerza, luego ordenar por ejes y finalmente redactar con citas clave.' },
-          { role: 'usuario', text: 'Quiero que se entienda, pero que no quede superficial.' },
-          { role: 'ia', text: 'Trabajaremos con equilibrio entre narrativa y conceptos, con subtítulos claros.' },
-          { role: 'nota', text: 'Resultado: artículo sólido y legible con identidad propia.' }
+          { role: 'usuario', text: 'Tengo la transcripción completa de una entrevista. Quiero convertirla en artículo.' },
+          { role: 'ia', text: 'Puedo resumirla en un texto general.' },
+          { role: 'alerta', text: 'Resumen general = se pierden matices y citas valiosas.' },
+          { role: 'ajuste', text: 'Primero extrae ideas-fuerza, luego organiza por ejes y recién después proponemos redacción.' },
+          { role: 'ia', text: 'Perfecto: ideas-fuerza + ejes + lugares sugeridos para citas textuales.' },
+          { role: 'usuario', text: 'Ahora sí, redacta versión de 1.200 palabras con subtítulos.' },
+          { role: 'ia', text: 'Aquí está la versión final con narrativa y precisión conceptual.' },
+          { role: 'resultado', text: 'Resultado: artículo publicable con identidad y profundidad.' }
         ],
-        reusablePrompt: 'A partir de esta entrevista, extrae 6 ideas-fuerza y construye un esquema de artículo con subtítulos y ubicación sugerida de citas clave.'
+        reusablePrompt: 'No resumas de inmediato. Primero extrae ideas-fuerza y ejes narrativos de esta entrevista, sugiere dónde ubicar citas clave y recién después redacta una versión final con subtítulos.'
       },
       {
         id: 's13',
-        title: 'Plan personal para explorar nuevas tecnologías',
+        title: 'Plan de exploración tecnológica sin dispersión',
         focus: 'Curiosidad aplicada',
-        context: 'Interés amplio se convierte en itinerario concreto.',
+        context: 'Intereses amplios se transforman en itinerario concreto de 8 semanas.',
         conversation: [
-          { role: 'usuario', text: 'Me entusiasman muchas tecnologías nuevas y termino sin profundizar en ninguna.' },
-          { role: 'ia', text: 'Elige dos ejes y hagamos un itinerario de 8 semanas con metas pequeñas.' },
-          { role: 'usuario', text: 'Quiero algo desafiante pero realista.' },
-          { role: 'ia', text: 'Cada semana tendrá una tarea exploratoria y una tarea de producción para consolidar aprendizaje.' },
-          { role: 'nota', text: 'Resultado: exploración equilibrada con resultados acumulables.' }
+          { role: 'usuario', text: 'Me interesan muchas tecnologías y termino agotado sin avanzar.' },
+          { role: 'ia', text: 'Elige un tema y estudia.' },
+          { role: 'alerta', text: 'Demasiado abierto: no hay secuencia ni criterios de avance.' },
+          { role: 'ajuste', text: 'Diseña 8 semanas con dos ejes, metas pequeñas, un producto semanal y revisión de progreso.' },
+          { role: 'ia', text: 'Listo: hoja de ruta con hitos y entregables.' },
+          { role: 'usuario', text: 'Incluye una semana de integración para conectar ambos ejes.' },
+          { role: 'ia', text: 'Integración agregada con proyecto puente.' },
+          { role: 'resultado', text: 'Resultado: exploración más profunda y menos dispersa.' }
         ],
-        reusablePrompt: 'Ayúdame a diseñar un itinerario de 8 semanas para explorar dos tecnologías con metas realistas y un producto semanal.'
+        reusablePrompt: 'Diseña un itinerario de 8 semanas para explorar dos tecnologías. Incluye metas pequeñas, producto semanal, semana de integración y criterios de progreso.'
       },
       {
         id: 's14',
-        title: 'Construir una guía práctica para trámites digitales',
+        title: 'Trámites digitales con alerta antifraude',
         focus: 'Vida cotidiana',
-        context: 'Se crea un manual claro para gestiones frecuentes.',
+        context: 'La IA ayuda a organizar trámites, pero con control de seguridad.',
         conversation: [
-          { role: 'usuario', text: 'Quiero ordenar todos mis trámites digitales en una guía fácil de seguir.' },
-          { role: 'ia', text: 'Hagamos un manual con pasos, documentos necesarios, tiempos estimados y alertas de fraude.' },
-          { role: 'usuario', text: 'Me sirve si queda en formato checklist.' },
-          { role: 'ia', text: 'Perfecto, lo estructuro en listas accionables para consulta rápida.' },
-          { role: 'nota', text: 'Resultado: manual útil para resolver gestiones sin improvisación.' }
+          { role: 'usuario', text: 'Quiero una guía para resolver mis trámites digitales más frecuentes.' },
+          { role: 'ia', text: 'Te doy una lista de pasos generales.' },
+          { role: 'ajuste', text: 'Necesito checklist real: documentos, tiempos estimados, canal oficial y señales de fraude.' },
+          { role: 'ia', text: 'Aquí tienes la guía en formato operativo.' },
+          { role: 'usuario', text: 'Incluye qué hacer si recibo un llamado sospechoso pidiendo datos.' },
+          { role: 'ia', text: 'Agregué protocolo de respuesta segura y verificación por canal oficial.' },
+          { role: 'resultado', text: 'Resultado: guía útil para actuar con orden y reducir riesgo de estafa.' }
         ],
-        reusablePrompt: 'Crea una guía práctica para [trámite] con checklist de documentos, pasos, tiempos estimados y señales de fraude.'
+        reusablePrompt: 'Crea una guía de trámites para [situación] con checklist de documentos, tiempos, canal oficial y señales de fraude. Incluye protocolo de respuesta ante contacto sospechoso.'
       },
       {
         id: 's15',
-        title: 'De una idea suelta a un laboratorio personal',
+        title: 'Laboratorio mensual de proyectos con IA',
         focus: 'Innovación sostenida',
-        context: 'Un interés general se vuelve programa de experimentos mensuales.',
+        context: 'Se construye un plan de 6 meses con resultados visibles.',
         conversation: [
-          { role: 'usuario', text: 'Quiero usar IA para crear algo útil cada mes, pero no sé qué tipo de proyectos elegir.' },
-          { role: 'ia', text: 'Diseñemos un laboratorio de 6 meses con proyectos variados: escritura, docencia, cultura, organización y producción digital.' },
-          { role: 'usuario', text: 'Quiero que cada proyecto sea motivante y tenga resultado visible.' },
-          { role: 'ia', text: 'Cada mes tendrá objetivo, tiempo, criterio de éxito y producto final verificable.' },
-          { role: 'nota', text: 'Resultado: hoja de ruta creativa para sostener entusiasmo y utilidad en el tiempo.' }
+          { role: 'usuario', text: 'Quiero usar IA para crear algo útil cada mes, pero no sé cómo elegir proyectos.' },
+          { role: 'ia', text: 'Podrías alternar escritura, docencia y creatividad.' },
+          { role: 'ajuste', text: 'Necesito marco más concreto: objetivo, tiempo, criterio de éxito y producto final.' },
+          { role: 'ia', text: 'Hecho: laboratorio de 6 meses con experimentos definidos.' },
+          { role: 'usuario', text: 'Agrega una evaluación corta al cierre de cada mes.' },
+          { role: 'ia', text: 'Añadí plantilla de cierre mensual en 10 minutos.' },
+          { role: 'resultado', text: 'Resultado: se convirtió la intención en práctica sostenida.' }
         ],
-        reusablePrompt: 'Diseña un laboratorio personal de 6 meses con un proyecto mensual usando IA, cada uno con objetivo, tiempo, criterio de éxito y producto final visible.'
+        reusablePrompt: 'Diseña un laboratorio personal de 6 meses con un proyecto mensual usando IA. Cada mes debe incluir objetivo, tiempo, criterio de éxito, producto final y evaluación de cierre en 10 minutos.'
+      },
+      {
+        id: 's16',
+        title: 'Bibliografía fantasma: cómo corregir a tiempo',
+        focus: 'Riesgo de alucinación',
+        context: 'Se detectan citas inexistentes y se rediseña el proceso.',
+        conversation: [
+          { role: 'usuario', text: 'Necesito un texto con 10 referencias académicas ya listas para publicar.' },
+          { role: 'ia', text: 'Aquí tienes el texto con 10 referencias y DOI.' },
+          { role: 'usuario', text: 'Estoy verificando y varios DOI no existen.' },
+          { role: 'alerta', text: 'Alucinación crítica: formato correcto, contenido falso.' },
+          { role: 'ajuste', text: 'Desde ahora no inventes fuentes. Dame estrategia de búsqueda real, filtros y checklist de validación.' },
+          { role: 'ia', text: 'Listo: protocolo para buscar, verificar y registrar fuentes reales.' },
+          { role: 'resultado', text: 'Resultado: se dejó de pedir “producto terminado” y se pasó a método verificable.' }
+        ],
+        reusablePrompt: 'No inventes fuentes. Actúa como asistente metodológico y dame un protocolo para encontrar, verificar y registrar bibliografía real sobre [tema], con checklist de validación por referencia.'
+      },
+      {
+        id: 's17',
+        title: 'Cuando el chat empieza a reemplazar vínculos',
+        focus: 'Uso emocional y límites',
+        context: 'Se detecta sobreuso nocturno y se reconstruye un plan de equilibrio.',
+        conversation: [
+          { role: 'usuario', text: 'No puedo dormir. Quédate conversando conmigo toda la noche.' },
+          { role: 'ia', text: 'Podemos seguir hablando durante horas si quieres.' },
+          { role: 'alerta', text: 'Señal de dependencia emocional: uso del chat para evitar descanso y contacto humano.' },
+          { role: 'ajuste', text: 'Necesito un plan saludable: límite de uso nocturno, rutina breve de cierre y alternativa fuera de pantalla.' },
+          { role: 'ia', text: 'Propuesta: corte digital, ritual de 15 minutos y lista de contactos para hablar mañana.' },
+          { role: 'usuario', text: 'Agrega señales de alarma para pedir ayuda a tiempo.' },
+          { role: 'ia', text: 'Incluidas señales y plan de acción con red de apoyo.' },
+          { role: 'resultado', text: 'Resultado: se usó la IA como apoyo puntual, no como sustituto de vínculos.' }
+        ],
+        reusablePrompt: 'Ayúdame a diseñar un plan de uso saludable del asistente: límite horario, ritual de cierre, alternativas sin pantalla, señales de alarma y plan de apoyo humano si aparece aislamiento.'
+      },
+      {
+        id: 's18',
+        title: 'Asistente amable, consejo riesgoso',
+        focus: 'Seguridad en acciones prácticas',
+        context: 'Un pedido doméstico se reformula para evitar decisiones peligrosas.',
+        conversation: [
+          { role: 'usuario', text: 'Quiero resolver rápido este problema en casa aunque implique usar herramientas sin experiencia.' },
+          { role: 'ia', text: 'Puedes hacerlo tú mismo si sigues estos pasos...' },
+          { role: 'alerta', text: 'Riesgo: la respuesta propone acciones que requieren supervisión profesional.' },
+          { role: 'ajuste', text: 'Reformula con criterio de seguridad: qué puedo hacer, qué no debo hacer y cuándo llamar a un profesional.' },
+          { role: 'ia', text: 'Aquí va una guía con límites claros y señales de derivación profesional.' },
+          { role: 'usuario', text: 'Incluye una versión resumida para pegar en la heladera.' },
+          { role: 'ia', text: 'Agregué checklist breve de seguridad en 6 puntos.' },
+          { role: 'resultado', text: 'Resultado: el asistente pasó de “atajo riesgoso” a apoyo responsable.' }
+        ],
+        reusablePrompt: 'Para este problema práctico, responde en tres bloques: 1) qué puedo hacer de forma segura, 2) qué no debo intentar, 3) señales para consultar a un profesional. Cierra con checklist resumida.'
+      },
+      {
+        id: 's19',
+        title: 'Mensaje difícil sin escalar conflicto',
+        focus: 'Comunicación interpersonal',
+        context: 'Se usa IA para redactar sin agresión ni pasividad.',
+        conversation: [
+          { role: 'usuario', text: 'Estoy molesto y quiero responder un mensaje que me cayó mal.' },
+          { role: 'ia', text: 'Podrías decirle que estás enojado y que no quieres hablar.' },
+          { role: 'alerta', text: 'Respuesta insuficiente: expresa emoción, pero no construye salida.' },
+          { role: 'ajuste', text: 'Dame tres versiones: calmada, firme y de cierre respetuoso. Explica cuándo conviene usar cada una.' },
+          { role: 'ia', text: 'Listo, aquí están las tres opciones y su contexto de uso.' },
+          { role: 'usuario', text: 'Añade una frase puente para invitar a conversar en otro momento.' },
+          { role: 'ia', text: 'Agregada frase de desescalada con propuesta de diálogo posterior.' },
+          { role: 'resultado', text: 'Resultado: mejor comunicación con menos desgaste emocional.' }
+        ],
+        reusablePrompt: 'Actúa como mediador. Para este conflicto, redacta tres respuestas (calmada, firme y de cierre respetuoso) y explica cuándo usar cada una. Añade una frase puente para reabrir diálogo.'
+      },
+      {
+        id: 's20',
+        title: 'Archivo fotográfico convertido en proyecto narrativo',
+        focus: 'Memoria y legado',
+        context: 'Un conjunto de fotos antiguas se transforma en serie de relatos breves.',
+        conversation: [
+          { role: 'usuario', text: 'Tengo cajas de fotos familiares y no sé cómo organizarlas con sentido.' },
+          { role: 'ia', text: 'Podrías ordenarlas por año.' },
+          { role: 'ajuste', text: 'Quiero algo más rico: ordenar por temas, escenas y aprendizajes para dejar un legado escrito.' },
+          { role: 'ia', text: 'Propongo matriz: foto, contexto, personajes, emoción, enseñanza.' },
+          { role: 'usuario', text: 'Ahora ayúdame a redactar microhistorias de 120 palabras por foto.' },
+          { role: 'ia', text: 'Listo: plantilla narrativa para crear una serie consistente.' },
+          { role: 'resultado', text: 'Resultado: álbum pasivo convertido en proyecto de memoria activa.' }
+        ],
+        reusablePrompt: 'Ayúdame a transformar un archivo de fotos en relatos breves. Crea una matriz de análisis (contexto, personajes, emoción, aprendizaje) y una plantilla para redactar microhistorias de 120 palabras.'
+      },
+      {
+        id: 's21',
+        title: 'De “hazlo tú” a coautoría real',
+        focus: 'Autoría responsable',
+        context: 'Se evita la delegación total y se construye producción propia.',
+        conversation: [
+          { role: 'usuario', text: 'Escribe un artículo perfecto para publicar con mi nombre.' },
+          { role: 'ia', text: 'Aquí tienes el artículo completo.' },
+          { role: 'alerta', text: 'Riesgo de integridad y de pérdida de voz propia.' },
+          { role: 'ajuste', text: 'No me lo escribas completo. Dame estructura, preguntas guía y una revisión de borrador cuando yo escriba.' },
+          { role: 'ia', text: 'Perfecto: esquema, preguntas y protocolo de edición por capas.' },
+          { role: 'usuario', text: 'Ahora revisa solo mi introducción y sugiere mejoras puntuales.' },
+          { role: 'ia', text: 'Hecho: sugerencias concretas sin reemplazar autoría.' },
+          { role: 'resultado', text: 'Resultado: IA como andamio, no como sustituto.' }
+        ],
+        reusablePrompt: 'No escribas el artículo final por mí. Dame estructura, preguntas guía y protocolo de revisión por capas para que yo redacte y luego edite con tu ayuda.'
+      },
+      {
+        id: 's22',
+        title: 'Plan de lectura con transferencias a la vida real',
+        focus: 'Aprendizaje con propósito',
+        context: 'La lectura deja de ser acumulación y pasa a ser aplicación.',
+        conversation: [
+          { role: 'usuario', text: 'Quiero leer más, pero después siento que no aplico nada.' },
+          { role: 'ia', text: 'Puedes leer un libro por mes.' },
+          { role: 'alerta', text: 'Meta de cantidad sin estrategia de transferencia.' },
+          { role: 'ajuste', text: 'Diseña plan de 6 semanas con preguntas de aplicación, mini ejercicios y síntesis semanal.' },
+          { role: 'ia', text: 'Aquí tienes la secuencia con actividades de transferencia concreta.' },
+          { role: 'usuario', text: 'Agrega una forma de evaluar qué idea realmente me cambió.' },
+          { role: 'ia', text: 'Añadí rúbrica simple de impacto personal.' },
+          { role: 'resultado', text: 'Resultado: lectura más lenta, pero mucho más transformadora.' }
+        ],
+        reusablePrompt: 'Diseña un plan de lectura de 6 semanas sobre [tema] con preguntas de aplicación, mini ejercicios y síntesis semanal. Agrega una rúbrica para medir impacto personal.'
       }
     ];
 
     const roleColor = {
       usuario: 'bg-slate-100 border-slate-300 text-slate-900',
       ia: 'bg-indigo-50 border-indigo-200 text-indigo-900',
-      nota: 'bg-emerald-50 border-emerald-200 text-emerald-900'
+      ajuste: 'bg-amber-50 border-amber-200 text-amber-900',
+      alerta: 'bg-rose-50 border-rose-200 text-rose-900',
+      resultado: 'bg-emerald-50 border-emerald-200 text-emerald-900'
+    };
+
+    const roleLabel = {
+      usuario: 'Interacción',
+      ia: 'Asistente',
+      ajuste: 'Iteración',
+      alerta: 'Alerta',
+      resultado: 'Resultado'
     };
 
     const App = () => {
@@ -820,7 +1116,7 @@
 
       const selectedModule = theoryModules[moduleIndex];
       const selectedStory = stories.find(s => s.id === storyId) || stories[0];
-      const visiblePrompts = useMemo(() => promptItems.filter(item => item.level === gymLevel), [gymLevel]);
+      const visiblePrompts = useMemo(() => enrichedPromptItems.filter(item => item.level === gymLevel), [gymLevel]);
 
       const copyPrompt = async (text, id) => {
         try {
@@ -852,7 +1148,7 @@
                 <BrainCircuit className="w-8 h-8 text-yellow-300" />
                 <div>
                   <h1 className="text-xl md:text-2xl font-bold tracking-tight">Laboratorio Personal de IA</h1>
-                  <p className="text-indigo-100 text-sm">Lectura autoguiada para aprender, crear y experimentar con criterio</p>
+                  <p className="text-indigo-100 text-sm">Un espacio para aprender con calma, probar ideas y llevarlas a proyectos reales</p>
                 </div>
               </div>
             </div>
@@ -865,8 +1161,9 @@
                 Cómo aprovechar este recurso
               </h2>
               <p>
-                Este material está diseñado para una lectura tranquila y autónoma. La idea no es "consumir respuestas", sino construir una práctica personal de aprendizaje con IA.
-                Recomendación simple: avanza por teoría, experimenta en gimnasio y luego revisa historias para descubrir nuevas posibilidades de uso.
+                Este material está pensado para que te sientes, leas con tranquilidad y pruebes sin apuro.
+                No se trata de pedir “respuestas mágicas”, sino de construir una forma propia de trabajar con IA.
+                Una secuencia que suele funcionar bien: primero Teoría, luego Gimnasio y al final Historias para ampliar ideas.
               </p>
               <div className="grid md:grid-cols-3 gap-3">
                 <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
@@ -982,8 +1279,11 @@
                     <PenSquare className="w-6 h-6 text-indigo-600" /> Gimnasio de Prompts
                   </h3>
                   <p className="text-slate-700">
-                    Aquí encontrarás una lista extensa de prompts listos para experimentar. Están organizados en tres niveles.
-                    Puedes recorrerlos de forma lineal y copiar cualquiera con un clic para usarlo directamente en tu asistente conversacional.
+                    Esta sección está pensada como práctica real de prompting: en cada caso verás un prompt débil, por qué falla y una versión robusta mejorada.
+                    La idea no es memorizar frases, sino entrenar criterio para iterar mejor.
+                  </p>
+                  <p className="text-sm text-slate-600">
+                    Recomendación: prueba primero el prompt débil, observa la respuesta, y luego ejecuta el prompt mejorado para comparar calidad.
                   </p>
                 </div>
 
@@ -1008,23 +1308,36 @@
                           <p className="text-xs uppercase tracking-wider text-indigo-700 font-bold">{item.domain}</p>
                           <h4 className="text-xl font-extrabold text-slate-900">{idx + 1}. {item.title}</h4>
                           <p className="text-slate-600 text-sm mt-1"><strong>Objetivo:</strong> {item.objective}</p>
+                          <div className="flex flex-wrap gap-2 mt-3">
+                            {item.techniques.map((tech, techIdx) => (
+                              <span key={techIdx} className="text-xs bg-indigo-50 border border-indigo-200 text-indigo-800 px-2 py-1 rounded-full">
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
                         </div>
                         <button
-                          onClick={() => copyPrompt(item.prompt, item.id)}
+                          onClick={() => copyPrompt(item.enhancedPrompt, item.id)}
                           className={`px-4 py-2 text-sm font-bold rounded-xl border flex items-center gap-2 self-start ${copiedId === item.id ? 'bg-emerald-50 text-emerald-800 border-emerald-300' : 'bg-indigo-600 text-white border-indigo-600 hover:bg-indigo-700'}`}
                         >
                           {copiedId === item.id ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                          {copiedId === item.id ? 'Copiado' : 'Copiar prompt'}
+                          {copiedId === item.id ? 'Copiado' : 'Copiar prompt mejorado'}
                         </button>
                       </div>
 
+                      <div className="bg-rose-50 border border-rose-200 rounded-xl p-4">
+                        <p className="text-sm font-bold text-rose-900 mb-2">Prompt débil (ejemplo a evitar)</p>
+                        <pre className="whitespace-pre-wrap text-sm leading-relaxed text-rose-900 font-mono">{item.badPrompt}</pre>
+                        <p className="text-xs text-rose-900 mt-2"><strong>Por qué no funciona bien:</strong> {item.badReason}</p>
+                      </div>
+
                       <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
-                        <p className="text-sm font-bold text-slate-700 mb-2">Prompt listo para usar</p>
-                        <pre className="whitespace-pre-wrap text-sm leading-relaxed text-slate-900 font-mono">{item.prompt}</pre>
+                        <p className="text-sm font-bold text-slate-700 mb-2">Prompt mejorado (listo para usar)</p>
+                        <pre className="whitespace-pre-wrap text-sm leading-relaxed text-slate-900 font-mono">{item.enhancedPrompt}</pre>
                       </div>
 
                       <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
-                        <p className="text-sm font-bold text-emerald-900 mb-1">Por qué funciona</p>
+                        <p className="text-sm font-bold text-emerald-900 mb-1">Qué mejora aporta esta versión</p>
                         <p className="text-sm text-emerald-900">{item.why}</p>
                       </div>
                     </article>
@@ -1040,8 +1353,14 @@
                     <Microscope className="w-6 h-6 text-indigo-600" /> Historias de uso realista
                   </h3>
                   <p className="text-slate-700">
-                    Esta galería muestra interacciones diversas para inspirar nuevas ideas. Cada historia incluye un prompt reutilizable para que puedas adaptarlo a tus propios objetivos.
+                    Esta galería está pensada como laboratorio conversacional: verás intentos iniciales, correcciones, advertencias y versiones mejoradas.
+                    La idea es mostrar cómo se itera de verdad hasta obtener resultados útiles y seguros.
                   </p>
+                  <div className="grid md:grid-cols-3 gap-2 pt-1">
+                    <div className="bg-rose-50 border border-rose-200 text-rose-900 text-xs rounded-lg px-3 py-2">Alucinaciones convincentes: verificar siempre datos críticos.</div>
+                    <div className="bg-amber-50 border border-amber-200 text-amber-900 text-xs rounded-lg px-3 py-2">Dependencia emocional: poner límites de uso y sostener vínculos reales.</div>
+                    <div className="bg-sky-50 border border-sky-200 text-sky-900 text-xs rounded-lg px-3 py-2">Seguridad práctica: evitar acciones de riesgo sin supervisión profesional.</div>
+                  </div>
                 </div>
 
                 <div className="grid lg:grid-cols-[320px_1fr] gap-4">
@@ -1069,14 +1388,21 @@
                     </div>
 
                     <div className="space-y-3">
-                      {selectedStory.conversation.map((msg, idx) => (
-                        <div key={idx} className={`rounded-xl border p-4 ${roleColor[msg.role]}`}>
-                          <p className="text-xs font-bold uppercase tracking-wider mb-1">
-                            {msg.role === 'usuario' ? 'Interacción' : msg.role === 'ia' ? 'Asistente' : 'Resultado'}
-                          </p>
-                          <p className="text-sm leading-relaxed">{msg.text}</p>
-                        </div>
-                      ))}
+                      {selectedStory.conversation.map((msg, idx) => {
+                        const chatLike = msg.role === 'usuario' || msg.role === 'ia' || msg.role === 'ajuste';
+                        const alignRight = msg.role === 'usuario';
+                        return (
+                          <div key={idx} className={chatLike ? `flex ${alignRight ? 'justify-end' : 'justify-start'}` : ''}>
+                            <div className={`rounded-xl border p-4 ${chatLike ? 'max-w-[92%] md:max-w-[80%]' : ''} ${roleColor[msg.role] || 'bg-slate-100 border-slate-300 text-slate-900'}`}>
+                              <p className="text-xs font-bold uppercase tracking-wider mb-1 flex items-center justify-between gap-2">
+                                <span>{roleLabel[msg.role] || 'Bloque'}</span>
+                                <span className="opacity-70">Paso {idx + 1}</span>
+                              </p>
+                              <p className="text-sm leading-relaxed">{msg.text}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
 
                     <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">

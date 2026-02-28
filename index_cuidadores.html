@@ -2775,6 +2775,18 @@
             </p>
           </div>
 
+          <div className="grid md:grid-cols-3 gap-3 mb-8">
+            <div className="bg-rose-50 border border-rose-200 rounded-xl p-3 text-xs text-rose-900">
+              <strong>Alucinaciones:</strong> nunca asumir precisión por tono convincente.
+            </div>
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-900">
+              <strong>Dependencia:</strong> tecnología como apoyo, no sustituto de red de cuidado.
+            </div>
+            <div className="bg-sky-50 border border-sky-200 rounded-xl p-3 text-xs text-sky-900">
+              <strong>Escalamiento:</strong> ante riesgo, protocolo humano primero.
+            </div>
+          </div>
+
           <StoryCompanionGuide introGuide={introGuide} isPrimary={isPrimary} />
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -2951,6 +2963,16 @@
                   </button>
                 </div>
 
+                <div className="bg-white border border-slate-200 rounded-2xl p-4 md:p-5 shadow-sm">
+                  <p className="font-bold text-slate-800 mb-2">Ruta breve de uso profesional</p>
+                  <div className="grid md:grid-cols-4 gap-2 text-xs md:text-sm">
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-2">Definir objetivo y nivel de riesgo.</div>
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-2">Intentar una hipótesis inicial.</div>
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-2">Pedir apoyo IA con protocolo y límites.</div>
+                    <div className="bg-slate-50 border border-slate-200 rounded-lg p-2">Verificar y escalar con red humana/profesional.</div>
+                  </div>
+                </div>
+
                 {/* VISTAS */}
                 {currentView === 'modules' && (
                   <ModuleViewer
@@ -3025,6 +3047,18 @@
           </div>
 
           <CompanionGymGuide guide={gymGuide} isPrimary={isPrimary} activeTab={activeTab} />
+
+          <div className="grid md:grid-cols-3 gap-3 mb-8">
+            <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-3 text-sm text-indigo-900">
+              <strong>1) Intento inicial:</strong> formular primero criterio clínico/operativo básico.
+            </div>
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm text-amber-900">
+              <strong>2) Prompt con límites:</strong> objetivo, contexto y restricción de seguridad.
+            </div>
+            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-sm text-emerald-900">
+              <strong>3) Validación y escalamiento:</strong> decidir con protocolos y apoyo humano.
+            </div>
+          </div>
 
           {/* Sub-Navegación del Gimnasio */}
           <div className="flex flex-wrap justify-center gap-3 mb-8">
@@ -3276,6 +3310,11 @@
               </div>
               <div className="prose max-w-none text-lg text-slate-700 leading-relaxed mb-6">
                 <p>{module.theory}</p>
+              </div>
+
+              <div className="mb-6 bg-indigo-50 border border-indigo-200 rounded-xl p-4 text-sm text-indigo-900">
+                <p className="font-bold mb-1">Principio operativo</p>
+                <p>Primero evalúa con criterio profesional básico, luego usa IA para ordenar y comunicar. En situaciones de riesgo, la decisión y el escalamiento siempre son humanos.</p>
               </div>
 
               {module.extendedTheory && (
