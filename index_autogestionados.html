@@ -680,38 +680,140 @@
       return 'Lista estructurada con pasos, criterios y cierre accionable.';
     };
 
+    const weakPromptByDomain = {
+      'escritura personal': 'Tengo recuerdos sueltos y quiero escribir algo autobiográfico. Ordénamelo rápido.',
+      'docencia': 'Explícame [tema] para dar una clase mañana y que se entienda.',
+      'lectura crítica': 'Resume este artículo y dime si está bien.',
+      'organización': 'Arma una agenda de estudio semanal para IA.',
+      'proyecto editorial': 'Dame un índice para un libro sobre [tema].',
+      'vida cotidiana': 'Compara estas opciones y dime cuál conviene.',
+      'comunicación': 'Redacta un mensaje correcto para esta situación.',
+      'aprendizaje digital': 'Enséñame a usar [aplicación] paso a paso.',
+      'creatividad': 'Dame ideas de talleres sobre [tema].',
+      'investigación personal': 'Hazme un plan para aprender [tema].',
+      'memoria activa': 'Sácame tarjetas de estudio de este material.',
+      'planificación cultural': 'Arma un plan de libros y películas sobre [tema].',
+      'edición de textos': 'Mejora este texto para que suene mejor.',
+      'pensamiento crítico': 'Dame contraargumentos para esta tesis.',
+      'diseño de cursos': 'Diseña un seminario de 8 sesiones sobre [tema].',
+      'fuentes': 'Revisa estas afirmaciones y dime si son confiables.',
+      'historia de vida': 'Prepara preguntas para entrevistar a mi familia.',
+      'productividad intelectual': 'Ayúdame a ordenar notas para un proyecto largo.',
+      'cultura y análisis': 'Compara estos dos autores sobre [tema].',
+      'divulgación': 'Pasa este texto técnico a lenguaje simple.',
+      'plan de proyecto': 'Hazme un plan de 90 días para este proyecto.',
+      'ia aplicada': 'Mira mis prompts y mejóralos.',
+      'conversaciones significativas': 'Dame un guion para entrevistar sobre [tema].',
+      'aprendizaje continuo': 'Evalúa mi semana y dime qué mejorar.',
+      'libro completo': 'Diseña un libro de 12 capítulos sobre [tema].',
+      'curso autoral': 'Crea un curso de 10 semanas sobre [tema].',
+      'laboratorio de ideas': 'Evalúa mi propuesta desde distintos puntos de vista.',
+      'investigación aplicada': 'Arma un protocolo para investigar este problema.',
+      'producción audiovisual': 'Hazme una serie de microclases en video.',
+      'memorias públicas': 'Ordena mis anécdotas para publicarlas.',
+      'círculo de lectura': 'Diseña encuentros para mi círculo de lectura.',
+      'asistencia personalizada': 'Crea una plantilla para mis consultas semanales.',
+      'proyectos comunitarios': 'Diseña una iniciativa cultural local.',
+      'pensamiento estratégico': 'Proyecta escenarios a 5 años para mi proyecto.',
+      'innovación personal': 'Diseña experimentos mensuales con IA.',
+      'mentoría': 'Crea un programa de mentoría con mi experiencia.'
+    };
+
     const resolveBadPrompt = (item) => {
-      if (item.level === 'inicio') return `Ayúdame con esto: ${item.title}.`;
-      if (item.level === 'profundizar') return `Explícame ${item.title} y dame algo útil rápido.`;
-      return `Haz todo el trabajo de ${item.title} y déjalo listo para usar.`;
+      const domainKey = item.domain.toLowerCase();
+      if (weakPromptByDomain[domainKey]) return weakPromptByDomain[domainKey];
+      if (item.level === 'inicio') return `Necesito ayuda con ${item.domain.toLowerCase()} para ${item.objective.toLowerCase()}.`;
+      if (item.level === 'profundizar') return `Trabaja este tema: ${item.title}. Dame una versión útil para hoy.`;
+      return `Resuelve completo este proyecto: ${item.title}.`;
     };
 
     const resolveWhyBad = (item) => {
-      if (item.level === 'inicio') return 'No define contexto, formato ni nivel de detalle. La IA responde de forma amplia y poco práctica.';
-      if (item.level === 'profundizar') return 'Pide profundidad sin restricciones ni criterios de calidad. Es probable que la salida sea irregular.';
-      return 'Delega en bloque una tarea compleja sin etapas ni validación. Aumenta riesgo de errores y pérdida de autoría.';
+      if (item.level === 'inicio') return 'Es específico en tema, pero no define público, formato de salida ni criterios para evaluar si la respuesta sirve.';
+      if (item.level === 'profundizar') return 'Pide una tarea exigente, pero no fija alcance, límites ni método de revisión. La salida puede quedar correcta en apariencia y floja en calidad.';
+      return 'Intenta resolver un proyecto complejo de una sola vez, sin fases ni entregables intermedios. Eso aumenta errores y reduce control de autoría.';
+    };
+
+    const resolveQualityCriteria = (item) => {
+      const domain = item.domain.toLowerCase();
+      if (domain.includes('escritura') || domain.includes('editorial') || domain.includes('memorias')) {
+        return 'coherencia argumental, voz propia, transiciones y cierre con sentido';
+      }
+      if (domain.includes('docencia') || domain.includes('curso') || domain.includes('aprendizaje')) {
+        return 'claridad didáctica, secuencia progresiva, actividad aplicable y evidencia de comprensión';
+      }
+      if (domain.includes('investigación') || domain.includes('fuentes')) {
+        return 'trazabilidad de fuentes, distinción entre verificado/pendiente y riesgos de error';
+      }
+      if (domain.includes('comunicación') || domain.includes('entrevista')) {
+        return 'tono adecuado, intención explícita, reducción de ambigüedad y salida accionable';
+      }
+      if (domain.includes('proyecto') || domain.includes('estratégico') || domain.includes('iniciativa')) {
+        return 'fases realistas, hitos verificables, riesgos y plan de mitigación';
+      }
+      return 'claridad, utilidad práctica, control de supuestos y siguiente paso concreto';
+    };
+
+    const resolveToneFrame = (item, role, outputFormat, qualityCriteria, techniques) => {
+      if (item.level === 'inicio') {
+        return [
+          `Actúa como ${role} con tono cercano, claro y paciente.`,
+          ``,
+          `Meta de esta sesión: ${item.objective}`,
+          `Pedido base: ${item.prompt}`,
+          ``,
+          `Trabajemos paso a paso:`,
+          `- Si falta contexto, hazme primero 2 o 3 preguntas breves de calibración.`,
+          `- Evita tecnicismos innecesarios y usa ejemplos concretos.`,
+          `- Formato de salida solicitado: ${outputFormat}`,
+          `- Cierra con una mini revisión de calidad (criterios: ${qualityCriteria}).`,
+          ``,
+          `Antes de cerrar, sugiere una versión 2 de este pedido para mejorar precisión sin complejizar de más.`,
+          `Técnicas aplicadas: ${techniques.join(', ')}.`
+        ];
+      }
+
+      if (item.level === 'profundizar') {
+        return [
+          `Actúa como ${role} con enfoque riguroso y criterio crítico.`,
+          ``,
+          `Objetivo de trabajo: ${item.objective}`,
+          `Consigna inicial: ${item.prompt}`,
+          ``,
+          `Condiciones metodológicas:`,
+          `1) Si hay ambigüedad, abre con preguntas de calibración antes de producir la versión final.`,
+          `2) Entrega una propuesta estructurada, con supuestos explícitos y justificación breve por bloque.`,
+          `3) Respeta este formato de salida: ${outputFormat}`,
+          `4) Incluye control de calidad al final con estos criterios: ${qualityCriteria}.`,
+          `5) Señala qué conviene iterar en una segunda ronda y por qué.`,
+          ``,
+          `Técnicas aplicadas en este prompt: ${techniques.join(', ')}.`
+        ];
+      }
+
+      return [
+        `Actúa como ${role} con enfoque estratégico y orientación a ejecución.`,
+        ``,
+        `Resultado buscado: ${item.objective}`,
+        `Desafío base: ${item.prompt}`,
+        ``,
+        `Diseña la respuesta como un plan por fases:`,
+        `Fase 1 - Delimitación: supuestos, alcance y preguntas críticas de calibración.`,
+        `Fase 2 - Diseño: propuesta principal en formato solicitado (${outputFormat}).`,
+        `Fase 3 - Implementación: hitos, entregables y métricas de avance.`,
+        `Fase 4 - Control: riesgos, límites y revisión final con criterios (${qualityCriteria}).`,
+        ``,
+        `Cierre obligatorio: incluye una versión 2 del pedido para iterar con mayor precisión y menor riesgo.`,
+        `Técnicas aplicadas: ${techniques.join(', ')}.`
+      ];
     };
 
     const buildEnhancedPrompt = (item) => {
       const techniques = levelTechniqueMap[item.level] || levelTechniqueMap.inicio;
       const role = resolveRole(item.domain);
       const outputFormat = resolveOutputFormat(item);
-      return [
-        `Actúa como ${role}.`,
-        ``,
-        `Objetivo principal: ${item.objective}`,
-        `Tarea base: ${item.prompt}`,
-        ``,
-        `Condiciones de trabajo:`,
-        `1) Si te falta contexto, hazme primero 3 preguntas breves de calibración antes de producir la versión final.`,
-        `2) Estructura la respuesta en bloques claramente titulados y evita relleno.`,
-        `3) Formato esperado: ${outputFormat}`,
-        `4) Incluye criterios de calidad al final (qué revisar y cómo mejorarlo en la siguiente iteración).`,
-        `5) Señala supuestos que estés haciendo para que yo pueda corregirlos.`,
-        ``,
-        `Técnicas aplicadas en este prompt: ${techniques.join(', ')}.`,
-        `Cierre obligatorio: propone una versión 2 del pedido para iterar con mayor precisión.`
-      ].join('\n');
+      const qualityCriteria = resolveQualityCriteria(item);
+      const frame = resolveToneFrame(item, role, outputFormat, qualityCriteria, techniques);
+      return frame.join('\n');
     };
 
     const enrichedPromptItems = promptItems.map((item) => ({
