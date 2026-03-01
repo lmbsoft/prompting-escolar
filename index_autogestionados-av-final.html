@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Galpón de la IA</title>
+    <meta name="description" content="Recurso educativo para aprender a usar inteligencia artificial generativa con criterio, seguridad y proyectos reales en el campo, el taller y la familia.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "lucide-react": "https://esm.sh/lucide-react@0.292.0"
+      }
+    }
+    </script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        :root { --text: #0f172a; --bg: #f8fafc; --focus: #0ea5e9; }
+        html { font-size: clamp(18px, 1.2vw + 14px, 22px); text-size-adjust: 100%; }
+        body { background: var(--bg); color: var(--text); line-height: 1.72; letter-spacing: 0.01em; }
+        p, li, label, input, textarea, select, button { font-size: 1rem; }
+        h1, h2, h3, h4, h5 { line-height: 1.3; }
+        button, input, textarea, select { min-height: 48px; border-radius: 0.75rem; }
+        button:focus-visible, a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+        @media (max-width: 768px) { button, input, textarea, select { min-height: 52px; } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <div id="root"></div>
+    <script type="text/babel" data-type="module">
+        import React, { useMemo, useState } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import {
+            BrainCircuit, BookOpen, Target, MessageCircle, Sparkles, CheckCircle2, ChevronLeft, ChevronRight,
+            Copy, Check, Lightbulb, ArrowUpRight, Zap
+        } from 'lucide-react';
+
+        // ═══════════════════════════════════════════════════════════════
+        // DATA: MÓDULOS DE TEORÍA (Unificada A + C)
+        // ═══════════════════════════════════════════════════════════════
+        const theoryModules = [
+            {
+                id: 't1', title: 'La IA es como un tractor nuevo', subtitle: 'Mucha fuerza, pero necesita un buen chofer',
+                reading: [
+                    'Pensá en la Inteligencia Artificial como en un tractor de última generación: tiene una fuerza bárbara, hace el trabajo pesado en una fracción del tiempo, pero no sabe qué lote hay que sembrar ni a qué profundidad va la semilla. Esa decisión siempre es tuya.',
+                    'Un asistente de IA no "piensa". Predice qué palabra viene después de otra basándose en millones de textos. Es como el repuestero veterano que sabe qué pieza le vas a pedir apenas le decís el modelo del auto.',
+                    'Como odontólogo y tipo de taller, sabés que cada herramienta tiene su uso. La IA es excelente para armar borradores, ordenar listas para el campo, buscar alternativas de repuestos o inventar juegos para los nietos. Pero el control de calidad final lo hacés vos.'
+                ],
+                checklist: ['Dale contexto: decile dónde estás y qué querés.', 'No le pidas conocimiento perfecto, pedile opciones.', 'Tratala como a un ayudante rápido pero sin calle.'],
+                practice: 'Pedile a la IA que te explique cómo carburar un motor. Primero así nomás. Después aclarale que es un auto clásico y que vos ya tenés experiencia. Fijate cómo cambia.'
+            },
+            {
+                id: 't2', title: 'El arte de la buena orden (Prompt)', subtitle: 'Si pedís mal en la ferretería, te dan el tornillo equivocado',
+                reading: [
+                    'A la instrucción que le damos se le llama "Prompt". Un buen prompt es como ir a comprar repuestos con la muestra en la mano: no hay margen de error.',
+                    'Tiene que tener partes claras: el Rol (quién querés que sea), la Tarea (qué hacer), el Contexto (para qué), el Formato (cómo entregarlo) y los Límites (qué NO hacer).',
+                    'Ejemplo flojo: "Haceme una rutina para el finde". Ejemplo ajustado: "Actuá como un abuelo divertido. Diseñame 3 actividades al aire libre para hacer el sábado con mis nietos de 6 y 8 años en un campo. Que no requieran pantallas y duren 40 minutos".'
+                ],
+                checklist: ['Asignale un rol de experto ("Actuá como un mecánico").', 'Dá todo el contexto necesario.', 'Pedí un formato claro (una lista, un cuadro).', 'Poné límites claros (qué NO querés).'],
+                practice: 'Pensá en algo que quieras arreglar. Escribí un pedido dándole el ROL de experto, contándole las herramientas que tenés y pidiendo el paso a paso en LISTA.'
+            },
+            {
+                id: 't3', title: 'No te comas el amague (Las alucinaciones)', subtitle: 'Cuando la IA manda fruta y suena convincente',
+                reading: [
+                    'La IA es a veces como ese pescador que, para no quedarse callado, te inventa una respuesta con total seguridad. A esto se le llama "alucinación".',
+                    'NUNCA uses la IA como enciclopedia para datos exactos (dosis médicas, agroquímicos, especificaciones de torque críticas).',
+                    'Una buena técnica es decirle en el pedido: "Si no sabés la respuesta exacta, decime \'No lo sé\', no inventes". Tu ojímetro rural y clínico es el filtro final.'
+                ],
+                checklist: ['Cuidado con la información precisa: sospechá si suena demasiado perfecto.', 'Avisale que no invente datos.', 'No le confíes decisiones críticas de salud o inversiones.'],
+                practice: 'Preguntale algo muy específico local (ej: cuál es el mejor viento para ir a pescar al faro de Monte Hermoso). Leé la respuesta y fíjate dónde acierta y dónde inventa.'
+            },
+            {
+                id: 't4', title: 'Conversar como quien acomoda el taller', subtitle: 'Una charla por partes rinde más que pedir todo junto',
+                reading: [
+                    'No intentes resolver un problema gigante en una sola pregunta. Pensalo como desarmar un motor: primero sacás la tapa, después ves las válvulas.',
+                    'Con la IA, el primer mensaje tiene que tantear el panorama: "Hagamos un plan de mejoras para el campo, pero primero dame las 3 áreas de enfoque". Luego profundizás la que te sirva.',
+                    'Si te responde algo que no te gusta, frenala y corregila sin asco: "No me sirve ese enfoque, pensalo para clima seco".'
+                ],
+                checklist: ['Dividí el problema grande en preguntas chicas.', 'Pedile primero un esquema, luego desarrollá.', 'Corregí el rumbo en el momento si se desvía.'],
+                practice: 'Pedile: "Quiero restaurar una mesa vieja. No me des el paso a paso todavía. Decime solo qué 3 preguntas me harías para saber por dónde arrancar".'
+            },
+            {
+                id: 't5', title: 'Seguridad: Cuidando la tranquera digital', subtitle: 'Proteger tus datos y evitar estafas',
+                reading: [
+                    'Regla de oro: No compartas documento, dirección, claves, patentes, ni datos médicos de pacientes o amigos. Si necesitás ayuda con un caso, anonimizá (usá "Paciente A", "un amigo de 60 años").',
+                    'La IA te puede ayudar a detectar fraudes. Si te llega un mensaje raro pidiendo plata, podés pegarlo (sin nombres) y pedirle: "Analizá si este texto tiene patrones de estafa digital".'
+                ],
+                checklist: ['Anonimizar antes de preguntar.', 'Cero claves y cero datos bancarios.', 'Usar la IA como filtro antifraude ante dudas.'],
+                practice: 'Pensá en una consulta clínica o legal que harías y reescribila usando solo "una persona", "en tal zona", ocultando toda identidad.'
+            },
+            {
+                id: 't6', title: 'Legado, familia y uso saludable', subtitle: 'Que el motor no se pase de vueltas',
+                reading: [
+                    'La IA sirve para organizar asados de la peña, inventar búsquedas del tesoro para los nietos o incluso organizar tus recuerdos. "Tengo fotos viejas del abuelo en el campo, ayudame a armar una entrevista para mis tíos y recuperar esa historia".',
+                    'Pero recordá: la IA prepara el terreno, vos lo vivís. Si la usás para evitar hablar con alguien ("escribile a mi amigo porque me da pereza"), bajá un cambio. Que la herramienta sume, no que te aísle.'
+                ],
+                checklist: ['Usarla para facilitar encuentros reales (listas de compras, juegos).', 'Ideal para ordenar memorias y fotos viejas.', 'Cerrar la pantalla e ir a ensuciarse las manos.'],
+                practice: 'Pedile a la IA que te arme 10 preguntas para hacerle a un familiar mayor sobre cómo era la vida en el pueblo antes, y usalas en el próximo asado.'
+            }
+        ];
+
+        // ═══════════════════════════════════════════════════════════════
+        // DATA: GIMNASIO DE PROMPTS (Categorías de la Versión A + Volumen)
+        // ═══════════════════════════════════════════════════════════════
+        const promptLevels = [
+            { id: 'taller', label: `Nivel 1: Trabajos Rápidos en Taller`, hint: `Cosas de todos los días, listas, cuentos y arreglos simples.` },
+            { id: 'campo', label: `Nivel 2: Tareas del Campo y la Clínica`, hint: `Organizar ideas más grandes, planificar compras o diagnósticos de maquinaria.` },
+            { id: 'proyectos', label: `Nivel 3: Proyectos y Legado`, hint: `Para planear cosas que llevan tiempo, desde restauración hasta viajes de pesca o memorias.` }
+        ];
+
+        const promptItems = [
+            // TALLER
+            { id: 'p1', level: 'taller', domain: `Mecánica`, title: `Diagnóstico de ruido motor`, objective: `Ideas sobre ruidos raros en el auto antes de desarmar.`, badPrompt: `El auto hace un ruido metálico, ¿qué es?`, badReason: `Muy genérico. La IA inventará causas sin saber tu nivel ni el auto.`, enhancedPrompt: `Actuá como un mecánico con 30 años de taller. Mi auto (un [modelo y año]) está haciendo un ruido [describir ruido]. Tirame las 3 causas más probables de más a menos grave, y decime cómo puedo chequear la más simple en el garaje de mi casa.`, why: `Te da opciones prácticas y un primer paso realizable.` },
+            { id: 'p2', level: 'taller', domain: `Familia`, title: `Cuento nocturno rápido`, objective: `Armar una historia rápida para dormir a los nietos.`, badPrompt: `Inventá un cuento para nenes.`, badReason: `Saldrá un cuento genérico y aburrido.`, enhancedPrompt: `Actuá como un abuelo contador de historias. Escribí un cuento corto (3 minutos) donde mis nietos [nombres] encuentran un mapa del tesoro escondido en mi vieja caja de pesca. Usá lenguaje argentino, cercano y que termine con un final tranquilo para dormir.`, why: `Combina diversión a medida con un resultado instantáneo.` },
+            { id: 'p3', level: 'taller', domain: `Pesca`, title: `Estado de la marea y el viento`, objective: `Entender cómo pega el clima en la pesca de hoy.`, badPrompt: `¿Se puede pescar hoy en Monte Hermoso?`, badReason: `No sabe qué tipo de pesca hacés ni desde dónde.`, enhancedPrompt: `Explicame cómo afecta el viento [dirección y nudos] a la pesca variada de costa en la zona de Monte Hermoso hoy. Dame 3 tips rápidos sobre qué plomada y línea me conviene armar.`, why: `Traduce datos del clima en decisiones prácticas para la caja de pesca.` },
+            { id: 'p4', level: 'taller', domain: `Odontología`, title: `Mensaje de control a un amigo`, objective: `Avisar a pacientes amigos sin parecer un cobrador.`, badPrompt: `Escribile a Raúl que venga al dentista.`, badReason: `Puede sonar muy formal o robótico.`, enhancedPrompt: `Actuá como un odontólogo de confianza. Necesito mandarle un WhatsApp a mi amigo que hace un año no viene a hacerse una limpieza. Redactalo informal y con humor, pero recordándole que es importante. Dale 2 opciones de texto.`, why: `Te ahorra pensar cómo pedirle a un amigo que se cuide la boca sin sonar pesado.` },
+            { id: 'p5', level: 'taller', domain: `Mecánica`, title: `Duda con manual en inglés`, objective: `Traducir y entender un manual técnico de despiece.`, badPrompt: `Traducí esto: [texto]`, badReason: `Traducirá literal, perdiendo la jerga de taller.`, enhancedPrompt: `Actuá como mecánico traductor. Tengo este párrafo del manual de un motor viejo en inglés: "[pegar texto]". Traducilo al español de taller argentino, y decime rápido qué herramientas necesito para hacer lo que dice.`, why: `Salva la barrera del idioma adaptando los términos a lo que tenés en el galpón.` },
+            { id: 'p6', level: 'taller', domain: `Cotidiano`, title: `Redactar aviso de venta de fierros`, objective: `Vender una herramienta usada por WhatsApp.`, badPrompt: `Hacé un aviso para vender una soldadora.`, badReason: `Falta contexto de uso y tono de venta entre conocidos.`, enhancedPrompt: `Quiero vender una soldadora inversora usada [Marca/Modelo]. Escribime un aviso corto para un grupo de WhatsApp de la zona. Destacá que tiene poco uso, que la cambio por una más grande, y que el precio se charla si la vienen a probar. Tono directo de compra-venta de fierros.`, why: `Te saca de encima la pereza de redactar el texto de venta.` },
+
+            // CAMPO
+            { id: 'p7', level: 'campo', domain: `Agro`, title: `Checklist de tareas de temporada`, objective: `Ordenar tareas del campo sin depender de la memoria.`, badPrompt: `Dame tareas para hacer en el campo.`, badReason: `No sabe qué tipo de campo es ni en qué zona estás.`, enhancedPrompt: `Actúa como asesor práctico rural. Necesito una checklist de tareas por temporada para un establecimiento en el sudoeste bonaerense con algo de trigo y animales. Formato: lista por mes, con prioridades y qué tareas puedo delegar cuando estoy en la clínica.`, why: `Da un marco para organizar el trabajo mixto (ciudad/campo).` },
+            { id: 'p8', level: 'campo', domain: `Mecánica`, title: `Plan pre-VTV camioneta`, objective: `Revisión casera antes de la técnica.`, badPrompt: `Qué revisan en la VTV.`, badReason: `Te dará un texto legal aburrido.`, enhancedPrompt: `Tengo que llevar la Pick-up modelo [Año/Marca] a la VTV. Armame un checklist de 10 puntos críticos que puedo revisar yo mismo en el galpón este fin de semana para no rebotar por pavadas. Ordená de lo más sucio a lo más limpio.`, why: `Organiza tu propia revisión ahorrando tiempo y sorpresas.` },
+            { id: 'p9', level: 'campo', domain: `Logística`, title: `Asado y pesca con la peña`, objective: `Calcular comida y logística para varios.`, badPrompt: `Lista de compras para asado para 5.`, badReason: `Falta el contexto de que es una salida de pesca (comodidad).`, enhancedPrompt: `Vamos a ir a pescar a la laguna 5 tipos de buen comer. Haceme la lista exacta de supermercado para un asado completo (carne, achuras, bebida, leña) y tirame 3 ideas de 'picada de lancha' que no ensucien mucho las manos ni requieran cubiertos.`, why: `Delega la matemática de las compras a la IA.` },
+            { id: 'p10', level: 'campo', domain: `Agro`, title: `Identificar plaga o maleza`, objective: `Reconocer una maleza rara en el lote.`, badPrompt: `Hay un yuyo con espinas, ¿qué es?`, badReason: `Falta descripción visual y ubicación geográfica.`, enhancedPrompt: `Actuá como perito agrónomo. Encontré una maleza rara en mi lote en [Zona]. Tiene [describir hojas, flor, espinas]. Tirame las 3 opciones más probables para buscar fotos en Google, y fijate si tu base de datos dice que es tóxica para el ganado.`, why: `Filtra rápido cuando estás caminando el lote.` },
+            { id: 'p11', level: 'campo', domain: `Familia`, title: `Actividades en el campo`, objective: `Entretener a los nietos todo el sábado sin internet.`, badPrompt: `Juegos para chicos en el campo.`, badReason: `Te puede dar juegos que requieren comprar cosas.`, enhancedPrompt: `Voy a estar en el campo de 10 a 18hs con mis dos nietos de [edad 1] y [edad 2]. Armame un cronograma realista con 4 actividades al aire libre que no requieran señal de celular, que usen cosas del galpón (sogas, maderas), que los cansen pero sean seguras.`, why: `Convierte un día plano en una aventura sin inventar de cero.` },
+            { id: 'p12', level: 'campo', domain: `Salud`, title: `Aclarar mito a un paciente/amigo`, objective: `Explicar algo clínico de forma simple usando analogías.`, badPrompt: `Explicá por qué el bicarbonato hace mal a los dientes.`, badReason: `Usará jerga odontológica incomprensible.`, enhancedPrompt: `Un amigo me pregunta en un asado si es verdad que "el bicarbonato blanquea". Explicame en 2 párrafos cortos, usando una analogía de mecánica o campo (como pulir un faro o despintar chapa), por qué usarlo puro raya el esmalte, así se lo explico en su idioma.`, why: `Te da metáforas rápidas para explicar ciencia.` },
+
+            // PROYECTOS
+            { id: 'p13', level: 'proyectos', domain: `Pesca`, title: `Planificación embarcada de varios días`, objective: `Logística completa para un viaje a la costa.`, badPrompt: `Armame el viaje de pesca de 3 días.`, badReason: `Va a inventar un itinerario turístico.`, enhancedPrompt: `Vamos a salir a pescar embarcados 3 días por Monte Hermoso con 3 amigos. Armame un plan dividido en: 1) Revisiones de la lancha previas al viaje, 2) Checklist de seguridad obligatoria, 3) Estrategia de pesca por día según mareas supuestas. No detalles cada punto todavía, solo dame la estructura.`, why: `Avanza paso a paso (evita alucinaciones).` },
+            { id: 'p14', level: 'proyectos', domain: `Mecánica`, title: `Restauración de tractor antiguo`, objective: `Estructurar pasos para arreglar una reliquia.`, badPrompt: `Cómo arreglo un tractor viejo.`, badReason: `Proyecto inabarcable en una sola respuesta.`, enhancedPrompt: `Quiero restaurar un tractor viejo [Marca/Modelo] que lleva 10 años parado. Mi presupuesto es bajo y voy a hacer el trabajo manual yo mismo los domingos. Dividí este proyecto en 4 grandes etapas. ¿Cuál debería ser la Fase 1 y qué 3 herramientas críticas necesito para arrancar?`, why: `Corta un proyecto intimidante en partes manejables.` },
+            { id: 'p15', level: 'proyectos', domain: `Familia`, title: `Manual de la casa para nietos`, objective: `Dejar instrucciones de seguridad divertidas.`, badPrompt: `Reglas de seguridad para el campo.`, badReason: `Saldrá un manual aburrido que los chicos no leerán.`, enhancedPrompt: `Quiero escribir un "Manual del Explorador" para cuando mis nietos vienen al campo. Redactá reglas de seguridad (ej: no acercarse al molino, no tocar herramientas) pero escritas como misiones de aventura, no como retos de adulto gruñón. Haceme los primeros 3 artículos.`, why: `Reformatea reglas aburridas en algo genial.` },
+            { id: 'p16', level: 'proyectos', domain: `Odontología`, title: `Estrategia de jubilación progresiva`, objective: `Ir cerrando a pacientes sin perder a los históricos.`, badPrompt: `Cómo me jubilo del consultorio.`, badReason: `Te dará consejos financieros estándar.`, enhancedPrompt: `Tengo el consultorio hace 30 años pero quiero bajar el ritmo y quedarme solo para los amigos o urgencias. No quiero cerrar abruptamente. Actuá como asesor profesional maduro. Sugerime una estrategia simple a 12 meses, y un texto amable por WhatsApp para derivar a los que me exigen turnos pero no quiero seguir viendo.`, why: `Planifica una transición emocional y laboral compleja.` },
+            { id: 'p17', level: 'proyectos', domain: `Legado`, title: `Archivo narrativo de la familia`, objective: `Organizar fotos e historias familiares.`, badPrompt: `Qué hago con fotos viejas.`, badReason: `Te dirá que las escanees.`, enhancedPrompt: `Tengo cajas de fotos familiares y herramientas antiguas del abuelo. Quiero crear un archivo narrativo. Diseñá la estructura del documento en secciones (orígenes, oficios, anécdotas del campo, crisis superadas). Para cada sección incluí 3 preguntas guía para hacerles a mis tíos en el próximo asado.`, why: `Transforma recuerdos dispersos en patrimonio familiar.` },
+            { id: 'p18', level: 'proyectos', domain: `Seguridad`, title: `Filtro contra alucinaciones técnicas`, objective: `Forzar a la IA a verificar su exactitud.`, badPrompt: `Dónde van las arandelas de la caja de cambios del Massey.`, badReason: `Si no sabe, puede inventar y arruinarás la caja.`, enhancedPrompt: `Tengo una caja manual desarmada de [Vehículo]. Me sobran 2 arandelas y no sé de qué lado van. Buscá en tu base de datos. IMPORTANTE: Si no tenés el diagrama exacto de este modelo, no inventes. Decime explícitamente "Necesito el manual de despiece".`, why: `Muestra la técnica de ponerle "frenos" a la Inteligencia Artificial.` }
+        ];
+
+        // ═══════════════════════════════════════════════════════════════
+        // DATA: HISTORIAS DE USO REALISTA
+        // ═══════════════════════════════════════════════════════════════
+        const stories = [
+            {
+                id: 's1', title: `La bomba seca un domingo a la tarde`, focus: `Mecánica y urgencias`,
+                context: `Falla la bomba de agua. Un diagnóstico paso a paso para zafar con cosas del galpón.`,
+                conversation: [
+                    { role: 'usuario', text: `La bomba del molino anda pero no chupa agua, y yo veo que la manguera abajo está bien. Actuá como un mecánico viejo, hablemos paso a paso. ¿Qué puede ser?` },
+                    { role: 'ia', text: `Si abajo está bien, es arriba. Puede ser: 1) Entró aire por la empaquetadura, 2) El cuero interno se gastó, 3) El resorte se quebró. Desarmá la tapa y decime qué ves.` },
+                    { role: 'ajuste', text: `El resorte está partido al medio. No tengo repuesto hoy domingo y el pueblo está lejos. ¡Dame ideas provisorias con cosas del taller para aguantar hasta el martes!` },
+                    { role: 'ia', text: `Para aguantar: 1) Cortá un resorte viejo de amortiguador de silla. 2) Armá sin resorte agregando 2 arandelas de suplemento al eje (bombeará con menos caudal). 3) Trabá la válvula con un alambre galvanizado rígido dejándola semifija.` },
+                    { role: 'resultado', text: `Resultado: Cortó el resorte de un sillón viejo de jardín, armó la bomba, y la casa tuvo agua hasta que abrió la ferretería.` }
+                ],
+                reusablePrompt: `Actuá como un experto en mecánica práctica. Tengo este problema urgente: [Describir problema]. Diagnostiquemos de a un paso. ¿Qué 3 cosas miro primero?`
+            },
+            {
+                id: 's2', title: `Cobrarle las coronas a un compañero de caza`, focus: `Odontología y amistades`,
+                context: `Avisar que el laboratorio subió los precios sin que suene a cobrador.`,
+                conversation: [
+                    { role: 'usuario', text: `Tengo que mandarle un WhatsApp a Raúl, un amigo. Sus coronas de porcelana ya están. El laboratorio subió el costo un 30% y se lo tengo que avisar. Escribilo directo pero profesional.` },
+                    { role: 'ia', text: `¡Hola Raúl! Te aviso que llegaron las coronas. Un tema importante: el laboratorio ajustó los precios un 30% por materiales importados, la cuota queda en [Monto]. Pasate el martes a las 18. ¡Un abrazo!` },
+                    { role: 'ajuste', text: `Sacale la parte de "materiales importados" que suena a excusa barata. Y en vez de "un abrazo" poné "nos vemos el sábado en el campo".` },
+                    { role: 'ia', text: `¡Hola Raúl! Te aviso que llegaron las coronas, ¡quedaron impecables! Un tema para no tener sorpresas: hubo un ajuste del 30% en costos de laboratorio, así que el total queda en [Monto]. Avisame si te complica o pasate directo el martes a las 18. Nos vemos el sábado en el campo.` },
+                    { role: 'resultado', text: `Resultado: Mensaje claro, conservando la amistad y sin perder plata.` }
+                ],
+                reusablePrompt: `Tengo que comunicar un mensaje sobre dinero/costos a una persona cercana. Redactame un mensaje de WhatsApp empático y al grano. Dame 2 opciones.`
+            },
+            {
+                id: 's3', title: `Controlando la sanata del pescador digital`, focus: `Pesca y alucinaciones`,
+                context: `Buscando un nudo específico, se frena a la máquina para que no invente.`,
+                conversation: [
+                    { role: 'usuario', text: `Voy a pescar a un banco de piedras. ¿Conocés el "Nudo de escape para piedra"? Si no existe, decime "no lo sé", no inventes variaciones raras.` },
+                    { role: 'ia', text: `No lo sé, no existe un nudo estándar con ese nombre. Lo que sí se usa en piedra es un "nudo fusible" (juntar la plomada con una tanza más fina para que al tirar se corte solo el plomo).` },
+                    { role: 'ajuste', text: `Esa es buena. Explicame rápido cómo se ata el plomo usando ese método fusible.` },
+                    { role: 'ia', text: `1. Hacés un lazo pasante en tu línea madre. 2. Agarrás tanza fina. 3. Atás la fina al plomo con nudo barrilito, y el otro extremo al lazo. La tensión de quiebre recae en ese tramo.` },
+                    { role: 'resultado', text: `Resultado: Frenó a la máquina antes de que mienta, descubrió la técnica correcta y salvó la línea.` }
+                ],
+                reusablePrompt: `Buscá sobre el siguiente tema técnico: [Escribir Tema]. IMPORTANTE: Si la solución no es un estándar comprobado o no sabés, decime explícitamente "No lo sé", no inventes.`
+            },
+            {
+                id: 's4', title: `Rescate mecánico bajo la tormenta`, focus: `Familia y creatividad`,
+                context: `Día de lluvia en el campo. Los nietos aburridos con la tablet.`,
+                conversation: [
+                    { role: 'usuario', text: `Afuera hay temporal. Tengo a mis nietos (6 y 9) con los jueguitos. Inventame una "búsqueda del tesoro" corta adentro de la casa. Tengo linternas, hilos, y un chocolate. Que la historia sea que somos mecánicos y perdimos la llave del tractor del abuelo. 4 pistas.` },
+                    { role: 'ia', text: `Pista 1 (La entregás vos): "¡Perdimos la llave del tractor! Tomen las linternas. El dato lo tiene la caja helada que guarda las gaseosas".\nPista 2 (En la heladera): "Los ratones se la llevaron. Sigan el hilo rojo hasta donde el abuelo lee".\nPista 3 (Bajo tu sillón): "¡Casi! Busquen en la cueva de los zapatos embarrados".\nPista 4 (En tus botas): "¡Aquí está la llave! El repuesto de energía (chocolate) está en la cocina".` },
+                    { role: 'resultado', text: `Resultado: Cortaron la pantalla, corrieron 30 minutos y comieron chocolate en equipo.` }
+                ],
+                reusablePrompt: `Actuá como animador infantil. Mis nietos de [edades] están aburridos en casa. Tengo a mano [objetos]. Inventame un juego físico de 20 minutos con temática de [mecánicos/campo/piratas].`
+            },
+            {
+                id: 's5', title: `Injerto en el Massey Ferguson`, focus: `Ingeniería y riesgos`,
+                context: `Validar una idea loca del galpón con la IA actuando de "abogado del diablo".`,
+                conversation: [
+                    { role: 'usuario', text: `Quiero adaptarle una manguera de retorno de gasoil a la tapa del tanque de mi Massey Ferguson para cebarlo más fácil. Actuá como ingeniero mecánico experto. ¿Cuáles son las 3 peores cosas que podrían pasar si lo hago mal?` },
+                    { role: 'ia', text: `1) Si no sella herméticamente, entra humedad, condensa agua y pudre toberas. 2) Si usás manguera cristalina común, el gasoil la derrite. 3) Presión excesiva cerca de la tapa sin venteo escupirá combustible.` },
+                    { role: 'ajuste', text: `Sobre el 1: si perforo la tapa metálica y pongo espiga de bronce, ¿qué sellador químico aguanta gasoil y frío polar sin despegarse?` },
+                    { role: 'ia', text: `Descartá siliconas (el gasoil las deshace). Usá Poxipol 10 minutos rayando bien el bronce, o Loctite 518 (forma juntas rojo). Asegurate que la tuerca interior sea autofrenante para que la vibración no la suelte dentro del tanque.` },
+                    { role: 'resultado', text: `Resultado: Terminó el injerto de forma duradera y a la primera, sin romper el tractor.` }
+                ],
+                reusablePrompt: `Quiero inventar/modificar [explicar idea] usando [materiales]. Actuá como ingeniero pesimista: decime los 3 riesgos fatales que no estoy viendo.`
+            }
+        ];
+
+        // ═══════════════════════════════════════════════════════════════
+        // DATA: DESAFÍOS COGNITIVOS (Adaptados al perfil)
+        // ═══════════════════════════════════════════════════════════════
+        const challengesData = [
+            {
+                id: 'c1', type: 'memoryPairs', title: `Pares del Taller`, description: `Encontrá los conceptos que van juntos.`,
+                pairs: [
+                    ['Prompt', 'Orden de trabajo a la IA'],
+                    ['Contexto', 'Datos de tu lote o motor'],
+                    ['Iteración', 'Corregir el rumbo de la charla'],
+                    ['Alucinación', 'Sanata digital convincente'],
+                    ['Anonimizar', 'No poner el nombre del paciente'],
+                    ['Checklist', 'Lista de revisión de la chata']
+                ]
+            },
+            {
+                id: 'c2', type: 'spotDifference', title: `Afinando la carburación del prompt`, description: `¿Por qué la segunda versión es mejor?`,
+                comparisons: [
+                    {
+                        weak: `Haceme una lista para revisar el auto.`,
+                        strong: `Necesito un checklist de 10 puntos críticos para revisar mi Pick-up en el galpón antes de la VTV. Ordená de lo más sucio a lo más limpio.`,
+                        options: [
+                            'Usa palabras en inglés.',
+                            'Le da contexto específico (Pick-up, VTV, Galpón) y un formato de orden lógico.',
+                            'Es más larga.'
+                        ],
+                        correct: 1, improvement: `El contexto y el límite de "10 puntos" evitan que la IA te dé un manual genérico de 50 páginas.`
+                    },
+                    {
+                        weak: `¿Qué es este yuyo con espinas?`,
+                        strong: `Encontré una maleza rara en mi lote de Coronel Dorrego. Tiene hojas dentadas y espinas blancas. Tirame las 3 opciones más probables para buscar fotos.`,
+                        options: [
+                            'Suena más profesional.',
+                            'Pide 3 opciones en lugar de exigir una verdad absoluta que la IA podría inventar.',
+                            'Incluye el nombre de la ciudad.'
+                        ],
+                        correct: 1, improvement: `Al pedir opciones para luego chequear fotos, neutralizás el riesgo de que la IA alucine una plaga que no existe.`
+                    }
+                ]
+            },
+            {
+                id: 'c3', type: 'intruder', title: `Cuidando la tranquera`, description: `¿Qué dato NO le deberías pasar a la IA para un trámite o consulta?`,
+                groups: [
+                    { items: ['Kilometraje del tractor', 'Marca de la herramienta', 'Número de DNI y Clave Fiscal', 'Edad aproximada de un paciente'], intruder: 2, reason: `Nunca compartas información financiera, claves o documentos gubernamentales con la IA.` }
+                ]
+            }
+        ];
+
+        // ═══════════════════════════════════════════════════════════════
+        // COMPONENTES DE DESAFÍOS
+        // ═══════════════════════════════════════════════════════════════
+        const MemoryPairsGame = ({ data, onReset }) => {
+            const [cards, setCards] = useState(() => data.pairs.flatMap((pair, i) => [{ id: i * 2, pairId: i, text: pair[0] }, { id: i * 2 + 1, pairId: i, text: pair[1] }]).sort(() => Math.random() - 0.5));
+            const [revealed, setRevealed] = useState([]);
+            const [matched, setMatched] = useState([]);
+            const [moves, setMoves] = useState(0);
+            const [checking, setChecking] = useState(false);
+
+            const handleFlip = (cardId) => {
+                if (checking || revealed.includes(cardId) || matched.includes(cardId)) return;
+                const newRevealed = [...revealed, cardId];
+                setRevealed(newRevealed);
+                if (newRevealed.length === 2) {
+                    setMoves(m => m + 1);
+                    setChecking(true);
+                    const c1 = cards.find(c => c.id === newRevealed[0]);
+                    const c2 = cards.find(c => c.id === newRevealed[1]);
+                    if (c1.pairId === c2.pairId) {
+                        setTimeout(() => { setMatched(p => [...p, c1.id, c2.id]); setRevealed([]); setChecking(false); }, 700);
+                    } else {
+                        setTimeout(() => { setRevealed([]); setChecking(false); }, 1200);
+                    }
+                }
+            };
+
+            const allDone = matched.length === cards.length;
+            return (
+                <div>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+                        {cards.map(card => {
+                            const isUp = revealed.includes(card.id) || matched.includes(card.id);
+                            const isDone = matched.includes(card.id);
+                            return (
+                                <button key={card.id} onClick={() => handleFlip(card.id)}
+                                    className={`p-3 rounded-xl border-2 min-h-[72px] text-center transition-all font-medium text-sm ${isDone ? 'bg-emerald-100 border-emerald-400 text-emerald-800' : isUp ? 'bg-indigo-100 border-indigo-400 text-indigo-800' : 'bg-white border-slate-300 hover:border-indigo-400 hover:bg-indigo-50 text-slate-400'}`}>
+                                    {isUp ? card.text : '?'}
+                                </button>
+                            );
+                        })}
+                    </div>
+                    {allDone && (
+                        <div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+                            <p className="text-emerald-800 font-bold">🎉 ¡Completado en {moves} intentos!</p>
+                            <button onClick={onReset} className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg">Jugar de nuevo</button>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const SpotDifferenceGame = ({ data, onReset }) => {
+            const [qi, setQi] = useState(0);
+            const [picked, setPicked] = useState(null);
+            const [score, setScore] = useState(0);
+            const c = data.comparisons[qi];
+            const done = qi >= data.comparisons.length;
+
+            const pick = (i) => { if (picked !== null) return; setPicked(i); if (i === c.correct) setScore(s => s + 1); };
+            const next = () => { setPicked(null); setQi(i => i + 1); };
+
+            if (done) return (
+                <div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+                    <p className="text-emerald-800 font-bold">🎉 {score} de {data.comparisons.length} correctas.</p>
+                    <button onClick={onReset} className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg">Reiniciar</button>
+                </div>
+            );
+
+            return (
+                <div>
+                    <div className="grid md:grid-cols-2 gap-4 mb-4 text-sm">
+                        <div className="p-4 bg-rose-50 rounded-xl border border-rose-200">
+                            <p className="font-bold text-rose-600 mb-1">❌ Versión débil</p>
+                            <p className="text-rose-900 italic">"{c.weak}"</p>
+                        </div>
+                        <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+                            <p className="font-bold text-emerald-600 mb-1">✅ Versión mejorada</p>
+                            <p className="text-emerald-900 italic">"{c.strong}"</p>
+                        </div>
+                    </div>
+                    <p className="font-bold mb-3">¿Qué mejoró?</p>
+                    <div className="space-y-2 mb-4">
+                        {c.options.map((opt, i) => (
+                            <button key={i} onClick={() => pick(i)} className={`w-full text-left p-3 rounded-xl border-2 text-sm transition-all ${picked === null ? 'bg-white border-slate-300 hover:border-indigo-400' : i === c.correct ? 'bg-emerald-100 border-emerald-400' : i === picked ? 'bg-rose-100 border-rose-400' : 'opacity-50'}`}>{opt}</button>
+                        ))}
+                    </div>
+                    {picked !== null && picked === c.correct && <p className="text-emerald-700 mb-2 font-medium">¡Exacto! {c.improvement}</p>}
+                    {picked !== null && picked !== c.correct && <p className="text-rose-700 mb-2">No exactamente. La mejora clave fue: {c.improvement}</p>}
+                    {picked !== null && <button onClick={next} className="px-4 py-2 bg-indigo-600 text-white rounded-lg">Siguiente →</button>}
+                </div>
+            );
+        };
+
+        const IntruderGame = ({ data, onReset }) => {
+            const [gi, setGi] = useState(0);
+            const [picked, setPicked] = useState(null);
+            const g = data.groups[gi];
+            const pick = (i) => { if (picked !== null) return; setPicked(i); };
+            const done = gi >= data.groups.length;
+
+            if (done) return (
+                <div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+                    <button onClick={onReset} className="px-4 py-2 bg-emerald-600 text-white rounded-lg">Reiniciar</button>
+                </div>
+            );
+
+            return (
+                <div>
+                    <div className="flex flex-wrap gap-3 mb-4">
+                        {g.items.map((item, i) => (
+                            <button key={i} onClick={() => pick(i)} className={`px-4 py-3 rounded-xl border-2 text-sm font-medium transition-all ${picked === null ? 'bg-white hover:border-indigo-400' : i === g.intruder ? 'bg-amber-100 border-amber-400' : i === picked ? 'bg-rose-100 border-rose-400' : 'opacity-50'}`}>{item}</button>
+                        ))}
+                    </div>
+                    {picked !== null && picked === g.intruder && <p className="text-emerald-700 font-medium mb-2">¡Correcto! {g.reason}</p>}
+                    {picked !== null && picked !== g.intruder && <p className="text-rose-700 mb-2">Ese sí lo podés compartir. El intruso era: <strong>{g.items[g.intruder]}</strong>. {g.reason}</p>}
+                    {picked !== null && <button onClick={() => {setPicked(null); setGi(i=>i+1)}} className="px-4 py-2 bg-indigo-600 text-white rounded-lg">Siguiente →</button>}
+                </div>
+            );
+        };
+
+        const ChallengesSection = () => {
+            const [activeChallenge, setActiveChallenge] = useState(null);
+            const [resetKey, setResetKey] = useState(0);
+            const challenge = challengesData.find(c => c.id === activeChallenge);
+
+            if (activeChallenge && challenge) {
+                return (
+                    <div className="max-w-3xl mx-auto">
+                        <button onClick={() => setActiveChallenge(null)} className="flex items-center gap-2 text-indigo-600 hover:underline mb-4">
+                            <ChevronLeft className="w-4 h-4" /> Volver a desafíos
+                        </button>
+                        <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6">
+                            <h3 className="text-xl font-bold mb-1">{challenge.title}</h3>
+                            <p className="text-slate-600 mb-6">{challenge.description}</p>
+                            {challenge.type === 'memoryPairs' && <MemoryPairsGame data={challenge} onReset={() => setResetKey(k => k + 1)} key={resetKey} />}
+                            {challenge.type === 'spotDifference' && <SpotDifferenceGame data={challenge} onReset={() => setResetKey(k => k + 1)} key={resetKey} />}
+                            {challenge.type === 'intruder' && <IntruderGame data={challenge} onReset={() => setResetKey(k => k + 1)} key={resetKey} />}
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="max-w-3xl mx-auto">
+                    <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 mb-6 border border-amber-200">
+                        <h3 className="text-xl font-bold text-amber-800 mb-2 flex items-center gap-2"><Zap className="w-5 h-5" /> Entrenando el motor</h3>
+                        <p className="text-amber-900">Ejercicios breves para agarrarle la mano a la IA. Son opcionales, como un crucigrama de domingo.</p>
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-4">
+                        {challengesData.map(ch => (
+                            <button key={ch.id} onClick={() => { setActiveChallenge(ch.id); setResetKey(k => k + 1); }} className="text-left bg-white rounded-xl p-5 border-2 border-slate-200 hover:border-indigo-400 transition-all">
+                                <h4 className="font-bold text-slate-800 mb-1">{ch.title}</h4>
+                                <p className="text-sm text-slate-600">{ch.description}</p>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // VISTAS PRINCIPALES: Historias y Gimnasio
+        // ═══════════════════════════════════════════════════════════════
+        const StoryPlayer = ({ story, onBack }) => {
+            const [step, setStep] = useState(0);
+            const [copied, setCopied] = useState(false);
+            const visibleMsgs = story.conversation.slice(0, step + 1);
+            const roleColor = { usuario: 'bg-slate-100 border-slate-300', ia: 'bg-indigo-50 border-indigo-200 text-indigo-900', ajuste: 'bg-amber-50 border-amber-200 text-amber-900', alerta: 'bg-rose-50 border-rose-200 text-rose-900', resultado: 'bg-emerald-50 border-emerald-200 text-emerald-900' };
+
+            return (
+                <div className="max-w-3xl mx-auto">
+                    <button onClick={onBack} className="flex items-center gap-2 text-indigo-600 hover:underline mb-4"><ChevronLeft className="w-4 h-4" /> Volver</button>
+                    <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-6">
+                        <h3 className="text-xl font-bold mb-1">{story.title}</h3>
+                        <p className="text-sm text-slate-500 mb-4">{story.focus} — {story.context}</p>
+                        <div className="space-y-3 mb-6">
+                            {visibleMsgs.map((msg, i) => (
+                                <div key={i} className={`p-4 rounded-xl border-2 ${roleColor[msg.role]}`}>
+                                    <p className="text-xs font-bold uppercase mb-1 opacity-70">{msg.role === 'ia' ? 'Asistente' : msg.role}</p>
+                                    <p>{msg.text}</p>
+                                </div>
+                            ))}
+                        </div>
+                        {step < story.conversation.length - 1 ? (
+                            <button onClick={() => setStep(s => s + 1)} className="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-medium">Siguiente paso →</button>
+                        ) : (
+                            <div className="bg-sky-50 rounded-xl p-5 border border-sky-200">
+                                <p className="font-bold text-sky-800 mb-2">📋 Prompt reutilizable</p>
+                                <p className="text-sky-900 italic mb-3">"{story.reusablePrompt}"</p>
+                                <button onClick={() => { navigator.clipboard.writeText(story.reusablePrompt); setCopied(true); setTimeout(() => setCopied(false), 2000); }} className="flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-lg">
+                                    {copied ? <><Check className="w-4 h-4" /> Copiado</> : <><Copy className="w-4 h-4" /> Copiar prompt</>}
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const PromptGym = () => {
+            const [level, setLevel] = useState(null);
+            const [activePrompt, setActivePrompt] = useState(null);
+            const [copied, setCopied] = useState(false);
+
+            const currentPrompts = promptItems.filter(p => p.level === level);
+            const active = promptItems.find(p => p.id === activePrompt);
+
+            if (!level) return (
+                <div className="max-w-3xl mx-auto">
+                    <div className="bg-gradient-to-br from-indigo-50 to-sky-50 rounded-2xl p-6 mb-6 border border-indigo-200">
+                        <h3 className="text-xl font-bold text-indigo-800 mb-2 flex items-center gap-2"><Target className="w-5 h-5" /> Gimnasio de Prompts</h3>
+                        <p className="text-indigo-900">Elegí el nivel de tu proyecto. Cada ejemplo te muestra qué evitar (el "prompt débil") y la versión calibrada lista para usar.</p>
+                    </div>
+                    <div className="space-y-4">
+                        {promptLevels.map(pl => (
+                            <button key={pl.id} onClick={() => setLevel(pl.id)} className="w-full text-left bg-white rounded-xl p-5 border-2 border-slate-200 hover:border-indigo-400 hover:shadow-md transition-all">
+                                <h4 className="font-bold text-slate-800">{pl.label}</h4>
+                                <p className="text-sm text-slate-600">{pl.hint}</p>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            );
+
+            if (active) return (
+                <div className="max-w-3xl mx-auto">
+                    <button onClick={() => setActivePrompt(null)} className="flex items-center gap-2 text-indigo-600 hover:underline mb-4"><ChevronLeft className="w-4 h-4" /> Volver</button>
+                    <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6 space-y-6">
+                        <div>
+                            <p className="text-xs font-bold text-indigo-600 uppercase">{active.domain}</p>
+                            <h3 className="text-xl font-bold text-slate-800">{active.title}</h3>
+                            <p className="text-slate-600">{active.objective}</p>
+                        </div>
+                        <div className="bg-rose-50 rounded-xl p-5 border border-rose-200">
+                            <p className="text-xs font-bold text-rose-600 mb-2">❌ Prompt débil</p>
+                            <p className="text-rose-900 italic mb-2">"{active.badPrompt}"</p>
+                            <p className="text-sm text-rose-700">{active.badReason}</p>
+                        </div>
+                        <div className="bg-emerald-50 rounded-xl p-5 border border-emerald-200">
+                            <p className="text-xs font-bold text-emerald-600 mb-2">✅ Prompt robusto</p>
+                            <p className="text-emerald-900 italic text-sm mb-3">"{active.enhancedPrompt}"</p>
+                            <button onClick={() => { navigator.clipboard.writeText(active.enhancedPrompt); setCopied(true); setTimeout(() => setCopied(false), 2000); }} className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">
+                                {copied ? <><Check className="w-4 h-4" /> Copiado</> : <><Copy className="w-4 h-4" /> Copiar prompt</>}
+                            </button>
+                        </div>
+                        <div className="bg-sky-50 rounded-xl p-4 border border-sky-200">
+                            <p className="text-xs font-bold text-sky-600 mb-1">💡 ¿Por qué funciona?</p>
+                            <p className="text-sm text-sky-900">{active.why}</p>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            return (
+                <div className="max-w-3xl mx-auto">
+                    <button onClick={() => setLevel(null)} className="flex items-center gap-2 text-indigo-600 hover:underline mb-4"><ChevronLeft className="w-4 h-4" /> Elegir otro nivel</button>
+                    <h3 className="text-lg font-bold text-slate-800 mb-4">{promptLevels.find(p => p.id === level)?.label}</h3>
+                    <div className="grid gap-3">
+                        {currentPrompts.map(p => (
+                            <button key={p.id} onClick={() => setActivePrompt(p.id)} className="text-left bg-white rounded-xl p-4 border-2 border-slate-200 hover:border-indigo-400 transition-all">
+                                <p className="text-xs text-indigo-600 font-bold">{p.domain}</p>
+                                <h4 className="font-bold text-slate-800">{p.title}</h4>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // APP CONTENEDOR
+        // ═══════════════════════════════════════════════════════════════
+        const App = () => {
+            const [view, setView] = useState('theory');
+            const [moduleIndex, setModuleIndex] = useState(0);
+            const [activeStory, setActiveStory] = useState(null);
+            const mod = theoryModules[moduleIndex];
+
+            const tabs = [
+                { id: 'theory', label: 'Teoría', icon: <BookOpen className="w-4 h-4" /> },
+                { id: 'gym', label: 'Gimnasio', icon: <Target className="w-4 h-4" /> },
+                { id: 'stories', label: 'Historias', icon: <MessageCircle className="w-4 h-4" /> },
+                { id: 'challenges', label: 'Desafíos', icon: <Sparkles className="w-4 h-4" /> }
+            ];
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50">
+                    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-slate-200 shadow-sm">
+                        <div className="max-w-5xl mx-auto px-4 py-3">
+                            <div className="flex items-center gap-3 mb-3">
+                                <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-sky-600 rounded-xl flex items-center justify-center shadow-md">
+                                    <BrainCircuit className="w-6 h-6 text-white" />
+                                </div>
+                                <div>
+                                    <h1 className="text-lg font-extrabold text-slate-800 leading-tight">El Galpón de la IA</h1>
+                                    <p className="text-xs text-slate-500">Herramientas prácticas para el taller, el campo y la familia</p>
+                                </div>
+                            </div>
+                            <div className="flex gap-1 overflow-x-auto">
+                                {tabs.map(tab => (
+                                    <button key={tab.id} onClick={() => { setView(tab.id); setActiveStory(null); }} className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all ${view === tab.id ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'}`}>
+                                        {tab.icon} {tab.label}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </header>
+
+                    <main className="max-w-5xl mx-auto px-4 py-8">
+                        {view === 'theory' && (
+                            <div className="flex flex-col md:flex-row gap-6">
+                                <aside className="hidden md:block md:w-64 flex-shrink-0">
+                                    <div className="sticky top-32 space-y-1">
+                                        <p className="text-xs font-bold text-slate-400 uppercase mb-2">Módulos</p>
+                                        {theoryModules.map((m, i) => (
+                                            <button key={m.id} onClick={() => setModuleIndex(i)} className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all ${i === moduleIndex ? 'bg-indigo-100 text-indigo-800 font-bold border-l-4 border-indigo-500' : 'text-slate-600 hover:bg-slate-100'}`}>
+                                                <span className="text-xs text-slate-400 mr-1">{i + 1}.</span> {m.title}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </aside>
+                                <div className="md:hidden mb-4">
+                                    <select value={moduleIndex} onChange={e => setModuleIndex(Number(e.target.value))} className="w-full p-3 rounded-xl border-2 border-slate-300 bg-white text-slate-800 font-medium">
+                                        {theoryModules.map((m, i) => <option key={m.id} value={i}>{i + 1}. {m.title}</option>)}
+                                    </select>
+                                </div>
+                                <div className="flex-1 max-w-3xl">
+                                    <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6 md:p-8">
+                                        <h2 className="text-2xl font-extrabold text-slate-800 mb-1">{mod.title}</h2>
+                                        <p className="text-slate-500 mb-6">{mod.subtitle}</p>
+                                        <div className="space-y-4 text-slate-700 leading-relaxed mb-8">
+                                            {mod.reading.map((para, i) => <p key={i}>{para}</p>)}
+                                        </div>
+                                        <div className="bg-indigo-50 rounded-xl p-5 border border-indigo-200 mb-6">
+                                            <h4 className="font-bold text-indigo-800 mb-3 flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Checklist</h4>
+                                            <ul className="space-y-2">
+                                                {mod.checklist.map((item, i) => <li key={i} className="flex items-start gap-2 text-indigo-900"><CheckCircle2 className="w-4 h-4 text-indigo-500 mt-1 flex-shrink-0" /><span>{item}</span></li>)}
+                                            </ul>
+                                        </div>
+                                        <div className="bg-amber-50 rounded-xl p-5 border border-amber-200 mb-8">
+                                            <h4 className="font-bold text-amber-800 mb-2 flex items-center gap-2"><Lightbulb className="w-4 h-4" /> Práctica sugerida</h4>
+                                            <p className="text-amber-900">{mod.practice}</p>
+                                        </div>
+                                        <div className="flex justify-between gap-4">
+                                            <button onClick={() => setModuleIndex(i => Math.max(0, i - 1))} disabled={moduleIndex === 0} className="px-4 py-2 rounded-lg bg-slate-100 text-slate-700 disabled:opacity-30">Anterior</button>
+                                            {moduleIndex < theoryModules.length - 1 ? (
+                                                <button onClick={() => setModuleIndex(i => i + 1)} className="px-4 py-2 rounded-lg bg-indigo-600 text-white">Siguiente</button>
+                                            ) : (
+                                                <button onClick={() => setView('gym')} className="px-5 py-2 rounded-lg bg-emerald-600 text-white font-medium flex gap-2 items-center">Ir al Gimnasio <ArrowUpRight className="w-4 h-4"/></button>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {view === 'gym' && <PromptGym />}
+                        {view === 'challenges' && <ChallengesSection />}
+                        {view === 'stories' && (
+                            activeStory ? <StoryPlayer story={activeStory} onBack={() => setActiveStory(null)} /> : (
+                                <div>
+                                    <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 mb-6 border border-purple-200 max-w-3xl mx-auto">
+                                        <h3 className="text-xl font-bold text-purple-800 mb-2 flex items-center gap-2"><MessageCircle className="w-5 h-5" /> Historias de uso</h3>
+                                        <p className="text-purple-900">Casos reales que muestran cómo mejorar la charla con la IA paso a paso, con el prompt final para copiar.</p>
+                                    </div>
+                                    <div className="grid gap-4 md:grid-cols-2 max-w-4xl mx-auto">
+                                        {stories.map(s => (
+                                            <button key={s.id} onClick={() => setActiveStory(s)} className="text-left bg-white rounded-xl p-5 border-2 border-slate-200 hover:border-indigo-400 transition-all">
+                                                <h4 className="font-bold text-slate-800 mb-1">{s.title}</h4>
+                                                <p className="text-sm text-slate-500 mb-2">{s.focus}</p>
+                                                <p className="text-sm text-slate-600 line-clamp-2">{s.context}</p>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )
+                        )}
+                    </main>
+
+                    <footer className="bg-white border-t border-slate-200 mt-12">
+                        <div className="max-w-5xl mx-auto px-4 py-6 text-center text-slate-500 text-sm">
+                            <p className="font-medium">El Galpón de la IA — Herramientas para la vida real</p>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
