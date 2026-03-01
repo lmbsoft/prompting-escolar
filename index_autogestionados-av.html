@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Galpón de la IA</title>
+    <meta name="description"
+        content="Recurso educativo para aprender a usar inteligencia artificial generativa con criterio, seguridad y proyectos reales.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "lucide-react": "https://esm.sh/lucide-react@0.292.0"
+      }
+    }
+  </script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        :root {
+            --text: #0f172a;
+            --bg: #f8fafc;
+            --focus: #0ea5e9;
+        }
+
+        html {
+            font-size: clamp(18px, 1.2vw + 14px, 22px);
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.72;
+            letter-spacing: 0.01em;
+        }
+
+        p,
+        li,
+        label,
+        input,
+        textarea,
+        select,
+        button {
+            font-size: 1rem;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            line-height: 1.3;
+            letter-spacing: 0.005em;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            min-height: 48px;
+            border-radius: 0.75rem;
+        }
+
+        textarea {
+            min-height: 120px;
+        }
+
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible,
+        select:focus-visible,
+        a:focus-visible {
+            outline: 3px solid var(--focus);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 768px) {
+
+            button,
+            input,
+            textarea,
+            select {
+                min-height: 52px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800">
+    <div id="root"></div>
+    <script type="text/babel" data-type="module">
+        import React, { useMemo, useState } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import {
+            BrainCircuit, GraduationCap, Gamepad2, MessageCircle, BookOpen, Sparkles,
+            ShieldAlert, CheckCircle2, ChevronLeft, ChevronRight, Copy, Check,
+            Target, Lightbulb, Clock, PenSquare, Microscope, Library, ArrowUpRight,
+            ClipboardList, AlertTriangle, Lock, Heart, RefreshCw, Zap
+        } from 'lucide-react';
+
+        // ═══════════════════════════════════════════════════════════════
+        // DATA: MÓDULOS DE TEORÍA (13 módulos expandidos)
+        // ═══════════════════════════════════════════════════════════════
+
+        const theoryModules = [
+            {
+                id: 't1',
+                title: 'La IA es como un tractor nuevo',
+                subtitle: 'Mucha fuerza, pero necesita un buen chofer',
+                reading: [
+                    'Pensá en la Inteligencia Artificial como en un tractor de última generación: tiene una fuerza bárbara, hace el trabajo pesado en una fracción del tiempo, pero no sabe qué lote hay que sembrar ni a qué profundidad va la semilla. Esa decisión es tuya.',
+                    'Un asistente de IA no "piensa" como nosotros. Lo que hace es predecir qué palabra viene después de otra, basándose en millones de textos que ya leyó. Es parecido a cuando un repuestero veterano ya sabe qué pieza le vas a pedir apenas le decís el modelo del auto: junta piezas de información rapidísimo.',
+                    'Como toda herramienta nueva, al principio uno le desconfía. Pero una vez que le agarrás la mano, te ahorra horas. Podés pedirle que te ayude a redactar un texto para un amigo, que te busque opciones de repuestos, o que te tire ideas de juegos para agotar a los nietos el domingo a la tarde.',
+                    'La regla de oro es no pedirle magia. Si le decís "dame ideas para el campo", te va a dar respuestas de manual gringo que no sirven en el sudoeste bonaerense. Pero si le decís "tengo un lote de 50 hectáreas cerca de Bahía Blanca, llovió poco este mes, ¿qué opciones de forraje rápido tengo?", ahí el tractor empieza a rendir.',
+                    'Como odontólogo y tipo de taller, sabés que cada herramienta tiene su uso. La IA es excelente para armar borradores, ordenar ideas sueltas y buscar alternativas. Pero el control de calidad final siempre lo hacés vos.'
+                ],
+                checklist: [
+                    'Dale contexto: decile dónde estás, qué sabés hacer y qué querés.',
+                    'No le pidas conocimiento perfecto, pedile opciones.',
+                    'Tratala como a un ayudante de taller muy rápido pero sin calle.',
+                    'Recordá que siempre tenés que revisar lo que te entrega.'
+                ],
+                practice: 'Ejercicio: Pedile a la IA que te explique cómo carburar un motor. Primero pedíselo así nomás. Después pedíselo aclarando que es un motor de un auto clásico de los 70 y que vos ya tenés experiencia en mecánica. Fijate cómo cambia la respuesta.'
+            },
+            {
+                id: 't2',
+                title: 'El arte de la buena orden (Prompt)',
+                subtitle: 'Si pedís mal en la ferretería, te dan el tornillo equivocado',
+                reading: [
+                    'Cuando hablamos con la IA, a la instrucción que le damos se le llama "Prompt". Un buen prompt es como ir a comprar repuestos con la muestra en la mano: no hay margen de error.',
+                    'Para que la IA te entienda bien, tu pedido tiene que tener cinco partes básicas, como si estuvieras armando un motor: el Rol (quién querés que sea), la Tarea (qué tiene que hacer), el Contexto (para qué lo necesitás), el Formato (cómo querés que lo entregue) y los Límites (qué no debe hacer).',
+                    'Por ejemplo, el ROL cambia todo. No es lo mismo pedirle "escribí sobre pesca" que "Escribí como un viejo pescador de corvina rubia de Monte Hermoso". Al darle el rol, le ajustás la carburación a la respuesta.',
+                    'El contexto es clave. Asumí que la IA no sabe nada de vos. Si vas a preguntar sobre la siembra de trigo, aclarale la zona, tipo de suelo y maquinaria disponible.',
+                    'Los límites son como los frenos. Es muy útil decirle a la IA qué cosas NO querés. "No uses palabras técnicas complicadas", "No me des textos de más de dos párrafos", "No asumas que voy a comprar fertilizantes caros".',
+                    'Un ejemplo de pedido flojo: "Haceme una rutina para el fin de semana". Un ejemplo de pedido ajustado: "Actuá como un abuelo divertido. Diseñame 3 actividades al aire libre para hacer el sábado con mis dos nietos de 6 y 8 años en un campo. Que no requieran tecnología, que ensucien poco y que duren unos 40 minutos cada una".'
+                ],
+                checklist: [
+                    'Asignale un rol de experto ("Actuá como un mecánico de autos clásicos").',
+                    'Definí bien la tarea central.',
+                    'Dá todo el contexto necesario, como si le explicaras a un forastero.',
+                    'Pedí un formato claro (una lista, un cuadro, un párrafo corto).',
+                    'Poné límites claros sobre lo que NO querés ver en la respuesta.'
+                ],
+                practice: 'Ejercicio: Pensá en algo que quieras arreglar (en la casa o el auto). Escribí un pedido dándole el ROL de experto, contándole las herramientas que tenés (CONTEXTO) y pidiéndole el paso a paso en formato LISTA.'
+            },
+            {
+                id: 't3',
+                title: 'No te comas el amague (Las alucinaciones)',
+                subtitle: 'Cuando la IA manda fruta y suena convincente',
+                reading: [
+                    'Hay algo que tenés que saber de entrada: la IA es a veces como ese amigo pescador que, para no quedarse callado, te inventa una respuesta con una seguridad total. A esto en tecnología se le llama "alucinación".',
+                    'Por eso, NUNCA uses la IA como si fuera una enciclopedia para datos exactos o temas delicados (como medicación o dosis de algo agroquímico). Usala para generar ideas, para organizar textos, para buscar opciones.',
+                    'Si vas a buscar información concreta técnica sobre piezas o procedimientos, pedile siempre que te confirme si está segura o si es una estimación. Una buena técnica es decirle en el pedido: "Si no sabés la respuesta exacta, decime \'No lo sé\', no inventes".',
+                    'Tu experiencia es el mejor filtro. Si un consejo médico para un amigo te suena raro, dudá. Si te dice que la presión de las cubiertas de la chata para la arena tiene que ser de 35, tu sentido común te tira la alerta roja.',
+                    'La IA propone, pero el odontólogo, el pescador y el mecánico sos vos.'
+                ],
+                checklist: [
+                    'Cuidado con la información precisa: sospechá si suena demasiado perfecto pero no lo conocés.',
+                    'Avisale en el texto inicial que no invente datos ("Si no sabés, decí no lo sé").',
+                    'Usá tu "ojímetro" rural y mecánico para descartar los consejos absurdos o de manual.',
+                    'No le confíes decisiones críticas de salud, dinero o inversiones fuertes.'
+                ],
+                practice: 'Ejercicio: Preguntale a la IA algo muy específico y local que vos sepas bien (ej: cuál es el mejor viento para ir a pescar al faro de Monte Hermoso). Leé la respuesta y fíjate qué acierta y dónde manda fruta.'
+            },
+            {
+                id: 't4',
+                title: 'Conversar como quien acomoda el taller',
+                subtitle: 'Una charla por partes rinde más que pedir todo junto',
+                reading: [
+                    'No intentes resolver un problema gigante en una sola pregunta. Si querés organizar todo un cronograma de mejoras para el campo, o armar la historia clínica completa de tus pacientes amigos, hacelo por partes.',
+                    'Pensalo como desarmar un motor: primero sacás la tapa, después ves las válvulas, y así. Con la IA, el primer mensaje tiene que ser para tantear el panorama: "Hagamos un plan, pero primero dame las 3 áreas de enfoque".',
+                    'Una vez que te responde el primer paso, recién ahí pasás al segundo. "Me gustó el punto 2, detallemos eso". A esto se le llama llevar la conversación paso a paso.',
+                    'Si te responde algo que no te gusta o que va por otro lado, no tengas problema en frenarla. Le podés decir: "No me sirve ese enfoque, pensalo más para un clima seco y sin gastar plata". La IA no se ofende; al contrario recalcula rapidísimo al nuevo rumbo.',
+                    'Además, las conversaciones se pueden guardar. Podés tener un "chat" (una ventanita) abierta solo para temas del campo, otra solo para ideas para los nietos, y otra para consultas técnicas del auto.'
+                ],
+                checklist: [
+                    'Dividí el problema grande en preguntas chicas y andá paso a paso.',
+                    'Si la máquina arranca para otro lado, corregila en el momento sin asco.',
+                    'Pedile primero que te haga un esquema, y si te gusta, decile que desarrolle.',
+                    'Mantené las conversaciones (chats) ordenadas por tema.'
+                ],
+                practice: 'Ejercicio: Empezá una interacción pidiéndole: "Quiero restaurar una mesa vieja de madera. No me des todo el paso a paso todavía. Decime solo qué 3 preguntas me harías para saber por dónde arrancar".'
+            },
+            {
+                id: 't5',
+                title: 'La caja de herramientas para la familia',
+                subtitle: 'Desde cuentos para los nietos hasta organizar asados',
+                reading: [
+                    'Podés pedirle a la IA: "Mis nietos tienen 7 y 10 años, les encantan los dinosaurios y los autos. Inventame un cuento cortito donde un tiranosaurio Rex ayuda a arreglar una camioneta vieja. Que el nieto mayor sea el mecánico principal y la menor la copiloto". El resultado los va a volver locos.',
+                    'También sirve para buscar actividades cuando vienen a visitarte al campo: "Decime 5 juegos de exploración al aire libre para hacer en un lote seguro, que nos mantengan ocupados 2 horas y no requieran llevar materiales extraños".',
+                    'Incluso para los asados de la peña o los amigos. Podés darle a la IA: "Somos 8 adultos de buen comer. Haceme la lista de compras del supermercado para un asado con picada previa, detallando los kilos de carne, chorizos, carbón y bebida necesarios". Te arma la lista que copiás, enviás al celular y vas directo a comprar.',
+                    'Lo importante acá es usar la máquina para sacarte el trabajo pesado de pensar de cero, y dejarte más tiempo limpio para estar con ellos y disfrutar haciéndolo.'
+                ],
+                checklist: [
+                    'Agregá detalles personales clave cuando pidas cosas familiares (edades de los nietos, gustos).',
+                    'Usá la IA para los cálculos de comida y bebida de reuniones grandes.',
+                    'Creatividad a pedido: usala para armar juegos, historias o prendas para divertirse con los chicos.',
+                    'Si el resultado te parece muy formal, pedile: "Reescribí esto en tono de abuelo compinche y en argentino".'
+                ],
+                practice: 'Ejercicio: Inventá un cuento ahora mismo. Pedile a la IA que protagonice una aventura corta con el nombre real de uno de tus nietos/as mezclando algún hobby tuyo (como pescar en lancha).'
+            }
+        ];
+        // ═══════════════════════════════════════════════════════════════
+        // DATA: NIVELES DE PROMPTS
+        // ═══════════════════════════════════════════════════════════════
+
+        const promptLevels = [
+            { id: 'taller', label: `Nivel 1: Trabajos Rápidos en Taller`, hint: `Cosas de todos los días, listas, cuentos y arreglos simples.` },
+            { id: 'campo', label: `Nivel 2: Tareas del Campo y la Clínica`, hint: `Para organizar ideas más grandes, planificar compras o diagnósticos de maquinaria.` },
+            { id: 'proyectos', label: `Nivel 3: Proyectos de Fin de Semana`, hint: `Para planear cosas que llevan tiempo, desde restauración hasta viajes de pesca con amigos.` }
+        ];
+
+        // ═══════════════════════════════════════════════════════════════
+        // DATA: ITEMS DE PROMPTS (~65 items)
+        // ═══════════════════════════════════════════════════════════════
+
+        const promptItems = [
+            // Nivel: TALLER (Consultas rápidas, diagnóstico, redacción breve)
+            {
+                id: 'pav1', level: 'taller', domain: `Mecánica`, title: `Diagnóstico de ruido motor`,
+                objective: `Ideas sobre ruidos raros en el auto.`,
+                prompt: `Actuá como un mecánico con 30 años de taller. Mi auto (un [modelo y año]) está haciendo un ruido [describir ruido: ej. metálico al acelerar en baja]. Tirame las 3 causas más probables de más a menos grave, y decime cómo puedo chequear la más simple en el garaje de mi casa.`,
+                why: `Te da opciones antes de meter mano o llevarlo al chapista.`
+            },
+            {
+                id: 'pav2', level: 'taller', domain: `Nietos`, title: `Cuento nocturno rápido`,
+                objective: `Armar una historia rápida para dormir.`,
+                prompt: `Actuá como un abuelo contador de historias. Escribí un cuento corto (3 minutos) donde mis nietos [nombres] encuentran un mapa del tesoro escondido en mi vieja caja de pesca. Usá lenguaje argentino, cercano y que termine con un final tranquilo para dormir.`,
+                why: `Combina diversión a medida con un resultado instantáneo para zafar a la noche.`
+            },
+            {
+                id: 'pav3', level: 'taller', domain: `Agro`, title: `Clima y tareas del día`,
+                objective: `Revisar si conviene salir a trabajar.`,
+                prompt: `Actuá como un ingeniero agrónomo baqueano. Hoy el pronóstico dice [temp, humedad, viento] para el sudoeste bonaerense. Tengo pensado hacer [tarea: ej. fumigar / arreglar alambrado]. ¿Me conviene arrancar ahora o mejor espero a mañana? Sé breve y directo.`,
+                why: `Ideal para validar tu intuición antes del primer mate.`
+            },
+            {
+                id: 'pav4', level: 'taller', domain: `Odontología Amigos`, title: `Mensaje de control`,
+                objective: `Aviar a pacientes amigos sin parecer un cobrador.`,
+                prompt: `Actuá como un odontólogo de confianza. Necesito mandarle un WhatsApp a mi amigo que hace un año no viene a hacerse una limpieza. Redactalo informal y con humor, pero recordándole que es importante. Dale 2 opciones de texto.`,
+                why: `Te ahorra pensar cómo pedirle a un amigo que se cuide la boca sin sonar pesado.`
+            },
+            {
+                id: 'pav5', level: 'taller', domain: `Mecánica`, title: `Equivalencia de piezas`,
+                objective: `Saber si un repuesto sirve para otra cosa.`,
+                prompt: `Tengo un [nombre del repuesto/herramienta antigua]. ¿Me sirve para reemplazar temporalmente a un [repuesto que falta] en un motor chico? Decime solo sí o no y, si es sí, qué precaución debo tener. Si no estás seguro, decime "No lo sé".`,
+                why: `Filtra alucinaciones con la instrucción clara de "No lo sé".`
+            },
+            {
+                id: 'pav6', level: 'taller', domain: `Pesca`, title: `Estado de la marea`,
+                objective: `Entender cómo pega el clima en la pesca.`,
+                prompt: `Explicame cómo afecta el viento [dirección y nudos] a la pesca variada de costa en la zona de Monte Hermoso hoy. Dame 3 tips rápidos sobre qué plomada y línea me conviene armar.`,
+                why: `Traduce datos del clima en decisiones prácticas para la caja de pesca.`
+            },
+
+            // Nivel: CAMPO (Planificación media, cálculos, logística)
+            {
+                id: 'pav7', level: 'campo', domain: `Agro`, title: `Cálculo de rinde estimado`,
+                objective: `Saber si los números del lote de trigo cierran.`,
+                prompt: `Actuá como un agrónomo. Tengo un lote de trigo de [hectáreas] en el sudoeste bonaerense. El clima de este año fue [describir, ej: seco en primavera]. Haceme un cálculo rápido de cuánto grano debería estimar sacar por hectárea y qué precio de pizarra necesito para no perder plata.`,
+                why: `Esboza un número rápido usando variables reales de tu zona.`
+            },
+            {
+                id: 'pav8', level: 'campo', domain: `Mecánica`, title: `Plan pre-VTV camioneta`,
+                objective: `Revisión casera antes de la técnica.`,
+                prompt: `Tengo que llevar la Pick-up modelo [Año/Marca] a la VTV la semana que viene. Armame un checklist de 10 puntos críticos que puedo revisar yo mismo en el galpón este fin de semana para no de rebotar por pavadas. Ordená de lo más sucio a lo más limpio.`,
+                why: `Organiza tu propia revisión ahorrando tiempo en el taller.`
+            },
+            {
+                id: 'pav9', level: 'campo', domain: `Familia`, title: `Actividades en el campo`,
+                objective: `Entretener a los nietos todo el sábado.`,
+                prompt: `Actuá como organizador de campamentos. Voy a estar en el campo de 10 a 18hs con mis dos nietos de [edad 1] y [edad 2]. Armame un cronograma realista con 4 actividades al aire libre que no requieran señal de internet, que los cansen pero que sean seguras.`,
+                why: `Convierte un día plano en una aventura sin tener que inventar todo de cero.`
+            },
+            {
+                id: 'pav10', level: 'campo', domain: `Odontología Amigos`, title: `Respuesta a consulta de urgencia`,
+                objective: `Contestar un mensaje de dolor de boca de un conocido.`,
+                prompt: `Un amigo me mandó: "Me duele la muela horrores al tomar frío". Redactá un mensaje de WhatsApp para responderle, indicándole qué analgésico de venta libre puede tomar ahora y en qué horario puede psar por mi casa a que lo revise. Tono: Tranquilo y resolutivo.`,
+                why: `Maneja la urgencia y baja la ansiedad del paciente amigo rápidamente.`
+            },
+            {
+                id: 'pav11', level: 'campo', domain: `Pesca`, title: `Logística de asado y pesca`,
+                objective: `Calcular comida para la salida.`,
+                prompt: `Vamos a ir a pescar a la laguna 5 tipos de buen comer. Haceme la lista exacta de supermercado para un asado completo (carne, achuras, bebida, leña) y tirame 3 ideas de 'picada de lancha' que no ensucien mucho las manos.`,
+                why: `Delega la matemática de las compras a la IA.`
+            },
+
+            // Nivel: PROYECTOS (Planificación por fases, diseño, investigación)
+            {
+                id: 'pav12', level: 'proyectos', domain: `Pesca`, title: `Planificación embarcada a Monte Hermoso`,
+                objective: `Logística completa de salida en lancha de varios días.`,
+                prompt: `Actuá como un capitán de pesca. Vamos a salir a pescar embarcados 3 días por Monte Hermoso con 3 amigos. Armame un plan dividido en:\n1. Revisiones de la lancha previas al viaje.\n2. Checklist de seguridad náutica obligatoria.\n3. Estrategia de pesca por día según mareas supuestas.\nNo detalles cada punto todavía, solo dame la estructura.`,
+                why: `Demuestra cómo pedir estructura primero y rellenar después (prevención de alucinaciones).`
+            },
+            {
+                id: 'pav13', level: 'proyectos', domain: `Mecánica`, title: `Restauración de tractor antiguo`,
+                objective: `Estructurar los pasos para arreglar una reliquia.`,
+                prompt: `Quiero restaurar un tractor viejo [Marca/Modelo] que lleva 10 años parado en el galpón. Mi presupuesto es bajo y voy a hacer el trabajo manual yo mismo los domingos. Dividí este proyecto en 4 grandes etapas. ¿Cuál debería ser la Fase 1 y qué 3 herramientas críticas necesito para arrancar?`,
+                why: `Corta un proyecto intimidante en partes manejables reales.`
+            },
+            {
+                id: 'pav14', level: 'proyectos', domain: `Agro`, title: `Investigación de abono orgánico`,
+                objective: `Buscar alternativas económicas y hacer la prueba.`,
+                prompt: `Quiero empezar a probar fertilizantes orgánicos o caseros en un pequeño sector de mi lote de la zona de Coronel Dorrego. Resumime en 3 viñetas cuáles son las opciones más accesibles usando desechos que ya tengo en el campo, y decime cómo armar un lote de prueba de 5x5 metros. Si algún dato requiere un ingeniero, marcalo en negrita.`,
+                why: `Investiga temas nuevos con un cinturón de seguridad contra datos inventados.`
+            },
+            {
+                id: 'pav15', level: 'proyectos', domain: `Familia`, title: `Manual de la casa para nietos`,
+                objective: `Dejar instrucciones claras (y divertidas) de seguridad.`,
+                prompt: `Quiero escribir un "Manual del Pequeño Explorador" para cuando mis nietos vienen al campo. Necesito que me ayudes a redactar reglas importantes de seguridad (ej: no acercarse al molino, cuidado con los perros de trabajo, no tocar herramientas) pero escritas como si fueran misiones de una aventura y no retos de adulto gruñón. Haceme los primeros 3 artículos.`,
+                why: `Usa la IA para reformatear algo aburrido (reglas) en algo genial enfocándose en el rol.`
+            },
+            {
+                id: 'pav16', level: 'proyectos', domain: `General`, title: `Filtro contra alucinaciones técnicas`,
+                objective: `Forzar a la IA a verificar la exactitud de una duda puntual.`,
+                prompt: `Tengo una caja de cambios manual desarmada de [Vehículo]. Me sobran 2 arandelas de empuje y no sé del lado de qué engranaje van. Buscá en tu base de conocimientos técnicos: ¿Cuál es la disposición de las arandelas en el eje secundario? IMPORTANTE: Si no tenés el diagrama exacto de este modelo, no inventes una respuesta. Decime "Necesito el manual de despiece".`,
+                why: `Muestra la técnica avanzada de ponerle "frenos" explícitos a la Inteligencia Artificial.`
+            },
+            {
+                id: 'pav17', level: 'taller', domain: `Mecánica`, title: `Duda con manual en inglés`,
+                objective: `Traducir y entender un manual técnico de despiece.`,
+                prompt: `Actuá como mecánico traductor. Tengo este párrafo del manual de un motor viejo en inglés: "[pegar texto]". Traducilo al español de taller argentino, y decime rápido qué herramientas necesito para hacer lo que dice.`,
+                why: `Salva la barrera del idioma cuando buscás información de motores antiguos.`
+            },
+            {
+                id: 'pav18', level: 'taller', domain: `Agro`, title: `Identificar plaga o maleza`,
+                objective: `Reconocer una maleza rara en el lote.`,
+                prompt: `Actuá como perito agrónomo. Encontré una maleza rara en el lote de trigo. Tiene [describir hojas, tallo gigante, flor, espinas]. Es la primera vez que la veo. Tirame las 3 opciones más probables de qué puede ser para buscar fotos, y fijate si tu base de datos dice que es tóxica para las vacas.`,
+                why: `Filtra rápido cuando estás caminando el lote, antes de gastar en llamada al ingeniero.`
+            },
+            {
+                id: 'pav19', level: 'taller', domain: `Odontología Amigos`, title: `Aclarar mito dental`,
+                objective: `Explicarle algo complejo a un amigo de forma simple.`,
+                prompt: `Un amigo me pregunta en el asado si es verdad que "el bicarbonato blanquea los dientes". Explicame en 2 párrafos cortos, usando una analogía de mecánica o campo (como pulir un faro o despintar chapa), por qué usarlo puro raya el esmalte, así yo se lo puedo explicar en su idioma.`,
+                why: `Te da metáforas rápidas para explicar ciencia sin aburrir a la gente.`
+            },
+            {
+                id: 'pav20', level: 'taller', domain: `General`, title: `Redactar aviso de venta`,
+                objective: `Vender una herramienta usada por internet o grupos.`,
+                prompt: `Quiero vender una soldadora inversora usada [Marca y Modelo]. Escribime un aviso corto para un grupo de WhatsApp de la zona. Destacá que tiene poco uso, que la cambio porque compré una de 250 amp, y que el precio se puede charlar si la vienen a probar al campo. Tono directo de compra-venta de fierros.`,
+                why: `Te saca de encima la pereza de redactar el texto para vender cosas del galpón.`
+            },
+            {
+                id: 'pav21', level: 'campo', domain: `Mecánica`, title: `Comparar dos herramientas`,
+                objective: `Decidir qué comprar sin leer largas páginas de internet.`,
+                prompt: `Actuá como un jefe de taller comprador. Estoy dudando entre comprar una [Herramienta A] o una [Herramienta B]. Las quiero para reparaciones de galpón los fines de semana. Haceme una tabla comparativa corta sobre: durabilidad frente al polvo, costo de conseguirse repuestos, y facilidad de arreglo si se rompen.`,
+                why: `Te arma un cuadro sinóptico solo con los temas que te importan de verdad.`
+            },
+            {
+                id: 'pav22', level: 'campo', domain: `Agro`, title: `Anotador de observaciones de recorrida`,
+                objective: `Resumir notas habladas o sueltas.`,
+                prompt: `Recorrí el lote 4 a la mañana y anoté esto suelto en papel: "[pegar notas]". Actuá como mi secretario de campo y armame un reporte limpio en 3 puntos: qué vi espectacular, qué vi dudoso, y qué 2 tareas tengo obligadas para la semana que viene.`,
+                why: `Ordena el trabajo mental después de una recorrida al lote larga.`
+            },
+            {
+                id: 'pav23', level: 'campo', domain: `Familia`, title: `Receta potente de estancia`,
+                objective: `Cocinar para todos sin bajar al pueblo a comprar.`,
+                prompt: `Actuá como un cocinero de estancia o pulpería. Somos 6 adultos de comer bien. En la heladera solo tengo: [Lista de 5-6 cosas, ej: sobras de asado, papas, cebolla, arvejas]. Inventame una receta de olla (al disco o cacerola fierro) que no me lleve más de 1 hora hacer. Pasame el paso a paso.`,
+                why: `Te salva la comida familiar con creatividad y sin moverte del lugar.`
+            },
+            {
+                id: 'pav24', level: 'campo', domain: `Pesca`, title: `Lectura de tabla de mareas`,
+                objective: `Entender rápido si conviene intentar la salida.`,
+                prompt: `Tengo los datos crudos de las mareas de Monte Hermoso hoy: [pegar datos de pleamar/bajamar de google]. Explicame en dos líneas a qué hora exacta sugerís que estemos tirando apostando a la variada y a qué hora es mejor juntar para matear. Sin explicaciones de luna largas.`,
+                why: `Traduce datos complejos de tablas pesadas a un plan de horario amigable.`
+            },
+            {
+                id: 'pav25', level: 'campo', domain: `General`, title: `Resumir un manual de seguridad`,
+                objective: `Evitar riesgos tóxicos entendiendo la letra chica.`,
+                prompt: `Compré este envase de curasemilla [o pintura epoxi]. La etiqueta de seguridad es inmensa. Te pego el texto acá abajo. Analizalo y decime SOLO en viñetas cuáles son las advertencias MUY graves (ej. qué material no debe tocar). Si no dice nada fuera de lo común, decime "es estándar". Aquí el texto: [pegar texto]`,
+                why: `Evita accidentes técnicos sacándole a la IA la tarea aburrida de filtrar letra chica.`
+            },
+            {
+                id: 'pav26', level: 'proyectos', domain: `Mecánica`, title: `Diseño estantería pesada de taller`,
+                objective: `Planificar soldadura y cortes para evitar errores.`,
+                prompt: `Quiero armar una estantería muy pesada para el galpón, soldando unos perfiles ángulos L y estructurales viejos. Arriba van 3 bidones de aceite y una morsa. Actuá como herrero calculista. Dame un plan de de 4 fases para armarla, y explicame dónde tengo que poner los refuerzos cruzados para que la estructura "no pancee".`,
+                why: `Asegura un diseño resistente antes de quemar electrodos y arrepentirte.`
+            },
+            {
+                id: 'pav27', level: 'proyectos', domain: `Agro`, title: `Sellar galpón antes del invierno`,
+                objective: `Un plan maestro para el techo y chapas en fines de semana.`,
+                prompt: `El galpón de chapa de la estancia filtra agua por los clavos viejos y le entra viento por abajo del portón descarrilado. Actuá como un contratista de campo de la vieja escuela. Armame un proyecto para que yo arregle esto a mis tiempos en 3 fines de semana. Fase 1: Sellado del zinc. Fase 2: Cuadratura. ¿Qué marca o tipo de sellador elastomérico dura posta en zona de heladas?`,
+                why: `Convierte una rotura grande en un plan realizable en tres domingos.`
+            },
+            {
+                id: 'pav28', level: 'proyectos', domain: `Familia`, title: `Proyecto plataforma en el árbol`,
+                objective: `Construir algo inolvidable y seguro con los chicos.`,
+                prompt: `Quiero armar una plataforma tipo rampa y mirador de madera en un árbol grueso con mis nietos de [edades]. Actuá como carpintero experto infantil. Armame un plan para hacerlo en 3 partes los sábados. El plan debe dividir el trabajo entre: a) Las cosas de fuerza/seguridad que hago yo solo, y b) Las tareas de lijar/pintar que pueden hacer los nietos. Importante: recomendame fijaciones que no lastimen la corteza viva.`,
+                why: `Te arma la logística de un trabajo manual que a la vez es plan familiar excelente.`
+            },
+            {
+                id: 'pav29', level: 'proyectos', domain: `Odontología Amigos`, title: `Estrategia de jubilación cómoda`,
+                objective: `Ir cerrando a pacientes "random" sin perder a los históricos.`,
+                prompt: `Tengo el consultorio desde hace 30 años pero ya quiero bajar el ritmo fuerte y quedarme solo para los amigos o urgentes graves. No quiero cerrar el local abruptamente. Actuá como asesor de salud profesional maduro. Sugerime una estrategia simple y a 12 meses. Dame también un texto amable pero firme de WhatsApp para derivar a los que me exigen turnos pero no quiero seguir viendo.`,
+                why: `Utiliza la IA para planificar en perspectiva algo que a veces cruza la barrera de las emociones personales.`
+            },
+            {
+                id: 'pav30', level: 'proyectos', domain: `General`, title: `Reglas de compra barrial / chacras`,
+                objective: `Dejar un minicontrato informal con vecinos para juntar plata y compras.`,
+                prompt: `Con 4 vecinos linderos vamos a armar un plan para comprar en conjunto (pool de compras) gasoil mayorista y conseguir rebajas, pero la onda no es quedar mal si alguno se atrasa en pagar el tanque. Actuá como mediador de pueblos. Redactame un minidocumento re contra simple de 4 "Reglas Claras de Compra" para el grupo de WhatsApp. Que quede claro que el que no depositó a la fecha de llegada del camión, se baja esa ronda, pero con camaradería.`,
+                why: `Formaliza reglas informales con ayuda neutral y descontracturada para no perder a los vecinos amigos.`
+            }
+        ];
+
+        // ═══════════════════════════════════════════════════════════════
+        // SISTEMA DE ENRIQUECIMIENTO DE PROMPTS
+        // ═══════════════════════════════════════════════════════════════
+
+        const levelTechniqueMap = {
+            taller: [`Rol explícito`, `Objetivo concreto`, `Formato de salida definido`, `Lenguaje claro y acotado`],
+            campo: [`Restricciones de calidad`, `Criterios de evaluación`, `Iteración por etapas`, `Control de ambigüedad`],
+            proyectos: [`Diseño por fases`, `Supuestos y riesgos`, `Entregables verificables`, `Cierre con siguiente acción`]
+        };
+
+        const roleByDomain = {
+            'mecánica': `mecánico experto con 30 años de experiencia en motores clásicos y herramientas de taller`,
+            'agro': `ingeniero agrónomo baqueano conocedor del sudoeste bonaerense`,
+            'nietos': `abuelo divertido y creativo, experto en inventar juegos y cuentos`,
+            'odontología amigos': `odontólogo de confianza con trato cercano y profesional`,
+            'pesca': `pescador náutico veterano, experto en navegación y variada de mar`
+        };
+
+        const resolveRole = (domain) => roleByDomain[domain.toLowerCase()] || `asistente experto en soluciones prácticas para el taller y el campo`;
+
+        const resolveOutputFormat = (item) => {
+            const domain = item.domain.toLowerCase();
+            if (domain.includes('mecánica') || domain.includes('agro')) return `Lista de pasos técnicos numerados con herramientas necesarias.`;
+            if (domain.includes('nietos')) return `Cuento o descripción de actividad en lenguaje cercano y argentino.`;
+            if (domain.includes('odontología')) return `Texto breve y amable para enviar por WhatsApp.`;
+            if (domain.includes('pesca')) return `Checklist completa por categorías (seguridad, equipo, logística).`;
+            return `Lista estructurada con pasos claros y consejos útiles.`;
+        };
+
+        const weakPromptByDomain = {
+            'mecánica': `Contame qué tiene el auto que hace ruido.`,
+            'agro': `Dame ideas para el campo este mes.`,
+            'nietos': `Inventame un cuento para mis nietos.`,
+            'odontología amigos': `Escribile a mi amigo que tiene que venir al consultorio.`,
+            'pesca': `Qué tengo que llevar para ir a pescar.`
+        };
+
+        const resolveBadPrompt = (item) => {
+            const domainKey = item.domain.toLowerCase();
+            if (weakPromptByDomain[domainKey]) return weakPromptByDomain[domainKey];
+            return `Necesito ayuda con ${item.domain.toLowerCase()} para ${item.objective.toLowerCase()}.`;
+        };
+
+        const resolveWhyBad = (item) => {
+            if (item.level === 'taller') return `Es demasiado general. No dice qué herramientas tenés ni qué resultado esperás exactamente.`;
+            if (item.level === 'campo') return `Le falta el contexto del lugar y el objetivo específico del trabajo. La IA va a responder cualquier cosa.`;
+            return `Es un pedido vago para un proyecto que lleva tiempo. Necesitás pedirle que actúe como un experto y te dé un plan.`;
+        };
+
+        const resolveQualityCriteria = (item) => {
+            const domain = item.domain.toLowerCase();
+            if (domain.includes('mecánica')) return `seguridad en el procedimiento, claridad de piezas y pasos lógicos`;
+            if (domain.includes('agro')) return `realismo climático, rinde coherente con la zona y terminología de campo`;
+            if (domain.includes('nietos')) return `tono afectuoso, vocabulario para chicos y temática de aventura`;
+            return `utilidad práctica, lenguaje claro y siguiente paso concreto`;
+        };
+
+        const resolveToneFrame = (item, role, outputFormat, qualityCriteria, techniques) => {
+            if (item.level === 'taller') {
+                return [
+                    `Actúa como ${role} con tono de taller: directo, práctico y paciente.`,
+                    ``, `Objetivo: ${item.objective}`,
+                    `Pedido inicial: ${item.prompt}`,
+                    ``, `Pasos sugeridos:`,
+                    `- Si no me diste suficientes datos del motor o el lote, haceme 2 preguntas clave.`,
+                    `- Explicame como si estuviéramos tomando un mate en el galpón.`,
+                    `- Formato pedido: ${outputFormat}`,
+                    `- Criterio de revisión: ${qualityCriteria}.`,
+                    ``, `Técnicas: ${techniques.join(', ')}.`
+                ];
+            }
+            return [
+                `Actúa como ${role} con enfoque profesional y previsor.`,
+                ``, `Resultado buscado: ${item.objective}`,
+                `Consigna: ${item.prompt}`,
+                ``, `Plan de acción:`,
+                `1) Calibración: pedime los datos técnicos que te falten.`,
+                `2) Respuesta estructurada en formato: ${outputFormat}`,
+                `3) Control de calidad bajo criterio: ${qualityCriteria}.`,
+                ``, `Técnicas aplicadas: ${techniques.join(', ')}.`
+            ];
+        };
+
+        const buildEnhancedPrompt = (item) => {
+            const techniques = levelTechniqueMap[item.level] || levelTechniqueMap.taller;
+            const role = resolveRole(item.domain);
+            const outputFormat = resolveOutputFormat(item);
+            const qualityCriteria = resolveQualityCriteria(item);
+            const frame = resolveToneFrame(item, role, outputFormat, qualityCriteria, techniques);
+            return frame.join('\n');
+        };
+
+        const enrichedPromptItems = promptItems.map((item) => ({
+            ...item,
+            badPrompt: resolveBadPrompt(item),
+            badReason: resolveWhyBad(item),
+            techniques: levelTechniqueMap[item.level] || levelTechniqueMap.taller,
+            enhancedPrompt: buildEnhancedPrompt(item)
+        }));
+        // ═══════════════════════════════════════════════════════════════
+        // DATA: HISTORIAS DE USO REALISTA (22 casos)
+        // ═══════════════════════════════════════════════════════════════
+
+        const stories = [
+            {
+                id: 's1', title: `La bomba seca a la tarde`, focus: `Reparaciones urgentes de galpón`,
+                context: `Un domingo a la tarde la bomba de agua falla. AV usa la IA para un diagnóstico paso a paso.`,
+                conversation: [
+                    { role: 'usuario', text: `La bomba del molino anda pero no chupa agua, y yo veo que la manguera y la válvula de abajo están bien. Actuá como un mecánico de 30 años de experiencia, hablemos paso a paso. ¿Qué puede ser?` },
+                    { role: 'ia', text: `Si abajo está todo bien, el problema está arriba. Puede ser: 1) Entró aire por la empaquetadura, 2) El cuero interno se resecó o gastó, 3) El resorte de desgaste se quebró. Desarmá la tapa arriba y decime qué ves.` },
+                    { role: 'ajuste', text: `La desarmo y veo que el resorte está partido al medio, pero los cueros todavía zafan. No tengo repuesto hoy domingo. ¡Dame ideas provisorias con cosas del taller para aguantar hasta el martes!` },
+                    { role: 'ia', text: `Para aguantar 48hs: 1) Podés buscar un resorte viejo de amortiguador de silla o tensión de freno de auto, cortarlo y adaptarlo. 2) Armar todo sin el resorte agregando 2 arandelas de suplemento al eje (vas a perder un 30% de caudal pero va a bombear). 3) Trabar la válvula con un alambre galvanizado rígido dejándola semifija.` },
+                    { role: 'resultado', text: `Resultado: Cortó el resorte de un sillón viejo de jardín, armó la bomba, y la casa tuvo agua de sobra hasta que abrió la ferretería.` }
+                ],
+                reusablePrompt: `Actuá como un experto en mecánica práctica. Tengo este problema urgente: [Describir problema]. Diagnostiquemos de a un paso. ¿Qué 3 cosas miro primero?`
+            },
+            {
+                id: 's2', title: `Controlando la sanata digital`, focus: `Pesca y prevención de alucinaciones`,
+                context: `AV quiere probar un nuevo nudo de pesca, pero no quiere que la máquina le invente cualquier cosa.`,
+                conversation: [
+                    { role: 'usuario', text: `Voy a ir a pescar a un banco de piedras y siempre corto la línea madre de nylon grueso al trabar fondo. ¿Conocés el "Nudo de escape para piedra"? Si no lo conocés o no existe, decime "no lo sé, Leandro", no inventes variaciones raras.` },
+                    { role: 'ia', text: `Leandro, no lo sé o no existe un nudo estandarizado con ese nombre en la pesca deportiva. Lo que sí es una técnica común para zonas de piedra es usar un "nudo fusible" (juntar la plomada con una tanza mucho más fina para que al tirar se corte solo el plomo y salves la línea con el pescado).` },
+                    { role: 'ajuste', text: `Esa es buena. Explicame rápido cómo se ata el plomo al destorcedor de abajo usando ese método fusible.` },
+                    { role: 'ia', text: `1. Hacés un lazo pasante (loop) en el ojal más bajo de tu línea madre. 2. Agarrás tanza de menor libraje (si la madre es 0.50, usá 0.30 para el plomo). 3. Atás el nylon fino al plomo con un nudo barrilito, y el otro extremo al loop de tu línea con un nudo ahorcado simple. Así la tensión máxima de quiebre siempre recae en ese tamo corto fino.` },
+                    { role: 'resultado', text: `Resultado: Frenó a la máquina antes de que mienta, descubrió la técnica correcta, y no perdió más anzuelos costosos.` }
+                ],
+                reusablePrompt: `Buscá sobre el siguiente tema técnico: [Escribir Tema]. IMPORTANTE: Si la solución no es un estándar comprobado o no sabés, decime explícitamente "No lo sé", no armes respuestas improvisadas.`
+            },
+            {
+                id: 's3', title: `Cobrarle a un amigo sin morir en el intento`, focus: `Odontología y tono de comunicación`,
+                context: `AV necesita avisarle a un compañero de caza que sus coronas dentales llegaron del laboratorio y que tienen un costo alto.`,
+                conversation: [
+                    { role: 'usuario', text: `Tengo que mandarle un WhatsApp a Raúl, un amigo de confianza. Sus coronas de porcelana ya están listas para colocar. El tema es que el laboratorio subió el costo un 30% y se lo tengo que avisar ahora para que no haya sorpresas. Escribilo en tono de amigos, directo pero profesional.` },
+                    { role: 'ia', text: `¡Hola Raúl! ¿Cómo andás? Te aviso que ya me llegaron las coronas del laboratorio, ¡quedaron impecables! Un tema importante para no tener sorpresas: el laboratorio ajustó los precios un 30% por el tema de los materiales importados, así que la cuota final queda en [Monto]. Avisame si te complica o pasate directo el martes a las 18 y te las coloco. ¡Un abrazo!` },
+                    { role: 'ajuste', text: `Está bien pero sacale la parte de "materiales importados" que suena a excusa barata. Y en vez de "un abrazo" poné "nos vemos el sábado en el campo".` },
+                    { role: 'ia', text: `¡Hola Raúl! ¿Cómo andás? Te aviso que ya me llegaron las coronas del laboratorio, ¡quedaron impecables! Un tema importante para no tener sorpresas: hubo un ajuste del 30% en los costos de laboratorio esta semana, así que el total final queda en [Monto]. Avisame si te complica o pasate directo el martes a las 18 y ya te las coloco. Nos vemos el sábado en el campo.` },
+                    { role: 'resultado', text: `Resultado: Envió un mensaje claro, sin la incomodidad inicial de redactarlo él mismo, conservando la amistad y la plata.` }
+                ],
+                reusablePrompt: `Tengo que comunicar un mensaje difícil a una persona cercana sobre [Escribir tema espinoso o de dinero]. Redactame un mensaje de WhatsApp que sea empático, que vaya al grano sin sonar como frío. Dame 2 opciones distintas.`
+            },
+            {
+                id: 's4', title: `Matando el aburrimiento un martes en el campo`, focus: `Creación espontánea para la familia`,
+                context: `Nieva, llueve y hace frío. Los nietos están encerrados mirando la tablet en el casco de la estancia.`,
+                conversation: [
+                    { role: 'usuario', text: `Afuera hay un temporal. Tengo a mis nietos Juani (6) y Pedro (9) encerrados con los jueguitos. Actuá como un líder scout. Inventame una "búsqueda del tesoro" corta dentro de la casa. Cuento con: linternas, hilos, un mapa viejo que puedo imprimir, y de premio un chocolate. Que tenga 4 pistas simples.` },
+                    {
+                        role: 'ia', text: `¡Excelente idea! Aquí tienes la misión "El rescate bajo la tormenta". 
+Pista 1 (Entregásela vos): "El tesoro está oculto, pero el primer paso es encontrar el faro que alumbra cuando el sol se esconde". (Solución: Donde guardas las linternas).
+Pista 2 (Escondida junto a las linternas): "Para cruzar las montañas nevadas, necesitamos abrigarnos los pies". (Solución: En el ropero o caja de pares de botas/zapatos).
+Pista 3...` },
+                    { role: 'ajuste', text: `Pará. Omití todo y cambiá el eje: que la historia se trate de que somos mecánicos y perdimos la llave maestra del tractor del abuelo. Recreá las 4 pistas.` },
+                    {
+                        role: 'ia', text: `Perfecto, "Misión: Arranque de Emergencia".
+Pista 1 (La entregás vos): "¡Tripulación! Perdimos la llave del viejo tractor azul. Tomen estas linternas. El primer dato lo tiene la caja helada que guarda las gaseosas". (Solución: La heladera).
+Pista 2 (En la heladera atada con hilo): "La llave no está aquí. Fueron los ratones grasientos. Sigan el hilo rojo por el pasillo hasta el lugar donde el abuelo lee". (Solución: Tu sillón principal).
+Pista 3 (Bajo tu almohadón): "¡Casi! El último rastro apunta a la cueva donde el abuelo guarda sus zapatos embarrados".
+Pista 4 (En tus botas): "¡Aquí está la llave (imprime la forma de una llave)! El repuesto de energía para los mecánicos (el chocolate) está detrás del sillón, ¡A comer!".` },
+                    { role: 'resultado', text: `Resultado: Los chicos cortaron la pantalla, corrieron por toda la casa 30 minutos, y la abuela les preparó chocolatada con el premio.` }
+                ],
+                reusablePrompt: `Actuá como un animador infantil dinámico. Mis nietos de [edades] están aburridos en casa porque [motivo]. Tengo a mano [enumera 3 o 4 objetos sueltos]. Inventame un juego físico de 20 minutos con temática de [elige un tema, ej: piratas, mecánicos, campo].`
+            },
+            {
+                id: 's5', title: `Desarmando el "qué pasaría si..." del tractor`, focus: `Revisión de riesgos mecánicos e iteración`,
+                context: `AV va a hacer una modificación en el tanque de gasoil de un viejo Massey, pero duda de un par de puntos.`,
+                conversation: [
+                    { role: 'usuario', text: `Quiero adaptarle una manguera de retorno de combustible extra directo a la tapa de llenado del tanque de mi viejo Massey Ferguson para cebarlo más fácil en invierno. Actuá como ingeniero mecánico experto en maquinaria agrícola antigua. ¿Cuáles son las 3 peores cosas que podrían pasar si hago esto mal?` },
+                    {
+                        role: 'ia', text: `Como ingeniero en fierros viejos te marco tres riesgos críticos de hacer ese injerto:
+1) Si la manguera no queda sellada herméticamente, el tanque puede chupar humedad del aire en invierno, condensar agua adentro y pudrirte las toberas de inyección.
+2) Si usás manguera cristalina o de goma no pensada para hidrocarburos se va a derretir o cuartear con los cambios térmicos de una semana a la otra y tirarás gasoil caliente por todo el chasis.
+3) Si metés presión de retorno excesiva cerca de la tapa sin el venteo adecuado, el tanque puede escupir combustible por el respiradero.` },
+                    { role: 'ajuste', text: `De acuerdo con el punto 1 y 2. Sobre el 1: para evitar esa humedad, si perforo la tapa metálica y pongo una espiga de bronce con contra-tuerca, ¿qué sellador químico o casero soporta gasoil sumergido y frío polar sin despegarse?` },
+                    { role: 'ia', text: `Si vas por el injerto de bronce, necesitás algo firme. Descartá fastix estándar y siliconas acéticas porque el gasoil las deshace. Usá Poxipol 10 minutos (que se la aguanta bárbaro) siempre que rayes bien el bronce y la chapa para agarre mecánico. Si no, Loctite 518 (forma juntas rojo). Asegurate que la tuerca por dentro sea autofrenante para que la vibración no la suelte adentro del tanque.` },
+                    { role: 'resultado', text: `Resultado: Validó una idea loca del galpón con el "médico" antes de cortar el acero, logrando terminar el injerto de forma duradera y a la primera.` }
+                ],
+                reusablePrompt: `Tengo la idea de implementar [Explicá tu idea cruzada/invento] usando [Materiales]. Actuá como un ingeniero pesimista y crítico: decime cuáles son los 3 puntos ciegos o riesgos fatales que no estoy viendo.`
+            }
+        ];
+
+        const roleColor = {
+            usuario: 'bg-slate-100 border-slate-300 text-slate-900',
+            ia: 'bg-indigo-50 border-indigo-200 text-indigo-900',
+            ajuste: 'bg-amber-50 border-amber-200 text-amber-900',
+            alerta: 'bg-rose-50 border-rose-200 text-rose-900',
+            resultado: 'bg-emerald-50 border-emerald-200 text-emerald-900'
+        };
+
+        const roleLabel = {
+            usuario: 'Interacción',
+            ia: 'Asistente',
+            ajuste: 'Iteración',
+            alerta: 'Alerta',
+            resultado: 'Resultado'
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // APP PRINCIPAL
+        // ═══════════════════════════════════════════════════════════════
+
+        const StoriesGallery = ({ onSelect }) => (
+            <div className="grid gap-4 md:grid-cols-2 max-w-4xl mx-auto">
+                {stories.map(s => (
+                    <button key={s.id} onClick={() => onSelect(s)} className="text-left bg-white rounded-xl p-5 border-2 border-slate-200
+        hover:border-indigo-400 hover:shadow-md transition-all">
+                        <h4 className="font-bold text-slate-800 mb-1">{s.title}</h4>
+                        <p className="text-sm text-slate-500 mb-2">{s.focus}</p>
+                        <p className="text-sm text-slate-600">{s.context}</p>
+                    </button>
+                ))}
+            </div>
+        );
+
+        const StoryPlayer = ({ story, onBack }) => {
+            const [step, setStep] = useState(0);
+            const [copied, setCopied] = useState(false);
+            const visibleMsgs = story.conversation.slice(0, step + 1);
+
+            const copyPrompt = () => {
+                navigator.clipboard.writeText(story.reusablePrompt).then(() => {
+                    setCopied(true); setTimeout(() => setCopied(false),
+                        2000);
+                });
+            };
+
+            return (
+                <div className="max-w-3xl mx-auto">
+                    <button onClick={onBack} className="flex items-center gap-2 text-indigo-600 hover:underline mb-4">
+                        <ChevronLeft className="w-4 h-4" /> Volver a las historias
+                    </button>
+                    <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-6">
+                        <h3 className="text-xl font-bold text-slate-800 mb-1">{story.title}</h3>
+                        <p className="text-sm text-slate-500 mb-4">{story.focus} — {story.context}</p>
+                        <div className="space-y-3 mb-6">
+                            {visibleMsgs.map((msg, i) => (
+                                <div key={i} className={`p-4 rounded-xl border-2 ${roleColor[msg.role] || 'bg-white border-slate-200'}`}>
+                                    <p className="text-xs font-bold uppercase mb-1 opacity-70">{roleLabel[msg.role] || msg.role}</p>
+                                    <p>{msg.text}</p>
+                                </div>
+                            ))}
+                        </div>
+                        {step < story.conversation.length - 1 ? (<button onClick={() => setStep(s => s + 1)} className="px-6 py-3
+            bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-medium">
+                            Siguiente paso →
+                        </button>
+                        ) : (
+                            <div className="bg-sky-50 rounded-xl p-5 border border-sky-200">
+                                <p className="font-bold text-sky-800 mb-2">📋 Prompt reutilizable</p>
+                                <p className="text-sky-900 italic mb-3">"{story.reusablePrompt}"</p>
+                                <button onClick={copyPrompt}
+                                    className="flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700">
+                                    {copied ? <>
+                                        <Check className="w-4 h-4" /> Copiado
+                                    </> : <>
+                                        <Copy className="w-4 h-4" /> Copiar prompt
+                                    </>}
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const PromptGym = () => {
+            const [level, setLevel] = useState(null);
+            const [activePrompt, setActivePrompt] = useState(null);
+            const [copiedId, setCopiedId] = useState(null);
+
+            const currentPrompts = enrichedPromptItems.filter(p => p.level === level);
+            const active = enrichedPromptItems.find(p => p.id === activePrompt);
+
+            const copyText = (text, id) => {
+                navigator.clipboard.writeText(text).then(() => { setCopiedId(id); setTimeout(() => setCopiedId(null), 2000); });
+            };
+
+            if (!level) {
+                return (
+                    <div className="max-w-3xl mx-auto">
+                        <div className="bg-gradient-to-br from-indigo-50 to-sky-50 rounded-2xl p-6 mb-6 border border-indigo-200">
+                            <h3 className="text-xl font-bold text-indigo-800 mb-2 flex items-center gap-2">
+                                <Target className="w-5 h-5" /> Gimnasio de Prompts
+                            </h3>
+                            <p className="text-indigo-900">Elegí tu nivel de práctica. Cada prompt incluye una versión débil (para entender
+                                qué evitar) y una versión robusta (para copiar y usar directamente).</p>
+                        </div>
+                        <div className="space-y-4">
+                            {promptLevels.map(pl => (
+                                <button key={pl.id} onClick={() => setLevel(pl.id)} className="w-full text-left bg-white rounded-xl p-5 border-2
+            border-slate-200 hover:border-indigo-400 hover:shadow-md transition-all">
+                                    <h4 className="font-bold text-slate-800">{pl.label}</h4>
+                                    <p className="text-sm text-slate-600">{pl.hint}</p>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                );
+            }
+
+            if (active) {
+                return (
+                    <div className="max-w-3xl mx-auto">
+                        <button onClick={() => setActivePrompt(null)} className="flex items-center gap-2 text-indigo-600 hover:underline
+        mb-4">
+                            <ChevronLeft className="w-4 h-4" /> Volver al nivel
+                        </button>
+                        <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6 space-y-6">
+                            <div>
+                                <p className="text-xs font-bold text-indigo-600 uppercase">{active.domain}</p>
+                                <h3 className="text-xl font-bold text-slate-800">{active.title}</h3>
+                                <p className="text-slate-600">{active.objective}</p>
+                            </div>
+                            <div className="bg-rose-50 rounded-xl p-5 border border-rose-200">
+                                <p className="text-xs font-bold text-rose-600 mb-2">❌ Prompt débil</p>
+                                <p className="text-rose-900 italic mb-2">"{active.badPrompt}"</p>
+                                <p className="text-sm text-rose-700">{active.badReason}</p>
+                            </div>
+                            <div className="bg-emerald-50 rounded-xl p-5 border border-emerald-200">
+                                <p className="text-xs font-bold text-emerald-600 mb-2">✅ Prompt robusto</p>
+                                <pre className="whitespace-pre-wrap text-emerald-900 text-sm mb-3 font-sans">{active.enhancedPrompt}</pre>
+                                <button onClick={() => copyText(active.enhancedPrompt, active.id)} className="flex items-center gap-2 px-4
+                py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">
+                                    {copiedId === active.id ? <>
+                                        <Check className="w-4 h-4" /> Copiado
+                                    </> : <>
+                                        <Copy className="w-4 h-4" /> Copiar prompt
+                                    </>}
+                                </button>
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                                {active.techniques.map((t, i) => <span key={i}
+                                    className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-medium">{t}</span>)}
+                            </div>
+                            <div className="bg-sky-50 rounded-xl p-4 border border-sky-200">
+                                <p className="text-xs font-bold text-sky-600 mb-1">💡 ¿Por qué funciona?</p>
+                                <p className="text-sm text-sky-900">{active.why}</p>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="max-w-3xl mx-auto">
+                    <button onClick={() => setLevel(null)} className="flex items-center gap-2 text-indigo-600 hover:underline mb-4">
+                        <ChevronLeft className="w-4 h-4" /> Elegir otro nivel
+                    </button>
+                    <h3 className="text-lg font-bold text-slate-800 mb-4">{promptLevels.find(p => p.id === level)?.label} —
+                        {currentPrompts.length} prompts</h3>
+                    <div className="grid gap-3">
+                        {currentPrompts.map(p => (
+                            <button key={p.id} onClick={() => setActivePrompt(p.id)} className="text-left bg-white rounded-xl p-4 border-2
+            border-slate-200 hover:border-indigo-400 hover:shadow-md transition-all">
+                                <p className="text-xs text-indigo-600 font-bold">{p.domain}</p>
+                                <h4 className="font-bold text-slate-800">{p.title}</h4>
+                                <p className="text-sm text-slate-600">{p.objective}</p>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [view, setView] = useState('theory');
+            const [moduleIndex, setModuleIndex] = useState(0);
+            const [activeStory, setActiveStory] = useState(null);
+            const mod = theoryModules[moduleIndex];
+
+            const tabs = [
+                {
+                    id: 'theory', label: 'Teoría', icon:
+                        <BookOpen className="w-4 h-4" />
+                },
+                {
+                    id: 'gym', label: 'Gimnasio', icon:
+                        <Target className="w-4 h-4" />
+                },
+                {
+                    id: 'stories', label: 'Historias', icon:
+                        <MessageCircle className="w-4 h-4" />
+                }
+            ];
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50">
+                    {/* Header */}
+                    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-slate-200 shadow-sm">
+                        <div className="max-w-5xl mx-auto px-4 py-3">
+                            <div className="flex items-center gap-3 mb-3">
+                                <div
+                                    className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-md">
+                                    <BrainCircuit className="w-6 h-6 text-white" />
+                                </div>
+                                <div>
+                                    <h1 className="text-lg font-extrabold text-slate-800 leading-tight">El Galpón de la IA</h1>
+                                    <p className="text-xs text-slate-500">Herramientas prácticas de IA para el taller, el campo y la familia</p>
+                                </div>
+                            </div>
+                            <div className="flex gap-1 overflow-x-auto">
+                                {tabs.map(tab => (
+                                    <button key={tab.id} onClick={() => { setView(tab.id); setActiveStory(null); }}
+                                        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap
+                    transition-all ${view === tab.id ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'
+                                            }`}>
+                                        {tab.icon} {tab.label}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </header>
+
+                    <main className="max-w-5xl mx-auto px-4 py-8">
+                        {/* THEORY VIEW */}
+                        {view === 'theory' && (
+                            <div className="flex flex-col md:flex-row gap-6">
+                                {/* Sidebar - desktop */}
+                                <aside className="hidden md:block md:w-64 flex-shrink-0">
+                                    <div className="sticky top-32 space-y-1">
+                                        <p className="text-xs font-bold text-slate-400 uppercase mb-2">Módulos ({theoryModules.length})</p>
+                                        {theoryModules.map((m, i) => (
+                                            <button key={m.id} onClick={() => setModuleIndex(i)}
+                                                className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all ${i === moduleIndex ? 'bg-indigo-100 text-indigo-800 font-bold border-l-4 border-indigo-500' :
+                                                    'text-slate-600 hover:bg-slate-100'
+                                                    }`}>
+                                                <span className="text-xs text-slate-400 mr-1">{i + 1}.</span> {m.title}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </aside>
+
+                                {/* Sidebar - mobile dropdown */}
+                                <div className="md:hidden mb-4">
+                                    <select value={moduleIndex} onChange={e => setModuleIndex(Number(e.target.value))}
+                                        className="w-full p-3 rounded-xl border-2 border-slate-300 bg-white text-slate-800 font-medium">
+                                        {theoryModules.map((m, i) => <option key={m.id} value={i}>{i + 1}. {m.title}</option>)}
+                                    </select>
+                                </div>
+
+                                {/* Content */}
+                                <div className="flex-1 max-w-3xl">
+                                    <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6 md:p-8">
+                                        <p className="text-xs text-indigo-600 font-bold uppercase mb-1">Módulo {moduleIndex + 1} de
+                                            {theoryModules.length}</p>
+                                        <h2 className="text-2xl font-extrabold text-slate-800 mb-1">{mod.title}</h2>
+                                        <p className="text-slate-500 mb-6">{mod.subtitle}</p>
+
+                                        <div className="space-y-4 text-slate-700 leading-relaxed mb-8">
+                                            {mod.reading.map((para, i) => <p key={i}>{para}</p>)}
+                                        </div>
+
+                                        <div className="bg-indigo-50 rounded-xl p-5 border border-indigo-200 mb-6">
+                                            <h4 className="font-bold text-indigo-800 mb-3 flex items-center gap-2">
+                                                <CheckCircle2 className="w-4 h-4" /> Checklist
+                                            </h4>
+                                            <ul className="space-y-2">
+                                                {mod.checklist.map((item, i) => (
+                                                    <li key={i} className="flex items-start gap-2 text-indigo-900">
+                                                        <CheckCircle2 className="w-4 h-4 text-indigo-500 mt-1 flex-shrink-0" />
+                                                        <span>{item}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+
+                                        <div className="bg-amber-50 rounded-xl p-5 border border-amber-200 mb-8">
+                                            <h4 className="font-bold text-amber-800 mb-2 flex items-center gap-2">
+                                                <Lightbulb className="w-4 h-4" /> Práctica sugerida
+                                            </h4>
+                                            <p className="text-amber-900">{mod.practice}</p>
+                                        </div>
+
+                                        <div className="flex items-center justify-between gap-4">
+                                            <button onClick={() => setModuleIndex(i => Math.max(0, i - 1))} disabled={moduleIndex === 0}
+                                                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-100 text-slate-700
+                            hover:bg-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition-all">
+                                                <ChevronLeft className="w-4 h-4" /> Anterior
+                                            </button>
+                                            {moduleIndex < theoryModules.length - 1 ? (<button onClick={() => setModuleIndex(i => i + 1)}
+                                                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 text-white
+                            hover:bg-indigo-700 transition-all">
+                                                Siguiente
+                                                <ChevronRight className="w-4 h-4" />
+                                            </button>
+                                            ) : (
+                                                <button onClick={() => setView('gym')}
+                                                    className="flex items-center gap-2 px-5 py-2 rounded-lg bg-emerald-600 text-white
+                                hover:bg-emerald-700 transition-all font-medium">
+                                                    Continuar al Gimnasio
+                                                    <ArrowUpRight className="w-4 h-4" />
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* GYM VIEW */}
+                        {view === 'gym' &&
+                            <PromptGym />}
+
+
+                        {/* STORIES VIEW */}
+                        {view === 'stories' && (
+                            activeStory ? <StoryPlayer story={activeStory} onBack={() => setActiveStory(null)} /> : (
+                                <div>
+                                    <div
+                                        className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 mb-6 border border-purple-200 max-w-3xl mx-auto">
+                                        <h3 className="text-xl font-bold text-purple-800 mb-2 flex items-center gap-2">
+                                            <MessageCircle className="w-5 h-5" /> Historias de uso
+                                        </h3>
+                                        <p className="text-purple-900">Casos reales que muestran cómo mejorar interacciones con IA, paso a
+                                            paso. Cada historia incluye un prompt reutilizable al final.</p>
+                                    </div>
+                                    <StoriesGallery onSelect={setActiveStory} />
+                                </div>
+                            )
+                        )}
+                    </main>
+
+                    <footer className="bg-white border-t border-slate-200 mt-12">
+                        <div className="max-w-5xl mx-auto px-4 py-6 text-center text-slate-500 text-sm">
+                            <p className="font-medium">El Galpón de la IA — Material formativo</p>
+                            <p className="mt-1">Navega las secciones a tu ritmo. Volvé cuando quieras.</p>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        createRoot(document.getElementById('root')).render(
+            <App />);
+    </script>
+</body>
+
+</html>
