@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio Personal de IA (versión práctica)</title>
+    <meta name="description"
+        content="Guía práctica para empezar a usar inteligencia artificial con criterio, seguridad y ejemplos reales en trabajo, casa y hobbies.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "lucide-react": "https://esm.sh/lucide-react@0.292.0"
+      }
+    }
+  </script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        :root {
+            --text: #0f172a;
+            --bg: #f8fafc;
+            --focus: #0ea5e9;
+        }
+
+        html {
+            font-size: clamp(18px, 1.2vw + 14px, 22px);
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.72;
+            letter-spacing: 0.01em;
+        }
+
+        p,
+        li,
+        label,
+        input,
+        textarea,
+        select,
+        button {
+            font-size: 1rem;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            line-height: 1.3;
+            letter-spacing: 0.005em;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            min-height: 48px;
+            border-radius: 0.75rem;
+        }
+
+        textarea {
+            min-height: 120px;
+        }
+
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible,
+        select:focus-visible,
+        a:focus-visible {
+            outline: 3px solid var(--focus);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 768px) {
+
+            button,
+            input,
+            textarea,
+            select {
+                min-height: 52px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800">
+    <div id="root"></div>
+    <script type="text/babel" data-type="module">
+        import React, { useMemo, useState } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import {
+            BrainCircuit, GraduationCap, Gamepad2, MessageCircle, BookOpen, Sparkles,
+            ShieldAlert, CheckCircle2, ChevronLeft, ChevronRight, Copy, Check,
+            Target, Lightbulb, Clock, PenSquare, Microscope, Library, ArrowUpRight,
+            ClipboardList, AlertTriangle, Lock, Heart, RefreshCw, Zap
+        } from 'lucide-react';
+
+        // ═══════════════════════════════════════════════════════════════
+        // DATA: MÓDULOS DE TEORÍA (13 módulos expandidos)
+        // ═══════════════════════════════════════════════════════════════
+
+        const theoryModules = [
+{
+id: 't1',
+title: 'Empezar sin miedo: la IA como herramienta',
+subtitle: 'Qué hace bien, qué hace mal y cómo sacarle jugo',
+reading: [
+'Pensá la IA como una herramienta más del taller: no reemplaza tu criterio, pero acelera tareas como escribir, ordenar ideas, comparar opciones y preparar materiales. No hay que “entender informática” para aprovecharla: se usa como una conversación bien dirigida.',
+'Lo que hace muy bien: redactar borradores, resumir, transformar textos (de largo a corto, de técnico a simple), armar listas de verificación y proponer alternativas. Lo que hace mal: garantizar hechos sin verificar y tomar decisiones clínicas o de seguridad por vos.',
+'Una regla simple: usala para producir un primer borrador y después aplicá tu experiencia para revisar. Si el tema tiene consecuencias (salud, dinero, seguridad), pedí siempre que indique supuestos y qué debería verificarse por fuera.',
+'Si te da una respuesta “demasiado segura”, frená y pedile: “¿Qué partes estás suponiendo? ¿Qué necesitarías confirmar con una fuente o con un profesional?”'
+],
+checklist: [
+'Tratarla como herramienta, no como autoridad.',
+'Pedir borradores y opciones, no sentencias finales.',
+'Separar generación (rápido) de verificación (calmo).',
+'En temas sensibles, exigir supuestos y límites.'
+],
+practice: 'Mini práctica (5 min): pedile que te arme una lista de verificación para una tarea que hacés seguido (por ejemplo, preparar una visita al consultorio, revisar el auto antes de un viaje o planificar el día en el campo). Luego corregila con tu experiencia.'
+},
+{
+id: 't2',
+title: 'Prompts que funcionan: encargar un trabajo claro',
+subtitle: 'Objetivo + contexto + formato + límites',
+reading: [
+'Un buen prompt se parece a una orden de trabajo: qué querés, para quién, con qué información y en qué formato. Con cuatro frases bien puestas, la respuesta mejora muchísimo.',
+'Plantilla corta: **(1) objetivo**, **(2) contexto mínimo**, **(3) formato de salida**, **(4) límites** (“no inventes datos”, “si falta info, preguntá”).',
+'Ejemplo: “Quiero explicar a un paciente en lenguaje simple qué esperar después de una extracción. Público: adulto sin vocabulario técnico. Formato: pasos y señales de alarma. Límite: no des indicaciones médicas personalizadas; usa información general.”',
+'Cuando no sabés qué pedir, la clave es pedir que te haga preguntas de calibración antes de responder.'
+],
+checklist: [
+'Decir el objetivo en una frase.',
+'Darle contexto mínimo (público, situación, restricciones).',
+'Pedir un formato concreto (lista, tabla, guion).',
+'Pedir preguntas de calibración si falta info.'
+],
+practice: 'Convertí este pedido vago en uno útil: “Necesito algo sobre mantenimiento”. Reescribilo con objetivo, contexto (auto / herramienta / campo), formato (checklist semanal) y límites (no asumir marca/modelo).'
+},
+{
+id: 't3',
+title: 'Ejemplos rápidos (copiar y usar)',
+subtitle: 'Sin teoría: 6 pedidos típicos listos',
+reading: [
+'**Texto claro para otra persona:** “Reescribí esto en lenguaje simple y respetuoso, en 120–160 palabras: [pegar texto]”.',
+'**Checklist práctica:** “Armame una lista de verificación en 12 puntos para: [tarea]. Separá ‘antes / durante / después’”.',
+'**Comparar opciones:** “Compará A vs B en una tabla con pros, contras, riesgo y ‘cuándo conviene’”.',
+'**Plan semanal:** “Organizá una semana tipo con bloques de 60–90 min para: [tareas]. Dejá márgenes y priorizá 3 cosas”.',
+'**Explicar sin tecnicismos:** “Explicá este concepto como si se lo contaras a alguien inteligente pero sin jerga. Usá 2 ejemplos cotidianos”.',
+'**Ideas con chicos:** “Dame 10 actividades de 30–45 min para hacer con niños usando cosas de casa. Que sean seguras, sin pantallas y con opción de ‘día de lluvia’”.'
+],
+checklist: [
+'Copiar un ejemplo y reemplazar los corchetes.',
+'Pedir formato (tabla, pasos, guion).',
+'Pedir “preguntas de calibración” si dudás.',
+'Guardar los mejores prompts como plantillas.'
+],
+practice: 'Elegí uno de los ejemplos y usalo hoy con un tema real. Iterá una vez: pedí una “versión 2” más corta o más práctica.'
+},
+{
+id: 't4',
+title: 'Verificación en 60 segundos',
+subtitle: 'Cómo evitar respuestas inventadas pero convincentes',
+reading: [
+'Si la respuesta incluye datos concretos (fechas, números, nombres, protocolos), asumí que puede haber errores. Pedí que marque qué es seguro y qué es estimación.',
+'Chequeo rápido: (1) pedí supuestos, (2) pedí 3 puntos que habría que confirmar, (3) pedí una versión “conservadora” si no hay certeza.',
+'Si necesitás exactitud, pedí que cite la fuente o que te diga dónde buscar (organismo, guía, manual, normativa) y verificá por fuera.',
+'En salud: usá la IA para comunicar y educar en general, no para decidir tratamientos. Si algo suena raro, tomalo como borrador y revisalo con criterio profesional.'
+],
+checklist: [
+'Pedir supuestos y nivel de confianza.',
+'Pedir “qué verificar” y “dónde verificar”.',
+'Preferir versiones conservadoras si hay duda.',
+'No usar IA como decisión clínica.'
+],
+practice: 'Pedile a la IA que resuma una recomendación de cuidado general (no personalizada) y luego preguntale: “¿Qué parte podría estar equivocada? ¿Qué debería confirmar en una guía oficial?”'
+},
+{
+id: 't5',
+title: 'Privacidad: lo mínimo imprescindible',
+subtitle: 'Cómo usar IA sin exponer datos sensibles',
+reading: [
+'Regla simple: no pegues datos personales de terceros ni información sensible (identificadores, historias clínicas, direcciones, números de cuenta).',
+'Si querés analizar un caso real, anonimiza: cambiá nombres por “Paciente A”, edades por rangos y quitá detalles que identifiquen.',
+'Cuando el texto sea delicado, trabajá con resúmenes tuyos (no con documentos completos) o con datos ficticios que mantengan la estructura del problema.',
+'Para familia y menores: evitá datos personales. Usá descripciones generales (“nene de 7”, “nieta curiosa”) sin nombres.'
+],
+checklist: [
+'No incluir datos identificables de terceros.',
+'Anonimizar antes de pegar información.',
+'Usar resúmenes y ejemplos ficticios cuando haga falta.',
+'En menores, cero datos personales.'
+],
+practice: 'Tomá un texto real que te gustaría mejorar y reescribilo antes de pegarlo: sacá nombres, direcciones y cualquier dato sensible.'
+},
+{
+id: 't6',
+title: 'Flujo simple: del pedido al resultado',
+subtitle: '3 pasos para que la IA no te haga perder tiempo',
+reading: [
+'Paso 1 — **Borrador**: pedí una primera versión rápida (lista, guion, esquema).',
+'Paso 2 — **Ajuste**: marcá qué está mal (tono, largo, orden) y pedí una versión 2. La iteración es normal.',
+'Paso 3 — **Tu criterio**: elegí, corregí y dejalo a tu estilo. La IA no conoce tu contexto completo: vos sí.',
+'Tip: guardá tus mejores pedidos como “plantillas” para repetirlos sin pensar.'
+],
+checklist: [
+'Borrador primero, perfección después.',
+'Dar feedback concreto (“más corto”, “más simple”, “en tabla”).',
+'Iterar 1–2 veces como máximo.',
+'Cerrar con revisión humana.'
+],
+practice: 'Elegí un tema (consultorio / campo / auto / familia). Hacé un borrador, pedí una versión 2, y terminá con tu edición final.'
+},
+{
+id: 't7',
+title: 'Uso saludable (y más humano)',
+subtitle: 'Que la herramienta sume, no que reemplace',
+reading: [
+'La IA puede acompañar y destrabar, pero conviene usarla con límites: horarios, objetivos claros y pausas.',
+'Usala para mejorar vínculos: preparar actividades, escribir mensajes cálidos, armar preguntas para conversar y documentar historias familiares.',
+'Si notás que la usás para evitar hablar con alguien o para decidir por vos cosas importantes, bajá un cambio: es señal de que hace falta apoyo humano o una conversación real.',
+'La mejor combinación suele ser: IA para preparar, personas para vivirlo.'
+],
+checklist: [
+'Usarla con un propósito concreto.',
+'Pausas y horarios (no “todo el día”).',
+'Priorizar vínculos reales (familia, amigos, colegas).',
+'En decisiones importantes, apoyo humano.'
+],
+practice: 'Pedile 10 ideas de actividades simples para hacer con nietos o familia (sin pantallas) y elegí una para esta semana.'
+}
+];
+
+// ═══════════════════════════════════════════════════════════════
+// DATA: ITEMS DE PROMPTS (~65 items)
+// ═══════════════════════════════════════════════════════════════
+
+const promptItems = [
+// ─── NIVEL 1 (inicio): empezar rápido, con ejemplos concretos ───
+{ id: 'p1', level: 'inicio', domain: `Consultorio y salud`, title: `Explicar un procedimiento sin jerga`,
+objective: `Comunicar de forma simple y calmada.`, prompt: `Necesito explicar en lenguaje simple qué esperar después de
+[procedimiento odontológico]. Público: adulto sin vocabulario técnico. Quiero: 1) qué es normal, 2) cuidados generales,
+3) señales de alerta para consultar, 4) qué NO hacer. No des indicaciones personalizadas ni reemplaces consejo
+profesional.`, why: `Convierte información técnica en un guion claro y responsable.` },
+{ id: 'p2', level: 'inicio', domain: `Consultorio y salud`, title: `Guion corto para ansiedad en el sillón`,
+objective: `Bajar tensión y aumentar cooperación.`, prompt: `Armame un guion de 90 segundos para hablar con un paciente
+ansioso antes de un procedimiento. Tono: humano, directo, sin infantilizar. Incluir: qué vamos a hacer, cuánto dura, qué
+sensaciones son normales, y cómo me avisa si necesita pausa.`, why: `Mejora experiencia del paciente sin tecnicismos.` },
+{ id: 'p3', level: 'inicio', domain: `Comunicación`, title: `Mensaje post-consulta (WhatsApp)`,
+objective: `Dar seguimiento cordial sin invadir.`, prompt: `Redactá un mensaje breve de seguimiento para enviar por
+WhatsApp después de una consulta. Debe ser cálido, claro y respetuoso. Incluir: agradecimiento, recordatorio general de
+cuidado (sin personalizar), y una frase de “si aparece X, consultá”.`, why: `Ahorra tiempo y cuida el tono.` },
+{ id: 'p4', level: 'inicio', domain: `Consultorio y salud`, title: `Consentimiento explicado en criollo`,
+objective: `Aclarar beneficios, riesgos y alternativas.`, prompt: `Necesito un texto breve (200–260 palabras) para
+explicar un consentimiento informado de [procedimiento]. Debe incluir: objetivo, pasos generales, beneficios, riesgos
+frecuentes, alternativas, y espacio para preguntas. Lenguaje simple, sin asustar.`, why: `Ayuda a comunicar sin perder
+seriedad.` },
+{ id: 'p5', level: 'inicio', domain: `Autos y mecánica`, title: `Checklist antes de salir a la ruta`,
+objective: `Evitar olvidos y sorpresas.`, prompt: `Haceme una lista de verificación en 15 puntos para revisar un auto
+antes de un viaje por ruta. Separá: seguridad, fluidos, neumáticos, herramientas y papeles. Que sea práctica, sin
+marcas.`, why: `Crea un “pre-vuelo” simple y repetible.` },
+{ id: 'p6', level: 'inicio', domain: `Taller y mantenimiento`, title: `Pasos para una reparación manual`,
+objective: `Ordenar el trabajo y reducir errores.`, prompt: `Quiero reparar [objeto/equipo]. Describo el problema:
+[síntomas]. Proponé un plan en pasos: diagnóstico básico, herramientas, seguridad, posibles causas (de más probable a
+menos), y pruebas simples para confirmar.`, why: `Estructura el razonamiento como un técnico metódico.` },
+{ id: 'p7', level: 'inicio', domain: `Campo y producción`, title: `Plan semanal de tareas en el campo`,
+objective: `Priorizar sin saturarse.`, prompt: `Ayudame a planificar una semana tipo en el campo. Tengo estas tareas:
+[lista]. Quiero un plan de lunes a domingo con bloques de 60–90 min, márgenes de descanso y 3 prioridades máximas por
+día.`, why: `Ordena energía y evita “hacer de todo un poco”.` },
+{ id: 'p8', level: 'inicio', domain: `Campo y producción`, title: `Registro simple de animales y tareas`,
+objective: `Llevar control sin volverse burocrático.`, prompt: `Diseñá un formato de registro simple (para cuaderno o
+planilla) para animales y tareas de mantenimiento. Columnas mínimas, qué anotar cada día y un resumen semanal.`, why:
+`Crea rutina liviana de seguimiento.` },
+{ id: 'p9', level: 'inicio', domain: `Pesca y navegación`, title: `Lista de equipo para una salida corta`,
+objective: `No olvidar lo esencial.`, prompt: `Armame una lista de equipo para una salida de pesca en el mar de 4–6
+horas con lancha. Separá: seguridad obligatoria, herramientas, pesca, abrigo/sol, comida/agua y “por si acaso”.`, why:
+`Reduce olvidos y mejora seguridad.` },
+{ id: 'p10', level: 'inicio', domain: `Pesca y navegación`, title: `Plan B si cambia el clima`,
+objective: `Tomar decisiones seguras sin dramatizar.`, prompt: `Dame un protocolo sencillo para decidir si salir o no
+en lancha según señales observables (viento, estado del mar, nubes, parte). Incluir: umbrales “si pasa X, no salgo” y
+alternativas en tierra para no frustrarme.`, why: `Pone seguridad primero y evita improvisar.` },
+{ id: 'p11', level: 'inicio', domain: `Juegos y actividades`, title: `10 actividades con chicos sin pantallas`,
+objective: `Disfrutar tiempo de calidad.`, prompt: `Dame 10 actividades de 30–45 minutos para hacer con niños usando
+cosas de casa o del campo. Que sean seguras, sin pantallas, con opción “día de lluvia” y una variante más tranquila.`, why:
+`Genera ideas concretas para compartir con nietos.` },
+{ id: 'p12', level: 'inicio', domain: `Lógica y juegos`, title: `Acertijos simples para jugar en la mesa`,
+objective: `Ejercitar mente y divertir.`, prompt: `Creá 8 acertijos de lógica aptos para niños (7–12) y adultos, con
+pistas graduales. Para cada uno: enunciado, 2 pistas y solución explicada.`, why: `Entretenimiento inteligente y
+familiar.` },
+{ id: 'p13', level: 'inicio', domain: `Taller y mantenimiento`, title: `Inventario rápido del taller`,
+objective: `Saber qué tengo y qué falta.`, prompt: `Ayudame a armar un inventario simple de herramientas y repuestos
+del taller. Quiero categorías, cómo etiquetar, y una rutina mensual de 15 minutos para mantenerlo al día.`, why:
+`Ordena sin hacer un sistema pesado.` },
+{ id: 'p14', level: 'inicio', domain: `Comunicación`, title: `Mensaje claro para coordinar un plan`,
+objective: `Reducir ida y vuelta.`, prompt: `Redactá un mensaje para coordinar [cita / reunión / salida] con un amigo.
+Debe incluir: propuesta concreta (día/hora), alternativa, duración estimada y cierre amable.`, why: `Comunicación
+eficiente y cordial.` },
+{ id: 'p15', level: 'inicio', domain: `Aprendizaje digital`, title: `Rutina de 10 minutos para aprender IA`,
+objective: `Formarme sin agotarme.`, prompt: `Diseñá una rutina diaria de 10 minutos por 14 días para aprender a usar
+IA de forma práctica. Cada día: una micro-tarea (prompts) y un ejemplo aplicado a trabajo, casa o hobbies.`, why:
+`Crea hábito con baja fricción.` },
+
+// ─── NIVEL 2 (profundizar): precisión, plantillas y mejores decisiones ───
+{ id: 'p16', level: 'profundizar', domain: `Consultorio y salud`, title: `Hoja de indicaciones generales por tipo de tratamiento`,
+objective: `Estandarizar comunicación sin personalizar de más.`, prompt: `Quiero una plantilla de “indicaciones
+generales” para después de [tratamiento]. Incluí: cuidados, qué evitar, tiempos orientativos y señales de consulta.
+Aclarar límites (no reemplaza indicación profesional). Formato: una página, con títulos claros.`, why: `Deja un material
+reutilizable y ordenado.` },
+{ id: 'p17', level: 'profundizar', domain: `Consultorio y salud`, title: `Explicación comparativa de alternativas`,
+objective: `Ayudar a decidir con calma.`, prompt: `Necesito explicar opciones A vs B (por ejemplo, dos alternativas de
+tratamiento). Quiero una tabla: objetivo, duración típica, ventajas, desventajas, riesgos comunes y “para quién suele
+convenir”. Lenguaje simple.`, why: `Hace comparaciones transparentes.` },
+{ id: 'p18', level: 'profundizar', domain: `Campo y producción`, title: `Calendario de tareas estacionales`,
+objective: `Anticipar en vez de apagar incendios.`, prompt: `Armame un calendario anual (por estaciones) de tareas
+típicas en un campo mixto del sudoeste bonaerense: animales, mantenimiento, controles y producción. Quiero un formato
+de checklist por estación y recordatorios mensuales.`, why: `Organiza el año sin perder flexibilidad.` },
+{ id: 'p19', level: 'profundizar', domain: `Campo y producción`, title: `Registro de costos simple`,
+objective: `Ver números sin volverse contador.`, prompt: `Diseñá un sistema simple para registrar costos y tareas del
+campo (insumos, combustible, reparaciones, veterinaria, etc.). Quiero: categorías, cómo cargarlo rápido y 5 preguntas
+para revisar al cierre del mes.`, why: `Permite mirar el negocio con claridad práctica.` },
+{ id: 'p20', level: 'profundizar', domain: `Autos y mecánica`, title: `Árbol de diagnóstico por síntomas`,
+objective: `Pensar como mecánico metódico.`, prompt: `Tengo este problema en el auto: [síntomas]. Quiero un árbol de
+diagnóstico: causas probables, pruebas simples (sin herramientas especiales), qué observar y cuándo conviene parar y
+llevarlo a un profesional.`, why: `Estructura el razonamiento y reduce ensayo-error.` },
+{ id: 'p21', level: 'profundizar', domain: `Taller y mantenimiento`, title: `Plan de mantenimiento preventivo`,
+objective: `Cuidar herramientas y equipos.`, prompt: `Armá un plan de mantenimiento preventivo para mis herramientas y
+equipos (taller/campo). Quiero: tareas semanales, mensuales y trimestrales, con tiempos estimados y checklist breve.`, why:
+`Evita roturas y mejora seguridad.` },
+{ id: 'p22', level: 'profundizar', domain: `Pesca y navegación`, title: `Checklist de seguridad y emergencias`,
+objective: `Salir con un plan, no con suerte.`, prompt: `Creá una checklist de seguridad para lancha en mar (antes de
+salir, durante, y regreso). Incluí: equipo, comunicación, combustible, clima, y plan de emergencia. Formato: imprimible
+en una hoja.`, why: `Aterriza seguridad en pasos accionables.` },
+{ id: 'p23', level: 'profundizar', domain: `Comunicación`, title: `Explicar un tema técnico a un amigo`,
+objective: `Traducir sin perder exactitud.`, prompt: `Necesito explicar a un amigo (no técnico) este tema: [tema].
+Pedime 3 datos para ajustar y luego escribí una explicación con 2 analogías y un ejemplo cotidiano.`, why: `Genera una
+explicación “humana” pero correcta.` },
+{ id: 'p24', level: 'profundizar', domain: `Lectura crítica`, title: `Resumir un texto y detectar humo`,
+objective: `Separar lo útil de lo dudoso.`, prompt: `Voy a pegar un texto (artículo / folleto / nota). Quiero: resumen
+en 8 líneas, 5 afirmaciones verificables, 5 preguntas críticas y un semáforo (verde/amarillo/rojo) según evidencia.`, why:
+`Entrena criterio y evita venderse con marketing.` },
+{ id: 'p25', level: 'profundizar', domain: `Juegos y actividades`, title: `Búsqueda del tesoro personalizada`,
+objective: `Crear un juego memorable.`, prompt: `Diseñá una búsqueda del tesoro para niños con 8 pistas. Tema:
+[autos / animales / mar / dientes / lo que sea]. Duración 30–45 min. Que pueda hacerse en casa o en el campo y que
+termine con un “premio simbólico”.`, why: `Actividad lista, con estructura y encanto.` },
+{ id: 'p26', level: 'profundizar', domain: `Lógica y juegos`, title: `Problemas tipo “mate recreativa”`,
+objective: `Jugar con números sin estrés.`, prompt: `Creá 10 problemas cortos de matemática recreativa para jugar en
+familia (sin papel si se puede). Para cada uno: enunciado, respuesta y explicación simple.`, why: `Entretenimiento
+cognitivo compartible.` },
+{ id: 'p27', level: 'profundizar', domain: `Organización`, title: `Sistema liviano de listas (no burocrático)`,
+objective: `Tener orden con poca fricción.`, prompt: `Ayudame a crear un sistema de listas simple para mi vida diaria:
+consultorio ocasional, campo, taller y familia. Quiero 5 listas máximo, con reglas de uso y revisión semanal de 15 min.`, why:
+`Orden sin “apps” complejas.` },
+{ id: 'p28', level: 'profundizar', domain: `Vida cotidiana`, title: `Comparar compras con criterio`,
+objective: `Decidir sin arrepentirme.`, prompt: `Estoy por comprar [producto/herramienta]. Compará 3 opciones (yo te
+doy datos) y devolveme: tabla de pros/contras, riesgos, mantenimiento, y “para quién conviene”. Pedime primero qué
+info te falta.`, why: `Mejora decisiones prácticas.` },
+{ id: 'p29', level: 'profundizar', domain: `Taller y mantenimiento`, title: `Manual rápido para un procedimiento`,
+objective: `Estandarizar cómo hago algo.`, prompt: `Quiero escribir un “manual de 1 página” para este procedimiento:
+[procedimiento]. Incluir: objetivo, herramientas, seguridad, pasos, errores comunes y checklist final.`, why: `Te deja un
+recurso reutilizable.` },
+{ id: 'p30', level: 'profundizar', domain: `Comunicación`, title: `Resolver un malentendido con buen tono`,
+objective: `Cuidar vínculos sin ceder todo.`, prompt: `Necesito responder a este mensaje (lo pego abajo). Quiero 3
+versiones: conciliadora, firme y muy breve. Que no sea pasivo-agresivo.`, why: `Da opciones de tono con control.` },
+
+// ─── NIVEL 3 (proyectar): proyectos largos, sistemas personales y estilo propio ───
+{ id: 'p31', level: 'proyectar', domain: `Plan de proyecto`, title: `Proyecto “orden total” en 4 semanas`,
+objective: `Mejorar un área sin agobiarse.`, prompt: `Quiero mejorar en 4 semanas este área: [taller / galpón / rutina
+del campo / consultorio]. Diseñá un plan por semanas con tareas pequeñas, tiempos estimados, materiales y un indicador
+de avance.`, why: `Convierte un deseo en un plan realista.` },
+{ id: 'p32', level: 'proyectar', domain: `Campo y producción`, title: `Cuaderno de campo inteligente`,
+objective: `Transformar notas sueltas en un sistema útil.`, prompt: `Quiero crear mi “cuaderno de campo” (papel o
+digital). Definí secciones, qué registrar, cómo revisar y cómo sacar conclusiones mensuales (qué funcionó, qué no,
+qué ajustar).`, why: `Sistematiza experiencia sin perder lo artesanal.` },
+{ id: 'p33', level: 'proyectar', domain: `Autos y mecánica`, title: `Plan anual de mantenimiento del vehículo`,
+objective: `Anticipar gastos y tiempos.`, prompt: `Armá un plan anual de mantenimiento para un vehículo de uso mixto
+(ruta/campo). Incluir: tareas por mes, señales para adelantar mantenimiento, checklist antes de viajes y registro de
+intervenciones.`, why: `Reduce sorpresas y ordena mantenimiento.` },
+{ id: 'p34', level: 'proyectar', domain: `Consultorio y salud`, title: `Guía educativa de salud bucal (para compartir)`,
+objective: `Crear un material claro y útil.`, prompt: `Quiero una guía educativa de salud bucal para público general
+(una página). Incluir: hábitos, mitos comunes, señales para consultar y preguntas frecuentes. Lenguaje simple y tono
+amigable.`, why: `Produce divulgación clara y responsable.` },
+{ id: 'p35', level: 'proyectar', domain: `Consultorio y salud`, title: `Simulación de conversación con objeciones`,
+objective: `Preparar respuestas sin improvisar.`, prompt: `Simulá un diálogo breve con un paciente que duda sobre
+[tema]. Yo soy profesional. Quiero 8 turnos máximo. Incluí objeciones reales y respuestas empáticas, sin presión.`, why:
+`Entrena comunicación en situaciones difíciles.` },
+{ id: 'p36', level: 'proyectar', domain: `Aprendizaje continuo`, title: `Plan de formación “a medida” (sin teoría pesada)`,
+objective: `Aprender con casos reales y poca lectura.`, prompt: `Diseñá un plan de 6 semanas para aprender IA aplicada a
+mi día a día. Condición: poca teoría, mucha práctica. Cada semana: 3 ejercicios basados en casos (consultorio, taller,
+campo, familia) y una plantilla de prompt para guardar.`, why: `Aprendizaje práctico y sostenido.` },
+{ id: 'p37', level: 'proyectar', domain: `Pesca y navegación`, title: `Salida perfecta: plan completo y liviano`,
+objective: `Disfrutar con seguridad.`, prompt: `Diseñá un plan completo para una salida de pesca (medio día): preparación,
+equipo, comida/agua, seguridad, plan B en tierra y una lista de “cosas para disfrutar” (no solo pescar).`, why: `Pone el
+disfrute y la seguridad al frente.` },
+{ id: 'p38', level: 'proyectar', domain: `Juegos y actividades`, title: `Proyecto con chicos: “taller en casa”`,
+objective: `Hacer un proyecto manual compartido.`, prompt: `Proponé 5 proyectos manuales simples para hacer con niños
+(7–12) en 2 o 3 sesiones: madera/cartón/reciclado. Para cada proyecto: materiales, seguridad, pasos, y una mini
+explicación de “qué aprende”.`, why: `Une lo manual con tiempo de calidad.` },
+{ id: 'p39', level: 'proyectar', domain: `Lógica y juegos`, title: `Liga de acertijos: desafío semanal`,
+objective: `Crear un ritual familiar.`, prompt: `Quiero un desafío semanal de lógica para familia durante 8 semanas.
+Cada semana: 1 acertijo principal, 2 variantes más fáciles, y una explicación final. Que se pueda hacer en 15 minutos.`, why:
+`Sostiene interés sin pantallas.` },
+{ id: 'p40', level: 'proyectar', domain: `Comunicación`, title: `Plantillas de mensajes para “vida real”`,
+objective: `Ahorrar tiempo y cuidar vínculos.`, prompt: `Creá un set de 12 plantillas de mensajes (WhatsApp/email) para
+situaciones frecuentes: coordinar, agradecer, confirmar, pedir disculpas, decir que no, invitar, etc. Tono: cálido,
+sencillo, argentino.`, why: `Biblioteca personal de comunicación.` },
+{ id: 'p41', level: 'proyectar', domain: `Seguridad`, title: `Plan de riesgos práctico (campo / taller / mar)`,
+objective: `Prevenir incidentes.`, prompt: `Quiero un análisis de riesgos práctico para estas actividades: [lista].
+Devolveme: riesgos principales, probabilidad/impacto (alto/medio/bajo), medidas preventivas y plan de emergencia simple.`, why:
+`Hace explícito lo importante sin alarmismo.` },
+{ id: 'p42', level: 'proyectar', domain: `Taller y mantenimiento`, title: `Bitácora de mantenimiento con recordatorios`,
+objective: `Recordar lo que hice y cuándo.`, prompt: `Diseñá una bitácora de mantenimiento para registrar reparaciones y
+servicios (auto, herramientas, equipos). Quiero campos mínimos, reglas de registro y un resumen mensual automático (qué
+se hizo, qué falta, costos).`, why: `Evita repetir errores y ordena historial.` },
+{ id: 'p43', level: 'proyectar', domain: `Creatividad`, title: `Ideas de proyectos manuales “con sentido”`,
+objective: `Mantener el espíritu inquieto.`, prompt: `Dame 12 ideas de proyectos manuales (madera/metal/mecánica ligera)
+que se puedan hacer en ratos: útiles para casa/campo o como regalos. Para cada uno: dificultad, materiales, tiempo y
+seguridad.`, why: `Inspiración concreta y realizable.` },
+{ id: 'p44', level: 'proyectar', domain: `Organización`, title: `Semana mixta: consultorio + campo + familia`,
+objective: `Equilibrar energía y disfrute.`, prompt: `Ayudame a diseñar una semana que mezcla: trabajo ocasional,
+tareas en el campo, ratos de taller y tiempo con familia. Quiero un esquema flexible, con 3 prioridades y 2 “espacios
+libres” por día.`, why: `Equilibrio realista y sostenible.` },
+{ id: 'p45', level: 'proyectar', domain: `IA aplicada`, title: `Mi banco personal de prompts (en 1 hora)`,
+objective: `Quedar con herramientas listas.`, prompt: `Ayudame a construir un banco personal de 25 prompts que yo usaría
+en mi día a día. Hacé preguntas para detectar mis tareas reales y devolveme las plantillas en una lista con nombre,
+cuándo usar y cómo ajustarlas.`, why: `Deja un kit de trabajo propio y repetible.` }
+];
+
+// ═══════════════════════════════════════════════════════════════
+// SISTEMA DE ENRIQUECIMIENTO DE PROMPTS
+// ═══════════════════════════════════════════════════════════════
+
+const levelTechniqueMap = {
+inicio: [`Rol explícito`, `Objetivo concreto`, `Formato de salida definido`, `Lenguaje claro y acotado`],
+profundizar: [`Restricciones de calidad`, `Criterios de evaluación`, `Iteración por etapas`, `Control de ambigüedad`],
+proyectar: [`Diseño por fases`, `Supuestos y riesgos`, `Entregables verificables`, `Cierre con siguiente acción`]
+};
+
+const promptLevels = [
+{ id: 'inicio', label: 'Nivel 1 — Empezar', hint: 'Para salir andando: rol + objetivo + formato. Cero vueltas.' },
+{ id: 'profundizar', label: 'Nivel 2 — Afinar', hint: 'Más control: criterios de calidad, restricciones y revisión.' },
+{ id: 'proyectar', label: 'Nivel 3 — Proyectos', hint: 'Plan por etapas: supuestos, riesgos y entregables claros.' }
+];
+
+
+const roleByDomain = {
+'escritura personal': `editor de no ficción con enfoque narrativo`,
+'docencia': `docente y diseñador pedagógico`,
+'lectura crítica': `analista de textos`,
+'organización': `planificador de aprendizaje`,
+'proyecto editorial': `editor de estructura de libros`,
+'vida cotidiana': `asistente de decisiones prácticas`,
+'comunicación': `editor de comunicación interpersonal`,
+'aprendizaje digital': `instructor digital paciente`,
+'creatividad': `facilitador creativo`,
+'investigación personal': `mentor de investigación aplicada`,
+'memoria activa': `especialista en aprendizaje activo`,
+'planificación cultural': `curador de itinerarios culturales`,
+'edición de textos': `editor de estilo y argumentación`,
+'pensamiento crítico': `oponente constructivo`,
+'diseño de cursos': `diseñador instruccional`,
+'fuentes': `asistente de verificación metodológica`,
+'historia de vida': `editor de memorias`,
+'productividad intelectual': `mentor de trabajo intelectual`,
+'cultura y análisis': `comparatista cultural`,
+'divulgación': `redactor de divulgación rigurosa`,
+'plan de proyecto': `consultor de proyectos`,
+'ia aplicada': `auditor de prompts`,
+'conversaciones significativas': `diseñador de entrevistas`,
+'aprendizaje continuo': `mentor de mejora continua`,
+'libro completo': `arquitecto editorial`,
+'curso autoral': `director académico`,
+'laboratorio de ideas': `facilitador de pensamiento estratégico`,
+'investigación aplicada': `metodólogo`,
+'producción audiovisual': `guionista pedagógico`,
+'memorias públicas': `curador narrativo`,
+'círculo de lectura': `moderador de discusión`,
+'asistencia personalizada': `diseñador de sistemas personales`,
+'proyectos comunitarios': `gestor de iniciativas locales`,
+'pensamiento estratégico': `analista de escenarios`,
+'innovación personal': `diseñador de experimentos`,
+'mentoría': `diseñador de programas de mentoría`,
+'matemáticas recreativas': `profesor de lógica recreativa`,
+'historia de la informática': `historiador de la computación`,
+'bienestar personal': `coach de bienestar respetuoso`,
+'comunicación familiar': `mediador de comunicación familiar`,
+'herramientas digitales': `instructor digital paciente`,
+'salud personal': `asistente de preparación médica`,
+'trámites y gestiones': `asistente de gestiones administrativas`,
+'curaduría cultural': `curador de recorridos intelectuales`,
+'matemáticas aplicadas': `diseñador de problemas recreativos`,
+'análisis de contenido': `analista crítico de medios`,
+'patrimonio digital': `organizador de archivos digitales`,
+'actividades para pares': `facilitador de actividades grupales`,
+'escritura reflexiva': `mentor de escritura personal`,
+'salud preventiva': `diseñador de autocuidado responsable`,
+'seguridad digital': `asesor de seguridad digital`,
+'matemáticas avanzadas': `diseñador de desafíos lógicos`,
+'legado familiar': `curador de memoria familiar`,
+'ciencia aplicada': `guía de exploración científica`,
+'patrimonio intelectual': `curador de conocimiento acumulado`,
+'colaboración con ia': `diseñador de sistemas de trabajo con IA`,
+'impacto local': `facilitador de iniciativas comunitarias`,
+'reflexión filosófica': `interlocutor socrático`,
+'transferencia de conocimiento': `diseñador de experiencias de enseñanza`,
+'bienestar integral': `planificador de bienestar integral`,
+'consultorio y salud': `asistente de comunicación clínica y educación en salud`,
+'campo y producción': `asistente de planificación rural práctico`,
+'autos y mecánica': `mecánico didáctico y metódico`,
+'taller y mantenimiento': `técnico de mantenimiento preventivo`,
+'pesca y navegación': `asistente náutico orientado a seguridad`,
+'juegos y actividades': `facilitador de actividades compartidas`,
+'lógica y juegos': `diseñador de acertijos y mate recreativa`,
+};
+
+const resolveRole = (domain) => roleByDomain[domain.toLowerCase()] || `asistente experto en diseño de prompts`;
+
+const resolveOutputFormat = (item) => {
+const domain = item.domain.toLowerCase();
+if (domain.includes('escritura') || domain.includes('editorial') || domain.includes('divulgación') ||
+domain.includes('legado') || domain.includes('memorias')) return `Estructura en apartados con subtítulos y un bloque
+final de mejora.`;
+if (domain.includes('docencia') || domain.includes('curso') || domain.includes('transferencia')) return `Tabla por
+sesiones con objetivo, actividad, evidencia y cierre.`;
+if (domain.includes('investigación') || domain.includes('fuentes') || domain.includes('ciencia')) return `Matriz con
+columnas y estado de verificación.`;
+if (domain.includes('comunicación') || domain.includes('familiar')) return `Tres versiones del mensaje con contexto de
+uso.`;
+if (domain.includes('proyecto') || domain.includes('estratégico') || domain.includes('impacto')) return `Plan por fases
+con hitos y riesgos.`;
+if (domain.includes('matemáticas') || domain.includes('lógica')) return `Enunciados numerados con solución paso a
+paso.`;
+if (domain.includes('bienestar') || domain.includes('salud')) return `Ficha práctica con dimensiones, escalas y
+acciones.`;
+if (domain.includes('seguridad') || domain.includes('trámites')) return `Checklist operativa con alertas y pasos
+verificables.`;
+return `Lista estructurada con pasos, criterios y cierre accionable.`;
+};
+
+const weakPromptByDomain = {
+'escritura personal': `Tengo recuerdos sueltos y quiero escribir algo autobiográfico. Ordénamelo rápido.`,
+'docencia': `Explícame [tema] para dar una clase mañana y que se entienda.`,
+'lectura crítica': `Resume este artículo y dime si está bien.`,
+'organización': `Arma una agenda de estudio semanal para IA.`,
+'proyecto editorial': `Dame un índice para un libro sobre [tema].`,
+'vida cotidiana': `Compara estas opciones y dime cuál conviene.`,
+'comunicación': `Redacta un mensaje correcto para esta situación.`,
+'aprendizaje digital': `Enséñame a usar [aplicación] paso a paso.`,
+'creatividad': `Dame ideas de talleres sobre [tema].`,
+'investigación personal': `Hazme un plan para aprender [tema].`,
+'memoria activa': `Sácame tarjetas de estudio de este material.`,
+'planificación cultural': `Arma un plan de libros y películas sobre [tema].`,
+'edición de textos': `Mejora este texto para que suene mejor.`,
+'pensamiento crítico': `Dame contraargumentos para esta tesis.`,
+'diseño de cursos': `Diseña un seminario de 8 sesiones sobre [tema].`,
+'fuentes': `Revisa estas afirmaciones y dime si son confiables.`,
+'historia de vida': `Prepara preguntas para entrevistar a mi familia.`,
+'productividad intelectual': `Ayúdame a ordenar notas para un proyecto largo.`,
+'cultura y análisis': `Compara estos dos autores sobre [tema].`,
+'divulgación': `Pasa este texto técnico a lenguaje simple.`,
+'plan de proyecto': `Hazme un plan de 90 días para este proyecto.`,
+'ia aplicada': `Mira mis prompts y mejóralos.`,
+'conversaciones significativas': `Dame un guion para entrevistar sobre [tema].`,
+'aprendizaje continuo': `Evalúa mi semana y dime qué mejorar.`,
+'libro completo': `Diseña un libro de 12 capítulos sobre [tema].`,
+'curso autoral': `Crea un curso de 10 semanas sobre [tema].`,
+'laboratorio de ideas': `Evalúa mi propuesta desde distintos puntos de vista.`,
+'investigación aplicada': `Arma un protocolo para investigar este problema.`,
+'producción audiovisual': `Hazme una serie de microclases en video.`,
+'memorias públicas': `Ordena mis anécdotas para publicarlas.`,
+'círculo de lectura': `Diseña encuentros para mi círculo de lectura.`,
+'asistencia personalizada': `Crea una plantilla para mis consultas semanales.`,
+'proyectos comunitarios': `Diseña una iniciativa cultural local.`,
+'pensamiento estratégico': `Proyecta escenarios a 5 años para mi proyecto.`,
+'innovación personal': `Diseña experimentos mensuales con IA.`,
+'mentoría': `Crea un programa de mentoría con mi experiencia.`,
+'matemáticas recreativas': `Dame un acertijo lógico.`,
+'historia de la informática': `Contame la historia de la computación.`,
+'bienestar personal': `Armame una rutina matinal.`,
+'comunicación familiar': `Escribime una carta para mi familia.`,
+'herramientas digitales': `Enseñame a usar esta app.`,
+'salud personal': `Qué le pregunto al médico.`,
+'trámites y gestiones': `Qué necesito para este trámite.`,
+'curaduría cultural': `Recomendame libros sobre [tema].`,
+'matemáticas aplicadas': `Dame problemas de matemáticas.`,
+'análisis de contenido': `Analizá este artículo.`,
+'patrimonio digital': `Cómo organizo mis archivos.`,
+'actividades para pares': `Dame una actividad para hacer en grupo.`,
+'escritura reflexiva': `Ayudame a escribir un ensayo.`,
+'salud preventiva': `Armame un plan de salud.`,
+'seguridad digital': `Dame tips de seguridad online.`,
+'matemáticas avanzadas': `Dame problemas de lógica difíciles.`,
+'legado familiar': `Ayudame a organizar la historia de mi familia.`,
+'ciencia aplicada': `Quiero aprender sobre [tema científico].`,
+'patrimonio intelectual': `Ayudame a catalogar lo que sé.`,
+'colaboración con ia': `Cómo uso mejor la IA.`,
+'impacto local': `Qué actividad puedo hacer para mi entorno.`,
+'reflexión filosófica': `Hablemos de filosofía.`,
+'transferencia de conocimiento': `Quiero enseñar lo que sé.`,
+  'bienestar integral': `Armame un plan de actividades para el mes.`,
+'consultorio y salud': `Escribime algo para un paciente sobre [tema].`,
+'campo y producción': `Organizame las tareas del campo y listo.`,
+'autos y mecánica': `Decime qué puede ser, el auto hace ruido.`,
+'taller y mantenimiento': `Dame los pasos para arreglar esto.`,
+'pesca y navegación': `¿Salgo a pescar hoy? Decime sí o no.`,
+'juegos y actividades': `Dame ideas para entretener chicos.`,
+'lógica y juegos': `Dame acertijos para pasar el rato.`,
+};
+
+const resolveBadPrompt = (item) => {
+const domainKey = item.domain.toLowerCase();
+if (weakPromptByDomain[domainKey]) return weakPromptByDomain[domainKey];
+if (item.level === 'inicio') return `Necesito ayuda con ${item.domain.toLowerCase()} para
+${item.objective.toLowerCase()}.`;
+if (item.level === 'profundizar') return `Trabaja este tema: ${item.title}. Dame una versión útil para hoy.`;
+return `Resuelve completo este proyecto: ${item.title}.`;
+};
+
+const resolveWhyBad = (item) => {
+if (item.level === 'inicio') return `Es específico en tema, pero no define público, formato de salida ni criterios para
+evaluar si la respuesta sirve.`;
+if (item.level === 'profundizar') return `Pide una tarea exigente, pero no fija alcance, límites ni método de revisión.
+La salida puede quedar correcta en apariencia y floja en calidad.`;
+return `Intenta resolver un proyecto complejo de una sola vez, sin fases ni entregables intermedios. Eso aumenta errores
+y reduce control de autoría.`;
+};
+
+const resolveQualityCriteria = (item) => {
+const domain = item.domain.toLowerCase();
+if (domain.includes('escritura') || domain.includes('editorial') || domain.includes('memorias') ||
+domain.includes('legado')) return `coherencia argumental, voz propia, transiciones y cierre con sentido`;
+if (domain.includes('docencia') || domain.includes('curso') || domain.includes('aprendizaje') ||
+domain.includes('transferencia')) return `claridad didáctica, secuencia progresiva, actividad aplicable y evidencia de
+comprensión`;
+if (domain.includes('investigación') || domain.includes('fuentes') || domain.includes('ciencia')) return `trazabilidad
+de fuentes, distinción entre verificado/pendiente y riesgos de error`;
+if (domain.includes('comunicación') || domain.includes('entrevista') || domain.includes('familiar')) return `tono
+adecuado, intención explícita, reducción de ambigüedad y salida accionable`;
+if (domain.includes('proyecto') || domain.includes('estratégico') || domain.includes('iniciativa') ||
+domain.includes('impacto')) return `fases realistas, hitos verificables, riesgos y plan de mitigación`;
+if (domain.includes('matemáticas') || domain.includes('lógica')) return `precisión del razonamiento, claridad de cada
+paso y verificabilidad del resultado`;
+if (domain.includes('salud') || domain.includes('bienestar')) return `límites claros entre autocuidado y consulta
+profesional, lenguaje no alarmista`;
+if (domain.includes('seguridad') || domain.includes('trámites')) return `pasos verificables, canales oficiales
+identificados y alertas de riesgo`;
+return `claridad, utilidad práctica, control de supuestos y siguiente paso concreto`;
+};
+
+const resolveToneFrame = (item, role, outputFormat, qualityCriteria, techniques) => {
+if (item.level === 'inicio') {
+return [
+`Actúa como ${role} con tono cercano, claro y paciente.`,
+``, `Meta de esta sesión: ${item.objective}`,
+`Pedido base: ${item.prompt}`,
+``, `Trabajemos paso a paso:`,
+`- Si falta contexto, hazme primero 2 o 3 preguntas breves de calibración.`,
+`- Evita tecnicismos innecesarios y usa ejemplos concretos.`,
+`- Formato de salida solicitado: ${outputFormat}`,
+`- Cierra con una mini revisión de calidad (criterios: ${qualityCriteria}).`,
+``, `Antes de cerrar, sugiere una versión 2 de este pedido para mejorar precisión sin complejizar de más.`,
+`Técnicas aplicadas: ${techniques.join(', ')}.`
+];
+}
+if (item.level === 'profundizar') {
+return [
+`Actúa como ${role} con enfoque riguroso y criterio crítico.`,
+``, `Objetivo de trabajo: ${item.objective}`,
+`Consigna inicial: ${item.prompt}`,
+``, `Condiciones metodológicas:`,
+`1) Si hay ambigüedad, abre con preguntas de calibración antes de producir la versión final.`,
+`2) Entrega una propuesta estructurada, con supuestos explícitos y justificación breve por bloque.`,
+`3) Respeta este formato de salida: ${outputFormat}`,
+`4) Incluye control de calidad al final con estos criterios: ${qualityCriteria}.`,
+`5) Señala qué conviene iterar en una segunda ronda y por qué.`,
+``, `Técnicas aplicadas en este prompt: ${techniques.join(', ')}.`
+];
+}
+return [
+`Actúa como ${role} con enfoque estratégico y orientación a ejecución.`,
+``, `Resultado buscado: ${item.objective}`,
+`Desafío base: ${item.prompt}`,
+``, `Diseña la respuesta como un plan por fases:`,
+`Fase 1 - Delimitación: supuestos, alcance y preguntas críticas de calibración.`,
+`Fase 2 - Diseño: propuesta principal en formato solicitado (${outputFormat}).`,
+`Fase 3 - Implementación: hitos, entregables y métricas de avance.`,
+`Fase 4 - Control: riesgos, límites y revisión final con criterios (${qualityCriteria}).`,
+``, `Cierre obligatorio: incluye una versión 2 del pedido para iterar con mayor precisión y menor riesgo.`,
+`Técnicas aplicadas: ${techniques.join(', ')}.`
+];
+};
+
+const buildEnhancedPrompt = (item) => {
+const techniques = levelTechniqueMap[item.level] || levelTechniqueMap.inicio;
+const role = resolveRole(item.domain);
+const outputFormat = resolveOutputFormat(item);
+const qualityCriteria = resolveQualityCriteria(item);
+const frame = resolveToneFrame(item, role, outputFormat, qualityCriteria, techniques);
+return frame.join('\n');
+};
+
+const enrichedPromptItems = promptItems.map((item) => ({
+...item,
+badPrompt: resolveBadPrompt(item),
+badReason: resolveWhyBad(item),
+techniques: levelTechniqueMap[item.level] || levelTechniqueMap.inicio,
+enhancedPrompt: buildEnhancedPrompt(item)
+}));
+// ═══════════════════════════════════════════════════════════════
+// DATA: HISTORIAS DE USO REALISTA (22 casos)
+// ═══════════════════════════════════════════════════════════════
+
+const stories = [
+{
+id: 's1', title: `El paciente entiende sin susto`, focus: `Consultorio y comunicación`,
+context: `Un profesional quiere explicar un procedimiento de forma simple y responsable, sin prometer de más.`,
+conversation: [
+{ role: 'usuario', text: `Escribime un texto para explicarle a un paciente una extracción. Que no se asuste.` },
+{ role: 'ia', text: `Claro. Una extracción es un procedimiento sencillo...` },
+{ role: 'alerta', text: `Riesgo típico: la IA puede sonar segura y deslizar indicaciones “médicas” demasiado específicas.` },
+{ role: 'ajuste', text: `Rehacelo con límites: información general, sin personalizar. Quiero: qué es normal, cuidados
+generales, señales de consulta y qué evitar. Máximo 220 palabras. Tono: calmado, humano.` },
+{ role: 'ia', text: `Perfecto. Aquí va una versión breve y clara con esos apartados...` },
+{ role: 'usuario', text: `Ahora haceme una versión aún más corta para WhatsApp (90–110 palabras).` },
+{ role: 'ia', text: `Listo: versión para WhatsApp...` }
+],
+reusablePrompt: `Actúa como asistente de comunicación clínica. Necesito explicar en lenguaje simple qué esperar después
+de [procedimiento]. Público: adulto sin jerga. Formato: 1) qué es normal, 2) cuidados generales, 3) qué evitar, 4)
+señales de consulta. Límite: no des indicaciones personalizadas ni reemplaces consejo profesional. Máx. 220 palabras.
+Cierra con una frase amable para invitar a preguntar.`
+},
+{
+id: 's2', title: `De anotaciones a plantillas reutilizables`, focus: `Gestión del consultorio`,
+context: `Con poca paciencia para escribir siempre lo mismo, se arma un set de textos cortos para uso real.`,
+conversation: [
+{ role: 'usuario', text: `Cada vez que atiendo termino escribiendo mensajes parecidos. ¿Me armás plantillas?` },
+{ role: 'ia', text: `Sí. Decime qué situaciones y te preparo textos.` },
+{ role: 'ajuste', text: `Quiero 10 plantillas: confirmar turno, reprogramar, seguimiento post-consulta, pedir estudios,
+avisar demora, agradecer, recordar higiene general, y dos para decir “no puedo” con buen tono.` },
+{ role: 'ia', text: `Genial. Te las armo con versiones breve y muy breve...` },
+{ role: 'alerta', text: `Mejora clave: pedir que sean editables y con campos “rellenables” para no copiar/pegar a mano.` },
+{ role: 'usuario', text: `Sumá campos entre corchetes para completar rápido y una guía de uso en 6 reglas.` },
+{ role: 'ia', text: `Listo. Plantillas + reglas de uso...` }
+],
+reusablePrompt: `Armá un set de plantillas de mensajes (WhatsApp/email) para estas situaciones: [lista]. Para cada una:
+1) versión breve (2–3 líneas), 2) versión muy breve (1 línea), 3) campos entre [corchetes] para completar. Tono: cálido,
+respetuoso y simple. Al final, dame 6 reglas para usarlas sin sonar robótico.`
+},
+{
+id: 's3', title: `El taller ordenado sin burocracia`, focus: `Taller y mantenimiento`,
+context: `Un espíritu manual quiere ordenar su taller con un sistema mínimo: inventario, etiquetas y revisión mensual.`,
+conversation: [
+{ role: 'usuario', text: `Tengo herramientas por todos lados. Quiero orden, pero sin hacerme esclavo.` },
+{ role: 'ia', text: `Podemos armar un sistema simple: categorías, etiquetas y una rutina corta.` },
+{ role: 'usuario', text: `Dame algo que pueda hacer en una tarde y mantener con 15 minutos al mes.` },
+{ role: 'ia', text: `Perfecto. Plan en 6 pasos + rutina mensual.` },
+{ role: 'alerta', text: `Punto fino: si el plan es “perfecto”, no se sostiene. Pedí que priorice lo mínimo viable.` },
+{ role: 'ajuste', text: `Rehacelo con enfoque “mínimo viable”: 5 categorías máximo, y checklist de mantenimiento mensual
+de 10 pasos.` },
+{ role: 'ia', text: `Listo. Sistema mínimo + checklist mensual...` }
+],
+reusablePrompt: `Actúa como técnico metódico y práctico. Ayúdame a ordenar un taller sin burocracia. Objetivo: hacerlo en
+una tarde y mantenerlo con 15 min al mes. Proponé: 1) 5 categorías máximo, 2) cómo etiquetar, 3) dónde guardar lo
+frecuente, 4) checklist mensual de 10 pasos, 5) errores comunes.`
+},
+{
+id: 's4', title: `Síntomas del auto → plan de diagnóstico`, focus: `Autos y mecánica`,
+context: `En vez de adivinar, se arma un árbol de diagnóstico con pruebas simples y criterio de “cuándo parar”.`,
+conversation: [
+{ role: 'usuario', text: `El auto hace un ruido raro. ¿Qué puede ser?` },
+{ role: 'ia', text: `Podría ser muchas cosas: suspensión, frenos, transmisión...` },
+{ role: 'alerta', text: `Riesgo: lista genérica. Mejor pedir preguntas de calibración y pruebas simples.` },
+{ role: 'ajuste', text: `Primero haceme 5 preguntas para ubicar el problema (cuándo suena, velocidad, si frena, etc).
+Después armá un árbol: causas probables, pruebas simples, qué observar, y cuándo conviene parar y llevarlo a un
+profesional.` },
+{ role: 'ia', text: `Perfecto. Preguntas: ... Árbol de diagnóstico: ...` }
+],
+reusablePrompt: `Tengo este síntoma en el auto: [describir]. Primero haceme 5 preguntas de calibración. Luego armá un
+árbol de diagnóstico: causas probables (de mayor a menor), pruebas simples sin herramientas especiales, qué observar y
+un criterio claro de “si pasa X, no sigo y lo llevo a un profesional”.`
+},
+{
+id: 's5', title: `Semana en el campo, con márgenes`, focus: `Campo y producción`,
+context: `Se organiza una semana mixta con prioridades y descansos, evitando la sensación de “no llego a nada”.`,
+conversation: [
+{ role: 'usuario', text: `Llego al campo y hago de todo un poco. Quiero orden, pero que sea flexible.` },
+{ role: 'ia', text: `Armemos un plan semanal con bloques y prioridades.` },
+{ role: 'usuario', text: `Mis tareas: [lista]. Quiero 3 prioridades por día y margen por si llueve o se rompe algo.` },
+{ role: 'ia', text: `Listo: plan lunes a domingo con bloques de 60–90 min + márgenes.` },
+{ role: 'alerta', text: `Mejora: pedir “plan A” y “plan B” (clima, imprevistos) para no frustrarse.` },
+{ role: 'ajuste', text: `Agregá un plan B por día (si llueve / si aparece un imprevisto) y un cierre semanal con 5
+preguntas de revisión.` },
+{ role: 'ia', text: `Perfecto. Plan A/B + revisión...` }
+],
+reusablePrompt: `Ayúdame a planificar una semana en el campo con flexibilidad. Tareas: [lista]. Quiero un plan lunes a
+domingo con bloques de 60–90 min, 3 prioridades máximas por día, y un plan B por si hay clima/imprevistos. Al final,
+sumá 5 preguntas para revisar la semana y ajustar la siguiente.`
+},
+{
+id: 's6', title: `Bitácora de mantenimiento: recordar lo que hice`, focus: `Organización práctica`,
+context: `Se diseña una bitácora mínima para auto/herramientas/equipos y un resumen mensual que ayude a decidir.`,
+conversation: [
+{ role: 'usuario', text: `Hago arreglos y después no me acuerdo cuándo fue. Quiero una bitácora simple.` },
+{ role: 'ia', text: `Te propongo una tabla con campos mínimos y una revisión mensual.` },
+{ role: 'usuario', text: `Que sirva para auto, herramientas y equipos del campo.` },
+{ role: 'ia', text: `Listo. Campos mínimos + reglas de uso + resumen mensual.` },
+{ role: 'alerta', text: `Clave: si tiene muchos campos, no se usa. Pedí “mínimo viable”.` },
+{ role: 'ajuste', text: `Dejalo en 8 campos máximo y sumá un ejemplo cargado completo.` },
+{ role: 'ia', text: `Perfecto. 8 campos + ejemplo...` }
+],
+reusablePrompt: `Diseñá una bitácora mínima de mantenimiento para registrar arreglos y servicios (auto, herramientas,
+equipos). Condición: 8 campos máximo. Incluí reglas de uso (cómo cargar en 2 minutos) y un resumen mensual: qué se hizo,
+qué falta y costos aproximados. Dame un ejemplo completo ya cargado.`
+},
+{
+id: 's7', title: `Salida al mar con plan B (sin frustración)`, focus: `Pesca y navegación`,
+context: `Se arma una salida pensada para disfrutar y volver seguro, con alternativas si el mar no acompaña.`,
+conversation: [
+{ role: 'usuario', text: `Quiero salir a pescar, pero ya no tengo ganas de renegar con el clima.` },
+{ role: 'ia', text: `Armemos un plan de salida con chequeos y un plan B en tierra.` },
+{ role: 'usuario', text: `Necesito: lista de equipo, seguridad, comida/agua y decisión de “salgo/no salgo”.` },
+{ role: 'ia', text: `Listo. Checklist + umbrales + plan B.` },
+{ role: 'alerta', text: `Mejora: pedir que sea imprimible en una hoja y que priorice seguridad.` },
+{ role: 'ajuste', text: `Rehacelo en formato imprimible (una hoja) y con umbrales conservadores. Incluí “si dudo, no
+salgo”.` },
+{ role: 'ia', text: `Perfecto. Versión imprimible...` }
+],
+reusablePrompt: `Diseñá un plan completo para una salida de pesca en lancha (medio día). Incluir: checklist de equipo,
+seguridad, comida/agua, criterios conservadores para decidir “salgo/no salgo”, y un plan B en tierra para disfrutar
+igual. Formato: una hoja imprimible.`
+},
+{
+id: 's8', title: `Tema “dientes” explicado para chicos`, focus: `Familia y actividades`,
+context: `Se transforma un tema técnico en una charla divertida con analogías y un mini experimento seguro.`,
+conversation: [
+{ role: 'usuario', text: `Mi nieto pregunta por qué se le mueve un diente. ¿Cómo se lo explico sin asustarlo?` },
+{ role: 'ia', text: `Podés explicarlo como un proceso natural...` },
+{ role: 'ajuste', text: `Dame una explicación de 2 minutos con 2 analogías (casa, árbol, etc) y un mini experimento
+seguro con cosas de casa. Edad: 7–9. Tono: divertido.` },
+{ role: 'ia', text: `Claro: explicación + analogías + experimento...` },
+{ role: 'alerta', text: `Buen cierre: sumar preguntas para que el chico participe y no sea “clase magistral”.` },
+{ role: 'usuario', text: `Sumá 5 preguntas para hacerlo participativo.` },
+{ role: 'ia', text: `Listo: preguntas...` }
+],
+reusablePrompt: `Explicá este tema a un niño de [edad]: [tema]. Formato: 1) explicación de 2 minutos sin jerga, 2) dos
+analogías cotidianas, 3) un mini experimento seguro con cosas de casa, 4) 5 preguntas para hacerlo participativo. Tono:
+divertido y cuidadoso.`
+},
+{
+id: 's9', title: `Búsqueda del tesoro temática (autos / animales / mar)`, focus: `Juegos y actividades`,
+context: `Se diseña un juego completo con pistas graduales y cierre simbólico, adaptable a casa o campo.`,
+conversation: [
+{ role: 'usuario', text: `Quiero hacer una actividad con los chicos que no sea pantalla. ¿Ideas?` },
+{ role: 'ia', text: `Podemos hacer una búsqueda del tesoro con pistas.` },
+{ role: 'usuario', text: `Tema: autos. Duración: 40 min. En el campo.` },
+{ role: 'ia', text: `Perfecto. 8 pistas, un mapa simple y un final con premio simbólico.` },
+{ role: 'alerta', text: `Mejora: pedir 2 niveles de dificultad y opción “día de lluvia”.` },
+{ role: 'ajuste', text: `Agregá versión fácil y versión desafiante, y una adaptación para hacer adentro si llueve.` },
+{ role: 'ia', text: `Listo: dos niveles + versión lluvia...` }
+],
+reusablePrompt: `Diseñá una búsqueda del tesoro para niños con 8 pistas. Tema: [tema]. Lugar: [casa/campo]. Duración:
+[30–45 min]. Incluir: materiales, seguridad, pistas graduales, 2 niveles de dificultad, y una versión “día de lluvia”.
+Cerrar con un premio simbólico y un mensaje lindo.`
+},
+{
+id: 's10', title: `Decir que no, sin pelear`, focus: `Comunicación`,
+context: `Se ensayan respuestas con distintos tonos para cuidar vínculos y límites personales.`,
+conversation: [
+{ role: 'usuario', text: `Me pidieron algo que no quiero hacer. ¿Cómo digo que no?` },
+{ role: 'ia', text: `Podés decir que estás ocupado...` },
+{ role: 'alerta', text: `Riesgo: frases evasivas generan más insistencia. Conviene claridad + amabilidad.` },
+{ role: 'ajuste', text: `Quiero 3 versiones: 1) cálida, 2) firme, 3) ultracorta. Que no suene pasivo-agresivo. Contexto:
+[breve].` },
+{ role: 'ia', text: `Perfecto. Acá van tres opciones...` }
+],
+reusablePrompt: `Necesito responder a esta situación y decir que no: [contexto]. Dame 3 versiones: cálida, firme y
+ultracorta. Evitá ironía y pasivo-agresivo. Cerrá con una alternativa razonable si corresponde (por ejemplo, otro día /
+otra forma).`
+},
+{
+id: 's11', title: `Comprar una herramienta sin arrepentirme`, focus: `Decisiones prácticas`,
+context: `Se compara con criterio: mantenimiento, repuestos, uso real y riesgos, no solo “precio y marca”.`,
+conversation: [
+{ role: 'usuario', text: `Estoy por comprar una herramienta, pero me mareo con opciones.` },
+{ role: 'ia', text: `Contame presupuesto y qué buscás.` },
+{ role: 'usuario', text: `Uso: [uso]. Presupuesto: [rango]. Opciones: [A, B, C].` },
+{ role: 'ia', text: `Voy a compararlas en tabla.` },
+{ role: 'alerta', text: `Mejora: pedir “preguntas que debería hacerle al vendedor” y riesgos de mantenimiento.` },
+{ role: 'ajuste', text: `Sumá: 8 preguntas para el vendedor, riesgos de mantenimiento y “cuándo NO conviene comprar”.` },
+{ role: 'ia', text: `Listo. Tabla + preguntas + alertas...` }
+],
+reusablePrompt: `Compará estas opciones: [A, B, C]. Contexto de uso: [uso real]. Presupuesto: [rango]. Devolveme: tabla
+de pros/contras, mantenimiento esperado, disponibilidad de repuestos, riesgos, y una recomendación condicionada (“conviene
+si…”). Sumá 8 preguntas para el vendedor y cuándo NO conviene comprar.`
+},
+{
+id: 's12', title: `Guía de salud bucal para la familia (una página)`, focus: `Divulgación práctica`,
+context: `Se crea un material claro para compartir, con mitos comunes y señales para consultar, sin alarmismo.`,
+conversation: [
+{ role: 'usuario', text: `Quiero una guía simple de higiene y señales para consultar, para pasarle a mi familia.` },
+{ role: 'ia', text: `Claro. Incluyamos hábitos, mitos y señales.` },
+{ role: 'usuario', text: `Que sea una página, tono amable, y que no suene a folleto comercial.` },
+{ role: 'ia', text: `Perfecto. Te armo una guía con secciones claras.` },
+{ role: 'alerta', text: `Mejora: pedir que sea fácil de imprimir y que cierre con preguntas frecuentes.` },
+{ role: 'ajuste', text: `Sumá 8 preguntas frecuentes y una versión “solo bullets” para celular.` },
+{ role: 'ia', text: `Listo. Versión imprimible + versión bullets...` }
+],
+reusablePrompt: `Redactá una guía de salud bucal para público general (una página). Incluir: hábitos, mitos comunes,
+señales para consultar y 8 preguntas frecuentes. Tono: amable, simple, sin alarmismo y sin vender nada. Entregar dos
+formatos: 1) versión imprimible con títulos, 2) versión bullets para celular.`
+}
+];
+
+// ═══════════════════════════════════════════════════════════════
+// DATA: DESAFÍOS COGNITIVOS (6 desafíos)
+// ═══════════════════════════════════════════════════════════════
+
+const challengesData = [
+{
+id: 'c1', type: 'memoryPairs', title: `Pares que van juntos`, description: `Encontrá los pares relacionados. Tocá dos tarjetas
+para descubrir si coinciden.`,
+pairs: [
+['Prompt', 'Orden de trabajo para la IA'],
+['Contexto', 'Datos del caso'],
+['Iteración', 'Mejorar versión 2, 3…'],
+['Alucinación', 'Respuesta inventada convincente'],
+['Checklist', 'Lista de verificación'],
+['Anonimizar', 'Sacar datos personales']
+]
+},
+{
+id: 'c2', type: 'sequence', title: `Completá la secuencia`, description: `Observá el patrón y elegí qué elemento sigue.`,
+questions: [
+{ sequence: ['5.000', '10.000', '15.000', '20.000', '?'], options: ['22.000', '25.000', '30.000', '40.000'], correct: 1,
+hint: `Kilómetros en intervalos iguales.` },
+{ sequence: ['1', '2', '4', '7', '11', '?'], options: ['14', '15', '16', '18'], correct: 2,
+hint: `Se suma 1, luego 2, luego 3...` },
+{ sequence: ['3', '6', '12', '24', '?'], options: ['30', '36', '48', '60'], correct: 2,
+hint: `Se duplica.` }
+]
+},
+{
+id: 'c3', type: 'spotDifference', title: `Mejorá el prompt`, description: `Compará dos versiones e identificá qué mejora la segunda.`,
+comparisons: [
+{ weak: `Haceme una lista para revisar el auto.`,
+strong: `Necesito una checklist en 15 puntos para revisar un auto antes de un viaje por ruta. Separá: seguridad, fluidos,
+neumáticos, herramientas y papeles. Que sea práctica, sin marcas. Si falta contexto, preguntame 3 cosas primero.` },
+{ weak: `Escribime indicaciones para una extracción.`,
+strong: `Actúa como asistente de comunicación clínica. Necesito explicar en lenguaje simple qué esperar después de una
+extracción. Formato: qué es normal, cuidados generales, qué evitar y señales de consulta. Límite: sin personalizar ni
+reemplazar consejo profesional. Máx. 220 palabras.` },
+{ weak: `Organizame las tareas del campo.`,
+strong: `Ayudame a planificar una semana en el campo. Tareas: [lista]. Quiero un plan lunes a domingo con bloques de
+60–90 min, 3 prioridades por día, márgenes y un plan B si hay clima/imprevistos. Cerrá con 5 preguntas de revisión.` }
+]
+},
+{
+id: 'c4', type: 'orderSteps', title: `Ordená los pasos`, description: `Tocá los pasos en el orden correcto para completar el proceso.`,
+exercises: [
+{ title: `Armar un prompt que funcione`, steps: [
+'Definir objetivo en una frase',
+'Agregar contexto mínimo (para quién, situación, restricciones)',
+'Pedir un formato concreto (lista, tabla, guion)',
+'Agregar límites (qué no hacer) y pedir preguntas de calibración',
+'Iterar: pedir versión 2 más práctica o más corta'
+]},
+{ title: `Usar IA en un tema sensible`, steps: [
+'Pedir un borrador general (no personalizado)',
+'Pedir supuestos y qué debería verificarse',
+'Verificar en fuentes externas si hay datos concretos',
+'Editar con criterio propio',
+'Guardar la plantilla del prompt para la próxima'
+]}
+]
+},
+{
+id: 'c5', type: 'association', title: `Asociación rápida`, description: `Conectá cada concepto con su descripción.`,
+pairs: [
+['Objetivo', 'Qué querés lograr'],
+['Formato', 'Cómo querés recibir la respuesta'],
+['Límites', 'Qué debe evitar o no asumir'],
+['Calibración', 'Preguntas iniciales para ajustar'],
+['Plantilla', 'Prompt reutilizable con campos'],
+['Versión 2', 'Mejora iterativa del resultado']
+]
+},
+{
+id: 'c6', type: 'intruder', title: `Encontrá al intruso`, description: `En cada grupo, uno no pertenece. ¿Cuál es y por qué?`,
+groups: [
+{ items: ['Nombre completo', 'DNI', 'Historia clínica', 'Dirección', 'Edad aproximada'], intruder: 4, reason:
+`“Edad aproximada” suele ser menos identificable que datos completos; igual conviene ser prudente.` },
+{ items: ['Resumir', 'Redactar', 'Armar checklist', 'Diagnosticar clínicamente', 'Proponer alternativas'], intruder: 3,
+reason: `La IA puede ayudar a comunicar y organizar, pero no debe “diagnosticar” de forma clínica.` },
+{ items: ['Objetivo', 'Contexto', 'Formato', 'Adivinar detalles que faltan', 'Límites'], intruder: 3,
+reason: `Un buen prompt evita que la IA adivine; si falta info, debe preguntar.` },
+{ items: ['Iterar', 'Pedir versión 2', 'Pedir supuestos', 'Verificar', 'Copiar sin leer'], intruder: 4,
+reason: `Copiar sin leer rompe el flujo: tu criterio siempre cierra el proceso.` }
+]
+}
+];
+
+const roleColor = {
+usuario: 'bg-slate-100 border-slate-300 text-slate-900',
+ia: 'bg-indigo-50 border-indigo-200 text-indigo-900',
+ajuste: 'bg-amber-50 border-amber-200 text-amber-900',
+alerta: 'bg-rose-50 border-rose-200 text-rose-900',
+resultado: 'bg-emerald-50 border-emerald-200 text-emerald-900'
+};
+
+const roleLabel = {
+usuario: 'Interacción',
+ia: 'Asistente',
+ajuste: 'Iteración',
+alerta: 'Alerta',
+resultado: 'Resultado'
+};
+// ═══════════════════════════════════════════════════════════════
+// COMPONENTES DE DESAFÍOS COGNITIVOS
+// ═══════════════════════════════════════════════════════════════
+
+const MemoryPairsGame = ({ data, onReset }) => {
+const [cards, setCards] = useState(() => {
+return data.pairs.flatMap((pair, i) => [
+{ id: i * 2, pairId: i, text: pair[0] },
+{ id: i * 2 + 1, pairId: i, text: pair[1] }
+]).sort(() => Math.random() - 0.5);
+});
+const [revealed, setRevealed] = useState([]);
+const [matched, setMatched] = useState([]);
+const [moves, setMoves] = useState(0);
+const [checking, setChecking] = useState(false);
+
+const handleFlip = (cardId) => {
+if (checking || revealed.includes(cardId) || matched.includes(cardId)) return;
+const newRevealed = [...revealed, cardId];
+setRevealed(newRevealed);
+if (newRevealed.length === 2) {
+setMoves(m => m + 1);
+setChecking(true);
+const c1 = cards.find(c => c.id === newRevealed[0]);
+const c2 = cards.find(c => c.id === newRevealed[1]);
+if (c1.pairId === c2.pairId) {
+setTimeout(() => { setMatched(p => [...p, c1.id, c2.id]); setRevealed([]); setChecking(false); }, 700);
+} else {
+setTimeout(() => { setRevealed([]); setChecking(false); }, 1200);
+}
+}
+};
+
+const allDone = matched.length === cards.length;
+
+return (
+<div>
+    <div className="grid grid-cols-3 md:grid-cols-4 gap-3 mb-4">
+        {cards.map(card => {
+        const isUp = revealed.includes(card.id) || matched.includes(card.id);
+        const isDone = matched.includes(card.id);
+        return (
+        <button key={card.id} onClick={()=> handleFlip(card.id)}
+            className={`p-3 rounded-xl border-2 min-h-[72px] text-center transition-all duration-300 font-medium ${
+            isDone ? 'bg-emerald-100 border-emerald-400 text-emerald-800' :
+            isUp ? 'bg-indigo-100 border-indigo-400 text-indigo-800' :
+            'bg-white border-slate-300 hover:border-indigo-400 hover:bg-indigo-50 cursor-pointer text-slate-400'
+            }`}>
+            {isUp ? card.text : '?'}
+        </button>
+        );
+        })}
+    </div>
+    {allDone && (
+    <div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+        <p className="text-emerald-800 font-bold text-lg">🎉 ¡Completaste el desafío en {moves} intentos!</p>
+        <button onClick={onReset}
+            className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Jugar de nuevo</button>
+    </div>
+    )}
+    {!allDone && <p className="text-sm text-slate-500 text-center">Intentos: {moves} — Pares encontrados:
+        {matched.length / 2} de {data.pairs.length}</p>}
+</div>
+);
+};
+
+const SequenceGame = ({ data, onReset }) => {
+const [qi, setQi] = useState(0);
+const [score, setScore] = useState(0);
+const [picked, setPicked] = useState(null);
+const [showHint, setShowHint] = useState(false);
+const q = data.questions[qi];
+const done = qi >= data.questions.length;
+
+const pick = (i) => {
+if (picked !== null) return;
+setPicked(i);
+if (i === q.correct) setScore(s => s + 1);
+};
+const next = () => { setPicked(null); setShowHint(false); setQi(i => i + 1); };
+
+if (done) return (
+<div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+    <p className="text-emerald-800 font-bold text-lg">🎉 Completaste {score} de {data.questions.length}</p>
+    <button onClick={onReset}
+        className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Reiniciar</button>
+</div>
+);
+
+return (
+<div>
+    <p className="text-sm text-slate-500 mb-3">Pregunta {qi + 1} de {data.questions.length}</p>
+    <div className="flex items-center gap-2 mb-4 flex-wrap">
+        {q.sequence.map((s, i) => (
+        <span key={i} className={`px-4 py-2 rounded-lg font-bold text-lg ${s==='?'
+            ? 'bg-amber-100 border-2 border-amber-400 text-amber-700' : 'bg-slate-100 border border-slate-300'
+            }`}>{s}</span>
+        ))}
+    </div>
+    <div className="grid grid-cols-2 gap-3 mb-4">
+        {q.options.map((opt, i) => (
+        <button key={i} onClick={()=> pick(i)} className={`p-3 rounded-xl border-2 font-medium transition-all ${
+            picked === null ? 'bg-white border-slate-300 hover:border-indigo-400 cursor-pointer' :
+            i === q.correct ? 'bg-emerald-100 border-emerald-400 text-emerald-800' :
+            i === picked ? 'bg-rose-100 border-rose-400 text-rose-800' :
+            'bg-slate-50 border-slate-200 text-slate-400'
+            }`}>{opt}</button>
+        ))}
+    </div>
+    {picked !== null && picked !== q.correct && <p className="text-rose-700 mb-2">Esa no es — intentá otra vez o mirá la
+        pista.</p>}
+    {picked === q.correct && <p className="text-emerald-700 mb-2 font-medium">¡Correcto! {q.hint}</p>}
+    {!showHint && picked !== q.correct && <button onClick={()=> setShowHint(true)} className="text-sm text-indigo-600
+        underline mb-2">Ver pista</button>}
+    {showHint && <p className="text-sm text-indigo-700 italic mb-2">💡 {q.hint}</p>}
+    {picked !== null && <button onClick={next}
+        className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Siguiente →</button>}
+</div>
+);
+};
+
+const SpotDifferenceGame = ({ data, onReset }) => {
+const [qi, setQi] = useState(0);
+const [picked, setPicked] = useState(null);
+const [score, setScore] = useState(0);
+const c = data.comparisons[qi];
+const done = qi >= data.comparisons.length;
+
+const pick = (i) => { if (picked !== null) return; setPicked(i); if (i === c.correct) setScore(s => s + 1); };
+const next = () => { setPicked(null); setQi(i => i + 1); };
+
+if (done) return (
+<div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+    <p className="text-emerald-800 font-bold text-lg">🎉 Identificaste {score} de {data.comparisons.length} mejoras
+        correctamente</p>
+    <button onClick={onReset}
+        className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Reiniciar</button>
+</div>
+);
+
+return (
+<div>
+    <p className="text-sm text-slate-500 mb-3">Comparación {qi + 1} de {data.comparisons.length}</p>
+    <div className="grid md:grid-cols-2 gap-4 mb-4">
+        <div className="p-4 bg-rose-50 rounded-xl border border-rose-200">
+            <p className="text-xs font-bold text-rose-600 mb-1">❌ Versión débil</p>
+            <p className="text-rose-900 italic">"{c.weak}"</p>
+        </div>
+        <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+            <p className="text-xs font-bold text-emerald-600 mb-1">✅ Versión mejorada</p>
+            <p className="text-emerald-900 italic">"{c.strong}"</p>
+        </div>
+    </div>
+    <p className="font-medium mb-3">¿Qué mejoró en la segunda versión?</p>
+    <div className="space-y-2 mb-4">
+        {c.options.map((opt, i) => (
+        <button key={i} onClick={()=> pick(i)} className={`w-full text-left p-3 rounded-xl border-2 transition-all ${
+            picked === null ? 'bg-white border-slate-300 hover:border-indigo-400 cursor-pointer' :
+            i === c.correct ? 'bg-emerald-100 border-emerald-400' :
+            i === picked ? 'bg-rose-100 border-rose-400' : 'bg-slate-50 border-slate-200 opacity-50'
+            }`}>{opt}</button>
+        ))}
+    </div>
+    {picked !== null && picked === c.correct && <p className="text-emerald-700 mb-2 font-medium">¡Exacto!
+        {c.improvement}</p>}
+    {picked !== null && picked !== c.correct && <p className="text-rose-700 mb-2">No exactamente. La mejora clave fue:
+        {c.improvement}</p>}
+    {picked !== null && <button onClick={next}
+        className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Siguiente →</button>}
+</div>
+);
+};
+
+const OrderStepsGame = ({ data, onReset }) => {
+const [ei, setEi] = useState(0);
+const [selected, setSelected] = useState([]);
+const [shuffled] = useState(() => data.exercises.map(ex => [...ex.steps].sort(() => Math.random() - 0.5)));
+const ex = data.exercises[ei];
+const done = ei >= data.exercises.length;
+const available = shuffled[ei] ? shuffled[ei].filter(s => !selected.includes(s)) : [];
+const isCorrect = selected.length === ex?.steps.length && selected.every((s, i) => s === ex.steps[i]);
+const isWrong = selected.length > 0 && selected.length === ex?.steps.length && !isCorrect;
+
+const addStep = (step) => { setSelected(p => [...p, step]); };
+const reset = () => { setSelected([]); };
+const next = () => { setSelected([]); setEi(i => i + 1); };
+
+if (done) return (
+<div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+    <p className="text-emerald-800 font-bold text-lg">🎉 ¡Completaste todos los ejercicios de orden!</p>
+    <button onClick={onReset}
+        className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Reiniciar</button>
+</div>
+);
+
+return (
+<div>
+    <p className="text-sm text-slate-500 mb-1">Ejercicio {ei + 1} de {data.exercises.length}</p>
+    <p className="font-bold text-slate-800 mb-4">{ex.title}</p>
+    {selected.length > 0 && (
+    <div className="mb-4 space-y-2">
+        <p className="text-xs font-bold text-slate-500">Tu orden:</p>
+        {selected.map((s, i) => (
+        <div key={i} className={`p-2 rounded-lg border text-sm ${isCorrect ? 'bg-emerald-50 border-emerald-300' :
+            isWrong ? 'bg-rose-50 border-rose-300' : 'bg-indigo-50 border-indigo-200' }`}>
+            <span className="font-bold mr-2">{i + 1}.</span>{s}
+        </div>
+        ))}
+    </div>
+    )}
+    {!isCorrect && !isWrong && available.length > 0 && (
+    <div className="space-y-2 mb-4">
+        <p className="text-xs font-bold text-slate-500">Tocá el siguiente paso:</p>
+        {available.map((s, i) => (
+        <button key={i} onClick={()=> addStep(s)} className="w-full text-left p-3 rounded-xl border-2 bg-white
+            border-slate-300 hover:border-indigo-400 hover:bg-indigo-50 transition-all">{s}</button>
+        ))}
+    </div>
+    )}
+    {isCorrect && <p className="text-emerald-700 font-medium mb-3">¡Perfecto! El orden es correcto.</p>}
+    {isWrong && <p className="text-rose-700 mb-3">No exactamente. Intentalo de nuevo.</p>}
+    <div className="flex gap-2">
+        {(isWrong || selected.length > 0) && !isCorrect && <button onClick={reset}
+            className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300">Reiniciar este</button>}
+        {isCorrect && <button onClick={next}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Siguiente →</button>}
+    </div>
+</div>
+);
+};
+
+const AssociationGame = ({ data, onReset }) => {
+const [selectedLeft, setSelectedLeft] = useState(null);
+const [matched, setMatched] = useState({});
+const [wrong, setWrong] = useState(null);
+const shuffledRight = useMemo(() => [...data.pairs.map(p => p[1])].sort(() => Math.random() - 0.5), []);
+const allDone = Object.keys(matched).length === data.pairs.length;
+
+const clickLeft = (concept) => { if (matched[concept]) return; setSelectedLeft(concept); setWrong(null); };
+const clickRight = (def) => {
+if (!selectedLeft || Object.values(matched).includes(def)) return;
+const pair = data.pairs.find(p => p[0] === selectedLeft && p[1] === def);
+if (pair) { setMatched(p => ({...p, [selectedLeft]: def})); setSelectedLeft(null); }
+else { setWrong(def); setTimeout(() => setWrong(null), 800); }
+};
+
+return (
+<div>
+    <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+            <p className="text-xs font-bold text-slate-500 mb-1">Conceptos</p>
+            {data.pairs.map(([concept], i) => (
+            <button key={i} onClick={()=> clickLeft(concept)} className={`w-full text-left p-3 rounded-xl border-2
+                transition-all text-sm ${
+                matched[concept] ? 'bg-emerald-100 border-emerald-300 text-emerald-700' :
+                selectedLeft === concept ? 'bg-indigo-100 border-indigo-400 text-indigo-800 ring-2 ring-indigo-300' :
+                'bg-white border-slate-300 hover:border-indigo-400 cursor-pointer'
+                }`}>{concept}</button>
+            ))}
+        </div>
+        <div className="space-y-2">
+            <p className="text-xs font-bold text-slate-500 mb-1">Definiciones</p>
+            {shuffledRight.map((def, i) => (
+            <button key={i} onClick={()=> clickRight(def)} className={`w-full text-left p-3 rounded-xl border-2
+                transition-all text-sm ${
+                Object.values(matched).includes(def) ? 'bg-emerald-100 border-emerald-300 text-emerald-700' :
+                wrong === def ? 'bg-rose-100 border-rose-400' :
+                'bg-white border-slate-300 hover:border-indigo-400 cursor-pointer'
+                }`}>{def}</button>
+            ))}
+        </div>
+    </div>
+    {allDone && (
+    <div className="mt-4 text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+        <p className="text-emerald-800 font-bold text-lg">🎉 ¡Todas las asociaciones correctas!</p>
+        <button onClick={onReset}
+            className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Jugar de nuevo</button>
+    </div>
+    )}
+    {!allDone && <p className="text-sm text-slate-500 mt-3 text-center">Asociaciones: {Object.keys(matched).length} de
+        {data.pairs.length}</p>}
+</div>
+);
+};
+
+const IntruderGame = ({ data, onReset }) => {
+const [gi, setGi] = useState(0);
+const [picked, setPicked] = useState(null);
+const [score, setScore] = useState(0);
+const g = data.groups[gi];
+const done = gi >= data.groups.length;
+
+const pick = (i) => { if (picked !== null) return; setPicked(i); if (i === g.intruder) setScore(s => s + 1); };
+const next = () => { setPicked(null); setGi(i => i + 1); };
+
+if (done) return (
+<div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+    <p className="text-emerald-800 font-bold text-lg">🎉 Encontraste {score} de {data.groups.length} intrusos</p>
+    <button onClick={onReset}
+        className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Reiniciar</button>
+</div>
+);
+
+return (
+<div>
+    <p className="text-sm text-slate-500 mb-3">Grupo {gi + 1} de {data.groups.length}</p>
+    <div className="flex flex-wrap gap-3 mb-4">
+        {g.items.map((item, i) => (
+        <button key={i} onClick={()=> pick(i)} className={`px-4 py-3 rounded-xl border-2 font-medium transition-all ${
+            picked === null ? 'bg-white border-slate-300 hover:border-indigo-400 cursor-pointer' :
+            i === g.intruder ? 'bg-amber-100 border-amber-400 text-amber-800' :
+            i === picked && i !== g.intruder ? 'bg-rose-100 border-rose-300 text-rose-700' :
+            'bg-slate-50 border-slate-200'
+            }`}>{item}</button>
+        ))}
+    </div>
+    {picked !== null && picked === g.intruder && <p className="text-emerald-700 font-medium mb-2">¡Correcto! {g.reason}
+    </p>}
+    {picked !== null && picked !== g.intruder && <p className="text-rose-700 mb-2">No es ese. El intruso era:
+        <strong>{g.items[g.intruder]}</strong>. {g.reason}</p>}
+    {picked !== null && <button onClick={next}
+        className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Siguiente →</button>}
+</div>
+);
+};
+
+const ChallengesSection = () => {
+const [activeChallenge, setActiveChallenge] = useState(null);
+const [resetKey, setResetKey] = useState(0);
+const challenge = challengesData.find(c => c.id === activeChallenge);
+const doReset = () => setResetKey(k => k + 1);
+
+const renderChallenge = () => {
+if (!challenge) return null;
+const props = { data: challenge, onReset: doReset, key: resetKey };
+switch (challenge.type) {
+case 'memoryPairs': return
+<MemoryPairsGame {...props} />;
+case 'sequence': return
+<SequenceGame {...props} />;
+case 'spotDifference': return
+<SpotDifferenceGame {...props} />;
+case 'orderSteps': return
+<OrderStepsGame {...props} />;
+case 'association': return
+<AssociationGame {...props} />;
+case 'intruder': return
+<IntruderGame {...props} />;
+default: return null;
+}
+};
+
+if (activeChallenge && challenge) {
+return (
+<div className="max-w-3xl mx-auto">
+    <button onClick={()=> setActiveChallenge(null)} className="flex items-center gap-2 text-indigo-600 hover:underline
+        mb-4">
+        <ChevronLeft className="w-4 h-4" /> Volver a los desafíos
+    </button>
+    <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6">
+        <h3 className="text-xl font-bold text-slate-800 mb-1">{challenge.title}</h3>
+        <p className="text-slate-600 mb-6">{challenge.description}</p>
+        {renderChallenge()}
+    </div>
+</div>
+);
+}
+
+return (
+<div className="max-w-3xl mx-auto">
+    <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 mb-6 border border-amber-200">
+        <h3 className="text-xl font-bold text-amber-800 mb-2 flex items-center gap-2">
+            <Zap className="w-5 h-5" /> Desafíos para la mente
+        </h3>
+        <p className="text-amber-900">Ejercicios breves que activan memoria, atención y lógica. Son completamente
+            opcionales y podés hacer los que quieras, en el orden que prefieras. ¡Disfrutalos!</p>
+    </div>
+    <div className="grid md:grid-cols-2 gap-4">
+        {challengesData.map(ch => (
+        <button key={ch.id} onClick={()=> { setActiveChallenge(ch.id); setResetKey(k => k + 1); }}
+            className="text-left bg-white rounded-xl p-5 border-2 border-slate-200 hover:border-indigo-400
+            hover:shadow-md transition-all">
+            <h4 className="font-bold text-slate-800 mb-1">{ch.title}</h4>
+            <p className="text-sm text-slate-600">{ch.description}</p>
+        </button>
+        ))}
+    </div>
+</div>
+);
+};
+
+// ═══════════════════════════════════════════════════════════════
+// APP PRINCIPAL
+// ═══════════════════════════════════════════════════════════════
+
+const StoriesGallery = ({ onSelect }) => (
+<div className="grid gap-4 md:grid-cols-2 max-w-4xl mx-auto">
+    {stories.map(s => (
+    <button key={s.id} onClick={()=> onSelect(s)} className="text-left bg-white rounded-xl p-5 border-2 border-slate-200
+        hover:border-indigo-400 hover:shadow-md transition-all">
+        <h4 className="font-bold text-slate-800 mb-1">{s.title}</h4>
+        <p className="text-sm text-slate-500 mb-2">{s.focus}</p>
+        <p className="text-sm text-slate-600">{s.context}</p>
+    </button>
+    ))}
+</div>
+);
+
+const StoryPlayer = ({ story, onBack }) => {
+const [step, setStep] = useState(0);
+const [copied, setCopied] = useState(false);
+const visibleMsgs = story.conversation.slice(0, step + 1);
+
+const copyPrompt = () => {
+navigator.clipboard.writeText(story.reusablePrompt).then(() => { setCopied(true); setTimeout(() => setCopied(false),
+2000); });
+};
+
+return (
+<div className="max-w-3xl mx-auto">
+    <button onClick={onBack} className="flex items-center gap-2 text-indigo-600 hover:underline mb-4">
+        <ChevronLeft className="w-4 h-4" /> Volver a las historias
+    </button>
+    <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-6">
+        <h3 className="text-xl font-bold text-slate-800 mb-1">{story.title}</h3>
+        <p className="text-sm text-slate-500 mb-4">{story.focus} — {story.context}</p>
+        <div className="space-y-3 mb-6">
+            {visibleMsgs.map((msg, i) => (
+            <div key={i} className={`p-4 rounded-xl border-2 ${roleColor[msg.role] || 'bg-white border-slate-200' }`}>
+                <p className="text-xs font-bold uppercase mb-1 opacity-70">{roleLabel[msg.role] || msg.role}</p>
+                <p>{msg.text}</p>
+            </div>
+            ))}
+        </div>
+        {step < story.conversation.length - 1 ? ( <button onClick={()=> setStep(s => s + 1)} className="px-6 py-3
+            bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-medium">
+            Siguiente paso →
+            </button>
+            ) : (
+            <div className="bg-sky-50 rounded-xl p-5 border border-sky-200">
+                <p className="font-bold text-sky-800 mb-2">📋 Prompt reutilizable</p>
+                <p className="text-sky-900 italic mb-3">"{story.reusablePrompt}"</p>
+                <button onClick={copyPrompt}
+                    className="flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700">
+                    {copied ? <>
+                        <Check className="w-4 h-4" /> Copiado
+                    </> : <>
+                        <Copy className="w-4 h-4" /> Copiar prompt
+                    </>}
+                </button>
+            </div>
+            )}
+    </div>
+</div>
+);
+};
+
+const PromptGym = () => {
+const [level, setLevel] = useState(null);
+const [activePrompt, setActivePrompt] = useState(null);
+const [copiedId, setCopiedId] = useState(null);
+
+const currentPrompts = enrichedPromptItems.filter(p => p.level === level);
+const active = enrichedPromptItems.find(p => p.id === activePrompt);
+
+const copyText = (text, id) => {
+navigator.clipboard.writeText(text).then(() => { setCopiedId(id); setTimeout(() => setCopiedId(null), 2000); });
+};
+
+if (!level) {
+return (
+<div className="max-w-3xl mx-auto">
+    <div className="bg-gradient-to-br from-indigo-50 to-sky-50 rounded-2xl p-6 mb-6 border border-indigo-200">
+        <h3 className="text-xl font-bold text-indigo-800 mb-2 flex items-center gap-2">
+            <Target className="w-5 h-5" /> Gimnasio de Prompts
+        </h3>
+        <p className="text-indigo-900">Elegí tu nivel y practicá con ejemplos del mundo real. Cada prompt muestra una versión débil (qué evitar) y una versión robusta (para copiar y usar).</p>
+    </div>
+    <div className="space-y-4">
+        {promptLevels.map(pl => (
+        <button key={pl.id} onClick={()=> setLevel(pl.id)} className="w-full text-left bg-white rounded-xl p-5 border-2
+            border-slate-200 hover:border-indigo-400 hover:shadow-md transition-all">
+            <h4 className="font-bold text-slate-800">{pl.label}</h4>
+            <p className="text-sm text-slate-600">{pl.hint}</p>
+        </button>
+        ))}
+    </div>
+</div>
+);
+}
+
+if (active) {
+return (
+<div className="max-w-3xl mx-auto">
+    <button onClick={()=> setActivePrompt(null)} className="flex items-center gap-2 text-indigo-600 hover:underline
+        mb-4">
+        <ChevronLeft className="w-4 h-4" /> Volver al nivel
+    </button>
+    <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6 space-y-6">
+        <div>
+            <p className="text-xs font-bold text-indigo-600 uppercase">{active.domain}</p>
+            <h3 className="text-xl font-bold text-slate-800">{active.title}</h3>
+            <p className="text-slate-600">{active.objective}</p>
+        </div>
+        <div className="bg-rose-50 rounded-xl p-5 border border-rose-200">
+            <p className="text-xs font-bold text-rose-600 mb-2">❌ Prompt débil</p>
+            <p className="text-rose-900 italic mb-2">"{active.badPrompt}"</p>
+            <p className="text-sm text-rose-700">{active.badReason}</p>
+        </div>
+        <div className="bg-emerald-50 rounded-xl p-5 border border-emerald-200">
+            <p className="text-xs font-bold text-emerald-600 mb-2">✅ Prompt robusto</p>
+            <pre className="whitespace-pre-wrap text-emerald-900 text-sm mb-3 font-sans">{active.enhancedPrompt}</pre>
+            <button onClick={()=> copyText(active.enhancedPrompt, active.id)} className="flex items-center gap-2 px-4
+                py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">
+                {copiedId === active.id ? <>
+                    <Check className="w-4 h-4" /> Copiado
+                </> : <>
+                    <Copy className="w-4 h-4" /> Copiar prompt
+                </>}
+            </button>
+        </div>
+        <div className="flex flex-wrap gap-2">
+            {active.techniques.map((t, i) => <span key={i}
+                className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-medium">{t}</span>)}
+        </div>
+        <div className="bg-sky-50 rounded-xl p-4 border border-sky-200">
+            <p className="text-xs font-bold text-sky-600 mb-1">💡 ¿Por qué funciona?</p>
+            <p className="text-sm text-sky-900">{active.why}</p>
+        </div>
+    </div>
+</div>
+);
+}
+
+return (
+<div className="max-w-3xl mx-auto">
+    <button onClick={()=> setLevel(null)} className="flex items-center gap-2 text-indigo-600 hover:underline mb-4">
+        <ChevronLeft className="w-4 h-4" /> Elegir otro nivel
+    </button>
+    <h3 className="text-lg font-bold text-slate-800 mb-4">{promptLevels.find(p => p.id === level)?.label} —
+        {currentPrompts.length} prompts</h3>
+    <div className="grid gap-3">
+        {currentPrompts.map(p => (
+        <button key={p.id} onClick={()=> setActivePrompt(p.id)} className="text-left bg-white rounded-xl p-4 border-2
+            border-slate-200 hover:border-indigo-400 hover:shadow-md transition-all">
+            <p className="text-xs text-indigo-600 font-bold">{p.domain}</p>
+            <h4 className="font-bold text-slate-800">{p.title}</h4>
+            <p className="text-sm text-slate-600">{p.objective}</p>
+        </button>
+        ))}
+    </div>
+</div>
+);
+};
+
+const App = () => {
+const [view, setView] = useState('gym');
+const [moduleIndex, setModuleIndex] = useState(0);
+const [activeStory, setActiveStory] = useState(null);
+const mod = theoryModules[moduleIndex];
+
+const tabs = [
+{ id: 'gym', label: 'Gimnasio', icon:
+<Target className="w-4 h-4" /> },
+{ id: 'stories', label: 'Historias', icon:
+<Library className="w-4 h-4" /> },
+{ id: 'theory', label: 'Base rápida', icon:
+<BookOpen className="w-4 h-4" /> },
+{ id: 'challenges', label: 'Desafíos', icon:
+<Sparkles className="w-4 h-4" /> }
+];
+
+return (
+<div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50">
+    {/* Header */}
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-slate-200 shadow-sm">
+        <div className="max-w-5xl mx-auto px-4 py-3">
+            <div className="flex items-center gap-3 mb-3">
+                <div
+                    className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-md">
+                    <BrainCircuit className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                    <h1 className="text-lg font-extrabold text-slate-800 leading-tight">Laboratorio Personal de IA</h1>
+                    <p className="text-xs text-slate-500">Usá IA en trabajo, casa y hobbies (sin teoría pesada)</p>
+                </div>
+            </div>
+            <div className="flex gap-1 overflow-x-auto">
+                {tabs.map(tab => (
+                <button key={tab.id} onClick={()=> { setView(tab.id); setActiveStory(null); }}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap
+                    transition-all ${
+                    view === tab.id ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'
+                    }`}>
+                    {tab.icon} {tab.label}
+                </button>
+                ))}
+            </div>
+        </div>
+    </header>
+
+    <main className="max-w-5xl mx-auto px-4 py-8">
+        {/* THEORY VIEW */}
+        {view === 'theory' && (
+        <div className="flex flex-col md:flex-row gap-6">
+            {/* Sidebar - desktop */}
+            <aside className="hidden md:block md:w-64 flex-shrink-0">
+                <div className="sticky top-32 space-y-1">
+                    <p className="text-xs font-bold text-slate-400 uppercase mb-2">Módulos ({theoryModules.length})</p>
+                    {theoryModules.map((m, i) => (
+                    <button key={m.id} onClick={()=> setModuleIndex(i)}
+                        className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all ${
+                        i === moduleIndex ? 'bg-indigo-100 text-indigo-800 font-bold border-l-4 border-indigo-500' :
+                        'text-slate-600 hover:bg-slate-100'
+                        }`}>
+                        <span className="text-xs text-slate-400 mr-1">{i + 1}.</span> {m.title}
+                    </button>
+                    ))}
+                </div>
+            </aside>
+
+            {/* Sidebar - mobile dropdown */}
+            <div className="md:hidden mb-4">
+                <select value={moduleIndex} onChange={e=> setModuleIndex(Number(e.target.value))}
+                    className="w-full p-3 rounded-xl border-2 border-slate-300 bg-white text-slate-800 font-medium">
+                    {theoryModules.map((m, i) => <option key={m.id} value={i}>{i + 1}. {m.title}</option>)}
+                </select>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 max-w-3xl">
+                <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6 md:p-8">
+                    <p className="text-xs text-indigo-600 font-bold uppercase mb-1">Módulo {moduleIndex + 1} de
+                        {theoryModules.length}</p>
+                    <h2 className="text-2xl font-extrabold text-slate-800 mb-1">{mod.title}</h2>
+                    <p className="text-slate-500 mb-6">{mod.subtitle}</p>
+
+                    <div className="space-y-4 text-slate-700 leading-relaxed mb-8">
+                        {mod.reading.map((para, i) => <p key={i}>{para}</p>)}
+                    </div>
+
+                    <div className="bg-indigo-50 rounded-xl p-5 border border-indigo-200 mb-6">
+                        <h4 className="font-bold text-indigo-800 mb-3 flex items-center gap-2">
+                            <CheckCircle2 className="w-4 h-4" /> Checklist
+                        </h4>
+                        <ul className="space-y-2">
+                            {mod.checklist.map((item, i) => (
+                            <li key={i} className="flex items-start gap-2 text-indigo-900">
+                                <CheckCircle2 className="w-4 h-4 text-indigo-500 mt-1 flex-shrink-0" />
+                                <span>{item}</span>
+                            </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div className="bg-amber-50 rounded-xl p-5 border border-amber-200 mb-8">
+                        <h4 className="font-bold text-amber-800 mb-2 flex items-center gap-2">
+                            <Lightbulb className="w-4 h-4" /> Práctica sugerida
+                        </h4>
+                        <p className="text-amber-900">{mod.practice}</p>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-4">
+                        <button onClick={()=> setModuleIndex(i => Math.max(0, i - 1))} disabled={moduleIndex === 0}
+                            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-100 text-slate-700
+                            hover:bg-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition-all">
+                            <ChevronLeft className="w-4 h-4" /> Anterior
+                        </button>
+                        {moduleIndex < theoryModules.length - 1 ? ( <button onClick={()=> setModuleIndex(i => i + 1)}
+                            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 text-white
+                            hover:bg-indigo-700 transition-all">
+                            Siguiente
+                            <ChevronRight className="w-4 h-4" />
+                            </button>
+                            ) : (
+                            <button onClick={()=> setView('gym')}
+                                className="flex items-center gap-2 px-5 py-2 rounded-lg bg-emerald-600 text-white
+                                hover:bg-emerald-700 transition-all font-medium">
+                                Continuar al Gimnasio
+                                <ArrowUpRight className="w-4 h-4" />
+                            </button>
+                            )}
+                    </div>
+                </div>
+            </div>
+        </div>
+        )}
+
+        {/* GYM VIEW */}
+        {view === 'gym' &&
+        <PromptGym />}
+
+        {/* CHALLENGES VIEW */}
+        {view === 'challenges' &&
+        <ChallengesSection />}
+
+        {/* STORIES VIEW */}
+        {view === 'stories' && (
+        activeStory ? <StoryPlayer story={activeStory} onBack={()=> setActiveStory(null)} /> : (
+            <div>
+                <div
+                    className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 mb-6 border border-purple-200 max-w-3xl mx-auto">
+                    <h3 className="text-xl font-bold text-purple-800 mb-2 flex items-center gap-2">
+                        <MessageCircle className="w-5 h-5" /> Historias de uso
+                    </h3>
+                    <p className="text-purple-900">Casos reales que muestran cómo mejorar interacciones con IA, paso a
+                        paso. Cada historia incluye un prompt reutilizable al final.</p>
+                </div>
+                <StoriesGallery onSelect={setActiveStory} />
+            </div>
+            )
+            )}
+    </main>
+
+    <footer className="bg-white border-t border-slate-200 mt-12">
+        <div className="max-w-5xl mx-auto px-4 py-6 text-center text-slate-500 text-sm">
+            <p className="font-medium">Laboratorio Personal de IA — Material formativo</p>
+            <p className="mt-1">Navega las secciones a tu ritmo. Volvé cuando quieras.</p>
+        </div>
+    </footer>
+</div>
+);
+};
+
+createRoot(document.getElementById('root')).render(
+<App />);
+</script>
+</body>
+
+</html>
