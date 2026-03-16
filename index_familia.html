@@ -228,6 +228,114 @@
           }
         },
         {
+          id: 'p6',
+          title: 'La IA se Equivoca',
+          icon: <AlertCircle className="w-6 h-6" />,
+          theory: `¿Sabías que la IA puede inventar cosas con total confianza? No está conectada a internet en tiempo real y a veces mezcla datos reales con datos inventados, presentándolos como si fueran completamente ciertos. ¡A esto los expertos lo llaman "alucinación"! No es que la IA quiera mentirte, es que no sabe la diferencia entre lo verdadero y lo falso. Por eso, antes de usar cualquier dato importante que te dé la IA, ¡hay que verificarlo con un adulto o una fuente confiable!`,
+          extendedTheory: (
+            <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+              <h4 className="text-2xl font-extrabold text-orange-600 flex items-center gap-2 mb-4">
+                <AlertCircle className="w-6 h-6" /> El Estudiante Muy Seguro de Sí Mismo 📚
+              </h4>
+              <p>
+                Imagina a un compañero de clase que estudió muchísimo, leyó cientos de libros y tiene muy buena memoria. ¡Pero a veces mezcla los apuntes sin darse cuenta! Lo peor es que cuando te da una respuesta equivocada, la dice con una sonrisa enorme, súper convencido, como si fuera 100% verdad.
+              </p>
+              <p>
+                La IA funciona exactamente igual. Puede decirte con total seguridad que el primer astronauta en llegar a la Luna se llamaba "Carlos López"... ¡y ese nombre es completamente inventado! No lo hace con mala intención: simplemente no sabe distinguir entre lo que es verdad y lo que solo suena bien.
+              </p>
+              <div className="bg-orange-50 p-5 rounded-xl border-l-4 border-orange-400 shadow-sm my-6">
+                <p className="font-bold text-orange-800 mb-2">🧠 ¿Qué es una "Alucinación" de IA?</p>
+                <p className="text-orange-900">
+                  Cuando la IA inventa algo que parece verdadero pero no lo es, los expertos lo llaman <strong>"alucinación"</strong>. No es que la IA quiera engañarte. Su trabajo es predecir qué palabras encajan bien juntas, no verificar si algo es real. Puede inventar nombres de personas, fechas, libros o lugares que nunca existieron, ¡y lo hace con la misma confianza que si fueran datos reales!
+                </p>
+              </div>
+              <h5 className="text-xl font-bold text-slate-800 mt-6 mb-3">¿Cuándo es más probable que la IA se equivoque? 🔍</h5>
+              <p>
+                No se equivoca en todo, pero hay situaciones donde hay que tener más cuidado:
+              </p>
+              <ul className="list-disc pl-6 space-y-3 mt-4">
+                <li><strong>Datos muy específicos:</strong> fechas exactas, nombres de personas poco famosas, números precisos. Fácil de inventar, difícil de verificar a simple vista.</li>
+                <li><strong>Noticias recientes:</strong> la IA aprendió de textos de hace un tiempo. No sabe qué pasó ayer, ni la semana pasada, ni el mes pasado.</li>
+                <li><strong>Citas y fuentes:</strong> puede inventar títulos de libros o frases de personas famosas que nunca dijeron eso. ¡Cuidado al usarlas en una tarea!</li>
+              </ul>
+              <div className="bg-sky-50 p-5 rounded-xl border border-sky-200 mt-6">
+                <p className="font-bold text-sky-800 text-center text-xl mb-2">🛡️ Tu Escudo Anti-Alucinación</p>
+                <p className="text-center text-sky-900">
+                  Antes de usar un dato importante de la IA en tu tarea o de contárselo a alguien, preguntate: <strong>"¿Cómo lo verifico?"</strong>. Podés buscar en un libro, preguntarle a un profe o adulto de confianza, o consultar una página confiable. <em>¡La IA propone, vos comprobás!</em>
+                </p>
+              </div>
+              <div className="bg-indigo-50 p-5 rounded-xl border border-indigo-200 mt-6">
+                <p className="font-bold text-indigo-800 text-center text-xl mb-2">💡 Piensa Como un Detective</p>
+                <p className="text-center text-indigo-900">
+                  Cuando recibas información de la IA, ponete el sombrero de detective: <em>"¿Tiene sentido esto? ¿Dónde lo puedo comprobar?"</em>. Si la respuesta te parece rara, demasiado perfecta, o si no podés encontrarla en ningún otro lado... <strong>¡confía en tu instinto y verificá antes de usarla!</strong>
+                </p>
+              </div>
+            </div>
+          ),
+          activity: {
+            type: 'quiz',
+            questions: [
+              { q: 'La IA te dice que el primer astronauta en la Luna se llamaba "Carlos López". ¿Qué hacés?', options: ['Le creo porque la IA sabe mucho.', 'Lo verifico en una fuente confiable antes de usarlo.', 'Lo copio en mi tarea directamente.'], answer: 1 },
+              { q: '¿Qué significa que la IA "alucina"?', options: ['Que ve colores raros en la pantalla.', 'Que inventa información que suena real pero no lo es.', 'Que se queda sin energía y se apaga.'], answer: 1 },
+              { q: 'La IA no está conectada a internet en tiempo real. Esto significa que...', options: ['No puede escribir textos largos.', 'Puede no saber lo que pasó ayer o la semana pasada.', 'Solo funciona cuando hay wifi rápido.'], answer: 1 }
+            ]
+          }
+        },
+        {
+          id: 'p7',
+          title: '¿De Quién es Esta Idea?',
+          icon: <Lightbulb className="w-6 h-6" />,
+          theory: `Cuando la IA escribe un cuento siguiendo tus instrucciones, ¿de quién es el resultado? ¡La clave está en quién tuvo la idea original! La IA es como un robot que construye tu castillo de LEGO siguiendo tus indicaciones: vos elegiste las piezas, los colores y la forma. Sin tu imaginación, el robot no haría nada. Pero si entregás el trabajo de la IA en la escuela como si lo hubieras hecho vos solo, sin decírselo al profe... eso no es honesto. Aprender a usar bien la IA también significa ser honesto sobre cómo la usaste.`,
+          extendedTheory: (
+            <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+              <h4 className="text-2xl font-extrabold text-orange-600 flex items-center gap-2 mb-4">
+                <Lightbulb className="w-6 h-6" /> El Robot Constructor de LEGOs 🧱
+              </h4>
+              <p>
+                Imagina que tenés un robot que puede construir cualquier cosa con LEGO. Vos le decís exactamente qué querés: <em>"Construí un castillo con torres azules, un puente levadizo y un dragón en la entrada"</em>. El robot lo construye perfectamente.
+              </p>
+              <div className="bg-orange-50 p-5 rounded-xl border-l-4 border-orange-400 shadow-sm my-6">
+                <p className="font-bold text-orange-800 mb-2">🤔 La Gran Pregunta:</p>
+                <p className="text-orange-900">
+                  ¿De quién es el castillo? ¡Tuyo, claro! Vos tuviste la idea, elegiste todos los detalles y tomaste las decisiones importantes. El robot solo ejecutó tus órdenes. <strong>La imaginación y la creatividad son tuyas. La IA es solo la herramienta que las hizo realidad.</strong>
+                </p>
+              </div>
+              <h5 className="text-xl font-bold text-slate-800 mt-6 mb-3">Pero... ¿qué pasa en la escuela? 🏫</h5>
+              <p>
+                Acá viene la parte importante. Si tu profe te pide que escribas un cuento y vos le pedís a la IA que lo escriba completo, y lo entregás como si fuera tuyo sin decir nada... eso es parecido a copiar. Tu profe quiere ver <strong>TU</strong> forma de pensar y de escribir, no la de una máquina.
+              </p>
+              <ul className="list-disc pl-6 space-y-3 mt-4">
+                <li><strong>✅ Honesto y genial:</strong> Pedirle a la IA ideas o palabras para inspirarte, y después escribir el trabajo con tus propias palabras.</li>
+                <li><strong>✅ Honesto y genial:</strong> Pedirle que corrija tu ortografía, pero que no cambie tus ideas ni tu forma de decir las cosas.</li>
+                <li><strong>✅ Honesto y genial:</strong> Usarla para entender algo difícil, y después explicárselo al profe con tus palabras.</li>
+                <li><strong>❌ No tan honesto:</strong> Copiar y pegar lo que la IA escribió y entregarlo como tuyo sin decírselo a nadie.</li>
+              </ul>
+              <div className="bg-emerald-50 p-5 rounded-xl border border-emerald-200 mt-6">
+                <p className="font-bold text-emerald-800 text-center text-xl mb-2">🌟 La Regla de Oro del Explorador</p>
+                <p className="text-center text-emerald-900">
+                  Si usaste la IA para hacer algo, ¡decilo! No hay nada de malo en usar herramientas. Los mejores artistas, escritores y científicos del mundo usan herramientas todo el tiempo. Lo importante es ser honesto sobre cómo trabajaste. ¡Tu profe puede enseñarte a usarla aún mejor si sabe cómo la estás usando!
+                </p>
+              </div>
+              <div className="bg-indigo-50 p-5 rounded-xl border border-indigo-200 mt-6">
+                <p className="font-bold text-indigo-800 text-center text-xl mb-2">🎨 La Diferencia que Importa</p>
+                <p className="text-center text-indigo-900">
+                  Un pintor usa pinceles para hacer su cuadro. Un escritor usa una computadora para escribir su libro. Vos podés usar la IA para crear, siempre y cuando <strong>las ideas y las decisiones importantes sean tuyas</strong>. Eso es lo que hace que el trabajo sea genuinamente tuyo.
+                </p>
+              </div>
+            </div>
+          ),
+          activity: {
+            type: 'scenarioChoice',
+            question: '¿Cuál de estas formas de usar la IA es la más honesta para la escuela?',
+            scenario: 'Tu profe te pidió escribir un cuento de dos páginas sobre un animal de la Patagonia para entregar mañana.',
+            choices: [
+              { text: 'Le pido a la IA que escriba el cuento completo y lo entrego como si fuera mío.', correct: false, feedback: '¡Eso no está bien! Tu profe quiere conocer TU manera de escribir y pensar. Entregar el trabajo de la IA sin decírselo es como copiar. ¡Vos podés hacerlo mejor!' },
+              { text: 'Le pido a la IA 3 ideas sobre animales de la Patagonia, yo elijo una y escribo el cuento con mis palabras.', correct: true, feedback: '¡Perfecto! Usaste la IA como fuente de inspiración, pero el trabajo final es tuyo. ¡Eso es ser un Explorador de IA responsable y creativo!' },
+              { text: 'No uso la IA para nada porque si no sería trampa.', correct: false, feedback: 'No es necesario evitarla por completo. Usarla para inspirarte, buscar información o corregir errores es totalmente válido. ¡Lo importante es que el trabajo final sea genuinamente tuyo!' }
+            ]
+          }
+        },
+        {
           id: 'p5',
           title: 'Misión Final (Evaluación)',
           icon: <Sparkles className="w-6 h-6" />,
@@ -447,6 +555,195 @@
             choices: [
               { text: 'Es su vida, la IA es más barata que un psicólogo.', correct: false, feedback: 'La IA no es un profesional de la salud mental y puede dar consejos peligrosos (alucinaciones).' },
               { text: 'Hablo con ella, le ofrezco escucharla sin juzgar y le sugiero ir al gabinete escolar.', correct: true, feedback: '¡Empatía humana! La conexión real y el apoyo profesional son irreemplazables.' }
+            ]
+          }
+        },
+        {
+          id: 's6',
+          title: 'Sesgos Algorítmicos: El Espejo Roto',
+          icon: <Search className="w-6 h-6" />,
+          theory: `Los modelos de IA aprendieron de textos escritos por humanos a lo largo de la historia. Esos textos contienen los prejuicios, estereotipos y desigualdades de la sociedad: de género, raza, clase social y geografía. La IA los absorbió todos, sin juicio crítico. A esto se llama sesgo algorítmico. Y hay otro problema: la IA tiende a darte la razón en vez de desafiarte, creando una "cámara de eco" que refuerza lo que ya creés. Entender esto te permite detectar cuándo la máquina está siendo injusta o complaciente, y forzarla a salir del molde.`,
+          extendedTheory: (
+            <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+              <h4 className="text-2xl font-extrabold text-emerald-600 flex items-center gap-2 mb-4">
+                <Search className="w-6 h-6" /> El Espejo que Deforma: Cuando la IA Reproduce Injusticias 🪞
+              </h4>
+              <p>
+                Imagina una esponja gigante que absorbió millones de libros, artículos, foros y redes sociales escritos durante siglos. Si en esos textos los médicos siempre eran hombres y las enfermeras siempre eran mujeres, la esponja aprenderá que así "debe ser". Cuando le pidas que genere un personaje de médico, su respuesta más probable será masculina. Eso es un <strong>sesgo algorítmico</strong>: un patrón distorsionado incorporado al modelo por los datos con los que aprendió.
+              </p>
+              <div className="bg-red-50 p-5 rounded-xl border-l-4 border-red-500 shadow-sm my-6">
+                <p className="font-bold text-red-800 mb-2">⚠️ No es intencional, pero igual hace daño</p>
+                <p className="text-red-900">
+                  Nadie programó a la IA para ser sexista, racista o clasista. Pero si los datos de entrenamiento reflejan una sociedad con desigualdades históricas, el modelo aprende esas desigualdades como si fueran "lo normal". El resultado puede ser invisibilizar a grupos enteros o reforzar estereotipos en millones de personas a la vez.
+                </p>
+              </div>
+              <h5 className="text-xl font-bold text-slate-800 mt-6 mb-3">Tipos de sesgos que podés encontrar 🔍</h5>
+              <ul className="list-disc pl-6 space-y-3 mt-4">
+                <li><strong>Sesgo de género:</strong> Asociar automáticamente ciertos roles profesionales con un género. Pedile a la IA que describa "un ingeniero exitoso" sin dar más contexto y observá qué pasa.</li>
+                <li><strong>Sesgo geográfico:</strong> Los datos de entrenamiento suelen concentrarse en inglés y en el mundo anglosajón. Muchas realidades latinoamericanas, africanas o asiáticas están subrepresentadas o directamente ausentes.</li>
+                <li><strong>Sesgo de confirmación:</strong> La IA está diseñada para ser útil y amable. Tiende a validar lo que el usuario ya cree, en lugar de cuestionarlo. Si vos creés algo incorrecto y se lo decís a la IA como premisa, es probable que ella lo acepte y construya sobre ese error.</li>
+              </ul>
+              <div className="bg-amber-50 p-5 rounded-xl border-l-4 border-amber-400 shadow-sm my-6">
+                <p className="font-bold text-amber-800 mb-2">🫧 La Burbuja de Confirmación</p>
+                <p className="text-amber-900">
+                  Si le decís a la IA: <em>"La IA generativa es perfectamente segura para menores sin ningún tipo de supervisión, ¿no?"</em>, es probable que en lugar de contradecirte, encuentre formas de validar esa afirmación. Esto se llama <strong>complacencia algorítmica</strong> y puede reforzar creencias falsas peligrosamente. El antídoto es forzar explícitamente el punto de vista opuesto: <em>"Dame los tres argumentos más sólidos en contra de esto"</em>.
+                </p>
+              </div>
+              <h5 className="text-xl font-bold text-slate-800 mt-6 mb-3">Cómo romper el espejo 🔨</h5>
+              <p>
+                Detectar el sesgo es el primer paso. Corregirlo en el prompt es el segundo:
+              </p>
+              <ul className="list-disc pl-6 space-y-3 mt-4">
+                <li>Especificá diversidad explícitamente: <em>"Describe cinco científicas latinoamericanas relevantes del siglo XX"</em>.</li>
+                <li>Pedí perspectivas múltiples: <em>"Dame cuatro puntos de vista distintos sobre este tema, incluyendo uno que desafíe la visión dominante"</em>.</li>
+                <li>Usá el rol de Abogado del Diablo: <em>"Actuá como alguien que está totalmente en desacuerdo con lo que acabo de decir y construí el mejor argumento posible"</em>.</li>
+              </ul>
+              <div className="bg-indigo-50 p-5 rounded-xl border border-indigo-200 mt-6">
+                <p className="font-bold text-indigo-800 text-center text-xl mb-2">🎯 El Detector de Sesgos en Acción</p>
+                <p className="text-center text-indigo-900">
+                  Cada vez que la IA te presente una respuesta con un personaje, una historia o una descripción, preguntate: <em>"¿Quién está presente en esta respuesta y quién está ausente? ¿Qué supuestos hay acá que yo no puse explícitamente?"</em>. Esa pregunta convierte el sesgo en una oportunidad de aprendizaje.
+                </p>
+              </div>
+            </div>
+          ),
+          activity: {
+            type: 'scenarioChoice',
+            question: 'Detectás el sesgo: Pedís a la IA que describa a "un programador exitoso de Silicon Valley" y el resultado describe a un hombre blanco de 30 años sin más detalles.',
+            choices: [
+              { text: 'Es lógico, la mayoría de los programadores de Silicon Valley son así, no hay problema.', correct: false, feedback: 'Que algo sea estadísticamente frecuente no significa que sea lo único válido ni que la IA deba reproducirlo sin cuestionarlo. Normalizar esa imagen refuerza barreras para quienes no encajan en ese molde.' },
+              { text: 'Le pido que reformule incluyendo diversidad de género, etnia y origen geográfico, y comparo ambas respuestas.', correct: true, feedback: '¡Exacto! Forzar al modelo a salir de su respuesta probable te da una imagen más rica y justa. Y comparar las dos versiones te muestra el sesgo en acción.' },
+              { text: 'Corrijo el sesgo directamente en mi cabeza y uso la respuesta igual.', correct: false, feedback: 'Reconocer el sesgo mentalmente está bien, pero no corregirlo en el prompt deja el problema sin resolver para la siguiente persona que haga la misma pregunta sin tu criterio crítico.' }
+            ]
+          }
+        },
+        {
+          id: 's7',
+          title: 'Propiedad Intelectual en la Era de la IA',
+          icon: <BookOpen className="w-6 h-6" />,
+          theory: `Los modelos de IA se entrenaron con millones de obras: libros, música, código, imágenes, sin pedir permiso a sus autores. Esto abre un debate global sobre derechos de autor que todavía no tiene resolución legal clara. Pero más allá del debate legal, hay algo que sí podés decidir vos ahora mismo: cuando usás IA para crear, ¿qué parte del resultado es genuinamente tuyo? El concepto de Centauro —mitad humano, mitad máquina— define la colaboración ideal: vos ponés el juicio, la experiencia vivida y las decisiones creativas; la IA pone la escala y la velocidad. El trabajo final es tuyo si las ideas y decisiones importantes lo son.`,
+          extendedTheory: (
+            <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+              <h4 className="text-2xl font-extrabold text-emerald-600 flex items-center gap-2 mb-4">
+                <BookOpen className="w-6 h-6" /> ¿Quién es el Autor? El Debate que está Cambiando las Leyes 📜
+              </h4>
+              <p>
+                Para entender este módulo hay que arrancar con una pregunta incómoda: <strong>¿de dónde aprendió la IA a escribir, dibujar y programar?</strong> La respuesta es que lo hizo consumiendo una cantidad gigantesca de obras humanas: novelas, artículos, fotografías, partituras, repositorios de código. En la mayoría de los casos, sin pedirle permiso a los autores ni pagarles un centavo.
+              </p>
+              <div className="bg-amber-50 p-5 rounded-xl border-l-4 border-amber-400 shadow-sm my-6">
+                <p className="font-bold text-amber-800 mb-2">⚖️ Un Debate Legal Sin Resolver</p>
+                <p className="text-amber-900">
+                  Al momento de escribir esto, hay cientos de demandas judiciales en todo el mundo —de escritores, músicos, periodistas, ilustradores y estudios de cine— contra las empresas que desarrollan IA, reclamando compensación por el uso de sus obras sin consentimiento. Nadie sabe todavía cómo terminará. Lo que sí es seguro es que las leyes de propiedad intelectual van a cambiar en los próximos años, y vos serás parte de la generación que viva ese cambio.
+                </p>
+              </div>
+              <h5 className="text-xl font-bold text-slate-800 mt-6 mb-3">El Problema de la Autoría: ¿Quién firma? ✍️</h5>
+              <p>
+                Si usás una IA para generar una imagen, un poema o un fragmento de código... ¿de quién es? Hoy existen al menos tres posturas distintas:
+              </p>
+              <ul className="list-disc pl-6 space-y-3 mt-4">
+                <li><strong>Es del usuario</strong> (vos pusiste el prompt, diste las instrucciones, tomaste las decisiones): postura que muchas plataformas adoptan en sus términos de uso.</li>
+                <li><strong>Es de la empresa que hizo la IA</strong> (ellos construyeron la herramienta que lo generó): postura que algunas compañías intentan aplicar en sus contratos.</li>
+                <li><strong>No tiene dueño</strong> (es dominio público porque ningún humano lo creó directamente): postura que varios tribunales están empezando a adoptar para obras 100% generadas por IA sin intervención creativa humana.</li>
+              </ul>
+              <div className="bg-emerald-50 p-5 rounded-xl border border-emerald-200 mt-6">
+                <p className="font-bold text-emerald-800 text-center text-xl mb-2">🐴 La Metáfora del Centauro</p>
+                <p className="text-emerald-900 text-center">
+                  El centauro de la mitología griega era mitad humano, mitad caballo: la combinación de lo mejor de cada especie. En el mundo de la IA, el <strong>modelo centauro</strong> representa la colaboración ideal: el humano aporta el juicio crítico, la experiencia vivida, la perspectiva ética y las decisiones creativas significativas. La IA aporta velocidad, escala y acceso a patrones aprendidos de millones de textos. La obra es genuinamente tuya cuando las ideas, la voz y las decisiones importantes son las tuyas.
+                </p>
+              </div>
+              <h5 className="text-xl font-bold text-slate-800 mt-6 mb-3">Integridad académica: la regla práctica 📋</h5>
+              <p>
+                Más allá del debate filosófico y legal, hay reglas prácticas para el contexto escolar y académico que ya se están instalando en muchas instituciones:
+              </p>
+              <ul className="list-disc pl-6 space-y-3 mt-4">
+                <li><strong>Declaración de uso:</strong> Si usaste IA en la producción de tu trabajo, declaralo. Indicá qué herramienta usaste y para qué parte del proceso.</li>
+                <li><strong>Proporción de intervención:</strong> Un texto donde vos pusiste el prompt de cinco palabras y la IA generó dos páginas no es un trabajo tuyo. Un texto donde vos escribiste el borrador y la IA te ayudó a revisarlo sí lo es.</li>
+                <li><strong>Verificabilidad:</strong> Si el trabajo usa datos o fuentes, tenés que poder verificar que son reales. La IA puede inventar bibliografía con fluidez convincente.</li>
+              </ul>
+              <div className="bg-indigo-50 p-5 rounded-xl border border-indigo-200 mt-6">
+                <p className="font-bold text-indigo-800 text-center text-xl mb-2">💡 La Pregunta que Vale la Pena Hacerse</p>
+                <p className="text-center text-indigo-900">
+                  Antes de entregar algo donde usaste IA, preguntate: <em>"¿Puedo explicarle a mi docente, con mis propias palabras, qué dice esto y por qué tomé estas decisiones?"</em>. Si la respuesta es sí, el trabajo es tuyo. Si la respuesta es no, todavía hay trabajo por hacer.
+                </p>
+              </div>
+            </div>
+          ),
+          activity: {
+            type: 'scenarioChoice',
+            question: 'Analizá el caso: Sofía (17 años) tiene que entregar un informe de sociología. Le da a la IA un prompt de dos oraciones y recibe tres páginas. Las corrige levemente y las entrega con su nombre.',
+            choices: [
+              { text: 'Está bien, el informe es tuyo porque vos lo pediste y lo revisaste.', correct: false, feedback: 'La revisión leve no constituye autoría. Sofía no puede explicar con sus propias palabras el contenido ni los argumentos del informe. Si el docente le pregunta en clase, no va a poder responder. El problema no es solo ético: es que Sofía no aprendió nada.' },
+              { text: 'Está mal porque usó IA, punto. No debería usarla para nada escolar.', correct: false, feedback: 'Prohibir el uso no es la solución ni la dirección que tomará la educación. El problema no es usar IA, sino hacerlo de forma que evite el aprendizaje real y sin transparencia.' },
+              { text: 'Hay un problema de autoría y de aprendizaje. Sofía debería haber usado la IA para desarrollar su propio esquema y luego escribir con su voz, declarando el uso al entregar.', correct: true, feedback: '¡Exacto! El proceso importa tanto como el resultado. Usar la IA para pensar mejor y declarar cómo la usaste es el modelo que respeta tanto el aprendizaje como la integridad académica.' }
+            ]
+          }
+        },
+        {
+          id: 's8',
+          title: 'IA y Sociedad: Empleos, Poder y Futuro',
+          icon: <GraduationCap className="w-6 h-6" />,
+          theory: `La IA ya está cambiando el mercado laboral: automatiza tareas repetitivas tanto físicas como cognitivas, crea nuevos roles que no existían hace cinco años, y concentra poder económico y tecnológico en pocas empresas y países. Estas transformaciones no afectan a todos por igual. El acceso a la tecnología, la formación y las decisiones regulatorias determinan quién gana y quién pierde en este proceso. No hay respuestas únicas a estas preguntas, pero sí hay posiciones que vale la pena conocer, debatir y construir con criterio propio.`,
+          extendedTheory: (
+            <div className="space-y-6 text-slate-700 leading-relaxed text-lg">
+              <h4 className="text-2xl font-extrabold text-emerald-600 flex items-center gap-2 mb-4">
+                <GraduationCap className="w-6 h-6" /> La Gran Transformación: Lo que Nadie Sabe con Certeza 🌍
+              </h4>
+              <p>
+                La IA generativa no es solo una nueva tecnología. Es la primera vez en la historia que una herramienta puede automatizar no solo trabajo físico repetitivo, sino también trabajo <em>cognitivo</em>: redacción, análisis, programación, diseño, diagnóstico médico básico, asesoramiento legal de bajo nivel. Eso cambia todo.
+              </p>
+              <div className="bg-sky-50 p-5 rounded-xl border-l-4 border-sky-500 shadow-sm my-6">
+                <p className="font-bold text-sky-800 mb-2">📊 La Pregunta del Millón: ¿Destruye o Crea Empleos?</p>
+                <p className="text-sky-900">
+                  Hay dos posiciones legítimas y bien fundamentadas sobre esto, y la respuesta probablemente sea las dos al mismo tiempo:
+                  <br /><br />
+                  <strong>Posición 1 — Destrucción neta:</strong> Los empleos que desaparecen lo harán más rápido de lo que la sociedad puede reconvertirse. Trabajadores de servicios, operadores de call centers, redactores de contenido básico, traductores de documentos estándar: todos en riesgo en los próximos diez años.
+                  <br /><br />
+                  <strong>Posición 2 — Creación neta:</strong> Cada revolución tecnológica anterior (agricultura, industria, internet) eliminó empleos y creó otros más. La IA generará roles que hoy no imaginamos: prompt engineers, auditores de sesgos, curadores de datos, entrenadores de modelos. El desafío es la velocidad del cambio.
+                </p>
+              </div>
+              <h5 className="text-xl font-bold text-slate-800 mt-6 mb-3">Poder y desigualdad: la dimensión que menos se debate 🏭</h5>
+              <p>
+                Más allá del empleo, hay una pregunta de poder que raramente aparece en los titulares:
+              </p>
+              <ul className="list-disc pl-6 space-y-3 mt-4">
+                <li><strong>Concentración tecnológica:</strong> Los modelos más poderosos son desarrollados por un puñado de empresas privadas (OpenAI, Google, Meta, Anthropic) con sede principalmente en EE.UU. o China. El resto del mundo usa sus herramientas pero no toma decisiones sobre cómo funcionan, qué valores tienen o qué datos excluyen.</li>
+                <li><strong>La brecha del acceso:</strong> No todas las personas, escuelas o países pueden costear las versiones más potentes de estas herramientas. Si la IA amplifica la productividad de quienes la usan bien, también puede ampliar la brecha entre quienes tienen acceso y quienes no.</li>
+                <li><strong>¿Quién regula?:</strong> Los gobiernos del mundo están corriendo detrás de esta tecnología. La Unión Europea aprobó el primer marco regulatorio (AI Act). Argentina, como la mayoría de los países latinoamericanos, todavía está en etapa de debate. Las decisiones que se tomen en los próximos cinco años definirán el ecosistema para décadas.</li>
+              </ul>
+              <div className="bg-purple-50 p-5 rounded-xl border-l-4 border-purple-400 shadow-sm my-6">
+                <p className="font-bold text-purple-800 mb-2">🤔 Tres preguntas sin respuesta única</p>
+                <p className="text-purple-900">
+                  Estas preguntas son para debatir, no para responder con una opción correcta:
+                  <br /><br />
+                  1. ¿Debería haber un impuesto a las empresas que automatizan empleos con IA, para financiar la reconversión laboral de los trabajadores desplazados?<br /><br />
+                  2. ¿Debería el Estado garantizar acceso gratuito a herramientas de IA para escuelas públicas, de la misma forma que garantiza acceso a libros?<br /><br />
+                  3. ¿Quién debería controlar los modelos de IA más poderosos: empresas privadas, gobiernos, organismos internacionales, o alguna combinación?
+                </p>
+              </div>
+              <h5 className="text-xl font-bold text-slate-800 mt-6 mb-3">Las habilidades que la IA no puede reemplazar (todavía) 🦾</h5>
+              <p>
+                Más allá del debate macroeconómico, hay algo que podés controlar: qué capacidades desarrollás. Estas son las que los economistas e investigadores de trabajo identifican como más resistentes a la automatización:
+              </p>
+              <ul className="list-disc pl-6 space-y-3 mt-4">
+                <li><strong>Juicio ético y contextual:</strong> Saber cuándo una decisión técnicamente correcta es moralmente inaceptable.</li>
+                <li><strong>Empatía y cuidado humano:</strong> Enfermería, docencia, trabajo social, psicología clínica, liderazgo en situaciones de crisis.</li>
+                <li><strong>Creatividad estratégica:</strong> No solo generar ideas, sino elegir cuáles importan y por qué, con criterio propio y experiencia vivida.</li>
+                <li><strong>Colaboración compleja:</strong> Trabajar con equipos humanos diversos, gestionar conflictos, construir confianza. La IA puede simular esto, pero no sostenerlo en el mundo real.</li>
+              </ul>
+              <div className="bg-emerald-50 p-5 rounded-xl border border-emerald-200 mt-6">
+                <p className="font-bold text-emerald-800 text-center text-xl mb-2">🚀 Tu Lugar en Esta Historia</p>
+                <p className="text-center text-emerald-900">
+                  Sos parte de la primera generación que va a vivir toda su vida laboral con IA como herramienta cotidiana. No podés saber exactamente qué va a pasar. Pero sí podés entrar con criterio: sabiendo cómo funciona la tecnología, entendiendo sus implicancias sociales, y construyendo las capacidades humanas que ninguna máquina puede automatizar. <strong>El futuro no le pertenece al que más sabe usar la IA, sino al que mejor sabe cuándo no usarla y por qué.</strong>
+                </p>
+              </div>
+            </div>
+          ),
+          activity: {
+            type: 'scenarioChoice',
+            question: 'Posicionamiento: Un estudio proyecta que en 10 años el 40% de los empleos administrativos podrían automatizarse con IA. ¿Cuál es la respuesta más completa y fundamentada?',
+            choices: [
+              { text: 'Hay que prohibir el uso de IA en empresas para proteger los empleos actuales.', correct: false, feedback: 'Prohibir una tecnología que ya está instalada globalmente es inviable y contraproducente. Los países que lo intenten quedarán en desventaja competitiva sin haber resuelto el problema de fondo.' },
+              { text: 'No pasa nada, siempre aparecen nuevos empleos con cada revolución tecnológica.', correct: false, feedback: 'Históricamente es cierto, pero ignora la velocidad del cambio actual y el impacto desigual sobre trabajadores que no tienen acceso a reconversión. Minimizar no es analizar.' },
+              { text: 'Es un desafío real que requiere políticas públicas de reconversión laboral, acceso equitativo a la tecnología y nuevos marcos regulatorios, mientras las personas desarrollan las habilidades que la IA no puede reemplazar.', correct: true, feedback: '¡Bien fundamentado! Esta posición reconoce el riesgo sin catastrofismo, identifica actores responsables (Estado, empresas, individuos) y combina la dimensión macro con la acción personal.' }
             ]
           }
         },
@@ -1406,6 +1703,68 @@
           ],
           agreement: 'Despues de IA, hacemos una actividad real juntos.'
         },
+        p6: {
+          purpose: 'Que el estudiante comprenda que la IA puede generar informacion incorrecta con apariencia de veracidad, y desarrolle el habito de verificar antes de usar cualquier dato importante.',
+          theory: 'Las alucinaciones son respuestas de IA que suenan plausibles pero contienen datos inventados: nombres, fechas, fuentes, hechos. El modelo no distingue verdad de ficcion, solo predice que texto es probable. La verificacion externa con fuentes confiables es la unica defensa efectiva. Sonar seguro no equivale a ser correcto.',
+          phrases: [
+            'De donde sacamos esto para comprobarlo?',
+            'Que pasa si esto no es cierto y lo usamos igual?',
+            'La IA suena muy segura, pero seguridad no es sinonimo de exactitud.'
+          ],
+          mistakes: [
+            'Asumir que una respuesta bien redactada es confiable.',
+            'No modelar el habito de verificacion delante del estudiante.',
+            'Tratar el error de la IA como falla grave en lugar de caracteristica conocida del sistema.'
+          ],
+          questions: {
+            before: 'Si recibes informacion de alguien, como sabes si es verdad?',
+            during: 'Este dato que dio la IA, como lo comprobarias?',
+            after: 'Que tipo de datos de la IA siempre vas a verificar de ahora en adelante?'
+          },
+          practice: 'Pidan a la IA tres datos sobre un tema conocido, por ejemplo un animal o un evento historico. Verifiquen cada uno en una fuente confiable. Anoten cuales eran correctos y cuales no.',
+          alerts: [
+            'Usar datos de IA en trabajos escolares sin verificacion previa.',
+            'Citar a la IA como fuente academica valida.',
+            'Confundir fluidez de escritura con exactitud factual.'
+          ],
+          closeSummary: [
+            'La IA puede inventar con total confianza.',
+            'Verificar es un habito, no una desconfianza exagerada.',
+            'La IA propone, la persona comprueba.'
+          ],
+          agreement: 'Antes de usar un dato de la IA en algo importante, lo verificamos juntos en una fuente confiable.'
+        },
+        p7: {
+          purpose: 'Que el estudiante comprenda la diferencia entre usar la IA como herramienta de apoyo y presentar su produccion como propia, desarrollando integridad academica desde temprano.',
+          theory: 'La autoria implica que las ideas, decisiones creativas y el proceso sean del estudiante. Usar IA para inspirarse, corregir o explorar es valido. Copiar su salida sin intervencion propia y presentarla como trabajo personal no lo es. La conversacion no debe ser prohibitiva sino orientadora sobre como usar la herramienta con honestidad y declararlo cuando corresponde.',
+          phrases: [
+            'Que parte de esto es tuya y que parte es de la IA?',
+            'Si tu profe te preguntara como lo hiciste, que le contarias?',
+            'La IA puede ayudarte a pensar mejor, pero el pensamiento tiene que ser tuyo.'
+          ],
+          mistakes: [
+            'Prohibir el uso de IA en lugar de ensenar a usarla bien.',
+            'No distinguir entre inspiracion asistida y copia directa.',
+            'No modelar transparencia sobre el uso de herramientas en tareas propias.'
+          ],
+          questions: {
+            before: 'Que parte de este trabajo queres que sea tuya?',
+            during: 'Estas usando la IA para pensar mejor o para evitar pensar?',
+            after: 'Como le explicarias a tu profe como usaste la IA en esta tarea?'
+          },
+          practice: 'Elijan una tarea escolar. Primero el estudiante escribe su version sin IA. Luego piden ayuda a la IA solo para mejorarla. Comparen ambas versiones y hablen sobre que cambio y por que.',
+          alerts: [
+            'Entregar trabajos que no reflejan la voz propia del estudiante.',
+            'Usar IA para evitar el esfuerzo de pensar o crear.',
+            'No poder explicar el contenido de lo que entrego.'
+          ],
+          closeSummary: [
+            'La creatividad y las ideas son del estudiante.',
+            'Declarar el uso de IA no es debilidad, es honestidad.',
+            'La IA es una herramienta, no el autor del trabajo.'
+          ],
+          agreement: 'Si usamos IA en una tarea, siempre lo decimos y explicamos como la usamos.'
+        },
         p5: {
           purpose: 'Consolidar uso creativo, seguro y critico de la IA en escuela y vida cotidiana.',
           theory: 'Esta instancia no mide solo aciertos. Mide razonamiento: como decide, como valida, como protege datos y como mejora prompts. La meta es transferir lo aprendido a situaciones reales.',
@@ -1562,6 +1921,99 @@
             'La accion real completa el proceso.'
           ],
           agreement: 'Toda sesion de IA termina con una accion en el mundo real.'
+        },
+        s6: {
+          purpose: 'Que el estudiante identifique sesgos en respuestas de IA y desarrolle estrategias concretas para cuestionarlas, incluyendo la deteccion de complacencia algorítmica.',
+          theory: 'Los modelos aprenden de datos humanos historicos que contienen prejuicios culturales, de genero, raza y geografia. Reproducen esos patrones como si fueran neutros. Ademas, estan optimizados para agradar al usuario, lo que genera burbujas de confirmacion. Detectar y corregir sesgos en el prompt es una habilidad critica de uso responsable.',
+          phrases: [
+            'Quien esta presente en esta respuesta y quien no aparece?',
+            'Probemos el mismo pedido con mas especificidad. Que cambia?',
+            'La IA nos esta dando la razon demasiado facilmente. Pidamosle que discuta.'
+          ],
+          mistakes: [
+            'Aceptar la primera respuesta sin analisis critico.',
+            'No distinguir entre frecuencia estadistica y norma deseable.',
+            'Tratar la complacencia algorítmica como validacion genuina.'
+          ],
+          questions: {
+            before: 'Que supuestos crees que tiene la IA sobre este tema?',
+            during: 'Que cambio cuando agregaste diversidad al prompt?',
+            after: 'Como aplicarias esto la proxima vez que pidas descripciones de personas?'
+          },
+          practice: 'Elijan un tipo de personaje o profesion. Hagan tres versiones del mismo prompt: sin restricciones, con diversidad explicita y con perspectiva opuesta. Comparen y discutan.',
+          alerts: [
+            'Aceptar estereotipos como datos objetivos.',
+            'No cuestionar ausencias en la respuesta.',
+            'Usar la complacencia para evitar el pensamiento critico.'
+          ],
+          closeSummary: [
+            'La IA no es neutral: refleja los datos con que aprende.',
+            'La diversidad en el prompt mejora la calidad del resultado.',
+            'Romper la burbuja requiere pedirlo explicitamente.'
+          ],
+          agreement: 'Antes de aceptar una descripcion de persona o grupo, preguntamos quien falta y por que.'
+        },
+        s7: {
+          purpose: 'Que el estudiante comprenda el debate de propiedad intelectual en la era de la IA y aplique criterios de autoria responsable en sus trabajos academicos.',
+          theory: 'Los modelos fueron entrenados con obras humanas en muchos casos sin consentimiento. La autoria de los textos generados por IA es un debate legal no resuelto. Lo que si es claro es el criterio de autoria academica: el trabajo es genuinamente del estudiante cuando las ideas, la voz y las decisiones importantes son las suyas. Declarar el uso de IA no es debilidad sino parte de la honestidad academica.',
+          phrases: [
+            'Que parte de este trabajo puede defender con tus propias palabras?',
+            'Si el docente te pregunta en clase, que le contarias?',
+            'Como usaste la IA como herramienta sin cederle la autoria?'
+          ],
+          mistakes: [
+            'Asociar declarar el uso de IA con admitir algo malo.',
+            'No distinguir entre usar IA de apoyo y delegar la produccion.',
+            'Ignorar el debate legal como si no fuera relevante para jovenes.'
+          ],
+          questions: {
+            before: 'Que parte del proceso queres que sea genuinamente tuya?',
+            during: 'En que punto la IA te apoyo y en que punto trabajaste solo?',
+            after: 'Como documentarian el uso de IA en este trabajo si tuvieran que explicarselo al docente?'
+          },
+          practice: 'Tomen un trabajo reciente. Revisen que partes fueron asistidas por IA y cuales no. Practiquen redactar una nota breve de declaracion de uso.',
+          alerts: [
+            'No poder explicar el contenido del trabajo propio.',
+            'Ausencia de voz personal en la produccion.',
+            'Creer que revisar superficialmente un texto de IA es suficiente para la autoria.'
+          ],
+          closeSummary: [
+            'La autoria requiere ideas, voz y decisiones propias.',
+            'Declarar el uso de IA es parte de la integridad academica.',
+            'El proceso de aprendizaje es irrenunciable aunque la IA sea mas rapida.'
+          ],
+          agreement: 'En cualquier trabajo con IA, el estudiante puede explicar el contenido con sus propias palabras.'
+        },
+        s8: {
+          purpose: 'Que el estudiante desarrolle criterio propio sobre el impacto social de la IA, incluyendo empleo, desigualdad y regulacion, sin caer en utopias ni en catastrofismos.',
+          theory: 'La IA automatiza trabajo cognitivo y fisico, genera nuevos roles y concentra poder en pocas empresas. Estos cambios son reales y desiguales. No hay respuestas cerradas pero si posiciones mas o menos fundamentadas. El objetivo es que el estudiante pueda argumentar con evidencia y matices, no solo opinar.',
+          phrases: [
+            'Que evidencia sostiene esa posicion?',
+            'Quien gana y quien pierde con ese escenario?',
+            'Que habilidades tuyas no puede reemplazar una maquina?'
+          ],
+          mistakes: [
+            'Tomar posicion sin fundamento o por reaccion emocional.',
+            'Ignorar la dimension de desigualdad en el acceso.',
+            'Reducir el debate a "si o no" sin matices.'
+          ],
+          questions: {
+            before: 'Que cambio en el mundo del trabajo te parece mas probable?',
+            during: 'Que argumento opuesto al tuyo tiene mas peso?',
+            after: 'Que capacidades propias vas a desarrollar en funcion de este panorama?'
+          },
+          practice: 'Elijan una de las tres preguntas sin respuesta unica del modulo y cada uno defiende una postura distinta. Luego intercambian y defienden la opuesta.',
+          alerts: [
+            'Catastrofismo sin analisis.',
+            'Optimismo tecnologico sin cuestionamiento.',
+            'Desconexion entre el debate macro y las decisiones personales.'
+          ],
+          closeSummary: [
+            'La IA transforma el trabajo pero no elimina el valor humano.',
+            'La desigualdad en el acceso es un problema real que requiere politica publica.',
+            'Las habilidades de juicio, empatia y criterio etico son las mas difíciles de automatizar.'
+          ],
+          agreement: 'Identificamos al menos una habilidad propia que queremos desarrollar en funcion del futuro con IA.'
         },
         s5: {
           purpose: 'Integrar una vision de futuro con adaptabilidad, pensamiento critico y autoria responsable.',
