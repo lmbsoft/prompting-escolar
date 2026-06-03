@@ -1,0 +1,2193 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA para tu empresa de nueces y avellanas</title>
+    <meta name="description"
+        content="Laboratorio de IA para un emprendedor agropecuario de nueces y avellanas: textos, planillas, imágenes y comercialización, con criterio y seguridad.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "lucide-react": "https://esm.sh/lucide-react@0.292.0"
+      }
+    }
+  </script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        :root {
+            --text: #0f172a;
+            --bg: #f8fafc;
+            --focus: #0ea5e9;
+        }
+
+        html {
+            font-size: clamp(18px, 1.2vw + 14px, 22px);
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.72;
+            letter-spacing: 0.01em;
+        }
+
+        p,
+        li,
+        label,
+        input,
+        textarea,
+        select,
+        button {
+            font-size: 1rem;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            line-height: 1.3;
+            letter-spacing: 0.005em;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            min-height: 48px;
+            border-radius: 0.75rem;
+        }
+
+        textarea {
+            min-height: 120px;
+        }
+
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible,
+        select:focus-visible,
+        a:focus-visible {
+            outline: 3px solid var(--focus);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 768px) {
+
+            button,
+            input,
+            textarea,
+            select {
+                min-height: 52px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800">
+    <div id="root"></div>
+    <script type="text/babel" data-type="module">
+        import React, { useMemo, useState } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import {
+            BrainCircuit, GraduationCap, Gamepad2, MessageCircle, BookOpen, Sparkles,
+            ShieldAlert, CheckCircle2, ChevronLeft, ChevronRight, Copy, Check,
+            Target, Lightbulb, Clock, PenSquare, Microscope, Library, ArrowUpRight,
+            ClipboardList, AlertTriangle, Lock, Heart, RefreshCw, Zap, Image as ImageIcon, Wand2, Palette, Camera
+        } from 'lucide-react';
+
+        // ═══════════════════════════════════════════════════════════════
+        // DATA: MÓDULOS DE TEORÍA (13 módulos expandidos)
+        // ═══════════════════════════════════════════════════════════════
+
+        const theoryModules = [
+            {
+                id: 't1',
+                title: 'Qué es la IA generativa y cómo conviene pensarla',
+                subtitle: 'Un modelo mental claro para tu empresa de nueces y avellanas',
+                reading: [
+                    'Una IA generativa no piensa como una persona ni "sabe" cosas como las sabe un agrónomo o un contador. Funciona prediciendo, a gran velocidad, qué texto (o qué imagen) es el más probable a partir de patrones que aprendió de enormes volúmenes de información. Cuando le escribís un pedido, calcula la respuesta más plausible. Su fortaleza es combinar ideas, redactar y ordenar; su debilidad es la certeza de cada dato concreto.',
+                    'Pensala como un empleado nuevo, muy rápido y muy leído, pero que recién llega a tu campo: puede redactarte un folleto, armarte una planilla o proponerte un plan de cosecha en segundos, pero no conoce TU realidad hasta que se la contás. Cuanto mejor le expliques tu contexto (que producís nueces y avellanas en la zona del IDEVI, cerca de Viedma, que vendés a mayoristas y a público), mejores y más útiles serán sus respuestas.',
+                    'Toda la conversación que tenés con la IA forma su "memoria de trabajo" del momento: lee todo lo que escribiste desde el primer mensaje para responder el último. Por eso conviene escribir ordenado y dar contexto: le estás dando mejor materia prima. Si arrancás con un pedido vago, te responde algo genérico; si le das objetivo, contexto y formato, el resultado sube de nivel notablemente.',
+                    'Hoy hay varias IA conversacionales importantes: ChatGPT, Claude, Gemini, Copilot y otras. Cada una tiene puntos fuertes distintos: algunas redactan mejor, otras analizan documentos largos, otras generan o editan imágenes. No existe "la mejor" en abstracto; existe la más adecuada para cada tarea. Para vos, lo importante es perder el miedo a probar: es gratis equivocarse con la IA.',
+                    'La regla práctica más importante: no la trates como una autoridad final, tratala como un copiloto. Vos seguís siendo el que decide. La IA te acerca borradores, estructuras y opciones; vos ponés el criterio del que conoce el negocio. Esa combinación —tu experiencia + la velocidad de la IA— es lo que la vuelve una herramienta poderosa para un emprendedor.',
+                    'Un aviso clave: que una respuesta suene impecable NO garantiza que sea exacta. La IA puede escribir con tono profesional y aun así inventar un dato, un precio o una norma. En todo lo que sea sensible para tu empresa (cifras, fechas, costos, requisitos legales), separá siempre dos momentos: uno de generación y otro de verificación. Esa disciplina te va a evitar problemas.'
+                ],
+                checklist: [
+                    'Antes de escribir, definir para qué quiero usar la IA en esta tarea concreta.',
+                    'Darle siempre contexto de mi negocio: qué produzco, dónde, para quién.',
+                    'Tratar las respuestas como borradores, no como verdades cerradas.',
+                    'Verificar fuera del chat todo dato crítico (precios, normas, fechas, cifras).'
+                ],
+                practice: 'Ejercicio 1: pedile a la IA que te explique algo que ya dominás de tu rubro (por ejemplo, el secado de la nuez). Marcá qué partes acertó y cuáles quedaron flojas: así calibrás cuánto confiar. Ejercicio 2: hacele el mismo pedido a dos IA distintas (ChatGPT y Gemini, por ejemplo) y compará. Ese contraste te entrena para usarlas con criterio.'
+            },
+            {
+                id: 't2',
+                title: 'La anatomía de un buen prompt',
+                subtitle: 'Del pedido difuso a la instrucción que sí te sirve',
+                reading: [
+                    'Un prompt (la instrucción que le das a la IA) de calidad suele tener cinco piezas: ROL (quién querés que sea), OBJETIVO (qué querés lograr), CONTEXTO (datos de tu situación), FORMATO de salida (cómo querés recibir la respuesta) y CRITERIO de calidad (cómo se evalúa que esté bien). No siempre hace falta usar las cinco, pero cuanto más claro seas, menos ambiguo será el resultado.',
+                    'El ROL define el punto de vista de la respuesta. No es lo mismo "actuá como diseñador gráfico especializado en alimentos" que "actuá como contador" o "actuá como agrónomo experto en frutos secos". Elegir el rol correcto es como elegir a qué profesional le hacés la consulta. Para tu empresa vas a usar muchos roles distintos según la tarea.',
+                    'El OBJETIVO aclara qué buscás. "Ayudame con un folleto" es vago. "Necesito el texto de un folleto de media página para promocionar nueces peladas por kilo a clientes minoristas" es preciso. El CONTEXTO agrega lo que la IA no puede adivinar: que estás en Viedma, que tu fuerte es la calidad artesanal, que vendés también por encargo, etc.',
+                    'El FORMATO de salida indica cómo querés la respuesta: una lista, una tabla comparativa, un texto de 5 líneas, una planilla con columnas, un guion. Pedir formato evita las "respuestas-río" (bloques de texto eternos difíciles de aprovechar) y te da algo listo para usar. Por ejemplo: "dame la respuesta como una tabla con columnas Producto, Presentación, Precio".',
+                    'El CRITERIO de calidad es lo que separa un prompt bueno de uno excelente. Decir "que quede lindo" es poco. Decir "que el texto sea claro, sin exagerar beneficios, con un llamado a la acción y que entre en media carilla" le da un estándar concreto contra el cual trabajar. Es como darle al empleado nuevo la vara con la que vas a medir su trabajo.',
+                    'Ejemplo de transformación. Difuso: "Haceme algo para vender más nueces". Útil: "Actuá como redactor publicitario de productos regionales. Escribime tres opciones de texto corto (máximo 4 líneas) para promocionar nuestras nueces de la zona del IDEVI en redes sociales, con tono cercano y un cierre que invite a hacer el pedido por WhatsApp. Evitá frases exageradas."',
+                    'La técnica más valiosa es ITERAR: leer la primera respuesta, ver qué le falta y pedir una mejora concreta. Que la primera salida no sea perfecta no es un error, es parte del proceso. Los mejores resultados casi nunca salen al primer intento, sino en la segunda o tercera vuelta. Esto vale tanto para textos como —sobre todo— para imágenes.'
+                ],
+                checklist: [
+                    'Asignar un rol claro según la tarea (diseñador, contador, agrónomo, vendedor).',
+                    'Decir para quién es el resultado (mayoristas, minoristas, redes, etc.).',
+                    'Pedir un formato concreto (tabla, lista, texto de X líneas, planilla).',
+                    'Incluir un criterio de calidad y los límites (tono, longitud, qué evitar).',
+                    'Iterar al menos una vez antes de dar la respuesta por buena.'
+                ],
+                practice: 'Tomá un pedido simple que harías hoy ("armame una lista de precios") y reescribilo agregando rol + contexto + formato + criterio. Probá las dos versiones en la IA y compará la diferencia. Vas a ver que el segundo resultado es mucho más usable.'
+            },
+            {
+                id: 't3',
+                title: 'Trabajar por bloques, sin pedir todo junto',
+                subtitle: 'La paciencia ordenada que produce mejores resultados',
+                reading: [
+                    'Cuando una tarea es grande —armar un catálogo completo, planificar la campaña de cosecha, diseñar un folleto con varias secciones— conviene dividir la conversación en bloques cortos. Primero el marco general, después una parte por vez, y al final el ajuste fino. Esto evita la sensación de "respuesta interminable" y te deja el control en cada paso.',
+                    'Pensalo como armar un galpón: nadie levanta todo de una vez. Primero el plano, después los cimientos, luego las paredes, al final los detalles. Con la IA es igual: cada bloque termina con una decisión tuya —seguir, corregir o cambiar el rumbo. Así, si algo sale mal en un paso, no perdés todo el trabajo: corregís ese paso y seguís.',
+                    'Una secuencia que funciona muy bien tiene tres fases. Fase exploratoria: "dame un panorama general en 5 puntos". Fase de desarrollo: "ahora desarrollá el punto 3 con detalle". Fase de pulido: "revisá todo y proponé mejoras concretas". Esta forma de avanzar da resultados mejores y más consistentes que un único pedido gigante.',
+                    'Esto es especialmente cierto con las imágenes, donde tu interés es grande. Nadie obtiene el folleto perfecto al primer prompt. Se empieza por la idea general (composición, estilo), después se ajusta el color, después el texto, después el logo. Cada mensaje es un paso más cerca. La paciencia para iterar es, literalmente, la habilidad central de quien usa bien la IA de imágenes.',
+                    'Un consejo práctico: al terminar cada bloque, resumí en una línea lo que quedó decidido antes de pedir el siguiente paso. Por ejemplo: "Bien, quedamos en folleto vertical, fondo madera claro, dos productos destacados. Ahora pasemos a los precios." Eso mantiene la conversación ordenada y evita que la IA "olvide" decisiones anteriores cuando se hace larga.'
+                ],
+                checklist: [
+                    'Bloque 1: pedir el panorama o esquema general del trabajo.',
+                    'Bloque 2: desarrollar una parte por vez.',
+                    'Bloque 3: revisar y pulir la versión final.',
+                    'Resumir en una línea lo decidido entre bloque y bloque.'
+                ],
+                practice: 'En tu próxima tarea con IA, prohibite pedir todo de una vez. Pedí primero solo el esquema, decidí qué te sirve y avanzá paso a paso. Anotá cuántas vueltas necesitaste hasta quedar conforme: es normal que sean varias, y eso está bien.'
+            },
+            {
+                id: 't4',
+                title: 'Pedir profundidad sin perderte en tecnicismos',
+                subtitle: 'Aprender de verdad, con explicaciones a tu medida',
+                reading: [
+                    'Una buena consigna para aprender combina profundidad y claridad. Podés pedirle a la IA: "explicámelo bien, pero sin jerga innecesaria, como si me lo contara un colega con paciencia". Y sumar: "dame un ejemplo concreto y también un caso donde esto NO funcione". Ese balance entre rigor y claridad es el que necesitás cuando entrás a un tema nuevo.',
+                    'Si algo te queda abstracto, pedí la explicación en tres niveles: breve (un párrafo), detallada (media página) y aplicada (un ejemplo real de tu negocio). Por ejemplo, sobre tablas dinámicas en una planilla: primero qué son en una frase, después cómo funcionan, después un ejemplo con tus ventas mensuales de nueces. Elegís el nivel según lo que necesites.',
+                    'Decile siempre tu punto de partida: "tengo conocimientos básicos de Excel pero hace tiempo que no lo uso a fondo" o "manejo la computadora a nivel intermedio". Eso le permite calibrar: no te abruma con lo obvio ni te deja perdido con lo avanzado. Es la mejor forma de que la explicación te quede a medida.',
+                    'Una técnica muy útil es pedir lo que NO querés: "no uses términos en inglés sin explicarlos", "no des por sentado que sé programar fórmulas", "no me tires diez opciones, dame las dos mejores". Estas restricciones acotan la respuesta y la vuelven mucho más precisa y digerible.',
+                    'Para temas en los que querés profundizar de verdad, pedí síntesis intermedias: "antes de seguir, resumime en 5 puntos lo que vimos". Eso te permite chequear si lo entendiste y no acumular información sin procesar. Es como hacer una pausa para asegurarte de que vas siguiendo el hilo antes de avanzar.'
+                ],
+                checklist: [
+                    'Pedir explicación en niveles: breve, detallada y aplicada a mi caso.',
+                    'Declarar mi nivel de partida para que calibre la profundidad.',
+                    'Usar restricciones negativas (qué NO incluir, qué evitar).',
+                    'Pedir síntesis intermedias para confirmar que voy entendiendo.'
+                ],
+                practice: 'Elegí un tema que querés dominar (por ejemplo, fórmulas de planilla para calcular márgenes). Pedile a la IA que te lo enseñe en tres niveles y que cierre con un mini ejercicio aplicado a tus productos. Resolvelo y pedile que te corrija.'
+            },
+            {
+                id: 't5',
+                title: 'La IA se equivoca: verificación inteligente',
+                subtitle: 'Separar lo útil de lo confiable, sobre todo en datos del negocio',
+                reading: [
+                    'La IA a veces "alucina": inventa datos, cifras, normas o fuentes que suenan totalmente creíbles pero son falsos. No lo hace por mala intención; es una consecuencia de cómo funciona (predice texto probable, no verdad comprobada). Para un emprendedor esto es crítico: un precio mal calculado, una norma inventada o un dato de mercado falso pueden costarte dinero o problemas.',
+                    'La regla de oro: cuanto más importante es la decisión, más rigurosa tiene que ser tu verificación. Para una lluvia de ideas o un borrador de texto, podés ser flexible. Para costos, requisitos legales, fechas de habilitación, datos impositivos o cifras que vas a publicar en un folleto, verificá siempre en una fuente oficial o con un profesional. La IA te ayuda a preparar, no a decidir a ciegas.',
+                    'Una técnica muy potente es pedirle a la IA que distinga lo que sabe de lo que supone: "marcá qué partes de esta respuesta son hechos verificables y cuáles son estimaciones o supuestos". También podés pedir: "no inventes datos; si no estás seguro, decímelo". No elimina el riesgo, pero lo reduce y te hace más consciente.',
+                    'Con números y planillas, conviene que la IA te muestre el razonamiento, no solo el resultado: "mostrame el cálculo paso a paso para que pueda revisarlo". Así podés detectar si se equivocó en una cuenta. Nunca copies un total a tu contabilidad sin entender de dónde salió.',
+                    'Pensá en la verificación como en revisar la mercadería antes de despacharla: no mandás un pedido sin controlarlo, aunque confíes en quien lo preparó. Con la IA es lo mismo. Esa rutina de control —generar primero, verificar después— es lo que distingue a quien usa la IA con criterio profesional de quien se deja llevar.'
+                ],
+                checklist: [
+                    'Verificar fuera del chat todo dato crítico para el negocio.',
+                    'Pedir a la IA que distinga hechos de suposiciones.',
+                    'Pedir el cálculo paso a paso cuando hay números de por medio.',
+                    'Nunca publicar precios, normas o cifras sin contrastarlas.'
+                ],
+                practice: 'Pedile a la IA un dato verificable de tu rubro (por ejemplo, requisitos para vender alimentos fraccionados). Después buscá ese dato en una fuente oficial y compará. Repetí el ejercicio hasta que te salga natural el reflejo de verificar.'
+            },
+            {
+                id: 't6',
+                title: 'Planillas de cálculo con IA (parte 1): modelar y calcular',
+                subtitle: 'Repaso y refuerzo para tus funciones de modelado de datos',
+                reading: [
+                    'La planilla de cálculo (Excel o Google Sheets) es probablemente tu herramienta más poderosa para el negocio, y la IA puede ayudarte a sacarle muchísimo más provecho. No reemplaza a la planilla: te enseña a usarla mejor, te arma fórmulas, te explica funciones y te propone estructuras de datos ordenadas. Lo mejor es que podés aprender haciendo, sobre tus propios datos de nueces y avellanas.',
+                    'Empecemos por el modelo mental: una planilla son filas y columnas donde cada columna es un tipo de dato (fecha, producto, kilos, precio) y cada fila es un registro (una venta, una cosecha, un gasto). Si mantenés esa disciplina —una columna por tipo de dato, una fila por evento— todo lo demás (sumas, filtros, gráficos) se vuelve fácil. La IA te puede ayudar a diseñar esa estructura antes de cargar nada.',
+                    'Para las fórmulas, la IA es una gran aliada. Le podés describir en palabras lo que querés y te da la fórmula lista: "necesito una fórmula que sume los kilos vendidos solo cuando el producto sea nuez pelada". Te devuelve algo como SUMAR.SI (o SUMIF) y te explica cada parte. Pedile siempre que te explique la fórmula, no solo que te la dé: así aprendés y podés adaptarla.',
+                    'Funciones que te conviene dominar para tu negocio: SUMA y PROMEDIO (totales y medias), SUMAR.SI / CONTAR.SI (totales por condición, por ejemplo por producto o por mes), BUSCARV o BUSCARX (traer el precio de una lista a otra hoja), SI (decisiones, por ejemplo marcar "stock bajo"), y las de fecha para organizar por temporada. La IA te puede dar ejemplos de cada una con TUS columnas.',
+                    'Para modelar (proyectar escenarios), la planilla brilla: podés armar una hoja donde cambiás el precio del kilo o el rinde por hectárea y ver cómo cambia tu ganancia. Pedile a la IA: "ayudame a armar un modelo simple donde, cambiando el precio de venta y los kilos producidos, calcule automáticamente ingresos, costos y margen". Te guía celda por celda.',
+                    'Un consejo de oro: cuando le pidas ayuda con una planilla, contale cómo están organizadas tus columnas (o pegá las primeras filas). La IA no ve tu archivo salvo que se lo describas o lo subas. Cuanto mejor le expliques tu estructura, más exacta será la fórmula que te dé.'
+                ],
+                checklist: [
+                    'Mantener una columna por tipo de dato y una fila por registro.',
+                    'Pedir las fórmulas en palabras y que la IA me las explique.',
+                    'Describir mis columnas reales antes de pedir una fórmula.',
+                    'Revisar siempre el resultado de la fórmula con un caso conocido.'
+                ],
+                practice: 'Armá (o tomá) una planilla con tus ventas del último mes. Pedile a la IA una fórmula para calcular el total facturado por producto y otra para el ticket promedio. Pedile que te explique cada fórmula y probala. Si el número no cierra, mostrale qué te dio y pedí corrección.'
+            },
+            {
+                id: 't7',
+                title: 'Planillas de cálculo con IA (parte 2): registro y análisis',
+                subtitle: 'Tu planilla como registro comercial personal y organizacional',
+                reading: [
+                    'Más allá de calcular, la planilla es tu libro de registro: ahí queda la historia de tu negocio. Una buena planilla de registro comercial te permite saber cuánto vendiste, a quién, cuándo, con qué margen, y detectar tendencias (por ejemplo, que la avellana se vende más en cierta época). La IA te ayuda a diseñar ese registro para que sea útil y no un amontonamiento de datos.',
+                    'Diseñá hojas separadas por tema pero conectadas: una de Ventas, una de Clientes, una de Productos/Precios, una de Gastos. Pedile a la IA: "ayudame a diseñar un libro de registro con estas hojas y qué columnas debería tener cada una para mi empresa de nueces y avellanas". Vas a obtener una estructura profesional que después llenás a tu ritmo.',
+                    'Para el análisis, la herramienta estrella son las tablas dinámicas (en inglés, pivot tables): te permiten resumir miles de filas en un resumen claro —por ejemplo, total vendido por producto y por mes— sin escribir una sola fórmula. Son intimidantes al principio, pero la IA te puede dar el paso a paso exacto para tu versión de Excel o Sheets. Pedile: "explicame cómo armar una tabla dinámica de mis ventas por producto y mes, paso a paso".',
+                    'El valor de registro no es solo numérico: también es respaldo. Anotá fechas, condiciones de venta, observaciones. Eso te sirve para reclamos, para tu contador, para planificar y para tomar decisiones con datos en vez de a memoria. La IA puede ayudarte a definir qué conviene registrar para que después te sirva, en lugar de darte cuenta tarde de que te faltó un dato.',
+                    'Cuidado importante: si vas a subir tu planilla a una IA para que la analice, sacá primero los datos personales sensibles de clientes (nombres completos, teléfonos, DNI). Podés reemplazarlos por códigos (Cliente 01, Cliente 02). El análisis funciona igual y protegés la información de tus clientes. Veremos esto en detalle en el módulo de seguridad de datos.',
+                    'Una rutina simple y poderosa: una vez por semana, dedicá 20 minutos a cargar y revisar tu planilla con ayuda de la IA. "Mirá estos datos de la semana y decime tres cosas que llaman la atención." Con el tiempo, tu planilla deja de ser una obligación y se vuelve tu mejor asesora del negocio.'
+                ],
+                checklist: [
+                    'Separar el registro en hojas (Ventas, Clientes, Productos, Gastos).',
+                    'Usar tablas dinámicas para resumir y analizar sin fórmulas complejas.',
+                    'Registrar también fechas, condiciones y observaciones, no solo números.',
+                    'Anonimizar datos de clientes antes de subir una planilla a la IA.'
+                ],
+                practice: 'Pedile a la IA que te diseñe la hoja de Ventas ideal para tu negocio (qué columnas y por qué). Cargá cinco ventas de ejemplo y pedile el paso a paso para armar una tabla dinámica que muestre el total por producto. Seguilo hasta lograrlo.'
+            },
+            {
+                id: 't8',
+                title: 'Dispositivos y tecnología: sacarles más provecho',
+                subtitle: 'Celular, computadora y nube como aliados del negocio',
+                reading: [
+                    'Manejás la tecnología a nivel intermedio, y la buena noticia es que con pequeños saltos podés ganar muchísima eficiencia. La IA es una excelente instructora paciente para esto: le podés pedir que te enseñe cualquier función de tu celular o computadora paso a paso, sin que te dé vergüenza preguntar lo básico. Nunca se cansa ni te juzga.',
+                    'Tu celular es una herramienta de trabajo enorme: la cámara te sirve para documentar la cosecha, registrar el estado de los frutos, o sacar fotos de productos para después mejorarlas con IA. Aprender a organizar esas fotos en álbumes, a hacer copias de seguridad automáticas y a compartirlas rápido te ahorra tiempo. Pedile a la IA: "enseñame a hacer copia de seguridad automática de mis fotos, paso a paso, en [tu modelo de celular]".',
+                    'La nube (Google Drive, OneDrive, etc.) es clave para no perder información. Te permite tener tus planillas, fotos y documentos accesibles desde el celular y la computadora, y respaldados por si se rompe un equipo. Para un negocio, perder la planilla de registros sería gravísimo. Vale la pena que la IA te guíe para configurar un respaldo automático y entender cómo funciona.',
+                    'Algunas habilidades digitales que multiplican tu productividad: escanear documentos con el celular (convertir un papel en PDF), usar el dictado por voz para escribir más rápido, buscar dentro de tus archivos, y compartir un documento para que otro lo vea sin mandarlo por mil pedazos. Cada una se aprende en minutos con una buena guía paso a paso.',
+                    'Mi recomendación: elegí UNA habilidad nueva por semana y pedile a la IA que te la enseñe con paciencia, probando vos en el momento. No intentes aprender todo junto. En pocas semanas vas a manejar tu equipo con una soltura que hoy te parece lejana. La tecnología premia al que prueba sin miedo, y la IA te acompaña en cada paso.'
+                ],
+                checklist: [
+                    'Pedir guías paso a paso para funciones concretas de mi celular o PC.',
+                    'Configurar copias de seguridad automáticas de fotos y archivos.',
+                    'Usar la nube para acceder y respaldar mis documentos de trabajo.',
+                    'Aprender una habilidad digital nueva por semana, probándola en el momento.'
+                ],
+                practice: 'Elegí algo que siempre quisiste hacer mejor con tu celular o PC (escanear un papel, respaldar fotos, dictar por voz). Pedile a la IA una guía de pocos pasos para tu dispositivo y hacelo mientras te lo explica. Pedile que verifique con vos cada paso antes de seguir.'
+            },
+            {
+                id: 't9',
+                title: 'Generación de imágenes con IA: panorama general',
+                subtitle: 'Qué puede y qué no, antes de meter manos a la obra',
+                reading: [
+                    'Las IA de imagen pueden crear ilustraciones, fotos realistas, logos, fondos, carteles y folletos a partir de una descripción en texto. También pueden modificar una imagen que ya tenés: cambiarle el fondo, mejorar la iluminación, agregar o quitar elementos, o usar una foto como punto de partida. Para tu actividad comercial esto es oro: material de difusión a bajo costo y a tu medida. Esta es la sección que más te interesa, y le dedicamos una pestaña entera ("Imágenes").',
+                    'Cómo funcionan, en simple: aprendieron de millones de imágenes con sus descripciones, y ahora pueden generar imágenes nuevas que combinan esos patrones. No copian una imagen existente: construyen una nueva en base a lo que les pedís. Por eso la calidad del resultado depende muchísimo de cómo describís lo que querés: el prompt de imagen es tan importante como el de texto.',
+                    'Qué hacen muy bien: estilos y estéticas (acuarela, foto de producto, minimalista, rústico), composiciones, fondos, climas de luz, y combinar ideas que no existen ("un cesto de nueces sobre madera rústica con luz cálida de atardecer"). Para difusión, productos y ambientaciones, son excelentes.',
+                    'Qué les cuesta todavía: el texto dentro de la imagen (a veces escriben mal las palabras o los precios), las manos y los detalles muy finos, la coherencia exacta de una marca entre varias imágenes, y reproducir literalmente un logo complejo. Esto importa para tu caso: para un folleto con lista de precios, conviene que la IA genere el DISEÑO y la ambientación, y que el texto y los precios exactos los controles vos (te explico cómo en la sección práctica).',
+                    'Recaudos de calidad y responsabilidad: revisá siempre que no haya errores en los textos o detalles raros; cuidá que la imagen represente con honestidad tu producto (no prometas algo que no es); y tené presente la resolución: para imprimir folletos necesitás imágenes grandes y nítidas, no las chiquitas que sirven solo para pantalla. Todo esto lo vemos paso a paso en la pestaña Imágenes.',
+                    'La actitud correcta: paciencia e iteración. Las primeras imágenes casi nunca son las definitivas. Se trata de generar, mirar con ojo crítico, pedir un ajuste, y repetir. Quien itera con calma obtiene resultados profesionales; quien se frustra al segundo intento se pierde el verdadero potencial. Tenés la energía y la intuición para hacerlo muy bien: solo necesitás el método, y para eso es esta guía.'
+                ],
+                checklist: [
+                    'Usar la IA de imagen para diseño, ambientación y difusión, no para datos exactos.',
+                    'Describir con detalle: tema, estilo, composición, luz y formato.',
+                    'Controlar yo los textos y precios exactos del material final.',
+                    'Cuidar la resolución si la imagen va a impresión.',
+                    'Asumir que el buen resultado llega iterando, no al primer intento.'
+                ],
+                practice: 'Entrá a una IA de imagen que tengas a mano (ChatGPT, Gemini o Copilot) y pedile una foto de producto de un cesto de nueces sobre madera rústica con luz cálida. Mirá el resultado con ojo crítico: ¿qué cambiarías? Anotalo. Ese ojo crítico es la base de todo lo que viene en la pestaña Imágenes.'
+            },
+            {
+                id: 't10',
+                title: 'Seguridad y privacidad de los datos del negocio',
+                subtitle: 'Usar la IA con tranquilidad, cuidando tu información y la de tus clientes',
+                reading: [
+                    'Cuando le escribís a una IA, esa información sale de tu dispositivo y viaja a un servidor. Por eso, como regla general, no compartas datos que no querrías que salgan de tu empresa: claves, datos bancarios, números de documento de clientes, contratos confidenciales. No es para asustarte: es la misma prudencia que tendrías al hablar con un proveedor nuevo. La IA es muy útil sin necesidad de darle datos sensibles.',
+                    'La técnica clave se llama ofuscación: reemplazar los datos reales por genéricos antes de consultar. En lugar de pegar tu lista de clientes con nombres y teléfonos, ponés "Cliente A, Cliente B". En lugar de tu cuenta real, ponés "[mi cuenta]". La IA te ayuda igual a redactar, calcular o analizar, y vos protegés lo sensible. Funciona casi siempre sin perder utilidad.',
+                    'Para tu negocio, esto aplica sobre todo a tres cosas: la planilla de clientes (anonimizá antes de subirla), las comunicaciones que tengan datos de terceros, y cualquier documento legal o impositivo. Para precios de tus propios productos, descripciones, ideas de marketing o textos de folletos, no hay problema: eso es información que de todos modos va a ser pública.',
+                    'Cuidado especial con las estafas, que están usando IA para parecer más creíbles (mensajes, audios o hasta videos falsos imitando a alguien). Reglas simples: ninguna institución seria te pide claves por mensaje; ante un pedido urgente de dinero o datos, frená y verificá por otro canal; desconfiá de ofertas demasiado buenas. La IA te puede ayudar a redactar respuestas y a chequear si algo huele a fraude.',
+                    'Revisá la configuración de privacidad de las herramientas que uses: muchas permiten desactivar que tus conversaciones se usen para entrenar el modelo. Pedile a la IA misma: "explicame cómo configurar la privacidad en [herramienta] para que mis conversaciones no se usen para entrenamiento". Es un trámite de minutos que te da más tranquilidad.',
+                    'En resumen: la IA es segura de usar si aplicás sentido común. Separá lo que es público (tus productos, tu difusión) de lo que es privado (datos de personas, finanzas, claves), ofuscá lo sensible, y desconfiá de lo urgente. Con esos hábitos vas a aprovechar todo el potencial sin exponerte.'
+                ],
+                checklist: [
+                    'No compartir claves, datos bancarios ni documentos de identidad.',
+                    'Ofuscar (reemplazar por genéricos) los datos de clientes antes de consultar.',
+                    'Verificar por otro canal cualquier pedido urgente de dinero o datos.',
+                    'Revisar y ajustar la configuración de privacidad de cada herramienta.'
+                ],
+                practice: 'Tomá un texto real con datos sensibles (por ejemplo, un mensaje a un cliente) y reescribilo ofuscando los datos (Cliente A, [monto], [fecha]). Pedile a la IA que te ayude a redactarlo con esos genéricos y comprobá que el resultado sirve igual. Ese reflejo te va a proteger siempre.'
+            },
+            {
+                id: 't11',
+                title: 'La IA como copiloto de tu empresa, de la producción a la venta',
+                subtitle: 'Una mirada integral: dónde te ayuda en cada etapa',
+                reading: [
+                    'Tu negocio tiene una cadena: producción (manejo del monte de nogales y avellanos, riego, sanidad, cosecha), poscosecha (secado, pelado, selección, fraccionado), y comercialización (precios, difusión, clientes, ventas, envíos). La IA puede ser tu copiloto en cada eslabón, siempre como apoyo a tu criterio, nunca reemplazándolo. Verla así, etapa por etapa, te ayuda a descubrir dónde te conviene usarla.',
+                    'En producción: te ayuda a organizar un calendario de tareas por temporada, a preparar preguntas para el agrónomo, a llevar registro de labores y a entender conceptos técnicos. Ojo: para decisiones agronómicas concretas (qué aplicar, cuándo regar según tu suelo) la IA orienta y prepara, pero la última palabra es del profesional y de tu experiencia en la zona del IDEVI.',
+                    'En poscosecha: te ayuda a documentar procesos (un protocolo de secado, una checklist de control de calidad), a estandarizar para que el producto salga parejo, y a calcular rindes y mermas en planilla. Un producto consistente es un producto que se vende mejor, y la IA te ayuda a ponerlo por escrito.',
+                    'En comercialización —donde más se va a notar— te ayuda con la lista de precios, los textos de venta, los folletos e imágenes de difusión, los mensajes a clientes, las respuestas a consultas frecuentes, las publicaciones en redes y la organización de pedidos. Buena parte de esta sección y de los ejercicios del Gimnasio apuntan justamente a esto.',
+                    'En gestión transversal: registro de ventas y gastos, análisis de qué producto deja más margen, planificación de la temporada, preparación de material para el contador. La planilla y la IA juntas te dan una visión de tu negocio que antes requería mucho tiempo o un asesor.',
+                    'La invitación es a mirar tu semana y preguntarte: ¿qué tarea repetitiva o que me cuesta podría delegar parcialmente a la IA para hacerla más rápido y mejor? Empezá por una. Cuando veas el resultado, vas a encontrar diez más. Tenés el empuje emprendedor; la IA te multiplica el alcance.'
+                ],
+                checklist: [
+                    'Identificar en qué etapa (producción, poscosecha, venta) me cuesta más tiempo.',
+                    'Usar la IA para preparar y documentar, dejando las decisiones técnicas al criterio profesional.',
+                    'Concentrar el mayor uso en comercialización y difusión.',
+                    'Empezar delegando una tarea repetitiva por vez.'
+                ],
+                practice: 'Hacé una lista de 5 tareas de tu semana. Marcá cuál te lleva más tiempo o más te cuesta. Pedile a la IA que te proponga 3 formas concretas de ayudarte con esa tarea. Elegí una y probala esta semana.'
+            },
+            {
+                id: 't12',
+                title: 'Paciencia, iteración y motivación',
+                subtitle: 'Cómo sostener el impulso sin frustrarte',
+                reading: [
+                    'Aprender a usar bien la IA es como aprender cualquier oficio: hay una curva. Los primeros intentos pueden salir flojos, y eso es totalmente normal y esperable. La diferencia entre quien termina dominándola y quien la abandona no es el talento: es la paciencia para iterar. Y vos tenés a favor algo grande: intuición y ganas. Con método, llegás lejos.',
+                    'La iteración no es fracaso: es el método. Cada respuesta o imagen que no te convence te dice algo sobre qué pedir distinto la próxima. "Está muy oscuro" te enseña a pedir más luz. "El texto no entra" te enseña a pedir menos palabras. Cada vuelta es información, no un error. Los profesionales que ves con resultados impecables iteraron muchas veces para llegar ahí.',
+                    'Un truco para no frustrarte: ponete metas chicas y celebrá los logros. No arranques queriendo el folleto perfecto. Arrancá logrando una imagen de producto decente. Después, una con buena luz. Después, con el texto. Cada paso es una victoria que alimenta el ánimo para el siguiente. El progreso visible es el mejor combustible.',
+                    'Cuando algo no sale después de varios intentos, cambiá de estrategia en vez de repetir lo mismo: pedile a la IA que te ayude a mejorar el pedido ("este prompt no me da lo que busco, ¿cómo lo reescribirías?"), probá otra herramienta, o dividí el problema en partes más chicas. Insistir con la misma fórmula es lo único que de verdad no funciona.',
+                    'Y algo importante para tu vida: el equilibrio. Sos una persona activa —gimnasia, natación, aguas frías, aire libre, RPG—. La IA es una herramienta para ganar tiempo y hacer mejor tu trabajo, no para vivir pegado a la pantalla. Bien usada, te DEVUELVE tiempo para lo que disfrutás. Ese es el verdadero objetivo: que la tecnología trabaje para vos, y no al revés.'
+                ],
+                checklist: [
+                    'Tomar cada intento fallido como información para el siguiente.',
+                    'Ponerme metas chicas y celebrar los avances.',
+                    'Si algo no sale, cambiar la estrategia en vez de repetir igual.',
+                    'Usar la IA para ganar tiempo para lo que disfruto, no para perderlo.'
+                ],
+                practice: 'Elegí una tarea con IA que te haya costado. Anotá qué pediste y qué salió mal. Reescribí el pedido corrigiendo ese punto y volvé a probar. Repetí el ciclo tres veces y observá cómo mejora. Guardá tus mejores prompts: van a ser tu caja de herramientas.'
+            }
+        ];
+
+// ═══════════════════════════════════════════════════════════════
+// DATA: NIVELES DE PROMPTS
+// ═══════════════════════════════════════════════════════════════
+
+const promptLevels = [
+{ id: 'inicio', label: `Nivel 1: Exploración guiada`, hint: `Para empezar con seguridad y foco.` },
+{ id: 'profundizar', label: `Nivel 2: Trabajo con precisión`, hint: `Para producir resultados más sólidos.` },
+{ id: 'proyectar', label: `Nivel 3: Interacción sofisticada`, hint: `Para proyectos largos y motivantes.` }
+];
+
+// ═══════════════════════════════════════════════════════════════
+// DATA: ITEMS DE PROMPTS (~65 items)
+// ═══════════════════════════════════════════════════════════════
+
+const promptItems = [
+// ─── NIVEL INICIO ───
+{ id: 'p1', level: 'inicio', domain: `Comercialización`, title: `Tres textos de venta para tus nueces`,
+objective: `Crear mensajes cortos y atractivos para promocionar un producto.`, prompt: `Actúa como redactor publicitario de productos regionales. Escribime tres opciones de texto corto (máximo 4 líneas cada una) para promocionar nueces peladas de mi empresa, con tono cercano y un cierre que invite a pedir por WhatsApp. Evitá frases exageradas.`, why: `Te da variantes listas para elegir según el canal y la ocasión.` },
+{ id: 'p2', level: 'inicio', domain: `Lista de precios`, title: `Lista de precios clara y ordenada`,
+objective: `Presentar tus productos y precios de forma profesional.`, prompt: `Ayudame a armar una lista de precios para mi empresa de nueces y avellanas. Organizala como tabla con columnas: Producto, Presentación (kg/bolsa), Precio minorista, Precio mayorista. Dejá los precios como [completar] para que yo los cargue. Sugerí un orden lógico de los productos.`, why: `Te entrega una estructura prolija que solo tenés que completar con tus valores.` },
+{ id: 'p3', level: 'inicio', domain: `Planilla de cálculo`, title: `Fórmula para sumar ventas por producto`,
+objective: `Aprender a calcular totales con condición en una planilla.`, prompt: `Tengo una planilla con columnas: Fecha, Producto, Kilos, Precio total. Necesito una fórmula que me sume el Precio total solo de las filas donde el Producto sea "Nuez pelada". Dame la fórmula para Excel y para Google Sheets, y explicame cada parte.`, why: `Aprendés una función clave (SUMAR.SI) aplicada a tus propios datos.` },
+{ id: 'p4', level: 'inicio', domain: `Atención al cliente`, title: `Respuestas a preguntas frecuentes`,
+objective: `Tener respuestas listas y consistentes para clientes.`, prompt: `Actúa como asesor de atención al cliente. Ayudame a redactar respuestas breves y amables a 8 preguntas frecuentes de clientes de frutos secos (precios, formas de pago, envíos, mínimos de compra, conservación del producto). Tono cordial y claro.`, why: `Te ahorra tiempo y mantiene un trato uniforme con cada cliente.` },
+{ id: 'p5', level: 'inicio', domain: `Dispositivos digitales`, title: `Guía paso a paso para una función del celular`,
+objective: `Aprender una herramienta digital sin frustrarte.`, prompt: `Actúa como instructor digital muy paciente. Quiero aprender a [escanear un documento con el celular / hacer copia de seguridad de mis fotos]. Dame una guía de pasos numerados, con la acción exacta y el error frecuente en cada uno. Preguntame si entendí cada paso antes de seguir.`, why: `Convierte una traba tecnológica en una habilidad concreta.` },
+{ id: 'p6', level: 'inicio', domain: `Marketing y difusión`, title: `Ideas de publicaciones para una semana`,
+objective: `No quedarte sin qué publicar sobre tu negocio.`, prompt: `Proponme 7 ideas de publicaciones (una por día) para difundir mi producción de nueces y avellanas en redes. Para cada idea indicá: tema, foto sugerida y una frase de texto. Mezclá producto, proceso, recetas y detrás de escena del campo.`, why: `Te da un plan de contenidos simple para sostener presencia.` },
+{ id: 'p7', level: 'inicio', domain: `Producción agropecuaria`, title: `Calendario de tareas por temporada`,
+objective: `Organizar las labores del monte a lo largo del año.`, prompt: `Actúa como planificador de tareas de campo. Ayudame a armar un calendario general de tareas para un monte de nogales y avellanos en el norte de la Patagonia (zona de Viedma/IDEVI), mes por mes: riego, poda, control sanitario, cosecha y poscosecha. Marcá lo que conviene consultar con un agrónomo.`, why: `Te ordena el año productivo y te muestra dónde pedir asesoramiento.` },
+{ id: 'p8', level: 'inicio', domain: `Registro comercial`, title: `Diseño de la hoja de ventas`,
+objective: `Definir qué registrar de cada venta.`, prompt: `Ayudame a diseñar la hoja "Ventas" de mi planilla de registro para una empresa de nueces y avellanas. Decime qué columnas debería tener y por qué cada una es útil para analizar después. Pensá en producto, cantidad, precio, cliente, canal y fecha.`, why: `Empezás a registrar bien desde el inicio, sin lamentar datos faltantes.` },
+{ id: 'p9', level: 'inicio', domain: `Atención al cliente`, title: `Mensaje de WhatsApp para confirmar un pedido`,
+objective: `Comunicarte con claridad y buen tono.`, prompt: `Redactá un mensaje breve de WhatsApp para confirmarle a un cliente su pedido. Debe incluir: saludo, resumen del pedido [completar], total [completar], forma de entrega y un cierre amable. Dame dos versiones: una más formal y una más cercana.`, why: `Profesionaliza tu comunicación cotidiana con clientes.` },
+{ id: 'p10', level: 'inicio', domain: `Bienestar y ocio`, title: `Rutina de entrenamiento para la semana`,
+objective: `Organizar tu actividad física combinando gimnasia y natación.`, prompt: `Actúa como coach de vida activa. Armame una rutina semanal que combine gimnasia y natación, incluyendo natación en aguas frías con precauciones de seguridad. Tengo nivel intermedio. Indicá días, duración y un objetivo por sesión. Sin reemplazar consejo médico.`, why: `Ordena tu tiempo libre y cuida tu energía para el trabajo.` },
+{ id: 'p11', level: 'inicio', domain: `Calendario de temporada`, title: `Cuenta regresiva para la cosecha`,
+objective: `Preparar con anticipación la campaña.`, prompt: `Faltan [X semanas] para la cosecha de nueces. Armame una cuenta regresiva con las tareas a preparar cada semana: equipos, personal, secado, envases, comunicación a clientes. Formato de checklist por semana.`, why: `Llegás a la cosecha organizado y sin improvisar.` },
+{ id: 'p12', level: 'inicio', domain: `Imágenes para difusión`, title: `Tu primer prompt de foto de producto`,
+objective: `Generar una imagen atractiva de tu producto.`, prompt: `Actúa como director de arte de fotografía de alimentos. Dame un prompt detallado, en español, para generar una foto realista de un cuenco de nueces y avellanas sobre una mesa de madera rústica, con luz natural cálida, fondo desenfocado y estilo apetecible para redes. Explicame por qué cada detalle del prompt importa.`, why: `Aprendés a describir una imagen para que la IA la genere bien.` },
+{ id: 'p13', level: 'inicio', domain: `Aprendizaje con IA`, title: `Plan para aprender IA en 4 semanas`,
+objective: `Avanzar con método y sin dispersarte.`, prompt: `Diseñame un plan de 4 semanas para aprender a usar IA en mi empresa de frutos secos, con sesiones de 30 minutos, 4 días por semana. Cada semana con un foco (textos, planillas, imágenes, organización) y un resultado concreto al final. Cerrá cada semana con una mini meta.`, why: `Transforma el entusiasmo en una práctica sostenida.` },
+{ id: 'p14', level: 'inicio', domain: `Proveedores y compras`, title: `Comparar opciones de un insumo`,
+objective: `Decidir una compra con criterios claros.`, prompt: `Necesito comparar tres opciones para comprar [insumo: envases / etiquetas / bolsas]. Armá una tabla con criterios: costo unitario, calidad, plazo de entrega, mínimo de compra y proveedor. Después dame una recomendación según si priorizo precio, calidad o rapidez.`, why: `Te ayuda a decidir con datos ordenados en vez de a ojo.` },
+{ id: 'p15', level: 'inicio', domain: `Organización del negocio`, title: `Ordenar las tareas del día`,
+objective: `Empezar el día con foco.`, prompt: `Ayudame a ordenar mis tareas del día en mi empresa de nueces y avellanas. Te paso una lista desordenada [pegar lista] y quiero que la organices por prioridad e indiques cuáles puedo delegar o hacer con ayuda de IA. Formato: lista numerada con una nota breve por tarea.`, why: `Convierte una lista caótica en un plan claro de jornada.` },
+{ id: 'p16', level: 'inicio', domain: `Redes sociales`, title: `Texto para presentar tu emprendimiento`,
+objective: `Contar quién sos y qué ofrecés.`, prompt: `Escribime un texto de presentación (estilo "acerca de") para la página de mi emprendimiento de nueces y avellanas de la zona del IDEVI, Viedma. Tono cálido y honesto, que transmita producción regional y cuidado artesanal. Máximo 6 líneas. Dame dos versiones.`, why: `Te da una carta de presentación lista para tus perfiles.` },
+{ id: 'p17', level: 'inicio', domain: `Finanzas y costos`, title: `Entender el costo de un producto`,
+objective: `Saber cuánto te cuesta producir para fijar precio.`, prompt: `Ayudame a listar todos los costos que debería considerar para calcular el costo de un kilo de nueces peladas (producción, secado, pelado, envase, mano de obra, mermas). Hacé una lista ordenada por categoría. No inventes montos: dejá [completar] en cada ítem para que yo cargue.`, why: `Te da el esqueleto para calcular costos reales y fijar precios con criterio.` },
+{ id: 'p18', level: 'inicio', domain: `Poscosecha y calidad`, title: `Checklist de control de calidad`,
+objective: `Estandarizar la calidad del producto que sale.`, prompt: `Actúa como especialista en poscosecha de frutos secos. Armame una checklist de control de calidad para nueces antes del envasado: humedad, color, sabor, sanidad, calibre y descarte. Formato de lista verificable con qué observar en cada punto.`, why: `Un producto parejo se vende mejor y genera confianza.` },
+
+// ─── NIVEL PROFUNDIZAR ───
+{ id: 'p19', level: 'profundizar', domain: `Lista de precios`, title: `Lista de precios con descuentos por volumen`,
+objective: `Diseñar una política de precios escalonada.`, prompt: `Ayudame a estructurar una lista de precios con descuentos por volumen para mayoristas. Quiero tramos (por ejemplo 1-9 kg, 10-49 kg, 50+ kg). Armá la tabla con la lógica de los tramos y dejá los valores como [completar]. Sugerí buenas prácticas para que los descuentos no me coman el margen.`, why: `Ordena tu estrategia comercial y protege tu rentabilidad.` },
+{ id: 'p20', level: 'profundizar', domain: `Planilla de cálculo`, title: `Modelo de margen por producto`,
+objective: `Calcular automáticamente la ganancia de cada producto.`, prompt: `Ayudame a armar en una planilla un modelo donde, ingresando costo y precio de venta de cada producto, calcule automáticamente el margen en pesos y en porcentaje. Indicame qué columnas crear, qué fórmulas poner en cada una y cómo verificar que el cálculo está bien. Excel y Google Sheets.`, why: `Ves de un vistazo qué producto te deja más rentabilidad.` },
+{ id: 'p21', level: 'profundizar', domain: `Marketing y difusión`, title: `Campaña de difusión para la temporada`,
+objective: `Planificar varias semanas de comunicación.`, prompt: `Actúa como redactor publicitario de productos regionales. Diseñame una campaña de difusión de 3 semanas para la temporada de cosecha de nueces. Incluí objetivo, mensaje central, calendario de publicaciones, y para cada semana 3 ideas de contenido con su foto sugerida. Tono honesto, sin promesas exageradas.`, why: `Pasás de publicar suelto a una campaña con hilo conductor.` },
+{ id: 'p22', level: 'profundizar', domain: `Registro comercial`, title: `Libro de registro completo del negocio`,
+objective: `Diseñar tu sistema de registro integral.`, prompt: `Ayudame a diseñar un libro de registro en planilla para mi empresa, con hojas conectadas: Ventas, Clientes, Productos/Precios y Gastos. Para cada hoja, decime las columnas y cómo se relacionan entre sí (por ejemplo, traer el precio desde Productos a Ventas con BUSCARX). Explicá el porqué de cada decisión.`, why: `Te da una base de gestión profesional que crece con el negocio.` },
+{ id: 'p23', level: 'profundizar', domain: `Imágenes para difusión`, title: `Brief para una serie de fotos coherentes`,
+objective: `Lograr varias imágenes con un mismo estilo de marca.`, prompt: `Actúa como director de arte. Quiero generar una serie de 5 fotos de producto con un estilo coherente para mi marca de frutos secos (rústico, cálido, natural). Dame un "brief" de estilo (paleta, luz, fondo, encuadre) y luego 5 prompts, uno por foto, que respeten ese estilo. Explicá cómo mantener la coherencia entre todas.`, why: `Aprendés a construir una identidad visual, no fotos sueltas.` },
+{ id: 'p24', level: 'profundizar', domain: `Atención al cliente`, title: `Manual de respuestas para situaciones difíciles`,
+objective: `Manejar reclamos y casos delicados con buen criterio.`, prompt: `Ayudame a redactar respuestas para 5 situaciones difíciles con clientes: demora en la entrega, producto que no conformó, pedido de descuento excesivo, consulta fuera de horario y reclamo por error de pesaje. Para cada una: una respuesta empática, firme y orientada a solución.`, why: `Te prepara para resolver con profesionalismo los momentos tensos.` },
+{ id: 'p25', level: 'profundizar', domain: `Finanzas y costos`, title: `Punto de equilibrio de la temporada`,
+objective: `Saber cuánto necesitás vender para cubrir costos.`, prompt: `Ayudame a entender y calcular el punto de equilibrio de mi temporada: cuántos kilos necesito vender para cubrir mis costos fijos y variables. Explicame el concepto con un ejemplo simple, decime qué datos necesito y cómo armarlo en una planilla. No inventes mis números: guiame para cargarlos.`, why: `Te da una brújula financiera para tomar decisiones de campaña.` },
+{ id: 'p26', level: 'profundizar', domain: `Logística y envíos`, title: `Organizar envíos y costos de entrega`,
+objective: `Definir cómo y a qué precio entregás.`, prompt: `Actúa como coordinador de logística para pequeñas empresas. Ayudame a organizar mis opciones de envío de frutos secos (retiro, envío local en Viedma, envío a otras ciudades). Para cada una: cómo funciona, qué cuidar con un producto alimenticio y cómo calcular el costo a cobrar. Formato de tabla comparativa.`, why: `Ordena una parte que suele generar desorden y pérdidas.` },
+{ id: 'p27', level: 'profundizar', domain: `Dispositivos digitales`, title: `Configurar respaldo en la nube`,
+objective: `Proteger tu información de trabajo.`, prompt: `Actúa como instructor digital paciente. Guiame paso a paso para configurar una copia de seguridad automática de mis planillas y fotos del negocio en la nube. Explicame primero las opciones (Google Drive, OneDrive) con sus ventajas, y después el paso a paso de la que recomiendes para alguien con conocimientos intermedios.`, why: `Evita la catástrofe de perder los registros del negocio.` },
+{ id: 'p28', level: 'profundizar', domain: `Producción agropecuaria`, title: `Preguntas inteligentes para el agrónomo`,
+objective: `Aprovechar al máximo la visita del profesional.`, prompt: `Voy a reunirme con el agrónomo por mi monte de nogales y avellanos. Ayudame a preparar 10 preguntas inteligentes y ordenadas por tema (sanidad, riego, nutrición, poda, cosecha) para aprovechar la consulta. No me des recomendaciones agronómicas: solo ayudame a preguntar mejor.`, why: `Llegás preparado y sacás más valor de cada asesoramiento.` },
+{ id: 'p29', level: 'profundizar', domain: `Seguridad de datos`, title: `Anonimizar la planilla de clientes`,
+objective: `Analizar datos sin exponer información sensible.`, prompt: `Actúa como asesor de seguridad digital. Quiero que la IA me analice mi planilla de ventas, pero sin exponer datos de clientes. Explicame cómo reemplazar nombres, teléfonos y direcciones por códigos genéricos manteniendo la utilidad del análisis, y dame un mini procedimiento para hacerlo rápido cada vez.`, why: `Te permite usar la IA con tus datos cuidando a tus clientes.` },
+{ id: 'p30', level: 'profundizar', domain: `Comercialización`, title: `Guion para vender a un nuevo mayorista`,
+objective: `Presentar tu producto a un cliente grande.`, prompt: `Actúa como asesor comercial. Ayudame a preparar un guion breve para ofrecerle mis nueces y avellanas a un nuevo cliente mayorista (dietética, almacén, distribuidor). Incluí: presentación, diferenciales del producto regional, propuesta de precios y manejo de objeciones frecuentes. Tono profesional y honesto.`, why: `Te da seguridad y estructura para abrir cuentas importantes.` },
+{ id: 'p31', level: 'profundizar', domain: `Redes sociales`, title: `Calendario mensual de contenidos`,
+objective: `Planear un mes entero de presencia.`, prompt: `Diseñame un calendario de contenidos para un mes (4 semanas) para mi emprendimiento de frutos secos. Equilibrá tipos de publicación: producto, receta, proceso de campo, testimonio y promoción. Entregalo como tabla con columnas: semana, día, tipo, tema, foto sugerida y texto breve.`, why: `Sostenés presencia sin improvisar cada día qué publicar.` },
+{ id: 'p32', level: 'profundizar', domain: `Poscosecha y calidad`, title: `Protocolo de secado por escrito`,
+objective: `Documentar un proceso clave para estandarizarlo.`, prompt: `Actúa como especialista en poscosecha de frutos secos. Ayudame a redactar un protocolo de secado de nueces paso a paso para que cualquiera en mi equipo lo siga igual: recepción, condiciones de secado, controles, tiempos y criterios para dar por terminado. Dejá [completar] donde van mis valores específicos.`, why: `Estandariza la calidad y facilita delegar el proceso.` },
+{ id: 'p33', level: 'profundizar', domain: `Organización del negocio`, title: `Rutina semanal de gestión`,
+objective: `Que la gestión no se acumule.`, prompt: `Ayudame a diseñar una rutina semanal de gestión para mi empresa, de 30 minutos por día: qué revisar cada día (registros, pedidos, redes, planilla, planificación). Formato de tabla por día con la tarea y su objetivo. Que sea realista para alguien que también trabaja en el campo.`, why: `Convierte la gestión en un hábito liviano y constante.` },
+
+// ─── NIVEL PROYECTAR ───
+{ id: 'p34', level: 'proyectar', domain: `Plan de proyecto`, title: `Plan de comercialización de la temporada`,
+objective: `Diseñar la estrategia comercial completa del año.`, prompt: `Actúa como consultor de proyectos para pymes agropecuarias. Ayudame a diseñar el plan de comercialización de mi temporada de nueces y avellanas por fases: 1) diagnóstico (productos, capacidad, clientes), 2) objetivos de venta, 3) canales y precios, 4) difusión, 5) seguimiento. Para cada fase: acciones, entregables y un indicador para saber si voy bien.`, why: `Te da una hoja de ruta integral, no acciones sueltas.` },
+{ id: 'p35', level: 'proyectar', domain: `Imágenes para difusión`, title: `Identidad visual de la marca`,
+objective: `Definir el estilo gráfico de todo tu material.`, prompt: `Actúa como director de arte y diseñador de marca. Ayudame a definir, por fases, la identidad visual de mi marca de frutos secos regionales: 1) valores y personalidad, 2) paleta de colores y tipo de imágenes, 3) cómo se vería un logo simple, 4) cómo aplicarla en folletos, etiquetas y redes. Para cada fase dame opciones y un prompt de imagen para explorarla.`, why: `Unifica todo tu material bajo una imagen coherente y memorable.` },
+{ id: 'p36', level: 'proyectar', domain: `Plan de proyecto`, title: `Plan para abrir un canal de venta online`,
+objective: `Llevar tu venta a internet de forma ordenada.`, prompt: `Actúa como consultor de proyectos. Quiero empezar a vender mis frutos secos por internet (catálogo + pedidos por WhatsApp o tienda simple). Diseñá un plan por fases: qué necesito, cómo armar el catálogo con fotos y precios, cómo gestionar pedidos y envíos, y qué riesgos cuidar. Incluí hitos y un primer paso muy concreto para esta semana.`, why: `Convierte una idea grande en pasos manejables y accionables.` },
+{ id: 'p37', level: 'proyectar', domain: `Planilla de cálculo`, title: `Tablero de control del negocio`,
+objective: `Tener todos los indicadores en una vista.`, prompt: `Ayudame a diseñar, por etapas, un tablero de control (dashboard) simple en planilla para mi empresa: ventas por mes, por producto, margen, clientes top y gastos. Indicame qué hojas y tablas dinámicas necesito, cómo conectar los datos y cómo armar 3 o 4 gráficos clave. Empezá por la estructura y avanzá paso a paso.`, why: `Te da una sala de comando para decidir con datos de un vistazo.` },
+{ id: 'p38', level: 'proyectar', domain: `Pensamiento estratégico`, title: `Escenarios para la próxima temporada`,
+objective: `Anticipar y prepararte para distintos futuros.`, prompt: `Actúa como analista de escenarios. Ayudame a proyectar tres escenarios para mi próxima temporada (optimista, realista, adverso) según variables como rinde, precio y demanda. Para cada escenario: qué supone, qué oportunidad y qué riesgo trae, y qué prepararía desde ahora. Cerrá con decisiones que sirven en los tres casos.`, why: `Te prepara para lo que venga en vez de reaccionar tarde.` },
+{ id: 'p39', level: 'proyectar', domain: `Plan de proyecto`, title: `Proyecto de valor agregado al producto`,
+objective: `Explorar productos derivados o diferenciados.`, prompt: `Actúa como consultor de innovación para pymes de alimentos. Ayudame a evaluar, por fases, ideas de valor agregado para mis nueces y avellanas (por ejemplo: tostadas y saborizadas, mix de frutos secos, packaging premium, regalos empresariales). Para cada idea: qué requiere, a qué cliente apunta, ventajas y riesgos. Priorizá según esfuerzo e impacto.`, why: `Abre caminos de crecimiento más allá de vender a granel.` },
+{ id: 'p40', level: 'proyectar', domain: `Organización del negocio`, title: `Sistema personal de trabajo con IA`,
+objective: `Integrar la IA a tu rutina de forma estable.`, prompt: `Ayudame a diseñar mi sistema personal para trabajar con IA en el negocio: qué tareas le delego (textos, planillas, imágenes, organización), qué prompts guardo como plantillas, cuándo verifico y cómo mido si me está ahorrando tiempo. Entregalo por fases, con un set inicial de 5 plantillas de prompt para mis tareas más frecuentes.`, why: `Hace que la IA se vuelva parte estable de tu forma de trabajar.` },
+
+// ─── NIVEL INICIO (continuación) ───
+{ id: 'p41', level: 'inicio', domain: `Recetas y usos`, title: `Ideas de recetas con frutos secos`,
+objective: `Dar valor a tus clientes con usos del producto.`, prompt: `Actuá como chef y desarrollador de recetas. Dame 6 ideas simples de recetas que usen nueces o avellanas (dulces y saladas), pensadas para compartir con mis clientes. Para cada una: nombre, ingredientes principales y un paso clave. Que sean fáciles y caseras.`, why: `El contenido útil acerca clientes y posiciona tu producto.` },
+{ id: 'p42', level: 'inicio', domain: `Ferias y eventos`, title: `Checklist para un puesto en una feria`,
+objective: `No olvidarte nada el día del evento.`, prompt: `Actuá como organizador de presencia en ferias. Armame una checklist para montar un puesto de venta de nueces y avellanas en una feria regional: producto, presentación, cartelería, dinero/cobro, muestras y atención. Formato de lista verificable por bloques.`, why: `Llegás a la feria preparado y das una imagen profesional.` },
+{ id: 'p43', level: 'inicio', domain: `Gestión del tiempo`, title: `Organizar la semana entre campo y gestión`,
+objective: `Equilibrar el trabajo productivo y el administrativo.`, prompt: `Actuá como asesor de productividad. Ayudame a organizar una semana tipo que combine tareas de campo, atención a clientes, gestión (planilla, pedidos) y un rato de aprendizaje de IA. Dame una grilla por día con bloques de tiempo realistas para alguien que también produce.`, why: `Evita que la gestión quede siempre para "después".` },
+{ id: 'p44', level: 'inicio', domain: `Packaging y etiquetas`, title: `Qué información debe llevar una etiqueta`,
+objective: `Armar una etiqueta clara y correcta.`, prompt: `Actuá como diseñador de packaging para alimentos. Decime qué información debería incluir la etiqueta de mis bolsas de nueces y avellanas (nombre, peso, origen, contacto, conservación, etc.) y cómo ordenarla. Marcá qué datos conviene verificar con normativa antes de imprimir.`, why: `Una etiqueta completa transmite seriedad y cuida lo legal.` },
+{ id: 'p45', level: 'inicio', domain: `Atención al cliente`, title: `Mensaje de posventa y agradecimiento`,
+objective: `Cuidar el vínculo después de la venta.`, prompt: `Redactá un mensaje breve y cálido para enviarle a un cliente después de su compra: agradecimiento, una sugerencia de conservación del producto y una invitación amable a volver. Dame dos versiones, una más corta y una un poco más completa.`, why: `El cuidado posventa convierte una compra en un cliente que vuelve.` },
+{ id: 'p46', level: 'inicio', domain: `Redes sociales`, title: `Pie de foto para una publicación`,
+objective: `Acompañar una imagen con buen texto.`, prompt: `Escribime tres opciones de pie de foto para una publicación de mis nueces recién cosechadas. Tono cercano y regional, con un emoji o dos como mucho, una frase que cuente algo del producto y un cierre que invite a consultar. Máximo 3 líneas cada uno.`, why: `Una buena foto rinde más con un texto que conecte.` },
+{ id: 'p47', level: 'inicio', domain: `Marketing y difusión`, title: `Promoción para una fecha especial`,
+objective: `Aprovechar fechas para impulsar ventas.`, prompt: `Proponme 3 ideas de promoción de mis frutos secos para [fecha: Día de la Madre / Fin de año / etc.]. Para cada una: en qué consiste, a qué cliente apunta y un texto breve para anunciarla. Que sean realistas para un emprendimiento chico.`, why: `Las fechas clave son oportunidades concretas de venta.` },
+{ id: 'p48', level: 'inicio', domain: `Planilla de cálculo`, title: `Convertir precios entre presentaciones`,
+objective: `Calcular precios de distintas presentaciones sin errores.`, prompt: `Tengo el precio por kilo de mis productos y necesito calcular el precio de bolsas de 250 g, 500 g y 1 kg. Dame la fórmula para hacerlo en una planilla y armá una tablita de ejemplo con [completar] en los valores. Excel y Google Sheets.`, why: `Evita errores al fijar precios de distintos envases.` },
+{ id: 'p49', level: 'inicio', domain: `Dispositivos digitales`, title: `Organizar las fotos del producto`,
+objective: `Encontrar tus fotos cuando las necesitás.`, prompt: `Actuá como instructor digital paciente. Enseñame paso a paso a organizar las fotos de mis productos en álbumes en el celular y a encontrarlas rápido después. Dame los pasos para [Android / iPhone] y un criterio simple para nombrar los álbumes.`, why: `Tener las fotos ordenadas te ahorra tiempo cada vez que publicás.` },
+{ id: 'p50', level: 'inicio', domain: `Fidelización de clientes`, title: `Lista de clientes frecuentes`,
+objective: `Empezar a cuidar a quienes más te compran.`, prompt: `Ayudame a armar una lista simple de clientes frecuentes en una planilla: qué columnas conviene tener para recordar quién es cada uno, qué compra y cuándo, sin guardar datos sensibles de más. Después decime una idea concreta para premiar su fidelidad.`, why: `Es más barato cuidar a un cliente que conseguir uno nuevo.` },
+
+// ─── NIVEL PROFUNDIZAR (continuación) ───
+{ id: 'p51', level: 'profundizar', domain: `Recetas y usos`, title: `Mini recetario como gancho de marketing`,
+objective: `Crear un material de valor que atraiga clientes.`, prompt: `Actuá como chef y desarrollador de recetas. Ayudame a armar un mini recetario de 5 recetas con nueces y avellanas para entregar (digital o impreso) como regalo a clientes. Para cada receta: título atractivo, ingredientes, pasos y una nota que conecte con mi producto. Sugerí cómo presentarlo.`, why: `Un recetario propio fideliza y difunde tu marca.` },
+{ id: 'p52', level: 'profundizar', domain: `Ferias y eventos`, title: `Plan para participar en una feria regional`,
+objective: `Sacar el máximo provecho de un evento.`, prompt: `Actuá como organizador de presencia en ferias. Ayudame a planificar la participación en una feria de productores: objetivos (vender, contactos, marca), qué llevar, cómo presentar el puesto, cómo captar datos de interesados y qué hacer después del evento. Dame un plan por etapas (antes, durante, después).`, why: `Una feria bien aprovechada deja ventas y contactos para meses.` },
+{ id: 'p53', level: 'profundizar', domain: `Capacitación del equipo`, title: `Guía para que un ayudante atienda ventas`,
+objective: `Poder delegar la atención sin perder calidad.`, prompt: `Actuá como formador de equipos. Ayudame a escribir una guía breve para que un ayudante pueda atender a mis clientes igual que yo: cómo saludar, información de productos y precios, formas de pago y envío, y qué hacer ante dudas o reclamos. Formato claro y fácil de seguir, con [completar] en mis datos.`, why: `Te permite delegar con tranquilidad y crecer.` },
+{ id: 'p54', level: 'profundizar', domain: `Packaging y etiquetas`, title: `Comparar presentaciones premium`,
+objective: `Decidir cómo presentar el producto para más valor.`, prompt: `Actuá como diseñador de packaging para alimentos. Ayudame a comparar 3 opciones de presentación para vender mis frutos secos con más valor (bolsa simple, bolsa con etiqueta de diseño, frasco o caja regalo). Para cada una: costo aproximado, percepción del cliente, a qué ocasión sirve y esfuerzo. Cerrá con una recomendación.`, why: `La presentación influye directo en el precio que podés pedir.` },
+{ id: 'p55', level: 'profundizar', domain: `Finanzas y costos`, title: `Rentabilidad por canal de venta`,
+objective: `Saber qué canal te deja más ganancia.`, prompt: `Ayudame a comparar la rentabilidad de mis canales de venta (feria, mayorista, minorista directo, online). Decime qué datos necesito de cada canal (precio, costos asociados, volumen) y cómo armar una planilla que muestre el margen real de cada uno. No inventes cifras: guiame para cargarlas.`, why: `Te dice dónde conviene poner la energía comercial.` },
+{ id: 'p56', level: 'profundizar', domain: `Planilla de cálculo`, title: `Control de stock con alertas`,
+objective: `Saber cuándo te estás quedando sin producto.`, prompt: `Ayudame a armar en una planilla un control de stock de mis productos que me avise cuando una existencia baja de un mínimo. Indicame las columnas, la fórmula con SI para marcar "reponer" y cómo usar formato condicional para que se pinte en rojo. Excel y Google Sheets.`, why: `Evita quedarte sin stock justo cuando hay demanda.` },
+{ id: 'p57', level: 'profundizar', domain: `Comercialización`, title: `Propuesta para una dietética o restaurante`,
+objective: `Abrir un canal de venta a comercios.`, prompt: `Actuá como asesor comercial. Ayudame a preparar una propuesta para venderle mis frutos secos a una dietética o restaurante: presentación del producto, ventajas del producto regional, opciones de presentación y precio, y condiciones de entrega. Incluí un cierre que proponga una prueba inicial chica.`, why: `Los comercios son clientes de compra repetida y volumen.` },
+{ id: 'p58', level: 'profundizar', domain: `Marketing y difusión`, title: `Encuesta corta para mejorar`,
+objective: `Escuchar a tus clientes con método.`, prompt: `Ayudame a diseñar una encuesta breve (máximo 6 preguntas) para mis clientes sobre producto, presentación, precio y atención. Mezclá preguntas de opción y una abierta. Dame también un mensaje corto y amable para invitarlos a responderla.`, why: `Las mejoras que más sirven salen de escuchar al cliente.` },
+{ id: 'p59', level: 'profundizar', domain: `Sostenibilidad`, title: `Comunicar prácticas sustentables con honestidad`,
+objective: `Mostrar tu cuidado del ambiente sin exagerar.`, prompt: `Actuá como asesor en producción sustentable. Ayudame a comunicar las prácticas cuidadosas de mi producción (las que realmente hago) sin caer en exageraciones ni promesas falsas. Pedime primero qué prácticas tengo y después ayudame a redactar 3 mensajes honestos y concretos.`, why: `La sustentabilidad bien comunicada suma valor; mal comunicada, resta credibilidad.` },
+{ id: 'p60', level: 'profundizar', domain: `Atención al cliente`, title: `Protocolo de respuesta en 24 horas`,
+objective: `Que ninguna consulta quede sin responder.`, prompt: `Ayudame a definir un protocolo simple para responder consultas de clientes en menos de 24 horas: cómo registrar las consultas que entran, mensajes tipo para los casos más comunes y qué hacer cuando no puedo resolver al instante. Formato de mini procedimiento.`, why: `La rapidez de respuesta es una de las cosas que más valora el cliente.` },
+
+// ─── NIVEL PROYECTAR (continuación) ───
+{ id: 'p61', level: 'proyectar', domain: `Plan de proyecto`, title: `Plan de marca para todo el año`,
+objective: `Dar coherencia a toda tu comunicación anual.`, prompt: `Actuá como consultor de proyectos. Ayudame a armar, por fases, un plan de marca anual para mi empresa de frutos secos: identidad y mensaje central, calendario de momentos clave (cosecha, fechas, fin de año), líneas de contenido y objetivos por trimestre. Para cada fase: acciones, entregables y un indicador de avance.`, why: `Te da una hoja de ruta de marca en vez de acciones improvisadas.` },
+{ id: 'p62', level: 'proyectar', domain: `Plan de proyecto`, title: `Proyecto para vender en otras ciudades`,
+objective: `Escalar la venta más allá de tu zona.`, prompt: `Actuá como consultor de proyectos. Quiero empezar a vender mis frutos secos en otras ciudades de la región. Diseñá un plan por fases: qué necesito (logística, envíos, presentación), cómo conseguir primeros clientes, qué riesgos cuidar con un producto alimenticio y un primer paso concreto y barato para probar el canal.`, why: `Convierte la ambición de crecer en pasos manejables.` },
+{ id: 'p63', level: 'proyectar', domain: `Pensamiento estratégico`, title: `Diversificación de productos derivados`,
+objective: `Explorar nuevas fuentes de ingreso.`, prompt: `Actuá como analista estratégico. Ayudame a evaluar opciones para diversificar mi oferta (mix de frutos secos, productos saborizados, aceite, regalos empresariales, subproductos). Para cada una: demanda potencial, esfuerzo, inversión y riesgo. Ordenalas en una matriz esfuerzo/impacto y recomendá por dónde empezar.`, why: `Diversificar bien reduce tu dependencia de un solo producto.` },
+{ id: 'p64', level: 'proyectar', domain: `Plan de proyecto`, title: `Sistema de pedidos y postventa`,
+objective: `Ordenar el flujo completo de una venta.`, prompt: `Actuá como consultor de proyectos. Ayudame a diseñar, por fases, un sistema simple para gestionar pedidos de punta a punta: cómo se recibe el pedido, cómo se registra, cómo se prepara y entrega, cobro, y seguimiento posventa. Indicá qué parte conviene llevar en planilla y dame un primer paso para implementarlo esta semana.`, why: `Un flujo ordenado evita olvidos, demoras y clientes molestos.` },
+{ id: 'p65', level: 'proyectar', domain: `Relación con la comunidad`, title: `Vínculo con escuelas y turismo del IDEVI`,
+objective: `Generar arraigo y difusión local.`, prompt: `Actuá como gestor de vínculos con la comunidad. Ayudame a diseñar, por fases, una iniciativa para conectar mi producción con la comunidad de la zona del IDEVI y Viedma (por ejemplo visitas educativas, alianza con turismo regional o ferias locales). Incluí objetivos, posibles aliados, actividades y un primer paso simple.`, why: `El arraigo local es difusión genuina y diferenciación.` },
+{ id: 'p66', level: 'proyectar', domain: `Organización del negocio`, title: `Manual de procesos del negocio`,
+objective: `Poner por escrito cómo funciona tu empresa.`, prompt: `Ayudame a armar, por fases, un manual de procesos simple de mi empresa de nueces y avellanas: producción, poscosecha, ventas, atención y administración. Para cada proceso: pasos, responsable y registros. Empecemos por listar los procesos y después desarrollamos uno por vez.`, why: `Un negocio documentado es más fácil de delegar, mejorar y sostener.` },
+{ id: 'p67', level: 'proyectar', domain: `Plan de proyecto`, title: `Campaña de regalos empresariales de fin de año`,
+objective: `Capturar una oportunidad estacional grande.`, prompt: `Actuá como consultor de proyectos. Ayudame a diseñar, por fases, una campaña de regalos empresariales de fin de año con mis frutos secos: producto/presentación regalo, a qué empresas apuntar, propuesta y precios por volumen, plazos de producción y difusión. Incluí un cronograma con cuándo empezar cada cosa.`, why: `Los regalos empresariales pueden ser una de tus mayores ventas del año.` },
+{ id: 'p68', level: 'proyectar', domain: `Pensamiento estratégico`, title: `Análisis FODA de la empresa`,
+objective: `Mirar el negocio con perspectiva para decidir.`, prompt: `Actuá como analista estratégico. Guiame para armar un análisis FODA (Fortalezas, Oportunidades, Debilidades, Amenazas) de mi empresa de nueces y avellanas. Haceme preguntas por cada cuadrante para que yo aporte mi realidad, y al final ayudame a sacar 3 decisiones concretas que surjan del análisis.`, why: `Te ordena la mirada del negocio y la convierte en decisiones.` }
+];
+
+// ═══════════════════════════════════════════════════════════════
+// SISTEMA DE ENRIQUECIMIENTO DE PROMPTS
+// ═══════════════════════════════════════════════════════════════
+
+const levelTechniqueMap = {
+inicio: [`Rol explícito`, `Objetivo concreto`, `Formato de salida definido`, `Lenguaje claro y acotado`],
+profundizar: [`Restricciones de calidad`, `Criterios de evaluación`, `Iteración por etapas`, `Control de ambigüedad`],
+proyectar: [`Diseño por fases`, `Supuestos y riesgos`, `Entregables verificables`, `Cierre con siguiente acción`]
+};
+
+const roleByDomain = {
+'comercialización': `asesor comercial de productos regionales`,
+'lista de precios': `analista de precios y rentabilidad`,
+'planilla de cálculo': `experto en hojas de cálculo (Excel y Google Sheets)`,
+'atención al cliente': `asesor de atención al cliente`,
+'dispositivos digitales': `instructor digital paciente`,
+'marketing y difusión': `redactor publicitario de productos regionales`,
+'producción agropecuaria': `planificador de tareas de campo en fruticultura`,
+'registro comercial': `organizador de registros y datos del negocio`,
+'bienestar y ocio': `coach de vida activa y bienestar`,
+'calendario de temporada': `planificador de campañas agrícolas`,
+'imágenes para difusión': `director de arte de fotografía de producto`,
+'aprendizaje con ia': `mentor de uso práctico de IA`,
+'proveedores y compras': `asesor de compras y proveedores`,
+'organización del negocio': `consultor de gestión para pymes`,
+'redes sociales': `community manager de marcas de alimentos`,
+'finanzas y costos': `analista de costos y márgenes`,
+'poscosecha y calidad': `especialista en poscosecha de frutos secos`,
+'logística y envíos': `coordinador de logística para pequeñas empresas`,
+'seguridad de datos': `asesor de seguridad digital`,
+'plan de proyecto': `consultor de proyectos para pymes agropecuarias`,
+'pensamiento estratégico': `analista de escenarios`,
+'recetas y usos': `chef y desarrollador de recetas`,
+'ferias y eventos': `organizador de presencia en ferias`,
+'gestión del tiempo': `asesor de productividad personal`,
+'packaging y etiquetas': `diseñador de packaging para alimentos`,
+'fidelización de clientes': `especialista en fidelización de clientes`,
+'capacitación del equipo': `formador de equipos de trabajo`,
+'sostenibilidad': `asesor en producción sustentable`,
+'relación con la comunidad': `gestor de vínculos con la comunidad`
+};
+
+const resolveRole = (domain) => roleByDomain[domain.toLowerCase()] || `asistente experto en diseño de prompts`;
+
+const resolveOutputFormat = (item) => {
+const domain = item.domain.toLowerCase();
+if (domain.includes('escritura') || domain.includes('editorial') || domain.includes('divulgación') ||
+domain.includes('legado') || domain.includes('memorias')) return `Estructura en apartados con subtítulos y un bloque
+final de mejora.`;
+if (domain.includes('docencia') || domain.includes('curso') || domain.includes('transferencia')) return `Tabla por
+sesiones con objetivo, actividad, evidencia y cierre.`;
+if (domain.includes('investigación') || domain.includes('fuentes') || domain.includes('ciencia')) return `Matriz con
+columnas y estado de verificación.`;
+if (domain.includes('comunicación') || domain.includes('familiar')) return `Tres versiones del mensaje con contexto de
+uso.`;
+if (domain.includes('proyecto') || domain.includes('estratégico') || domain.includes('impacto')) return `Plan por fases
+con hitos y riesgos.`;
+if (domain.includes('matemáticas') || domain.includes('lógica')) return `Enunciados numerados con solución paso a
+paso.`;
+if (domain.includes('bienestar') || domain.includes('salud')) return `Ficha práctica con dimensiones, escalas y
+acciones.`;
+if (domain.includes('seguridad') || domain.includes('trámites')) return `Checklist operativa con alertas y pasos
+verificables.`;
+if (domain.includes('precio') || domain.includes('lista')) return `Tabla con columnas Producto, Presentación, Precio y notas.`;
+if (domain.includes('planilla') || domain.includes('registro') || domain.includes('cálculo') || domain.includes('finanzas') || domain.includes('costo')) return `Indicación de columnas y fórmulas paso a paso, con cómo verificar el resultado.`;
+if (domain.includes('imágen') || domain.includes('imagen') || domain.includes('difusión') || domain.includes('marketing') || domain.includes('redes')) return `Prompt de imagen o plan de contenidos, con detalle de estilo y formato.`;
+if (domain.includes('producción') || domain.includes('poscosecha') || domain.includes('calidad') || domain.includes('calendario') || domain.includes('temporada')) return `Calendario o checklist por etapas con qué controlar en cada punto.`;
+if (domain.includes('logística') || domain.includes('envío') || domain.includes('proveedor') || domain.includes('compra') || domain.includes('organización') || domain.includes('cliente')) return `Tabla comparativa o lista práctica con pasos accionables.`;
+return `Lista estructurada con pasos, criterios y cierre accionable.`;
+};
+
+const weakPromptByDomain = {
+'comercialización': `Haceme algo para vender más nueces.`,
+'lista de precios': `Armame una lista de precios.`,
+'planilla de cálculo': `Haceme una fórmula para sumar ventas.`,
+'atención al cliente': `Respondé esta consulta de un cliente.`,
+'dispositivos digitales': `Enseñame a usar el celular.`,
+'marketing y difusión': `Dame ideas para promocionar mi negocio.`,
+'producción agropecuaria': `Armame un calendario de tareas del campo.`,
+'registro comercial': `Decime cómo llevar el registro de ventas.`,
+'bienestar y ocio': `Armame una rutina de ejercicio.`,
+'calendario de temporada': `Qué tengo que preparar para la cosecha.`,
+'imágenes para difusión': `Haceme una foto linda de nueces.`,
+'aprendizaje con ia': `Enseñame a usar la IA.`,
+'proveedores y compras': `Decime qué envases comprar.`,
+'organización del negocio': `Ordename las tareas del negocio.`,
+'redes sociales': `Dame textos para redes.`,
+'finanzas y costos': `Calculame cuánto gano por kilo.`,
+'poscosecha y calidad': `Decime cómo controlar la calidad.`,
+'logística y envíos': `Cómo organizo los envíos.`,
+'seguridad de datos': `Dame tips de seguridad.`,
+'plan de proyecto': `Haceme un plan para vender más.`,
+'pensamiento estratégico': `Decime qué hacer la próxima temporada.`,
+'recetas y usos': `Dame recetas con nueces.`,
+'ferias y eventos': `Qué llevo a una feria.`,
+'gestión del tiempo': `Ordename la semana.`,
+'packaging y etiquetas': `Qué pongo en la etiqueta.`,
+'fidelización de clientes': `Cómo hago que vuelvan los clientes.`,
+'capacitación del equipo': `Enseñale a vender a mi ayudante.`,
+'sostenibilidad': `Decí que soy sustentable.`,
+'relación con la comunidad': `Qué hago con la comunidad.`
+};
+
+const resolveBadPrompt = (item) => {
+const domainKey = item.domain.toLowerCase();
+if (weakPromptByDomain[domainKey]) return weakPromptByDomain[domainKey];
+if (item.level === 'inicio') return `Necesito ayuda con ${item.domain.toLowerCase()} para
+${item.objective.toLowerCase()}.`;
+if (item.level === 'profundizar') return `Trabaja este tema: ${item.title}. Dame una versión útil para hoy.`;
+return `Resuelve completo este proyecto: ${item.title}.`;
+};
+
+const resolveWhyBad = (item) => {
+if (item.level === 'inicio') return `Es específico en tema, pero no define público, formato de salida ni criterios para
+evaluar si la respuesta sirve.`;
+if (item.level === 'profundizar') return `Pide una tarea exigente, pero no fija alcance, límites ni método de revisión.
+La salida puede quedar correcta en apariencia y floja en calidad.`;
+return `Intenta resolver un proyecto complejo de una sola vez, sin fases ni entregables intermedios. Eso aumenta errores
+y reduce control de autoría.`;
+};
+
+const resolveQualityCriteria = (item) => {
+const domain = item.domain.toLowerCase();
+if (domain.includes('escritura') || domain.includes('editorial') || domain.includes('memorias') ||
+domain.includes('legado')) return `coherencia argumental, voz propia, transiciones y cierre con sentido`;
+if (domain.includes('docencia') || domain.includes('curso') || domain.includes('aprendizaje') ||
+domain.includes('transferencia')) return `claridad didáctica, secuencia progresiva, actividad aplicable y evidencia de
+comprensión`;
+if (domain.includes('investigación') || domain.includes('fuentes') || domain.includes('ciencia')) return `trazabilidad
+de fuentes, distinción entre verificado/pendiente y riesgos de error`;
+if (domain.includes('comunicación') || domain.includes('entrevista') || domain.includes('familiar')) return `tono
+adecuado, intención explícita, reducción de ambigüedad y salida accionable`;
+if (domain.includes('proyecto') || domain.includes('estratégico') || domain.includes('iniciativa') ||
+domain.includes('impacto')) return `fases realistas, hitos verificables, riesgos y plan de mitigación`;
+if (domain.includes('matemáticas') || domain.includes('lógica')) return `precisión del razonamiento, claridad de cada
+paso y verificabilidad del resultado`;
+if (domain.includes('salud') || domain.includes('bienestar')) return `límites claros entre autocuidado y consulta
+profesional, lenguaje no alarmista`;
+if (domain.includes('seguridad') || domain.includes('trámites')) return `pasos verificables, canales oficiales
+identificados y alertas de riesgo`;
+if (domain.includes('precio') || domain.includes('finanzas') || domain.includes('costo') || domain.includes('planilla') || domain.includes('registro')) return `exactitud de los cálculos, claridad de las fórmulas y verificabilidad de cada número`;
+if (domain.includes('imágen') || domain.includes('imagen') || domain.includes('marketing') || domain.includes('difusión') || domain.includes('redes')) return `claridad del estilo, coherencia de marca, honestidad del mensaje y formato listo para usar`;
+if (domain.includes('producción') || domain.includes('poscosecha') || domain.includes('calidad') || domain.includes('temporada')) return `pasos verificables, criterios de control claros y respeto del criterio profesional`;
+if (domain.includes('cliente') || domain.includes('comercial') || domain.includes('logística') || domain.includes('proveedor')) return `tono adecuado, propuesta accionable y reducción de ambigüedad`;
+return `claridad, utilidad práctica, control de supuestos y siguiente paso concreto`;
+};
+
+const resolveToneFrame = (item, role, outputFormat, qualityCriteria, techniques) => {
+if (item.level === 'inicio') {
+return [
+`Actúa como ${role} con tono cercano, claro y paciente.`,
+``, `Meta de esta sesión: ${item.objective}`,
+`Pedido base: ${item.prompt}`,
+``, `Trabajemos paso a paso:`,
+`- Si falta contexto, hazme primero 2 o 3 preguntas breves de calibración.`,
+`- Evita tecnicismos innecesarios y usa ejemplos concretos.`,
+`- Formato de salida solicitado: ${outputFormat}`,
+`- Cierra con una mini revisión de calidad (criterios: ${qualityCriteria}).`,
+``, `Antes de cerrar, sugiere una versión 2 de este pedido para mejorar precisión sin complejizar de más.`,
+`Técnicas aplicadas: ${techniques.join(', ')}.`
+];
+}
+if (item.level === 'profundizar') {
+return [
+`Actúa como ${role} con enfoque riguroso y criterio crítico.`,
+``, `Objetivo de trabajo: ${item.objective}`,
+`Consigna inicial: ${item.prompt}`,
+``, `Condiciones metodológicas:`,
+`1) Si hay ambigüedad, abre con preguntas de calibración antes de producir la versión final.`,
+`2) Entrega una propuesta estructurada, con supuestos explícitos y justificación breve por bloque.`,
+`3) Respeta este formato de salida: ${outputFormat}`,
+`4) Incluye control de calidad al final con estos criterios: ${qualityCriteria}.`,
+`5) Señala qué conviene iterar en una segunda ronda y por qué.`,
+``, `Técnicas aplicadas en este prompt: ${techniques.join(', ')}.`
+];
+}
+return [
+`Actúa como ${role} con enfoque estratégico y orientación a ejecución.`,
+``, `Resultado buscado: ${item.objective}`,
+`Desafío base: ${item.prompt}`,
+``, `Diseña la respuesta como un plan por fases:`,
+`Fase 1 - Delimitación: supuestos, alcance y preguntas críticas de calibración.`,
+`Fase 2 - Diseño: propuesta principal en formato solicitado (${outputFormat}).`,
+`Fase 3 - Implementación: hitos, entregables y métricas de avance.`,
+`Fase 4 - Control: riesgos, límites y revisión final con criterios (${qualityCriteria}).`,
+``, `Cierre obligatorio: incluye una versión 2 del pedido para iterar con mayor precisión y menor riesgo.`,
+`Técnicas aplicadas: ${techniques.join(', ')}.`
+];
+};
+
+const buildEnhancedPrompt = (item) => {
+const techniques = levelTechniqueMap[item.level] || levelTechniqueMap.inicio;
+const role = resolveRole(item.domain);
+const outputFormat = resolveOutputFormat(item);
+const qualityCriteria = resolveQualityCriteria(item);
+const frame = resolveToneFrame(item, role, outputFormat, qualityCriteria, techniques);
+return frame.join('\n');
+};
+
+const enrichedPromptItems = promptItems.map((item) => ({
+...item,
+badPrompt: resolveBadPrompt(item),
+badReason: resolveWhyBad(item),
+techniques: levelTechniqueMap[item.level] || levelTechniqueMap.inicio,
+enhancedPrompt: buildEnhancedPrompt(item)
+}));
+// ═══════════════════════════════════════════════════════════════
+// DATA: HISTORIAS DE USO REALISTA (22 casos)
+// ═══════════════════════════════════════════════════════════════
+
+const stories = [
+{
+id: 's1', title: `De la foto del celular al folleto que sí vende`, focus: `Imágenes y difusión`,
+context: `Una foto común de producto se transforma, iterando, en un folleto atractivo.`,
+conversation: [
+{ role: 'usuario', text: `Te paso una foto de mis nueces sacada con el celular. Haceme un folleto profesional ya.` },
+{ role: 'ia', text: `Listo, generé un folleto con la imagen, varios textos y una lista de precios.` },
+{ role: 'alerta', text: `Señal de riesgo: el diseño quedó cargado, los precios los inventó la IA y el texto tiene errores de ortografía.` },
+{ role: 'ajuste', text: `No quiero el folleto final todavía. Primero mejorá solo la foto: fondo de madera clara, luz cálida y que se vean apetecibles. Sin texto por ahora.` },
+{ role: 'ia', text: `Perfecto. Acá está la foto mejorada, limpia y con mejor luz, sin texto.` },
+{ role: 'usuario', text: `Ahora sí, armá un folleto vertical simple con esa foto arriba, un título y un espacio en blanco para que YO ponga los precios a mano.` },
+{ role: 'ia', text: `Hecho: diseño limpio, foto arriba, título y un recuadro vacío para tu lista de precios.` },
+{ role: 'resultado', text: `Resultado: en vez de un folleto cargado y con datos inventados, un diseño prolijo donde los precios los controla la persona.` }
+],
+reusablePrompt: `Trabajemos por pasos. Paso 1: mejorá SOLO esta foto de producto (fondo de madera clara, luz cálida, apetecible, sin texto). Cuando esté, paso 2: armá un folleto vertical simple con esa foto arriba, un título y un recuadro vacío para que yo cargue los precios a mano.`
+},
+{
+id: 's2', title: `La fórmula que no cerraba`, focus: `Planillas y verificación`,
+context: `Un total mal calculado se detecta pidiendo el razonamiento paso a paso.`,
+conversation: [
+{ role: 'usuario', text: `Dame una fórmula para sumar lo facturado de nuez pelada en mi planilla.` },
+{ role: 'ia', text: `Usá =SUMAR.SI(B:B;"Nuez pelada";C:C)` },
+{ role: 'usuario', text: `La puse y me da un número que no me cierra, parece de más.` },
+{ role: 'alerta', text: `Atención: aplicar una fórmula sin verificar con un caso conocido puede arrastrar un error sin que te des cuenta.` },
+{ role: 'ajuste', text: `Mostrame paso a paso qué hace la fórmula y revisemos: mi columna de productos es la C y los importes están en la D, no en la B y C.` },
+{ role: 'ia', text: `Ahí está el error: hay que apuntar a tus columnas reales. La fórmula correcta es =SUMAR.SI(C:C;"Nuez pelada";D:D).` },
+{ role: 'usuario', text: `Ahora sí coincide con lo que sumé a mano para una semana.` },
+{ role: 'resultado', text: `Resultado: la fórmula se verificó contra un caso conocido antes de confiar en ella.` }
+],
+reusablePrompt: `Necesito una fórmula para [cálculo]. Mis columnas reales son: [describir columnas y letras]. Dame la fórmula, explicámela paso a paso y decime cómo verificarla con un caso que yo ya conozca.`
+},
+{
+id: 's3', title: `El precio que la IA inventó`, focus: `Costos y alucinaciones`,
+context: `La IA "estima" un costo que suena creíble pero no es real; se corrige a tiempo.`,
+conversation: [
+{ role: 'usuario', text: `¿Cuánto cuesta producir un kilo de nueces peladas? Decime el número.` },
+{ role: 'ia', text: `Aproximadamente cuesta tanto por kilo, según valores de mercado.` },
+{ role: 'alerta', text: `Alucinación: la IA dio una cifra concreta como si fuera tu costo real, pero no conoce tus números.` },
+{ role: 'ajuste', text: `No inventes mi costo. En vez de un número, dame la LISTA de todos los ítems de costo que debo sumar, y dejá cada monto en [completar] para que yo cargue mis valores.` },
+{ role: 'ia', text: `Tenés razón. Acá va la estructura de costos por categoría con [completar] en cada ítem para que la llenes vos.` },
+{ role: 'usuario', text: `Así sí. Cargo mis valores reales y al final mostrame el cálculo para revisarlo.` },
+{ role: 'resultado', text: `Resultado: la IA aportó la estructura; los números reales y la verificación quedaron en manos de la persona.` }
+],
+reusablePrompt: `No inventes montos. Dame la estructura de costos para producir [producto], con cada ítem en [completar] para que yo cargue mis valores reales. Al final, mostrame el cálculo paso a paso para que pueda verificarlo.`
+},
+{
+id: 's4', title: `El cartel viejo, renovado`, focus: `Edición de imágenes`,
+context: `Una captura de un cartel existente se moderniza con instrucciones precisas.`,
+conversation: [
+{ role: 'usuario', text: `Te subo la captura de mi cartel viejo. Cambialo todo y hacelo moderno.` },
+{ role: 'ia', text: `Generé una versión nueva totalmente distinta del cartel.` },
+{ role: 'alerta', text: `Señal de riesgo: "cambialo todo" es tan vago que la IA descartó lo que funcionaba y cambió hasta el nombre.` },
+{ role: 'ajuste', text: `Mantené el nombre y el logo tal cual. Cambiá SOLO: el fondo a uno de madera clara, la tipografía a una más legible y agregá una foto de nueces a la derecha.` },
+{ role: 'ia', text: `Hecho: conservé nombre y logo, cambié fondo y tipografía, y sumé la foto a la derecha.` },
+{ role: 'usuario', text: `Muy bien. Ahora subí un poco el contraste del texto para que se lea de lejos.` },
+{ role: 'resultado', text: `Resultado: el cartel se renovó conservando su identidad, gracias a instrucciones puntuales en vez de un "cambialo todo".` }
+],
+reusablePrompt: `Te subo una imagen. Mantené [qué conservar: nombre, logo, colores]. Cambiá SOLO estos elementos: [lista puntual de cambios]. No modifiques nada más. Después esperá mi siguiente ajuste.`
+},
+{
+id: 's5', title: `Un logo a partir de una captura`, focus: `Imágenes desde una referencia`,
+context: `Una imagen subida sirve de punto de partida para explorar un logo.`,
+conversation: [
+{ role: 'usuario', text: `Te subo una captura de un dibujo de nuez que me gusta. Quiero un logo igual.` },
+{ role: 'ia', text: `Generé un logo basado en esa imagen de referencia.` },
+{ role: 'alerta', text: `Aviso: usar una imagen ajena tal cual puede traer problemas; conviene inspirarse, no copiar, y revisar derechos.` },
+{ role: 'ajuste', text: `Usala solo como inspiración de estilo. Creá un logo ORIGINAL: una nuez estilizada simple, en dos colores (marrón y verde), que se entienda en chico y sirva para etiquetas.` },
+{ role: 'ia', text: `Acá tenés tres propuestas originales de logo, simples, en marrón y verde, legibles en tamaño pequeño.` },
+{ role: 'usuario', text: `Me gusta la segunda. Dame una versión en fondo transparente y otra en blanco para imprimir.` },
+{ role: 'resultado', text: `Resultado: un logo propio, original y usable, partiendo de una referencia solo como inspiración.` }
+],
+reusablePrompt: `Te subo una imagen SOLO como inspiración de estilo (no para copiar). Creá un logo original de [tema]: simple, en [colores], que se entienda en tamaño chico y sirva para etiquetas. Dame 3 propuestas y luego versiones en fondo transparente y en blanco.`
+},
+{
+id: 's6', title: `Abrir la puerta de un mayorista`, focus: `Comercialización`,
+context: `Se prepara un ofrecimiento a un cliente grande, afinando el mensaje.`,
+conversation: [
+{ role: 'usuario', text: `Escribime un mensaje para ofrecerle mis nueces a una distribuidora.` },
+{ role: 'ia', text: `Acá tenés un mensaje de presentación comercial.` },
+{ role: 'ajuste', text: `Está bien pero genérico. Hacelo más concreto: producto regional del IDEVI, calidad artesanal, que puedo entregar volumen, y cerrá ofreciendo enviar muestra.` },
+{ role: 'ia', text: `Reescrito con esos diferenciales y un cierre que ofrece muestra sin compromiso.` },
+{ role: 'usuario', text: `Dame también una versión más corta para WhatsApp y otra más formal para email.` },
+{ role: 'ia', text: `Listas las dos versiones, ajustadas al canal.` },
+{ role: 'resultado', text: `Resultado: un mensaje a medida del canal y del diferencial, listo para enviar.` }
+],
+reusablePrompt: `Actuá como asesor comercial. Escribime un ofrecimiento a [tipo de cliente] destacando: [diferenciales]. Cerrá ofreciendo una muestra. Dame dos versiones: una corta para WhatsApp y una formal para email.`
+},
+{
+id: 's7', title: `Analizar ventas sin exponer a los clientes`, focus: `Seguridad de datos`,
+context: `Se anonimiza la planilla antes de pedir un análisis a la IA.`,
+conversation: [
+{ role: 'usuario', text: `Te pego mi planilla de ventas con nombres y teléfonos de clientes para que la analices.` },
+{ role: 'alerta', text: `Cuidado: estarías compartiendo datos personales de terceros. Mejor anonimizar primero.` },
+{ role: 'ajuste', text: `Pará. Antes decime cómo reemplazar nombres y teléfonos por códigos (Cliente 01, 02...) sin perder el análisis.` },
+{ role: 'ia', text: `Reemplazá la columna Nombre por un código y borrá la de teléfono para el análisis. Te explico cómo hacerlo rápido.` },
+{ role: 'usuario', text: `Listo, ahora te paso la versión con códigos. Analizá qué clientes compran más y en qué meses.` },
+{ role: 'ia', text: `Con los datos anonimizados: estos códigos concentran las compras y estos son los meses pico.` },
+{ role: 'resultado', text: `Resultado: el mismo análisis útil, pero protegiendo los datos personales de los clientes.` }
+],
+reusablePrompt: `Quiero que analices mis ventas, pero primero ayudame a anonimizar: cómo reemplazar nombres por códigos (Cliente 01, 02...) y qué columnas sensibles quitar. Después te paso la versión anonimizada para el análisis.`
+},
+{
+id: 's8', title: `Llegar listo a la cosecha`, focus: `Producción`,
+context: `Se arma una preparación por etapas en lugar de improvisar.`,
+conversation: [
+{ role: 'usuario', text: `Se viene la cosecha de nueces. ¿Qué hago?` },
+{ role: 'ia', text: `Te doy una lista general de tareas de cosecha.` },
+{ role: 'alerta', text: `Respuesta útil pero genérica: no está ordenada en el tiempo ni adaptada a tu situación.` },
+{ role: 'ajuste', text: `Faltan 6 semanas. Armame una cuenta regresiva semana por semana: equipos, personal, secado, envases y aviso a clientes. Marcá qué consultar con el agrónomo.` },
+{ role: 'ia', text: `Acá va la cuenta regresiva de 6 semanas, con las tareas de cada una y los puntos para consultar al profesional.` },
+{ role: 'usuario', text: `Sumale una columna para tildar lo que ya hice.` },
+{ role: 'resultado', text: `Resultado: un plan de preparación claro y accionable, no una lista suelta.` }
+],
+reusablePrompt: `Faltan [X semanas] para la cosecha de [producto]. Armame una cuenta regresiva semana por semana con tareas (equipos, personal, secado, envases, aviso a clientes) y una columna para tildar lo hecho. Marcá qué conviene consultar con el agrónomo.`
+},
+{
+id: 's9', title: `Tablas dinámicas, sin miedo`, focus: `Planillas y aprendizaje`,
+context: `Un tema que intimida se aprende pidiendo el paso a paso y practicando.`,
+conversation: [
+{ role: 'usuario', text: `Todos hablan de tablas dinámicas pero no entiendo nada. Explicámelo fácil.` },
+{ role: 'ia', text: `Una tabla dinámica resume muchos datos en un resumen claro. Te doy la teoría completa.` },
+{ role: 'ajuste', text: `No me tires toda la teoría junta. Tengo nivel intermedio. Enseñame con MIS datos (ventas por producto y mes), paso a paso, y preguntame antes de avanzar.` },
+{ role: 'ia', text: `Vamos paso 1: seleccioná tus datos. ¿Ya los tenés en columnas Fecha, Producto, Importe? Avisame y seguimos.` },
+{ role: 'usuario', text: `Sí, listo el paso 1.` },
+{ role: 'ia', text: `Paso 2: insertar tabla dinámica. Te indico exactamente dónde tocar en tu versión.` },
+{ role: 'resultado', text: `Resultado: aprendió haciendo, sobre sus propios datos, sin abrumarse.` }
+],
+reusablePrompt: `Tengo nivel intermedio y quiero aprender [tema, ej: tablas dinámicas] con MIS datos ([describir]). Enseñame paso a paso, un paso por mensaje, y preguntame si entendí antes de seguir. Nada de teoría toda junta.`
+},
+{
+id: 's10', title: `Una campaña, no publicaciones sueltas`, focus: `Marketing`,
+context: `Se pasa de improvisar posts a una campaña con hilo conductor.`,
+conversation: [
+{ role: 'usuario', text: `Dame ideas para publicar sobre mis nueces.` },
+{ role: 'ia', text: `Acá tenés 10 ideas de publicaciones variadas.` },
+{ role: 'ajuste', text: `Mejor armemos una campaña de la temporada: 3 semanas, con un mensaje central, y para cada semana 3 posts con foto sugerida y texto.` },
+{ role: 'ia', text: `Listo: campaña de 3 semanas con mensaje central y un calendario de contenidos detallado.` },
+{ role: 'usuario', text: `Agregá una semana final con una promoción de cierre.` },
+{ role: 'ia', text: `Sumé la semana 4 con la promo de cierre y su llamado a la acción.` },
+{ role: 'resultado', text: `Resultado: en vez de posts sueltos, una campaña con principio, desarrollo y cierre.` }
+],
+reusablePrompt: `Diseñá una campaña de difusión de [X semanas] para la temporada de [producto]. Definí un mensaje central y, por semana, 3 publicaciones con foto sugerida y texto. Cerrá con una semana de promoción final.`
+},
+{
+id: 's11', title: `Natación en aguas frías, con cabeza`, focus: `Bienestar y ocio`,
+context: `La IA ayuda a planificar, pero remarca los límites de seguridad.`,
+conversation: [
+{ role: 'usuario', text: `Quiero meterme a nadar en agua fría más seguido. Armame un plan para aguantar más.` },
+{ role: 'ia', text: `Te propongo un plan de exposición progresiva al frío.` },
+{ role: 'alerta', text: `Tema sensible: el agua fría tiene riesgos reales. La IA orienta, pero no reemplaza criterio médico ni de seguridad.` },
+{ role: 'ajuste', text: `Dame un plan progresivo pero con foco en seguridad: nunca solo, señales de alarma del cuerpo y cuándo parar. Y aclará qué consultar con un médico.` },
+{ role: 'ia', text: `Acá va el plan progresivo con reglas de seguridad, señales de alarma y los puntos para consultar con un profesional.` },
+{ role: 'usuario', text: `Perfecto, así me organizo sin arriesgar de más.` },
+{ role: 'resultado', text: `Resultado: un plan motivador pero responsable, con la seguridad por delante.` }
+],
+reusablePrompt: `Armame un plan progresivo para [actividad física exigente] con el foco puesto en la SEGURIDAD: precauciones, señales de alarma del cuerpo, cuándo parar y qué consultar con un médico. No reemplaces el consejo profesional.`
+},
+{
+id: 's12', title: `El catálogo online, por fases`, focus: `Proyecto`,
+context: `Una idea grande se vuelve manejable dividida en etapas con un primer paso concreto.`,
+conversation: [
+{ role: 'usuario', text: `Quiero vender por internet. Armame todo el sistema completo ya.` },
+{ role: 'ia', text: `Te propongo una tienda online completa con muchas funciones.` },
+{ role: 'alerta', text: `Riesgo: encarar todo de golpe abruma y se abandona. Mejor por fases, con un primer paso simple.` },
+{ role: 'ajuste', text: `Dividámoslo en fases. Empecemos por lo más simple: un catálogo con fotos y precios y pedidos por WhatsApp. ¿Qué necesito para la fase 1?` },
+{ role: 'ia', text: `Fase 1: catálogo simple. Necesitás fotos de producto, lista de precios y un mensaje de pedido. Te dejo el primer paso para esta semana.` },
+{ role: 'usuario', text: `Buenísimo, eso lo puedo hacer. Cuando lo tenga, pasamos a la fase 2.` },
+{ role: 'resultado', text: `Resultado: un proyecto grande convertido en pasos manejables, empezando esta misma semana.` }
+],
+reusablePrompt: `Quiero [proyecto grande]. No lo armes todo junto: dividilo en fases, de lo más simple a lo más completo. Empecemos por la fase 1 con un primer paso concreto que pueda hacer esta semana. Cuando lo logre, seguimos con la siguiente.`
+},
+{
+id: 's13', title: `La etiqueta que faltaba completar`, focus: `Packaging y normativa`,
+context: `Una etiqueta de producto se arma completa y se verifica antes de imprimir.`,
+conversation: [
+{ role: 'usuario', text: `Haceme la etiqueta para mis bolsas de nueces, ponele lo que va.` },
+{ role: 'ia', text: `Listo: nombre, peso y un texto de venta atractivo.` },
+{ role: 'alerta', text: `Señal de riesgo: faltan datos que una etiqueta de alimentos suele requerir (origen, conservación, contacto) y conviene chequear normativa.` },
+{ role: 'ajuste', text: `Mejor primero listame TODA la información que debería llevar una etiqueta de frutos secos fraccionados, y marcá qué tengo que verificar con normativa.` },
+{ role: 'ia', text: `Acá va la lista completa de datos y, separados, los puntos que conviene confirmar con la normativa vigente antes de imprimir.` },
+{ role: 'usuario', text: `Perfecto. Ahora sí, ordená esos datos en un diseño de etiqueta simple, con [completar] donde van mis valores.` },
+{ role: 'resultado', text: `Resultado: una etiqueta completa y prolija, con los puntos legales señalados para verificar, en vez de una linda pero incompleta.` }
+],
+reusablePrompt: `Antes de diseñar mi etiqueta de [producto], listame toda la información que debería incluir y marcá por separado qué debo verificar con normativa. Después ordenala en un diseño simple con [completar] en mis datos.`
+},
+{
+id: 's14', title: `Un reclamo bien respondido`, focus: `Atención al cliente`,
+context: `Una queja se transforma en oportunidad con el tono y la estructura correctos.`,
+conversation: [
+{ role: 'usuario', text: `Un cliente se quejó de que el pedido llegó tarde. Respondé vos, estoy molesto.` },
+{ role: 'ia', text: `Le explico que hubo demoras por motivos ajenos a nosotros.` },
+{ role: 'alerta', text: `Riesgo: una respuesta a la defensiva, escrita con fastidio, puede perder al cliente.` },
+{ role: 'ajuste', text: `Reescribilo con tono empático y orientado a solución: reconocer la molestia, una disculpa sincera, qué haremos y un gesto para compensar. Sin excusas largas.` },
+{ role: 'ia', text: `Listo: mensaje que valida la molestia, se disculpa, ofrece solución concreta y un pequeño gesto.` },
+{ role: 'usuario', text: `Mucho mejor. Dame una versión corta para WhatsApp.` },
+{ role: 'resultado', text: `Resultado: una respuesta que cuida el vínculo en vez de escalar el conflicto.` }
+],
+reusablePrompt: `Un cliente reclamó por [situación]. Redactá una respuesta empática y orientada a solución: reconocer la molestia, disculpa sincera, qué haremos y un gesto de compensación. Sin excusas largas. Dame una versión corta para WhatsApp.`
+},
+{
+id: 's15', title: `El precio puesto a ojo`, focus: `Finanzas y costos`,
+context: `Se pasa de fijar el precio por intuición a calcularlo con margen.`,
+conversation: [
+{ role: 'usuario', text: `Voy a vender la bolsa de avellanas a tanto, ¿está bien ese precio?` },
+{ role: 'ia', text: `Parece un precio razonable para el mercado.` },
+{ role: 'alerta', text: `Atención: validar un precio sin conocer el costo es adivinar; podrías estar perdiendo plata sin saberlo.` },
+{ role: 'ajuste', text: `Mejor ayudame a calcularlo bien: dame la estructura de costos por bolsa con [completar], y una fórmula para fijar el precio según el margen que yo quiera.` },
+{ role: 'ia', text: `Acá tenés los ítems de costo a completar y la fórmula: precio = costo / (1 - margen deseado). Te explico cómo usarla.` },
+{ role: 'usuario', text: `Cargué mis costos. Ahora veo que mi precio estaba por debajo del margen que necesito.` },
+{ role: 'resultado', text: `Resultado: el precio dejó de ser una corazonada y pasó a ser una decisión con criterio.` }
+],
+reusablePrompt: `No me digas si un precio "está bien". Ayudame a calcularlo: dame la estructura de costos de [producto] con [completar] y una fórmula para fijar el precio según el margen que yo quiera. Mostrame el cálculo paso a paso.`
+},
+{
+id: 's16', title: `El stock que avisa solo`, focus: `Planillas`,
+context: `Una planilla pasa de registro pasivo a alertar cuando hay que reponer.`,
+conversation: [
+{ role: 'usuario', text: `Siempre me entero tarde de que me quedé sin un producto. ¿Cómo lo controlo en la planilla?` },
+{ role: 'ia', text: `Anotá las entradas y salidas en una hoja.` },
+{ role: 'ajuste', text: `Quiero que además me avise. Armame una columna que calcule el stock y otra que diga "reponer" cuando baje de un mínimo, y que se pinte en rojo.` },
+{ role: 'ia', text: `Usá una fórmula con SI para marcar "reponer" y formato condicional para el color. Te doy los pasos para Excel y Google Sheets.` },
+{ role: 'usuario', text: `Lo armé y ya me marcó dos productos en rojo.` },
+{ role: 'ia', text: `Perfecto. Ahora cada vez que cargues una venta, el aviso se actualiza solo.` },
+{ role: 'resultado', text: `Resultado: la planilla dejó de ser un registro muerto y se volvió un sistema de alerta.` }
+],
+reusablePrompt: `Quiero un control de stock en planilla que me avise cuándo reponer: una columna que calcule existencias, otra con SI que diga "reponer" bajo un mínimo, y formato condicional para pintarla en rojo. Dame los pasos para Excel y Google Sheets.`
+},
+{
+id: 's17', title: `Lista para la feria`, focus: `Ferias y eventos`,
+context: `Una participación improvisada se vuelve una estrategia con objetivos.`,
+conversation: [
+{ role: 'usuario', text: `Me invitaron a una feria de productores. ¿Llevo nueces y listo?` },
+{ role: 'ia', text: `Sí, llevá producto y un cartel con precios.` },
+{ role: 'alerta', text: `Respuesta corta: una feria bien aprovechada deja mucho más que ventas del día.` },
+{ role: 'ajuste', text: `Armame un plan completo: objetivos (vender, conseguir contactos, marca), qué llevar, cómo presentar el puesto, cómo captar datos de interesados y qué hacer después.` },
+{ role: 'ia', text: `Acá va el plan en tres momentos: antes (preparación), durante (puesto y captación) y después (seguimiento de contactos).` },
+{ role: 'usuario', text: `Sumale una idea para que la gente me deje su contacto.` },
+{ role: 'resultado', text: `Resultado: la feria se convirtió en una estrategia, no en un día suelto de ventas.` }
+],
+reusablePrompt: `Voy a participar de una feria de productores. Armame un plan en tres momentos (antes, durante, después) con: objetivos, qué llevar, cómo presentar el puesto, cómo captar contactos y cómo hacer seguimiento luego.`
+},
+{
+id: 's18', title: `El recetario que acerca clientes`, focus: `Marketing y recetas`,
+context: `Un contenido de valor se vuelve una herramienta de difusión.`,
+conversation: [
+{ role: 'usuario', text: `Quiero algo para regalar a mis clientes que los haga volver. ¿Ideas?` },
+{ role: 'ia', text: `Podrías hacer un descuento.` },
+{ role: 'ajuste', text: `Prefiero algo de valor. Armemos un mini recetario con 5 recetas usando mis nueces y avellanas, para entregar como regalo. Que conecte con mi producto.` },
+{ role: 'ia', text: `Acá van 5 recetas con título atractivo, ingredientes y pasos, cada una con una nota que invita a usar tu producto.` },
+{ role: 'usuario', text: `Buenísimo. ¿Cómo lo presento para que quede lindo?` },
+{ role: 'ia', text: `Te sugiero formato (digital para enviar e impreso para la feria) y cómo sumarle tu marca.` },
+{ role: 'resultado', text: `Resultado: un regalo útil que difunde la marca y fideliza, mejor que un simple descuento.` }
+],
+reusablePrompt: `Ayudame a armar un mini recetario de 5 recetas con [producto] para regalar a mis clientes: título atractivo, ingredientes, pasos y una nota que conecte con mi producto. Sugerí cómo presentarlo (digital e impreso) con mi marca.`
+},
+{
+id: 's19', title: `El respaldo que salvó los registros`, focus: `Dispositivos y nube`,
+context: `Un susto con el celular impulsa a configurar copias de seguridad.`,
+conversation: [
+{ role: 'usuario', text: `Casi pierdo la planilla de ventas cuando se trabó el celular. ¿Cómo me protejo?` },
+{ role: 'ia', text: `Hacé copias de vez en cuando.` },
+{ role: 'ajuste', text: `Quiero algo automático. Actuá como instructor paciente y guiame paso a paso para configurar respaldo automático en la nube de mis planillas y fotos. Tengo nivel intermedio.` },
+{ role: 'ia', text: `Primero te explico las opciones (Google Drive, OneDrive) y después el paso a paso de la que recomiendo. ¿Avanzamos?` },
+{ role: 'usuario', text: `Sí. Listo el primer paso.` },
+{ role: 'ia', text: `Paso 2: activar la sincronización automática. Te indico dónde tocar.` },
+{ role: 'resultado', text: `Resultado: ahora los registros del negocio se respaldan solos, sin depender de la memoria.` }
+],
+reusablePrompt: `Actuá como instructor digital paciente. Guiame paso a paso, un paso por mensaje, para configurar respaldo automático en la nube de mis planillas y fotos del negocio. Tengo nivel intermedio; explicame primero las opciones y después la que recomendás.`
+},
+{
+id: 's20', title: `Enseñarle a vender a un ayudante`, focus: `Capacitación del equipo`,
+context: `Se documenta la atención para poder delegar sin perder calidad.`,
+conversation: [
+{ role: 'usuario', text: `Voy a sumar un ayudante para atender. ¿Cómo logro que atienda como yo?` },
+{ role: 'ia', text: `Explicale bien cómo hacés las cosas.` },
+{ role: 'ajuste', text: `Mejor pongámoslo por escrito. Armame una guía simple para que un ayudante atienda ventas: saludo, info de productos y precios, formas de pago y envío, y qué hacer ante dudas o reclamos.` },
+{ role: 'ia', text: `Acá va la guía en secciones claras, con [completar] en tus datos y ejemplos de respuestas.` },
+{ role: 'usuario', text: `Agregá un apartado de qué NO debe hacer o prometer.` },
+{ role: 'resultado', text: `Resultado: una guía que permite delegar la atención manteniendo la calidad y el tono del negocio.` }
+],
+reusablePrompt: `Armame una guía simple para que un ayudante atienda mis ventas igual que yo: saludo, info de productos y precios, formas de pago y envío, qué hacer ante dudas o reclamos, y un apartado de qué NO hacer ni prometer. Dejá [completar] en mis datos.`
+},
+{
+id: 's21', title: `El mensaje sospechoso`, focus: `Seguridad y estafas`,
+context: `Un intento de estafa se frena verificando antes de actuar.`,
+conversation: [
+{ role: 'usuario', text: `Me llegó un mensaje del "banco" pidiendo mis datos para no perder la cuenta. ¿Se los paso?` },
+{ role: 'alerta', text: `¡Frená! Ninguna institución seria pide claves ni datos completos por mensaje. Tiene señales de estafa.` },
+{ role: 'ajuste', text: `Tenés razón. Ayudame a reconocer las señales y decime cómo verificar si es real sin darle nada.` },
+{ role: 'ia', text: `Señales de alerta: urgencia, enlaces raros, pedido de datos. Para verificar: no toques el enlace, comunicate por el canal oficial que vos ya conocés.` },
+{ role: 'usuario', text: `Llamé al banco por el número oficial y me confirmaron que era falso.` },
+{ role: 'resultado', text: `Resultado: frenar y verificar por otro canal evitó la estafa.` }
+],
+reusablePrompt: `Me llegó este mensaje [pegar, sin mis datos reales]. Ayudame a identificar si tiene señales de estafa y decime cómo verificar su autenticidad sin entregar ningún dato ni tocar enlaces.`
+},
+{
+id: 's22', title: `La foto que salía oscura`, focus: `Imágenes e iteración`,
+context: `Una imagen mediocre mejora con ajustes puntuales y paciencia.`,
+conversation: [
+{ role: 'usuario', text: `Generé una foto de mis nueces pero quedó oscura y triste. No sirve.` },
+{ role: 'ia', text: `Genero otra distinta entonces.` },
+{ role: 'alerta', text: `Antes de tirarla y empezar de cero: casi siempre conviene ajustar lo que ya está, no descartar.` },
+{ role: 'ajuste', text: `No la cambies entera. Sobre esta misma: aumentá la luz, iluminación cálida y suave, y fondo de madera clara. El resto dejalo igual.` },
+{ role: 'ia', text: `Listo, misma composición con más luz y fondo cálido.` },
+{ role: 'usuario', text: `Mucho mejor. Ahora subí un poco el detalle de las nueces y hacela apetecible.` },
+{ role: 'resultado', text: `Resultado: en dos ajustes puntuales, una foto floja se volvió usable. Iterar, no descartar.` }
+],
+reusablePrompt: `Esta imagen quedó [problema]. No la rehagas de cero: sobre la misma, ajustá SOLO [cambio puntual: más luz / fondo / detalle] y dejá el resto igual. Vamos puliéndola de a un cambio por vez.`
+}
+];
+
+// ═══════════════════════════════════════════════════════════════
+// DATA: DESAFÍOS COGNITIVOS (6 desafíos)
+// ═══════════════════════════════════════════════════════════════
+
+const challengesData = [
+{
+id: 'c1', type: 'memoryPairs', title: `Pares de conceptos`, description: `Encontrá los pares que se relacionan. Tocá dos tarjetas para descubrir si coinciden.`,
+pairs: [
+['Prompt', 'Instrucción que le das a la IA'], ['Alucinación', 'Dato inventado que suena creíble'],
+['Iterar', 'Mejorar paso a paso'], ['Ofuscar', 'Reemplazar datos sensibles por genéricos'],
+['Margen', 'Diferencia entre precio y costo'], ['Tabla dinámica', 'Resumen de muchos datos sin fórmulas']
+]
+},
+{
+id: 'c2', type: 'sequence', title: `Completá la secuencia`, description: `Observá el patrón y elegí qué elemento sigue.`,
+questions: [
+{ sequence: ['2', '6', '18', '54', '?'], options: ['108', '162', '72', '216'], correct: 1, hint: `Cada número se multiplica por 3.` },
+{ sequence: ['1', '1', '2', '3', '5', '?'], options: ['7', '8', '6', '10'], correct: 1, hint: `Cada número es la suma de los dos anteriores (Fibonacci).` },
+{ sequence: ['10', '20', '40', '80', '?'], options: ['120', '160', '100', '200'], correct: 1, hint: `Se duplica cada vez (como bolsas que se van sumando de a doble).` },
+{ sequence: ['100', '90', '81', '73', '?'], options: ['66', '64', '70', '60'], correct: 0, hint: `Va bajando de a uno más: -10, -9, -8, -7.` },
+{ sequence: ['Lunes', 'Miércoles', 'Viernes', '?'], options: ['Sábado', 'Domingo', 'Jueves', 'Martes'], correct: 1, hint: `Se salta un día cada vez.` }
+]
+},
+{
+id: 'c3', type: 'spotDifference', title: `Mejorá el prompt`, description: `Compará dos versiones de un pedido a la IA e identificá qué mejora la segunda.`,
+comparisons: [
+{ weak: `Haceme una foto de nueces.`, strong: `Generá una foto realista de un cuenco de nueces sobre madera rústica, con luz cálida natural y fondo desenfocado, estilo apetecible para redes.`, improvement: `Agrega estilo, composición y luz`, options: ['Usa palabras más cortas', 'Agrega estilo, composición y luz', 'Es más larga'], correct: 1 },
+{ weak: `Armame una lista de precios.`, strong: `Armá una lista de precios como tabla con columnas Producto, Presentación, Precio minorista y mayorista, dejando los valores en [completar].`, improvement: `Define formato y deja los precios a mi cargo`, options: ['Define formato y deja los precios a mi cargo', 'Pide menos productos', 'Cambia el tono'], correct: 0 },
+{ weak: `Decime cuánto me cuesta un kilo de nueces.`, strong: `Dame la lista de ítems de costo de un kilo de nueces con cada monto en [completar], sin inventar valores, para que yo los cargue.`, improvement: `Evita que la IA invente cifras`, options: ['Pide un número exacto ya', 'Evita que la IA invente cifras', 'Usa lenguaje formal'], correct: 1 },
+{ weak: `Cambiá todo mi cartel.`, strong: `Mantené el nombre y el logo. Cambiá SOLO el fondo a madera clara y la tipografía a una más legible. No toques nada más.`, improvement: `Protege lo que funciona y acota el cambio`, options: ['Lo hace más corto', 'Protege lo que funciona y acota el cambio', 'Agrega colores'], correct: 1 },
+{ weak: `Analizá mi planilla de clientes.`, strong: `Te paso la planilla con los nombres reemplazados por códigos (Cliente 01, 02). Analizá quién compra más y en qué meses.`, improvement: `Anonimiza los datos antes de analizar`, options: ['Anonimiza los datos antes de analizar', 'Pide más datos personales', 'Cambia el formato'], correct: 0 }
+]
+},
+{
+id: 'c4', type: 'orderSteps', title: `Ordená los pasos`, description: `Tocá los pasos en el orden correcto para completar el proceso.`,
+exercises: [
+{ title: `Verificar un dato que dio la IA`, steps: ['Identificar el dato clave de la respuesta', 'Buscar la fuente oficial del dato', 'Comparar con otra fuente independiente', 'Decidir si el dato es confiable'] },
+{ title: `Crear una imagen de producto que sirva`, steps: ['Describir el tema, estilo y luz que quiero', 'Generar una primera versión', 'Mirar con ojo crítico qué falta', 'Pedir un ajuste puntual', 'Repetir hasta lograr la imagen final'] },
+{ title: `Anonimizar la planilla antes de subirla`, steps: ['Identificar las columnas con datos personales', 'Reemplazar nombres por códigos', 'Quitar teléfonos y direcciones', 'Verificar que el análisis funciona igual'] },
+{ title: `Armar un folleto con ayuda de IA`, steps: ['Mejorar primero la foto del producto', 'Definir un diseño simple', 'Dejar un espacio para los precios', 'Cargar yo los precios y revisar', 'Controlar que no haya errores antes de imprimir'] }
+]
+},
+{
+id: 'c5', type: 'association', title: `Asociación rápida`, description: `Conectá cada concepto de la izquierda con su descripción a la derecha.`,
+pairs: [
+['Rol', 'Quién querés que sea la IA al responder'],
+['Contexto', 'Datos de tu negocio que la IA no adivina'],
+['Formato', 'Cómo querés recibir la respuesta'],
+['Iterar', 'Mejorar pidiendo ajustes puntuales'],
+['Alucinación', 'Invento presentado como dato real'],
+['Resolución', 'Tamaño y nitidez para poder imprimir'],
+['Ofuscación', 'Ocultar datos sensibles antes de enviar'],
+['Margen', 'Lo que te queda entre precio y costo']
+]
+},
+{
+id: 'c6', type: 'intruder', title: `Encontrá al intruso`, description: `En cada grupo, una palabra no pertenece. ¿Cuál es y por qué?`,
+groups: [
+{ items: ['ChatGPT', 'Gemini', 'Claude', 'Excel', 'Copilot'], intruder: 3, reason: `Excel es una planilla de cálculo, no una IA conversacional.` },
+{ items: ['Rol', 'Contexto', 'Formato', 'Apurarse', 'Criterio'], intruder: 3, reason: `"Apurarse" no es parte de un buen prompt; lo demás sí.` },
+{ items: ['Nombre del cliente', 'Teléfono', 'Producto preferido', 'DNI', 'Dirección'], intruder: 2, reason: `"Producto preferido" no es un dato sensible que requiera protección.` },
+{ items: ['Verificar el dato', 'Iterar la imagen', 'Copiar sin revisar', 'Ofuscar datos', 'Mostrar el cálculo'], intruder: 2, reason: `"Copiar sin revisar" es justamente lo que hay que evitar.` },
+{ items: ['Luz cálida', 'Fondo de madera', 'Estilo apetecible', 'Precio exacto inventado', 'Encuadre cerrado'], intruder: 3, reason: `El precio exacto no se deja a la IA: lo controlás vos.` }
+]
+}
+];
+
+const roleColor = {
+usuario: 'bg-slate-100 border-slate-300 text-slate-900',
+ia: 'bg-indigo-50 border-indigo-200 text-indigo-900',
+ajuste: 'bg-amber-50 border-amber-200 text-amber-900',
+alerta: 'bg-rose-50 border-rose-200 text-rose-900',
+resultado: 'bg-emerald-50 border-emerald-200 text-emerald-900'
+};
+
+const roleLabel = {
+usuario: 'Interacción',
+ia: 'Asistente',
+ajuste: 'Iteración',
+alerta: 'Alerta',
+resultado: 'Resultado'
+};
+// ═══════════════════════════════════════════════════════════════
+// DATA + COMPONENTE: LABORATORIO DE IMÁGENES CON IA
+// ═══════════════════════════════════════════════════════════════
+
+const imageGlossary = [
+{ term: `Prompt de imagen`, def: `La descripción en palabras de lo que querés que la IA dibuje o genere. Cuanto más claro y detallado, mejor el resultado.` },
+{ term: `Estilo`, def: `El "cómo se ve": fotografía realista, acuarela, dibujo, minimalista, rústico, 3D. Define el clima visual de la imagen.` },
+{ term: `Composición / encuadre`, def: `Cómo se ubican los elementos: qué va al centro, qué de fondo, si es un primer plano o un plano general.` },
+{ term: `Iluminación`, def: `La luz de la escena: cálida, fría, suave, dura, natural, de estudio. Cambia por completo la sensación de la foto.` },
+{ term: `Paleta de colores`, def: `Los colores predominantes. Mantener una paleta fija ayuda a que tu marca se vea coherente en todo el material.` },
+{ term: `Relación de aspecto`, def: `La forma del rectángulo: cuadrada (1:1) para redes, vertical (4:5 o 9:16) para historias o folletos, horizontal (16:9) para portadas.` },
+{ term: `Resolución`, def: `El tamaño y la nitidez de la imagen. Para pantalla alcanza poco; para imprimir necesitás imágenes grandes y nítidas (alta resolución).` },
+{ term: `Imagen de referencia`, def: `Una foto o captura que subís para que la IA la use como punto de partida o inspiración. Clave para editar lo que ya tenés.` },
+{ term: `Edición / variación`, def: `Pedirle a la IA que modifique una imagen existente (cambiar fondo, luz, agregar o quitar algo) en vez de crear una desde cero.` },
+{ term: `Negativos (qué evitar)`, def: `Decirle a la IA lo que NO querés ("sin texto", "sin personas", "sin fondo recargado"). Acota el resultado y evita sorpresas.` },
+{ term: `Iteración`, def: `Mejorar la imagen en varias vueltas: generás, mirás, pedís un ajuste puntual y repetís. Es el método normal, no un fracaso.` },
+{ term: `Marca de agua / origen`, def: `Algunas IA marcan que la imagen fue generada. Es bueno saberlo y ser honesto sobre el uso de imágenes generadas.` }
+];
+
+const imageConcepts = [
+{ title: `Qué hacen muy bien (aprovechalo)`, body: [
+`Crear ambientaciones y fondos atractivos: madera rústica, campo, cocina, mesa servida.`,
+`Lograr climas de luz que dan ganas (luz cálida de atardecer, luz natural de mañana).`,
+`Generar estilos variados de la misma idea para que elijas: realista, ilustrado, minimalista.`,
+`Modificar una foto que ya tenés: cambiar el fondo, mejorar la luz, limpiar el entorno.`
+] },
+{ title: `Qué les cuesta todavía (controlalo vos)`, body: [
+`El texto dentro de la imagen: suelen escribir mal palabras y precios. Mejor agregá el texto vos.`,
+`Reproducir un logo complejo exacto: lo redibujan distinto. Usá tu logo real al final.`,
+`La coherencia entre varias imágenes: sin un estilo fijo, cada una sale diferente.`,
+`Detalles muy finos (manos, etiquetas, números): revisalos siempre antes de publicar.`
+] },
+{ title: `Calidad y responsabilidad`, body: [
+`Revisá que la imagen represente con honestidad tu producto: no muestres algo que no es.`,
+`Para impresión, pedí siempre alta resolución y exportá en el tamaño más grande disponible.`,
+`Si usás una imagen de referencia, inspirate, no copies obras ajenas: cuidá los derechos.`,
+`Sé honesto cuando corresponda sobre que una imagen fue generada o editada con IA.`
+] },
+{ title: `La actitud que da resultados`, body: [
+`Nadie logra la imagen perfecta al primer intento: se llega iterando con calma.`,
+`Trabajá por pasos: primero la foto, después el diseño, después el texto y el logo.`,
+`Cada intento "fallido" te dice qué pedir distinto la próxima vez: es información.`,
+`Guardá tus mejores prompts: van a ser tu caja de herramientas visual.`
+] }
+];
+
+const imageRecipes = [
+{
+id: 'r1',
+title: `Folleto con lista de precios y logo (partiendo de una captura)`,
+intro: `La receta estrella. Vamos a armar un folleto profesional combinando una foto de producto, tu logo (a partir de una captura) y una lista de precios que vas a controlar vos. La clave: trabajar por pasos y dejar los precios y el logo bajo tu control para que salgan exactos.`,
+toolNotes: [
+{ tool: `ChatGPT / DALL·E`, note: `Podés subir una imagen con el clip y pedir que la use de referencia o que la edite. Bueno para ir conversando ajustes.` },
+{ tool: `Gemini`, note: `Muy bueno editando a partir de una imagen que subís: ideal para "tomá esta foto y cambiá esto".` },
+{ tool: `Copilot (Designer)`, note: `Pensado para piezas de diseño y carteles; útil para layouts de folleto. Revisá siempre los textos.` }
+],
+steps: [
+{ goal: `Preparar la materia prima`, prompt: `(Sin prompt) Reuní antes de empezar: 1) una foto de tu producto sacada con el celular, 2) una captura de tu logo (o de una referencia de estilo), 3) tu lista de precios escrita aparte en un papel o nota.`, expect: `Tener todo a mano evita frenar a mitad de camino.`, adjust: `Si no tenés foto buena, sacá una nueva con luz de día y fondo simple: la vas a mejorar en el paso siguiente.` },
+{ goal: `Mejorar la foto del producto`, prompt: `Actuá como fotógrafo de alimentos. Te subo una foto de mis nueces. Mejorala: fondo de madera clara, luz natural cálida, aspecto apetecible y realista, fondo levemente desenfocado. No agregues texto ni logos. Mantené el producto tal como es.`, expect: `Una foto limpia y atractiva, sin texto, lista para usar en el diseño.`, adjust: `Si quedó artificial: "más natural y realista, textura real de la nuez". Si quedó oscura: "más luz, iluminación suave y cálida".` },
+{ goal: `Limpiar o recrear el logo desde la captura`, prompt: `Te subo una captura de mi logo. Limpialo y dejalo nítido sobre fondo transparente, sin recortes ni bordes raros, conservando sus colores y su forma. No le cambies el nombre ni el dibujo.`, expect: `Tu logo prolijo y reutilizable. Si el logo es complejo, puede no salir idéntico.`, adjust: `Si lo cambia demasiado: "respetá exactamente el logo, no lo rediseñes, solo limpialo". Si no sale bien, guardá tu logo original para pegarlo al final.` },
+{ goal: `Diseñar la estructura del folleto`, prompt: `Diseñá un folleto vertical (relación 4:5) simple y elegante para una empresa de nueces y avellanas, con estilo rústico y cálido. Dejá estas zonas: arriba un espacio para el logo, en el medio un espacio grande para una foto de producto, y abajo un recuadro limpio reservado para una lista de precios. Por ahora dejá esos espacios vacíos o con texto de muestra.`, expect: `Una plantilla de folleto con zonas claras y aire, sin contenido real todavía.`, adjust: `Si quedó recargado: "más simple, más espacio en blanco, menos adornos". Si querés otro formato: "hacelo horizontal" o "cuadrado para redes".` },
+{ goal: `Integrar foto y logo`, prompt: `Tomá el diseño anterior. Colocá la foto de producto mejorada en el espacio central y el logo arriba. Que se vea equilibrado y profesional. No agregues precios todavía.`, expect: `El folleto tomando forma, con tu producto y tu marca en su lugar.`, adjust: `Si el logo quedó chico o tapado: "agrandá el logo y dale más aire". Si compite con la foto: "que el logo sea más sobrio".` },
+{ goal: `Resolver la lista de precios (vos al control)`, prompt: `Dejá un recuadro limpio y legible para la lista de precios, con líneas para 6 productos y dos columnas (Producto y Precio). NO inventes precios ni nombres: dejá el recuadro listo para que yo escriba encima. Que la tipografía sea bien legible.`, expect: `Un espacio prolijo donde vas a cargar tus precios reales (a mano, con un editor simple, o escribiéndolos vos).`, adjust: `Recordá: los precios exactos los ponés vos. Si dejás que la IA los escriba, revisá número por número, porque suele equivocarse con el texto.` },
+{ goal: `Exportar en alta resolución y revisar`, prompt: `Generá la versión final en alta resolución, nítida, apta para impresión. Después decime en qué tamaño me conviene exportarla si la voy a imprimir en una hoja A5.`, expect: `Un archivo grande y nítido, listo para imprimir o compartir.`, adjust: `Antes de imprimir: revisá ortografía, que el logo esté bien y que los precios sean los correctos. Imprimí una prueba antes de la tirada grande.` }
+]
+},
+{
+id: 'r2',
+title: `Renovar un cartel o folleto que ya tenés`,
+intro: `Tenés un cartel o folleto viejo y querés modernizarlo sin perder lo que funciona (tu nombre, tu logo). La clave es la precisión: decir qué conservar y cambiar SOLO lo necesario, en vez de pedir "cambialo todo".`,
+toolNotes: [
+{ tool: `Gemini / ChatGPT`, note: `Subí la captura del cartel y pedí ediciones puntuales conversando: "cambiá solo esto".` },
+{ tool: `Copilot Designer`, note: `Útil si querés rehacer el layout completo manteniendo los elementos.` }
+],
+steps: [
+{ goal: `Subir y describir lo que tenés`, prompt: `Te subo la captura de mi cartel actual. Antes de cambiar nada, describime qué ves: elementos, colores y qué se podría mejorar para que se vea más moderno y legible.`, expect: `La IA "entiende" tu material y te propone mejoras; vos decidís cuáles aceptar.`, adjust: `Si no interpreta bien la imagen, describísela vos en palabras.` },
+{ goal: `Conservar lo importante`, prompt: `Mantené EXACTAMENTE igual: el nombre del negocio y el logo. No los modifiques ni los muevas de lugar.`, expect: `La IA fija lo que no debe tocar.`, adjust: `Repetí esta instrucción en cada pedido siguiente: "recordá conservar nombre y logo".` },
+{ goal: `Cambiar de a un elemento`, prompt: `Ahora cambiá SOLO el fondo: poné un fondo de madera clara, cálido. No toques el texto ni el logo.`, expect: `Un cambio puntual y controlado.`, adjust: `Una cosa por vez: primero fondo, después tipografía, después una foto. Si cambia algo de más: "volvé a lo anterior y cambiá únicamente el fondo".` },
+{ goal: `Mejorar legibilidad`, prompt: `Cambiá la tipografía por una más legible y subí el contraste del texto para que se lea de lejos. Mantené todo lo demás igual.`, expect: `Un cartel más claro y profesional.`, adjust: `Si el texto sigue costando: "letras más grandes y con más contraste sobre el fondo".` },
+{ goal: `Cerrar y exportar`, prompt: `Generá la versión final en alta resolución para imprimir. Listame los cambios que hicimos respecto del original.`, expect: `El cartel renovado, con tu identidad intacta.`, adjust: `Compará lado a lado con el original y revisá que no se haya colado ningún cambio no deseado.` }
+]
+},
+{
+id: 'r3',
+title: `Serie de fotos de producto con un estilo de marca coherente`,
+intro: `Para que tu negocio se vea profesional, tus fotos deberían "parecer de la misma familia". Esta receta arma primero un brief de estilo y después varias fotos que lo respetan.`,
+toolNotes: [
+{ tool: `Cualquier IA de imagen`, note: `Lo importante es repetir el mismo brief de estilo en cada prompt para mantener coherencia.` }
+],
+steps: [
+{ goal: `Definir el brief de estilo`, prompt: `Actuá como director de arte. Ayudame a definir un brief de estilo para las fotos de mi marca de frutos secos: paleta de colores, tipo de luz, tipo de fondo y clima general (por ejemplo rústico, natural y cálido). Resumilo en 4 líneas que pueda repetir en cada foto.`, expect: `Un mini instructivo de estilo reutilizable.`, adjust: `Si te dan muchas opciones, elegí una y pedí "fijá esta y resumila en una frase corta".` },
+{ goal: `Primera foto del set`, prompt: `Usando este brief de estilo: [pegá el brief]. Generá una foto realista de nueces peladas en un cuenco de cerámica, primer plano, con ese estilo.`, expect: `La primera foto que marca el tono del set.`, adjust: `Ajustá hasta que te guste: esta foto será la referencia de las demás.` },
+{ goal: `Repetir el estilo en otras tomas`, prompt: `Manteniendo EXACTAMENTE el mismo estilo del brief, generá ahora: 1) avellanas sobre madera, 2) un mix de frutos secos en bolsa de tela, 3) una mano sosteniendo nueces. Misma luz, misma paleta, mismo clima.`, expect: `Varias fotos que se ven como una familia.`, adjust: `Si alguna se desvía: "esta cambió el estilo, ajustala para que coincida con la primera".` },
+{ goal: `Revisar la coherencia`, prompt: `Mostrámelas juntas y decime si alguna rompe la coherencia del set y por qué.`, expect: `Una mirada crítica antes de usarlas.`, adjust: `Reemplazá las que no encajen repitiendo el brief.` },
+{ goal: `Exportar el set`, prompt: `Generá todas en alta resolución, mismo formato (por ejemplo cuadrado 1:1 para redes).`, expect: `Un set listo para tus publicaciones y catálogo.`, adjust: `Guardá el brief: lo vas a reutilizar cada temporada.` }
+]
+}
+];
+
+const imageEditorPhrases = [
+{ category: `Luz e iluminación`, phrases: [
+{ want: `Que se vea cálida y apetecible`, say: `iluminación cálida y suave, como luz natural de atardecer`, avoid: `iluminá bien (demasiado vago)` },
+{ want: `Que no quede oscura`, say: `aumentá la luz, escena luminosa y clara`, avoid: `que se vea (no dice cómo)` },
+{ want: `Look profesional de estudio`, say: `luz de estudio suave, sin sombras duras`, avoid: `que parezca profesional` }
+] },
+{ category: `Color y paleta`, phrases: [
+{ want: `Tonos naturales y tierra`, say: `paleta cálida de marrones, verdes y cremas`, avoid: `lindos colores` },
+{ want: `Coherencia con tu marca`, say: `respetá esta paleta: [colores de tu marca]`, avoid: `usá mis colores (sin decir cuáles)` },
+{ want: `Más vida sin exagerar`, say: `colores naturales y vivos, sin saturar de más`, avoid: `más colorido` }
+] },
+{ category: `Fondo y ambientación`, phrases: [
+{ want: `Fondo simple que no distraiga`, say: `fondo de madera clara, liso, levemente desenfocado`, avoid: `un fondo lindo` },
+{ want: `Quitar el desorden del fondo`, say: `quitá los objetos del fondo, dejalo limpio`, avoid: `sacá lo feo` },
+{ want: `Clima de campo`, say: `fondo natural de campo, cálido y rústico`, avoid: `que se vea rural` }
+] },
+{ category: `Composición y encuadre`, phrases: [
+{ want: `Destacar el producto`, say: `primer plano del producto, centrado, con espacio alrededor`, avoid: `que se vean bien las nueces` },
+{ want: `Dejar lugar para texto`, say: `dejá espacio libre arriba para poner un título después`, avoid: `que entre el texto` },
+{ want: `Diseño limpio`, say: `composición simple y equilibrada, con aire`, avoid: `que no quede feo` }
+] },
+{ category: `Estilo y estética`, phrases: [
+{ want: `Foto realista`, say: `fotografía realista de alimentos, textura real`, avoid: `que parezca foto` },
+{ want: `Aspecto artesanal`, say: `estilo rústico y artesanal, hecho a mano`, avoid: `estilo lindo` },
+{ want: `Evitar el look "plástico"`, say: `aspecto natural, nada artificial ni de plástico`, avoid: `más real (vago)` }
+] },
+{ category: `Calidad, nitidez y resolución`, phrases: [
+{ want: `Que sirva para imprimir`, say: `alta resolución, nítida, apta para impresión`, avoid: `que salga bien` },
+{ want: `Más detalle`, say: `enfocada y con detalle nítido en el producto`, avoid: `mejor calidad` },
+{ want: `Tamaño grande`, say: `exportala en el tamaño más grande disponible`, avoid: `hacela más grande (sin contexto)` }
+] },
+{ category: `Agregar, quitar o cambiar elementos`, phrases: [
+{ want: `Sumar algo concreto`, say: `agregá unas hojas verdes a un costado, sutil`, avoid: `ponele algo más` },
+{ want: `Quitar algo`, say: `quitá [elemento] y dejá ese espacio limpio`, avoid: `sacá eso` },
+{ want: `Cambiar solo una parte`, say: `cambiá SOLO [esto]; el resto queda igual`, avoid: `cambialo` }
+] },
+{ category: `Texto dentro de la imagen`, phrases: [
+{ want: `Evitar errores de ortografía`, say: `generá la imagen SIN texto; el texto lo agrego yo después`, avoid: `poné el precio (suele escribirlo mal)` },
+{ want: `Si necesitás que escriba algo`, say: `escribí exactamente esta palabra: "[palabra]" y revisá que esté bien`, avoid: `poné un texto lindo` },
+{ want: `Título legible`, say: `dejá un espacio limpio para un título grande y legible`, avoid: `ponele un título` }
+] }
+];
+
+const imageTroubleshoot = [
+{ problem: `Quedó muy oscura`, cause: `No especificaste la luz.`, fix: `Aumentá la luz, iluminación cálida y suave, escena luminosa.` },
+{ problem: `El texto tiene letras o números raros`, cause: `Los modelos escriben mal el texto dentro de la imagen.`, fix: `Pedí la imagen SIN texto y agregá vos el texto y los precios después.` },
+{ problem: `Cambió cosas que yo no quería`, cause: `El pedido fue muy abierto ("cambialo todo").`, fix: `Decí qué conservar y cambiá SOLO un elemento por vez.` },
+{ problem: `Se ve borrosa para imprimir`, cause: `Baja resolución.`, fix: `Pedí alta resolución, nítida, apta para impresión, y exportá en el tamaño más grande.` },
+{ problem: `No se parece a mi producto`, cause: `Faltó descripción o una referencia.`, fix: `Subí una foto real como referencia y describí los detalles importantes.` },
+{ problem: `Las nueces parecen de plástico`, cause: `Estilo demasiado artificial.`, fix: `Pedí aspecto natural y realista, textura real, fotografía de alimentos.` },
+{ problem: `Cada imagen tiene un estilo distinto`, cause: `No fijaste un estilo común.`, fix: `Definí un brief de estilo y repetilo igual en cada prompt.` },
+{ problem: `Quedó recargada`, cause: `Pediste demasiados elementos.`, fix: `Pedí composición simple, limpia, con espacio en blanco.` },
+{ problem: `El logo sale distinto cada vez`, cause: `Los modelos no reproducen logos exactos.`, fix: `Usá tu logo real y pedí que lo respete sin redibujarlo; o pegalo vos al final.` },
+{ problem: `Me frustré, no me sale`, cause: `Intentás lograr todo de una sola vez.`, fix: `Dividí en pasos: primero la foto, después el diseño, después el texto y el logo.` }
+];
+
+const ImagesSection = () => {
+const [sub, setSub] = useState('guia');
+const [recipeId, setRecipeId] = useState(imageRecipes[0].id);
+const [copied, setCopied] = useState(null);
+const copyTxt = (t, id) => { navigator.clipboard.writeText(t).then(() => { setCopied(id); setTimeout(() => setCopied(null), 1500); }); };
+const recipe = imageRecipes.find(r => r.id === recipeId);
+const subs = [
+{ id: 'guia', label: 'Guía general', icon: <Sparkles className="w-4 h-4" /> },
+{ id: 'folleto', label: 'Paso a paso', icon: <Wand2 className="w-4 h-4" /> },
+{ id: 'editor', label: 'Editor profesional', icon: <Palette className="w-4 h-4" /> },
+{ id: 'iterar', label: 'Iterar sin frustrarse', icon: <RefreshCw className="w-4 h-4" /> }
+];
+
+return (
+<div className="max-w-4xl mx-auto">
+<div className="bg-gradient-to-br from-amber-50 to-rose-50 rounded-2xl p-6 mb-6 border border-amber-200">
+<h3 className="text-xl font-bold text-amber-800 mb-2 flex items-center gap-2">
+<ImageIcon className="w-5 h-5" /> Laboratorio de Imágenes
+</h3>
+<p className="text-amber-900">Acá aprendés a crear y modificar material gráfico para tu negocio con IA: fotos de producto, folletos, carteles y logos. Primero el panorama, después un paso a paso bien concreto, un banco de frases para pedir cambios precisos, y una guía para no frustrarte. Recordá: el buen resultado llega iterando.</p>
+</div>
+
+<div className="flex flex-wrap gap-2 mb-6">
+{subs.map(s => (
+<button key={s.id} onClick={() => setSub(s.id)}
+className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${sub === s.id ? 'bg-amber-600 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`}>
+{s.icon} {s.label}
+</button>
+))}
+</div>
+
+{sub === 'guia' && (
+<div className="space-y-6">
+<div className="grid md:grid-cols-2 gap-4">
+{imageConcepts.map((c, i) => (
+<div key={i} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+<h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2"><Sparkles className="w-4 h-4 text-amber-500" /> {c.title}</h4>
+<ul className="space-y-2">
+{c.body.map((b, j) => (
+<li key={j} className="flex items-start gap-2 text-slate-700 text-sm"><CheckCircle2 className="w-4 h-4 text-amber-500 mt-1 flex-shrink-0" /><span>{b}</span></li>
+))}
+</ul>
+</div>
+))}
+</div>
+<div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+<h4 className="font-bold text-slate-800 mb-4 flex items-center gap-2"><BookOpen className="w-4 h-4 text-amber-500" /> Glosario para entenderte con la IA</h4>
+<div className="grid md:grid-cols-2 gap-3">
+{imageGlossary.map((g, i) => (
+<div key={i} className="border border-slate-100 rounded-xl p-3 bg-slate-50">
+<p className="font-bold text-slate-800 text-sm">{g.term}</p>
+<p className="text-slate-600 text-sm">{g.def}</p>
+</div>
+))}
+</div>
+</div>
+</div>
+)}
+
+{sub === 'folleto' && (
+<div className="space-y-5">
+<div className="flex flex-wrap gap-2">
+{imageRecipes.map(r => (
+<button key={r.id} onClick={() => setRecipeId(r.id)}
+className={`text-left px-4 py-2 rounded-lg text-sm font-medium transition-all ${recipeId === r.id ? 'bg-rose-600 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`}>
+{r.title}
+</button>
+))}
+</div>
+<div className="bg-rose-50 border border-rose-200 rounded-2xl p-5">
+<h4 className="font-bold text-rose-800 mb-1">{recipe.title}</h4>
+<p className="text-rose-900 text-sm">{recipe.intro}</p>
+</div>
+<div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+<p className="text-xs font-bold text-slate-400 uppercase mb-3">En qué herramienta</p>
+<div className="grid md:grid-cols-3 gap-3">
+{recipe.toolNotes.map((t, i) => (
+<div key={i} className="border border-slate-100 rounded-xl p-3 bg-slate-50">
+<p className="font-bold text-slate-800 text-sm flex items-center gap-1"><Wand2 className="w-3 h-3 text-rose-500" /> {t.tool}</p>
+<p className="text-slate-600 text-sm">{t.note}</p>
+</div>
+))}
+</div>
+</div>
+<div className="space-y-4">
+{recipe.steps.map((st, i) => {
+const id = recipe.id + '-' + i;
+return (
+<div key={i} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+<div className="flex items-start gap-3 mb-3">
+<div className="w-8 h-8 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold flex-shrink-0">{i + 1}</div>
+<h4 className="font-bold text-slate-800 mt-1">{st.goal}</h4>
+</div>
+<div className="bg-slate-900 rounded-xl p-4 mb-3">
+<pre className="whitespace-pre-wrap text-slate-100 text-sm font-sans">{st.prompt}</pre>
+</div>
+<button onClick={() => copyTxt(st.prompt, id)} className="flex items-center gap-2 px-4 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 text-sm mb-3">
+{copied === id ? <><Check className="w-4 h-4" /> Copiado</> : <><Copy className="w-4 h-4" /> Copiar prompt</>}
+</button>
+<div className="grid md:grid-cols-2 gap-3">
+<div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3">
+<p className="text-xs font-bold text-emerald-700 mb-1">Qué esperar</p>
+<p className="text-sm text-emerald-900">{st.expect}</p>
+</div>
+<div className="bg-amber-50 border border-amber-200 rounded-xl p-3">
+<p className="text-xs font-bold text-amber-700 mb-1">Cómo ajustar</p>
+<p className="text-sm text-amber-900">{st.adjust}</p>
+</div>
+</div>
+</div>
+);
+})}
+</div>
+</div>
+)}
+
+{sub === 'editor' && (
+<div className="space-y-5">
+<div className="bg-indigo-50 border border-indigo-200 rounded-2xl p-5">
+<h4 className="font-bold text-indigo-800 mb-1 flex items-center gap-2"><Palette className="w-4 h-4" /> Convertite en editor profesional</h4>
+<p className="text-indigo-900 text-sm">Modificar una imagen con calidad es cuestión de elegir las palabras correctas. Acá tenés, por tipo de cambio, qué decir para lograrlo y qué frases vagas conviene evitar. Usalas como repertorio: cuanto más preciso pedís, más preciso recibís.</p>
+</div>
+{imageEditorPhrases.map((cat, i) => (
+<div key={i} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+<h4 className="font-bold text-slate-800 mb-3">{cat.category}</h4>
+<div className="space-y-3">
+{cat.phrases.map((p, j) => (
+<div key={j} className="border border-slate-100 rounded-xl p-3 bg-slate-50">
+<p className="text-sm text-slate-500 mb-1">Querés: <span className="text-slate-800 font-medium">{p.want}</span></p>
+<p className="text-sm text-emerald-800 mb-1"><span className="font-bold">Decí:</span> "{p.say}"</p>
+<p className="text-sm text-rose-700"><span className="font-bold">Evitá:</span> "{p.avoid}"</p>
+</div>
+))}
+</div>
+</div>
+))}
+</div>
+)}
+
+{sub === 'iterar' && (
+<div className="space-y-5">
+<div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-5">
+<h4 className="font-bold text-emerald-800 mb-1 flex items-center gap-2"><RefreshCw className="w-4 h-4" /> Iterar es el método, no el fracaso</h4>
+<p className="text-emerald-900 text-sm">Casi ninguna imagen sale perfecta al primer intento, y eso es completamente normal. Cada resultado que no te convence te dice qué pedir distinto. Acá tenés los problemas más comunes y la frase exacta para corregirlos. Paciencia: cada vuelta te acerca.</p>
+</div>
+<div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+<table className="w-full text-sm">
+<thead>
+<tr className="bg-slate-100 text-slate-600 text-left">
+<th className="p-3 font-bold">Si pasa esto...</th>
+<th className="p-3 font-bold">Por qué</th>
+<th className="p-3 font-bold">Qué pedir</th>
+</tr>
+</thead>
+<tbody>
+{imageTroubleshoot.map((t, i) => (
+<tr key={i} className="border-t border-slate-100 align-top">
+<td className="p-3 font-medium text-slate-800">{t.problem}</td>
+<td className="p-3 text-slate-500">{t.cause}</td>
+<td className="p-3 text-emerald-800">{t.fix}</td>
+</tr>
+))}
+</tbody>
+</table>
+</div>
+<div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+<h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2"><Lightbulb className="w-4 h-4 text-amber-500" /> Cuatro recordatorios para no bajar los brazos</h4>
+<ul className="space-y-2 text-slate-700 text-sm">
+<li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 mt-1 flex-shrink-0" /><span>Metas chicas: lográ primero una buena foto, después el diseño, después el texto.</span></li>
+<li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 mt-1 flex-shrink-0" /><span>Si algo no sale tras varios intentos, cambiá la estrategia en vez de repetir igual.</span></li>
+<li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 mt-1 flex-shrink-0" /><span>Pedile ayuda a la IA con el propio pedido: "este prompt no me da lo que busco, ¿cómo lo reescribirías?".</span></li>
+<li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 mt-1 flex-shrink-0" /><span>Guardá tus prompts que funcionaron: son tu caja de herramientas para la próxima.</span></li>
+</ul>
+</div>
+</div>
+)}
+</div>
+);
+};
+
+// ═══════════════════════════════════════════════════════════════
+// COMPONENTES DE DESAFÍOS COGNITIVOS
+// ═══════════════════════════════════════════════════════════════
+
+const MemoryPairsGame = ({ data, onReset }) => {
+const [cards, setCards] = useState(() => {
+return data.pairs.flatMap((pair, i) => [
+{ id: i * 2, pairId: i, text: pair[0] },
+{ id: i * 2 + 1, pairId: i, text: pair[1] }
+]).sort(() => Math.random() - 0.5);
+});
+const [revealed, setRevealed] = useState([]);
+const [matched, setMatched] = useState([]);
+const [moves, setMoves] = useState(0);
+const [checking, setChecking] = useState(false);
+
+const handleFlip = (cardId) => {
+if (checking || revealed.includes(cardId) || matched.includes(cardId)) return;
+const newRevealed = [...revealed, cardId];
+setRevealed(newRevealed);
+if (newRevealed.length === 2) {
+setMoves(m => m + 1);
+setChecking(true);
+const c1 = cards.find(c => c.id === newRevealed[0]);
+const c2 = cards.find(c => c.id === newRevealed[1]);
+if (c1.pairId === c2.pairId) {
+setTimeout(() => { setMatched(p => [...p, c1.id, c2.id]); setRevealed([]); setChecking(false); }, 700);
+} else {
+setTimeout(() => { setRevealed([]); setChecking(false); }, 1200);
+}
+}
+};
+
+const allDone = matched.length === cards.length;
+
+return (
+<div>
+    <div className="grid grid-cols-3 md:grid-cols-4 gap-3 mb-4">
+        {cards.map(card => {
+        const isUp = revealed.includes(card.id) || matched.includes(card.id);
+        const isDone = matched.includes(card.id);
+        return (
+        <button key={card.id} onClick={()=> handleFlip(card.id)}
+            className={`p-3 rounded-xl border-2 min-h-[72px] text-center transition-all duration-300 font-medium ${
+            isDone ? 'bg-emerald-100 border-emerald-400 text-emerald-800' :
+            isUp ? 'bg-indigo-100 border-indigo-400 text-indigo-800' :
+            'bg-white border-slate-300 hover:border-indigo-400 hover:bg-indigo-50 cursor-pointer text-slate-400'
+            }`}>
+            {isUp ? card.text : '?'}
+        </button>
+        );
+        })}
+    </div>
+    {allDone && (
+    <div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+        <p className="text-emerald-800 font-bold text-lg">🎉 ¡Completaste el desafío en {moves} intentos!</p>
+        <button onClick={onReset}
+            className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Jugar de nuevo</button>
+    </div>
+    )}
+    {!allDone && <p className="text-sm text-slate-500 text-center">Intentos: {moves} — Pares encontrados:
+        {matched.length / 2} de {data.pairs.length}</p>}
+</div>
+);
+};
+
+const SequenceGame = ({ data, onReset }) => {
+const [qi, setQi] = useState(0);
+const [score, setScore] = useState(0);
+const [picked, setPicked] = useState(null);
+const [showHint, setShowHint] = useState(false);
+const q = data.questions[qi];
+const done = qi >= data.questions.length;
+
+const pick = (i) => {
+if (picked !== null) return;
+setPicked(i);
+if (i === q.correct) setScore(s => s + 1);
+};
+const next = () => { setPicked(null); setShowHint(false); setQi(i => i + 1); };
+
+if (done) return (
+<div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+    <p className="text-emerald-800 font-bold text-lg">🎉 Completaste {score} de {data.questions.length}</p>
+    <button onClick={onReset}
+        className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Reiniciar</button>
+</div>
+);
+
+return (
+<div>
+    <p className="text-sm text-slate-500 mb-3">Pregunta {qi + 1} de {data.questions.length}</p>
+    <div className="flex items-center gap-2 mb-4 flex-wrap">
+        {q.sequence.map((s, i) => (
+        <span key={i} className={`px-4 py-2 rounded-lg font-bold text-lg ${s==='?'
+            ? 'bg-amber-100 border-2 border-amber-400 text-amber-700' : 'bg-slate-100 border border-slate-300'
+            }`}>{s}</span>
+        ))}
+    </div>
+    <div className="grid grid-cols-2 gap-3 mb-4">
+        {q.options.map((opt, i) => (
+        <button key={i} onClick={()=> pick(i)} className={`p-3 rounded-xl border-2 font-medium transition-all ${
+            picked === null ? 'bg-white border-slate-300 hover:border-indigo-400 cursor-pointer' :
+            i === q.correct ? 'bg-emerald-100 border-emerald-400 text-emerald-800' :
+            i === picked ? 'bg-rose-100 border-rose-400 text-rose-800' :
+            'bg-slate-50 border-slate-200 text-slate-400'
+            }`}>{opt}</button>
+        ))}
+    </div>
+    {picked !== null && picked !== q.correct && <p className="text-rose-700 mb-2">Esa no es — intentá otra vez o mirá la
+        pista.</p>}
+    {picked === q.correct && <p className="text-emerald-700 mb-2 font-medium">¡Correcto! {q.hint}</p>}
+    {!showHint && picked !== q.correct && <button onClick={()=> setShowHint(true)} className="text-sm text-indigo-600
+        underline mb-2">Ver pista</button>}
+    {showHint && <p className="text-sm text-indigo-700 italic mb-2">💡 {q.hint}</p>}
+    {picked !== null && <button onClick={next}
+        className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Siguiente →</button>}
+</div>
+);
+};
+
+const SpotDifferenceGame = ({ data, onReset }) => {
+const [qi, setQi] = useState(0);
+const [picked, setPicked] = useState(null);
+const [score, setScore] = useState(0);
+const c = data.comparisons[qi];
+const done = qi >= data.comparisons.length;
+
+const pick = (i) => { if (picked !== null) return; setPicked(i); if (i === c.correct) setScore(s => s + 1); };
+const next = () => { setPicked(null); setQi(i => i + 1); };
+
+if (done) return (
+<div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+    <p className="text-emerald-800 font-bold text-lg">🎉 Identificaste {score} de {data.comparisons.length} mejoras
+        correctamente</p>
+    <button onClick={onReset}
+        className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Reiniciar</button>
+</div>
+);
+
+return (
+<div>
+    <p className="text-sm text-slate-500 mb-3">Comparación {qi + 1} de {data.comparisons.length}</p>
+    <div className="grid md:grid-cols-2 gap-4 mb-4">
+        <div className="p-4 bg-rose-50 rounded-xl border border-rose-200">
+            <p className="text-xs font-bold text-rose-600 mb-1">❌ Versión débil</p>
+            <p className="text-rose-900 italic">"{c.weak}"</p>
+        </div>
+        <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+            <p className="text-xs font-bold text-emerald-600 mb-1">✅ Versión mejorada</p>
+            <p className="text-emerald-900 italic">"{c.strong}"</p>
+        </div>
+    </div>
+    <p className="font-medium mb-3">¿Qué mejoró en la segunda versión?</p>
+    <div className="space-y-2 mb-4">
+        {c.options.map((opt, i) => (
+        <button key={i} onClick={()=> pick(i)} className={`w-full text-left p-3 rounded-xl border-2 transition-all ${
+            picked === null ? 'bg-white border-slate-300 hover:border-indigo-400 cursor-pointer' :
+            i === c.correct ? 'bg-emerald-100 border-emerald-400' :
+            i === picked ? 'bg-rose-100 border-rose-400' : 'bg-slate-50 border-slate-200 opacity-50'
+            }`}>{opt}</button>
+        ))}
+    </div>
+    {picked !== null && picked === c.correct && <p className="text-emerald-700 mb-2 font-medium">¡Exacto!
+        {c.improvement}</p>}
+    {picked !== null && picked !== c.correct && <p className="text-rose-700 mb-2">No exactamente. La mejora clave fue:
+        {c.improvement}</p>}
+    {picked !== null && <button onClick={next}
+        className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Siguiente →</button>}
+</div>
+);
+};
+
+const OrderStepsGame = ({ data, onReset }) => {
+const [ei, setEi] = useState(0);
+const [selected, setSelected] = useState([]);
+const [shuffled] = useState(() => data.exercises.map(ex => [...ex.steps].sort(() => Math.random() - 0.5)));
+const ex = data.exercises[ei];
+const done = ei >= data.exercises.length;
+const available = shuffled[ei] ? shuffled[ei].filter(s => !selected.includes(s)) : [];
+const isCorrect = selected.length === ex?.steps.length && selected.every((s, i) => s === ex.steps[i]);
+const isWrong = selected.length > 0 && selected.length === ex?.steps.length && !isCorrect;
+
+const addStep = (step) => { setSelected(p => [...p, step]); };
+const reset = () => { setSelected([]); };
+const next = () => { setSelected([]); setEi(i => i + 1); };
+
+if (done) return (
+<div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+    <p className="text-emerald-800 font-bold text-lg">🎉 ¡Completaste todos los ejercicios de orden!</p>
+    <button onClick={onReset}
+        className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Reiniciar</button>
+</div>
+);
+
+return (
+<div>
+    <p className="text-sm text-slate-500 mb-1">Ejercicio {ei + 1} de {data.exercises.length}</p>
+    <p className="font-bold text-slate-800 mb-4">{ex.title}</p>
+    {selected.length > 0 && (
+    <div className="mb-4 space-y-2">
+        <p className="text-xs font-bold text-slate-500">Tu orden:</p>
+        {selected.map((s, i) => (
+        <div key={i} className={`p-2 rounded-lg border text-sm ${isCorrect ? 'bg-emerald-50 border-emerald-300' :
+            isWrong ? 'bg-rose-50 border-rose-300' : 'bg-indigo-50 border-indigo-200' }`}>
+            <span className="font-bold mr-2">{i + 1}.</span>{s}
+        </div>
+        ))}
+    </div>
+    )}
+    {!isCorrect && !isWrong && available.length > 0 && (
+    <div className="space-y-2 mb-4">
+        <p className="text-xs font-bold text-slate-500">Tocá el siguiente paso:</p>
+        {available.map((s, i) => (
+        <button key={i} onClick={()=> addStep(s)} className="w-full text-left p-3 rounded-xl border-2 bg-white
+            border-slate-300 hover:border-indigo-400 hover:bg-indigo-50 transition-all">{s}</button>
+        ))}
+    </div>
+    )}
+    {isCorrect && <p className="text-emerald-700 font-medium mb-3">¡Perfecto! El orden es correcto.</p>}
+    {isWrong && <p className="text-rose-700 mb-3">No exactamente. Intentalo de nuevo.</p>}
+    <div className="flex gap-2">
+        {(isWrong || selected.length > 0) && !isCorrect && <button onClick={reset}
+            className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300">Reiniciar este</button>}
+        {isCorrect && <button onClick={next}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Siguiente →</button>}
+    </div>
+</div>
+);
+};
+
+const AssociationGame = ({ data, onReset }) => {
+const [selectedLeft, setSelectedLeft] = useState(null);
+const [matched, setMatched] = useState({});
+const [wrong, setWrong] = useState(null);
+const shuffledRight = useMemo(() => [...data.pairs.map(p => p[1])].sort(() => Math.random() - 0.5), []);
+const allDone = Object.keys(matched).length === data.pairs.length;
+
+const clickLeft = (concept) => { if (matched[concept]) return; setSelectedLeft(concept); setWrong(null); };
+const clickRight = (def) => {
+if (!selectedLeft || Object.values(matched).includes(def)) return;
+const pair = data.pairs.find(p => p[0] === selectedLeft && p[1] === def);
+if (pair) { setMatched(p => ({...p, [selectedLeft]: def})); setSelectedLeft(null); }
+else { setWrong(def); setTimeout(() => setWrong(null), 800); }
+};
+
+return (
+<div>
+    <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+            <p className="text-xs font-bold text-slate-500 mb-1">Conceptos</p>
+            {data.pairs.map(([concept], i) => (
+            <button key={i} onClick={()=> clickLeft(concept)} className={`w-full text-left p-3 rounded-xl border-2
+                transition-all text-sm ${
+                matched[concept] ? 'bg-emerald-100 border-emerald-300 text-emerald-700' :
+                selectedLeft === concept ? 'bg-indigo-100 border-indigo-400 text-indigo-800 ring-2 ring-indigo-300' :
+                'bg-white border-slate-300 hover:border-indigo-400 cursor-pointer'
+                }`}>{concept}</button>
+            ))}
+        </div>
+        <div className="space-y-2">
+            <p className="text-xs font-bold text-slate-500 mb-1">Definiciones</p>
+            {shuffledRight.map((def, i) => (
+            <button key={i} onClick={()=> clickRight(def)} className={`w-full text-left p-3 rounded-xl border-2
+                transition-all text-sm ${
+                Object.values(matched).includes(def) ? 'bg-emerald-100 border-emerald-300 text-emerald-700' :
+                wrong === def ? 'bg-rose-100 border-rose-400' :
+                'bg-white border-slate-300 hover:border-indigo-400 cursor-pointer'
+                }`}>{def}</button>
+            ))}
+        </div>
+    </div>
+    {allDone && (
+    <div className="mt-4 text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+        <p className="text-emerald-800 font-bold text-lg">🎉 ¡Todas las asociaciones correctas!</p>
+        <button onClick={onReset}
+            className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Jugar de nuevo</button>
+    </div>
+    )}
+    {!allDone && <p className="text-sm text-slate-500 mt-3 text-center">Asociaciones: {Object.keys(matched).length} de
+        {data.pairs.length}</p>}
+</div>
+);
+};
+
+const IntruderGame = ({ data, onReset }) => {
+const [gi, setGi] = useState(0);
+const [picked, setPicked] = useState(null);
+const [score, setScore] = useState(0);
+const g = data.groups[gi];
+const done = gi >= data.groups.length;
+
+const pick = (i) => { if (picked !== null) return; setPicked(i); if (i === g.intruder) setScore(s => s + 1); };
+const next = () => { setPicked(null); setGi(i => i + 1); };
+
+if (done) return (
+<div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+    <p className="text-emerald-800 font-bold text-lg">🎉 Encontraste {score} de {data.groups.length} intrusos</p>
+    <button onClick={onReset}
+        className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Reiniciar</button>
+</div>
+);
+
+return (
+<div>
+    <p className="text-sm text-slate-500 mb-3">Grupo {gi + 1} de {data.groups.length}</p>
+    <div className="flex flex-wrap gap-3 mb-4">
+        {g.items.map((item, i) => (
+        <button key={i} onClick={()=> pick(i)} className={`px-4 py-3 rounded-xl border-2 font-medium transition-all ${
+            picked === null ? 'bg-white border-slate-300 hover:border-indigo-400 cursor-pointer' :
+            i === g.intruder ? 'bg-amber-100 border-amber-400 text-amber-800' :
+            i === picked && i !== g.intruder ? 'bg-rose-100 border-rose-300 text-rose-700' :
+            'bg-slate-50 border-slate-200'
+            }`}>{item}</button>
+        ))}
+    </div>
+    {picked !== null && picked === g.intruder && <p className="text-emerald-700 font-medium mb-2">¡Correcto! {g.reason}
+    </p>}
+    {picked !== null && picked !== g.intruder && <p className="text-rose-700 mb-2">No es ese. El intruso era:
+        <strong>{g.items[g.intruder]}</strong>. {g.reason}</p>}
+    {picked !== null && <button onClick={next}
+        className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Siguiente →</button>}
+</div>
+);
+};
+
+const ChallengesSection = () => {
+const [activeChallenge, setActiveChallenge] = useState(null);
+const [resetKey, setResetKey] = useState(0);
+const challenge = challengesData.find(c => c.id === activeChallenge);
+const doReset = () => setResetKey(k => k + 1);
+
+const renderChallenge = () => {
+if (!challenge) return null;
+const props = { data: challenge, onReset: doReset, key: resetKey };
+switch (challenge.type) {
+case 'memoryPairs': return <MemoryPairsGame {...props} />;
+case 'sequence': return <SequenceGame {...props} />;
+case 'spotDifference': return <SpotDifferenceGame {...props} />;
+case 'orderSteps': return <OrderStepsGame {...props} />;
+case 'association': return <AssociationGame {...props} />;
+case 'intruder': return <IntruderGame {...props} />;
+default: return null;
+}
+};
+
+if (activeChallenge && challenge) {
+return (
+<div className="max-w-3xl mx-auto">
+    <button onClick={()=> setActiveChallenge(null)} className="flex items-center gap-2 text-indigo-600 hover:underline
+        mb-4">
+        <ChevronLeft className="w-4 h-4" /> Volver a los desafíos
+    </button>
+    <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6">
+        <h3 className="text-xl font-bold text-slate-800 mb-1">{challenge.title}</h3>
+        <p className="text-slate-600 mb-6">{challenge.description}</p>
+        {renderChallenge()}
+    </div>
+</div>
+);
+}
+
+return (
+<div className="max-w-3xl mx-auto">
+    <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 mb-6 border border-amber-200">
+        <h3 className="text-xl font-bold text-amber-800 mb-2 flex items-center gap-2">
+            <Zap className="w-5 h-5" /> Desafíos para la mente
+        </h3>
+        <p className="text-amber-900">Ejercicios breves que activan memoria, atención y lógica. Son completamente
+            opcionales y podés hacer los que quieras, en el orden que prefieras. ¡Disfrutalos!</p>
+    </div>
+    <div className="grid md:grid-cols-2 gap-4">
+        {challengesData.map(ch => (
+        <button key={ch.id} onClick={()=> { setActiveChallenge(ch.id); setResetKey(k => k + 1); }}
+            className="text-left bg-white rounded-xl p-5 border-2 border-slate-200 hover:border-indigo-400
+            hover:shadow-md transition-all">
+            <h4 className="font-bold text-slate-800 mb-1">{ch.title}</h4>
+            <p className="text-sm text-slate-600">{ch.description}</p>
+        </button>
+        ))}
+    </div>
+</div>
+);
+};
+
+// ═══════════════════════════════════════════════════════════════
+// APP PRINCIPAL
+// ═══════════════════════════════════════════════════════════════
+
+const StoriesGallery = ({ onSelect }) => (
+<div className="grid gap-4 md:grid-cols-2 max-w-4xl mx-auto">
+    {stories.map(s => (
+    <button key={s.id} onClick={()=> onSelect(s)} className="text-left bg-white rounded-xl p-5 border-2 border-slate-200
+        hover:border-indigo-400 hover:shadow-md transition-all">
+        <h4 className="font-bold text-slate-800 mb-1">{s.title}</h4>
+        <p className="text-sm text-slate-500 mb-2">{s.focus}</p>
+        <p className="text-sm text-slate-600">{s.context}</p>
+    </button>
+    ))}
+</div>
+);
+
+const StoryPlayer = ({ story, onBack }) => {
+const [step, setStep] = useState(0);
+const [copied, setCopied] = useState(false);
+const visibleMsgs = story.conversation.slice(0, step + 1);
+
+const copyPrompt = () => {
+navigator.clipboard.writeText(story.reusablePrompt).then(() => { setCopied(true); setTimeout(() => setCopied(false),
+2000); });
+};
+
+return (
+<div className="max-w-3xl mx-auto">
+    <button onClick={onBack} className="flex items-center gap-2 text-indigo-600 hover:underline mb-4">
+        <ChevronLeft className="w-4 h-4" /> Volver a las historias
+    </button>
+    <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-6">
+        <h3 className="text-xl font-bold text-slate-800 mb-1">{story.title}</h3>
+        <p className="text-sm text-slate-500 mb-4">{story.focus} — {story.context}</p>
+        <div className="space-y-3 mb-6">
+            {visibleMsgs.map((msg, i) => (
+            <div key={i} className={`p-4 rounded-xl border-2 ${roleColor[msg.role] || 'bg-white border-slate-200' }`}>
+                <p className="text-xs font-bold uppercase mb-1 opacity-70">{roleLabel[msg.role] || msg.role}</p>
+                <p>{msg.text}</p>
+            </div>
+            ))}
+        </div>
+        {step < story.conversation.length - 1 ? ( <button onClick={()=> setStep(s => s + 1)} className="px-6 py-3
+            bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-medium">
+            Siguiente paso →
+            </button>
+            ) : (
+            <div className="bg-sky-50 rounded-xl p-5 border border-sky-200">
+                <p className="font-bold text-sky-800 mb-2">📋 Prompt reutilizable</p>
+                <p className="text-sky-900 italic mb-3">"{story.reusablePrompt}"</p>
+                <button onClick={copyPrompt}
+                    className="flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700">
+                    {copied ? <>
+                        <Check className="w-4 h-4" /> Copiado
+                    </> : <>
+                        <Copy className="w-4 h-4" /> Copiar prompt
+                    </>}
+                </button>
+            </div>
+            )}
+    </div>
+</div>
+);
+};
+
+const PromptGym = () => {
+const [level, setLevel] = useState(null);
+const [activePrompt, setActivePrompt] = useState(null);
+const [copiedId, setCopiedId] = useState(null);
+
+const currentPrompts = enrichedPromptItems.filter(p => p.level === level);
+const active = enrichedPromptItems.find(p => p.id === activePrompt);
+
+const copyText = (text, id) => {
+navigator.clipboard.writeText(text).then(() => { setCopiedId(id); setTimeout(() => setCopiedId(null), 2000); });
+};
+
+if (!level) {
+return (
+<div className="max-w-3xl mx-auto">
+    <div className="bg-gradient-to-br from-indigo-50 to-sky-50 rounded-2xl p-6 mb-6 border border-indigo-200">
+        <h3 className="text-xl font-bold text-indigo-800 mb-2 flex items-center gap-2">
+            <Target className="w-5 h-5" /> Gimnasio de Prompts
+        </h3>
+        <p className="text-indigo-900">Elegí tu nivel de práctica. Cada prompt incluye una versión débil (para entender
+            qué evitar) y una versión robusta (para copiar y usar directamente).</p>
+    </div>
+    <div className="space-y-4">
+        {promptLevels.map(pl => (
+        <button key={pl.id} onClick={()=> setLevel(pl.id)} className="w-full text-left bg-white rounded-xl p-5 border-2
+            border-slate-200 hover:border-indigo-400 hover:shadow-md transition-all">
+            <h4 className="font-bold text-slate-800">{pl.label}</h4>
+            <p className="text-sm text-slate-600">{pl.hint}</p>
+        </button>
+        ))}
+    </div>
+</div>
+);
+}
+
+if (active) {
+return (
+<div className="max-w-3xl mx-auto">
+    <button onClick={()=> setActivePrompt(null)} className="flex items-center gap-2 text-indigo-600 hover:underline
+        mb-4">
+        <ChevronLeft className="w-4 h-4" /> Volver al nivel
+    </button>
+    <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6 space-y-6">
+        <div>
+            <p className="text-xs font-bold text-indigo-600 uppercase">{active.domain}</p>
+            <h3 className="text-xl font-bold text-slate-800">{active.title}</h3>
+            <p className="text-slate-600">{active.objective}</p>
+        </div>
+        <div className="bg-rose-50 rounded-xl p-5 border border-rose-200">
+            <p className="text-xs font-bold text-rose-600 mb-2">❌ Prompt débil</p>
+            <p className="text-rose-900 italic mb-2">"{active.badPrompt}"</p>
+            <p className="text-sm text-rose-700">{active.badReason}</p>
+        </div>
+        <div className="bg-emerald-50 rounded-xl p-5 border border-emerald-200">
+            <p className="text-xs font-bold text-emerald-600 mb-2">✅ Prompt robusto</p>
+            <pre className="whitespace-pre-wrap text-emerald-900 text-sm mb-3 font-sans">{active.enhancedPrompt}</pre>
+            <button onClick={()=> copyText(active.enhancedPrompt, active.id)} className="flex items-center gap-2 px-4
+                py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">
+                {copiedId === active.id ? <>
+                    <Check className="w-4 h-4" /> Copiado
+                </> : <>
+                    <Copy className="w-4 h-4" /> Copiar prompt
+                </>}
+            </button>
+        </div>
+        <div className="flex flex-wrap gap-2">
+            {active.techniques.map((t, i) => <span key={i}
+                className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-medium">{t}</span>)}
+        </div>
+        <div className="bg-sky-50 rounded-xl p-4 border border-sky-200">
+            <p className="text-xs font-bold text-sky-600 mb-1">💡 ¿Por qué funciona?</p>
+            <p className="text-sm text-sky-900">{active.why}</p>
+        </div>
+    </div>
+</div>
+);
+}
+
+return (
+<div className="max-w-3xl mx-auto">
+    <button onClick={()=> setLevel(null)} className="flex items-center gap-2 text-indigo-600 hover:underline mb-4">
+        <ChevronLeft className="w-4 h-4" /> Elegir otro nivel
+    </button>
+    <h3 className="text-lg font-bold text-slate-800 mb-4">{promptLevels.find(p => p.id === level)?.label} —
+        {currentPrompts.length} prompts</h3>
+    <div className="grid gap-3">
+        {currentPrompts.map(p => (
+        <button key={p.id} onClick={()=> setActivePrompt(p.id)} className="text-left bg-white rounded-xl p-4 border-2
+            border-slate-200 hover:border-indigo-400 hover:shadow-md transition-all">
+            <p className="text-xs text-indigo-600 font-bold">{p.domain}</p>
+            <h4 className="font-bold text-slate-800">{p.title}</h4>
+            <p className="text-sm text-slate-600">{p.objective}</p>
+        </button>
+        ))}
+    </div>
+</div>
+);
+};
+
+const App = () => {
+const [view, setView] = useState('theory');
+const [moduleIndex, setModuleIndex] = useState(0);
+const [activeStory, setActiveStory] = useState(null);
+const mod = theoryModules[moduleIndex];
+
+const tabs = [
+{ id: 'theory', label: 'Teoría', icon:
+<BookOpen className="w-4 h-4" /> },
+{ id: 'gym', label: 'Gimnasio', icon:
+<Target className="w-4 h-4" /> },
+{ id: 'images', label: 'Imágenes', icon:
+<ImageIcon className="w-4 h-4" /> },
+{ id: 'challenges', label: 'Desafíos', icon:
+<Zap className="w-4 h-4" /> },
+{ id: 'stories', label: 'Historias', icon:
+<MessageCircle className="w-4 h-4" /> }
+];
+
+return (
+<div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50">
+    {/* Header */}
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-slate-200 shadow-sm">
+        <div className="max-w-5xl mx-auto px-4 py-3">
+            <div className="flex items-center gap-3 mb-3">
+                <div
+                    className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-md">
+                    <BrainCircuit className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                    <h1 className="text-lg font-extrabold text-slate-800 leading-tight">Laboratorio de IA para tu negocio</h1>
+                    <p className="text-xs text-slate-500">Nueces y avellanas · de la producción a la venta · Viedma – IDEVI</p>
+                </div>
+            </div>
+            <div className="flex gap-1 overflow-x-auto">
+                {tabs.map(tab => (
+                <button key={tab.id} onClick={()=> { setView(tab.id); setActiveStory(null); }}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap
+                    transition-all ${
+                    view === tab.id ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'
+                    }`}>
+                    {tab.icon} {tab.label}
+                </button>
+                ))}
+            </div>
+        </div>
+    </header>
+
+    <main className="max-w-5xl mx-auto px-4 py-8">
+        {/* THEORY VIEW */}
+        {view === 'theory' && (
+        <div className="flex flex-col md:flex-row gap-6">
+            {/* Sidebar - desktop */}
+            <aside className="hidden md:block md:w-64 flex-shrink-0">
+                <div className="sticky top-32 space-y-1">
+                    <p className="text-xs font-bold text-slate-400 uppercase mb-2">Módulos ({theoryModules.length})</p>
+                    {theoryModules.map((m, i) => (
+                    <button key={m.id} onClick={()=> setModuleIndex(i)}
+                        className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all ${
+                        i === moduleIndex ? 'bg-indigo-100 text-indigo-800 font-bold border-l-4 border-indigo-500' :
+                        'text-slate-600 hover:bg-slate-100'
+                        }`}>
+                        <span className="text-xs text-slate-400 mr-1">{i + 1}.</span> {m.title}
+                    </button>
+                    ))}
+                </div>
+            </aside>
+
+            {/* Sidebar - mobile dropdown */}
+            <div className="md:hidden mb-4">
+                <select value={moduleIndex} onChange={e=> setModuleIndex(Number(e.target.value))}
+                    className="w-full p-3 rounded-xl border-2 border-slate-300 bg-white text-slate-800 font-medium">
+                    {theoryModules.map((m, i) => <option key={m.id} value={i}>{i + 1}. {m.title}</option>)}
+                </select>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 max-w-3xl">
+                <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6 md:p-8">
+                    <p className="text-xs text-indigo-600 font-bold uppercase mb-1">Módulo {moduleIndex + 1} de
+                        {theoryModules.length}</p>
+                    <h2 className="text-2xl font-extrabold text-slate-800 mb-1">{mod.title}</h2>
+                    <p className="text-slate-500 mb-6">{mod.subtitle}</p>
+
+                    <div className="space-y-4 text-slate-700 leading-relaxed mb-8">
+                        {mod.reading.map((para, i) => <p key={i}>{para}</p>)}
+                    </div>
+
+                    <div className="bg-indigo-50 rounded-xl p-5 border border-indigo-200 mb-6">
+                        <h4 className="font-bold text-indigo-800 mb-3 flex items-center gap-2">
+                            <CheckCircle2 className="w-4 h-4" /> Checklist
+                        </h4>
+                        <ul className="space-y-2">
+                            {mod.checklist.map((item, i) => (
+                            <li key={i} className="flex items-start gap-2 text-indigo-900">
+                                <CheckCircle2 className="w-4 h-4 text-indigo-500 mt-1 flex-shrink-0" />
+                                <span>{item}</span>
+                            </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div className="bg-amber-50 rounded-xl p-5 border border-amber-200 mb-8">
+                        <h4 className="font-bold text-amber-800 mb-2 flex items-center gap-2">
+                            <Lightbulb className="w-4 h-4" /> Práctica sugerida
+                        </h4>
+                        <p className="text-amber-900">{mod.practice}</p>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-4">
+                        <button onClick={()=> setModuleIndex(i => Math.max(0, i - 1))} disabled={moduleIndex === 0}
+                            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-100 text-slate-700
+                            hover:bg-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition-all">
+                            <ChevronLeft className="w-4 h-4" /> Anterior
+                        </button>
+                        {moduleIndex < theoryModules.length - 1 ? ( <button onClick={()=> setModuleIndex(i => i + 1)}
+                            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 text-white
+                            hover:bg-indigo-700 transition-all">
+                            Siguiente
+                            <ChevronRight className="w-4 h-4" />
+                            </button>
+                            ) : (
+                            <button onClick={()=> setView('gym')}
+                                className="flex items-center gap-2 px-5 py-2 rounded-lg bg-emerald-600 text-white
+                                hover:bg-emerald-700 transition-all font-medium">
+                                Continuar al Gimnasio
+                                <ArrowUpRight className="w-4 h-4" />
+                            </button>
+                            )}
+                    </div>
+                </div>
+            </div>
+        </div>
+        )}
+
+        {/* GYM VIEW */}
+        {view === 'gym' &&
+        <PromptGym />}
+
+        {/* IMAGES VIEW */}
+        {view === 'images' &&
+        <ImagesSection />}
+
+        {/* CHALLENGES VIEW */}
+        {view === 'challenges' &&
+        <ChallengesSection />}
+
+        {/* STORIES VIEW */}
+        {view === 'stories' && (
+        activeStory ? <StoryPlayer story={activeStory} onBack={()=> setActiveStory(null)} /> : (
+            <div>
+                <div
+                    className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 mb-6 border border-purple-200 max-w-3xl mx-auto">
+                    <h3 className="text-xl font-bold text-purple-800 mb-2 flex items-center gap-2">
+                        <MessageCircle className="w-5 h-5" /> Historias de uso
+                    </h3>
+                    <p className="text-purple-900">Casos reales que muestran cómo mejorar interacciones con IA, paso a
+                        paso. Cada historia incluye un prompt reutilizable al final.</p>
+                </div>
+                <StoriesGallery onSelect={setActiveStory} />
+            </div>
+            )
+            )}
+    </main>
+
+    <footer className="bg-white border-t border-slate-200 mt-12">
+        <div className="max-w-5xl mx-auto px-4 py-6 text-center text-slate-500 text-sm">
+            <p className="font-medium">Laboratorio de IA para tu empresa de nueces y avellanas — Material formativo</p>
+            <p className="mt-1">Navega las secciones a tu ritmo. Volvé cuando quieras.</p>
+        </div>
+    </footer>
+</div>
+);
+};
+
+createRoot(document.getElementById('root')).render(
+<App />);
+</script>
+</body>
+
+</html>
