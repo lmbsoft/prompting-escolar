@@ -111,7 +111,7 @@
             BrainCircuit, GraduationCap, Gamepad2, MessageCircle, BookOpen, Sparkles,
             ShieldAlert, CheckCircle2, ChevronLeft, ChevronRight, Copy, Check,
             Target, Lightbulb, Clock, PenSquare, Microscope, Library, ArrowUpRight,
-            ClipboardList, AlertTriangle, Lock, Heart, RefreshCw, Zap, Image as ImageIcon, Wand2, Palette, Camera
+            ClipboardList, AlertTriangle, Lock, Heart, RefreshCw, Zap, Image as ImageIcon, Wand2, Palette, Camera, Table2
         } from 'lucide-react';
 
         // ═══════════════════════════════════════════════════════════════
@@ -1498,6 +1498,44 @@ const imageTroubleshoot = [
 { problem: `Me frustré, no me sale`, cause: `Intentás lograr todo de una sola vez.`, fix: `Dividí en pasos: primero la foto, después el diseño, después el texto, el logo y el video.` }
 ];
 
+const spreadsheetTemplates = [
+{
+title: `Stock por producto y presentación`,
+purpose: `Saber qué hay disponible, reservado y entregado sin depender de memoria o chats sueltos.`,
+columns: [`Fecha`, `Producto`, `Presentación`, `Lote`, `Ingreso kg`, `Vendido kg`, `Reservado kg`, `Entregado kg`, `Disponible kg`, `Observación`],
+formula: `Disponible kg = Ingreso kg - Vendido kg - Reservado kg`,
+prompt: `Diseñá una planilla de stock para una empresa de nueces y avellanas con estas columnas: Fecha, Producto, Presentación, Lote, Ingreso kg, Vendido kg, Reservado kg, Entregado kg, Disponible kg y Observación. Explicame cómo calcular disponible sin duplicar ventas y qué controles revisar semanalmente.`
+},
+{
+title: `Ventas y cobranzas`,
+purpose: `Registrar pedidos, pagos y entregas para no perder seguimiento comercial.`,
+columns: [`Fecha`, `Cliente`, `Producto`, `Cantidad`, `Precio unitario`, `Total`, `Estado de pago`, `Estado de entrega`, `Canal`, `Próxima acción`],
+formula: `Total = Cantidad * Precio unitario`,
+prompt: `Creá una estructura de ventas y cobranzas para frutos secos. Incluí columnas para fecha, cliente anonimizado, producto, cantidad, precio unitario, total, estado de pago, estado de entrega, canal y próxima acción. Sugerí estados posibles y una rutina de revisión de 15 minutos por semana.`
+},
+{
+title: `Costos y margen`,
+purpose: `Entender cuánto deja cada presentación y qué cambios afectan el precio.`,
+columns: [`Producto`, `Presentación`, `Costo producto`, `Envase`, `Etiqueta`, `Logística`, `Comisión`, `Costo total`, `Precio venta`, `Margen`],
+formula: `Margen = Precio venta - Costo total`,
+prompt: `Ayudame a modelar costo y margen por presentación para nueces y avellanas usando datos ficticios. Explicá cada fórmula, qué campos debería actualizar cuando cambian envases o logística y qué indicadores mirar antes de cambiar precios.`
+},
+{
+title: `Clientes y contactos`,
+purpose: `Mantener relación comercial cuidando privacidad y evitando exponer datos sensibles.`,
+columns: [`Cliente`, `Tipo`, `Canal preferido`, `Última compra`, `Producto habitual`, `Pendiente`, `Notas no sensibles`],
+formula: `Usar filtros por tipo de cliente y fecha de última compra.`,
+prompt: `Diseñá una ficha de clientes para un emprendimiento de nueces y avellanas. Debe servir para seguimiento comercial sin exponer datos sensibles. Usá nombres anonimizados, tipos de cliente, canal preferido, última compra, producto habitual, pendiente y notas no sensibles.`
+},
+{
+title: `Campaña de difusión`,
+purpose: `Conectar imágenes, reels, mensajes y resultados en una misma rutina.`,
+columns: [`Fecha`, `Canal`, `Objetivo`, `Pieza`, `Imagen usada`, `Texto`, `Dato a verificar`, `Estado`, `Resultado`],
+formula: `Filtrar por Estado para ver pendientes, publicados y piezas a corregir.`,
+prompt: `Armá una planilla de campaña comercial de 6 semanas para nueces y avellanas. Para cada publicación registrá fecha, canal, objetivo, pieza, imagen usada, texto, dato a verificar, estado y resultado. Sumá una columna para revisar si la pieza mantiene coherencia de marca.`
+}
+];
+
 const frRecoveredVisuals = window.frRecoveredVisuals || { imageAssets: {}, imageExamples: [], imageSequences: [] };
 const recoveredImageExamples = Array.isArray(frRecoveredVisuals.imageExamples)
 ? frRecoveredVisuals.imageExamples.filter((item) => frRecoveredVisuals.imageAssets?.[item.id]?.src)
@@ -1572,8 +1610,23 @@ className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium tra
 {hasRecoveredVisuals ? (
 <>
 <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
-<h4 className="font-bold text-slate-800 mb-2 flex items-center gap-2"><Camera className="w-4 h-4 text-rose-500" /> Ejemplos visuales recuperados</h4>
-<p className="text-slate-700 text-sm">Esta pestaña recupera de la versión anterior lo que mejor mostraba el aprendizaje visual: ejemplos de imágenes ya generadas y secuencias donde se ve cómo cambia la pieza a medida que mejora el prompt. Usala junto con “Paso a paso”: acá ves la transformación; allá tenés el procedimiento para repetirla.</p>
+<h4 className="font-bold text-slate-800 mb-2 flex items-center gap-2"><Camera className="w-4 h-4 text-rose-500" /> Genealogía visual: cómo mejora una imagen prompt a prompt</h4>
+<p className="text-slate-700 text-sm">Esta pestaña muestra la evolución del material visual como una cadena de refinamientos. No es una galería decorativa: cada imagen registra una decisión de prompting, un cambio visible y un aprendizaje transferible. La idea es mirar cómo un pedido inicial se vuelve más preciso hasta transformarse en una pieza útil para vender, publicar o imprimir.</p>
+</div>
+
+<div className="grid md:grid-cols-3 gap-3">
+<div className="bg-rose-50 border border-rose-200 rounded-2xl p-4">
+<p className="text-xs font-bold text-rose-700 uppercase mb-1">1. Prompt</p>
+<p className="text-sm text-rose-900">Qué instrucción nueva se agregó: conservar, limpiar, ordenar, dejar espacio, adaptar formato o controlar datos.</p>
+</div>
+<div className="bg-sky-50 border border-sky-200 rounded-2xl p-4">
+<p className="text-xs font-bold text-sky-700 uppercase mb-1">2. Impacto visible</p>
+<p className="text-sm text-sky-900">Qué cambió en la imagen: luz, jerarquía, encuadre, legibilidad, coherencia, utilidad comercial o preparación para edición.</p>
+</div>
+<div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4">
+<p className="text-xs font-bold text-emerald-700 uppercase mb-1">3. Criterio aprendido</p>
+<p className="text-sm text-emerald-900">Qué regla práctica queda para repetir en otro caso: no pedir todo junto, separar texto real, revisar y volver a iterar.</p>
+</div>
 </div>
 
 <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
@@ -1608,12 +1661,12 @@ className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium tra
 <span className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">{item.step}</span>
 <h5 className="font-bold text-slate-800">{item.title}</h5>
 </div>
-<p className="text-sm text-slate-600"><span className="font-bold text-slate-800">Cambio visible:</span> {item.change}</p>
-<p className="text-sm text-emerald-900 bg-emerald-50 border border-emerald-200 rounded-xl p-3"><span className="font-bold">Aprendizaje:</span> {item.lesson}</p>
 <details className="rounded-xl border border-slate-200 bg-slate-50 p-3">
-<summary className="cursor-pointer text-sm font-bold text-rose-700">Ver prompt aplicado</summary>
+<summary className="cursor-pointer text-sm font-bold text-rose-700">1. Refinamiento aplicado: ver prompt</summary>
 <pre className="whitespace-pre-wrap text-xs font-sans text-slate-700 mt-2">{item.prompt}</pre>
 </details>
+<p className="text-sm text-sky-900 bg-sky-50 border border-sky-200 rounded-xl p-3"><span className="font-bold">2. Impacto visible:</span> {item.change}</p>
+<p className="text-sm text-emerald-900 bg-emerald-50 border border-emerald-200 rounded-xl p-3"><span className="font-bold">3. Criterio aprendido:</span> {item.lesson}</p>
 </div>
 </article>
 ))}
@@ -1633,7 +1686,7 @@ className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium tra
 </>
 ) : (
 <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
-<p className="text-slate-700">No se pudieron cargar los recursos visuales recuperados de la versión anterior. La guía textual sigue disponible en “Paso a paso”, “Editor profesional” e “Iterar sin frustrarse”.</p>
+<p className="text-slate-700">No se pudieron cargar las secuencias visuales. La guía textual sigue disponible en “Paso a paso”, “Editor profesional” e “Iterar sin frustrarse”, donde se mantiene el método de refinamiento por etapas.</p>
 </div>
 )}
 </div>
@@ -1644,7 +1697,7 @@ className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium tra
 <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 <div>
 <h4 className="font-bold text-slate-800 mb-1 flex items-center gap-2"><Camera className="w-4 h-4 text-rose-500" /> Ver y hacer</h4>
-<p className="text-slate-600 text-sm">Esta pestaña conserva el paso a paso operativo de `_fr_ii`. Si primero querés ver ejemplos concretos y transformación visual, abrí “Secuencias visuales”; si querés replicarlo con tu caso, seguí estas recetas.</p>
+<p className="text-slate-600 text-sm">Esta pestaña toma lo aprendido en la genealogía visual y lo convierte en procedimiento repetible. Si primero querés ver cómo cada refinamiento cambia una imagen, abrí “Secuencias visuales”; si querés replicarlo con tu caso, seguí estas recetas.</p>
 </div>
 {hasRecoveredVisuals && (
 <button onClick={() => setSub('visuales')} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-600 text-white hover:bg-rose-700 text-sm font-medium">
@@ -2321,6 +2374,105 @@ return (
 );
 };
 
+const PlanillasSection = () => {
+const [copiedId, setCopiedId] = useState(null);
+const copySheetPrompt = (text, id) => {
+navigator.clipboard.writeText(text).then(() => {
+setCopiedId(id);
+setTimeout(() => setCopiedId(null), 1500);
+});
+};
+
+return (
+<div className="max-w-4xl mx-auto space-y-6">
+    <section className="bg-gradient-to-br from-emerald-50 to-sky-50 rounded-2xl p-6 border border-emerald-200">
+        <h3 className="text-xl font-bold text-emerald-800 mb-2 flex items-center gap-2">
+            <Table2 className="w-5 h-5" /> Planillas, modelos y registro
+        </h3>
+        <p className="text-emerald-900">
+            Esta sección convierte la teoría de datos en estructuras concretas. La idea no es compartir una planilla real
+            con datos sensibles, sino pedirle a la IA modelos, columnas, fórmulas y rutinas para después aplicarlas en tu
+            archivo propio.
+        </p>
+    </section>
+
+    <div className="grid gap-5">
+        {spreadsheetTemplates.map((tpl, index) => (
+        <article key={tpl.title} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
+                <div>
+                    <p className="text-xs font-bold text-emerald-600 uppercase mb-1">Plantilla {index + 1}</p>
+                    <h4 className="text-lg font-bold text-slate-800">{tpl.title}</h4>
+                    <p className="text-slate-600 text-sm">{tpl.purpose}</p>
+                </div>
+                <button onClick={() => copySheetPrompt(tpl.prompt, tpl.title)}
+                    className="flex items-center justify-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-medium">
+                    {copiedId === tpl.title ? <><Check className="w-4 h-4" /> Copiado</> : <><Copy className="w-4 h-4" /> Copiar prompt</>}
+                </button>
+            </div>
+
+            <div className="overflow-x-auto rounded-xl border border-slate-200 mb-3">
+                <table className="w-full text-sm border-collapse">
+                    <thead>
+                        <tr className="bg-slate-100 text-slate-700">
+                            {tpl.columns.map((col) => (
+                            <th key={col} className="border-r last:border-r-0 border-slate-200 px-3 py-2 text-left whitespace-nowrap">
+                                {col}
+                            </th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            {tpl.columns.map((col) => (
+                            <td key={col} className="border-r last:border-r-0 border-slate-100 px-3 py-2 text-slate-400 whitespace-nowrap">
+                                ...
+                            </td>
+                            ))}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div className="grid md:grid-cols-[0.9fr_1.1fr] gap-3">
+                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3">
+                    <p className="text-xs font-bold text-emerald-700 mb-1">Fórmula o uso clave</p>
+                    <p className="text-sm text-emerald-900">{tpl.formula}</p>
+                </div>
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                    <p className="text-xs font-bold text-slate-500 mb-1">Prompt base</p>
+                    <p className="text-sm text-slate-700">{tpl.prompt}</p>
+                </div>
+            </div>
+        </article>
+        ))}
+    </div>
+
+    <section className="grid md:grid-cols-2 gap-4">
+        <div className="bg-white rounded-2xl border border-emerald-200 p-5 shadow-sm">
+            <h4 className="font-bold text-emerald-800 mb-3 flex items-center gap-2"><RefreshCw className="w-4 h-4" /> Rutina semanal sugerida</h4>
+            <ol className="list-decimal pl-5 space-y-2 text-emerald-950 text-sm">
+                <li>Actualizar stock real y pedidos pendientes.</li>
+                <li>Registrar ventas, pagos y entregas.</li>
+                <li>Revisar costos nuevos o cambios de envase/logística.</li>
+                <li>Actualizar lista de precios si corresponde.</li>
+                <li>Definir una acción comercial concreta para la semana.</li>
+            </ol>
+        </div>
+        <div className="bg-white rounded-2xl border border-rose-200 p-5 shadow-sm">
+            <h4 className="font-bold text-rose-800 mb-3 flex items-center gap-2"><ShieldAlert className="w-4 h-4" /> Datos que no conviene pegar en IA pública</h4>
+            <ul className="list-disc pl-5 space-y-2 text-rose-950 text-sm">
+                <li>Teléfonos, direcciones, CUIT, claves o cuentas.</li>
+                <li>Acuerdos privados de precio o condiciones especiales.</li>
+                <li>Datos identificables de clientes o proveedores.</li>
+                <li>Planillas completas con información sensible.</li>
+            </ul>
+        </div>
+    </section>
+</div>
+);
+};
+
 const App = () => {
 const [view, setView] = useState('theory');
 const [moduleIndex, setModuleIndex] = useState(0);
@@ -2332,8 +2484,10 @@ const tabs = [
 <BookOpen className="w-4 h-4" /> },
 { id: 'gym', label: 'Gimnasio', icon:
 <Target className="w-4 h-4" /> },
-{ id: 'images', label: 'Imágenes', icon:
+{ id: 'images', label: 'Imágenes y multimedia', icon:
 <ImageIcon className="w-4 h-4" /> },
+{ id: 'sheets', label: 'Planillas', icon:
+<Table2 className="w-4 h-4" /> },
 { id: 'challenges', label: 'Desafíos', icon:
 <Zap className="w-4 h-4" /> },
 { id: 'stories', label: 'Historias', icon:
@@ -2463,6 +2617,10 @@ return (
         {/* IMAGES VIEW */}
         {view === 'images' &&
         <ImagesSection />}
+
+        {/* SHEETS VIEW */}
+        {view === 'sheets' &&
+        <PlanillasSection />}
 
         {/* CHALLENGES VIEW */}
         {view === 'challenges' &&
