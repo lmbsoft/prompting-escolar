@@ -114,7 +114,7 @@
         } from 'lucide-react';
 
         // ═══════════════════════════════════════════════════════════════
-        // DATA: MÓDULOS DE TEORÍA (13 módulos expandidos)
+        // DATA: MÓDULOS DE TEORÍA (14 módulos expandidos)
         // ═══════════════════════════════════════════════════════════════
 
         const theoryModules = [
@@ -218,6 +218,27 @@
                 practice: 'Pedile a la IA un dato verificable de tu rubro (por ejemplo, requisitos para vender alimentos fraccionados). Después buscá ese dato en una fuente oficial y compará. Repetí el ejercicio hasta que te salga natural el reflejo de verificar.'
             },
             {
+                id: 't5b',
+                title: 'Búsqueda web, fuentes y criterio propio',
+                subtitle: 'Cuándo pedir información actualizada y cómo evitar que la IA te dé la razón de más',
+                reading: [
+                    'Hay preguntas que la IA puede responder con su conocimiento general, y hay otras donde necesita mirar información actualizada. Para tu negocio, esto importa mucho: normativa de etiquetas, requisitos para vender alimentos fraccionados, precios de envases, ferias regionales, costos de envío, herramientas digitales y proveedores cambian con el tiempo. Si el dato puede cambiar, pedile búsqueda web o verificá por tu cuenta.',
+                    'Un buen pedido de búsqueda no es "buscame esto" y listo. Conviene decirle qué tipo de fuente querés: oficial, municipal, provincial, nacional, técnica, académica o de proveedores concretos. Para una idea de marketing puede servir una nota o un ejemplo de redes; para una etiqueta, un requisito sanitario o una decisión de inversión, necesitás fuentes más confiables.',
+                    'También hay que pedir fechas. Una página vieja puede sonar útil y estar desactualizada. Si vas a imprimir una etiqueta, comprar envases, participar de una feria o cambiar una práctica comercial, pedile a la IA que indique la fecha de la fuente y qué deberías confirmar antes de actuar. La IA puede ayudarte a encontrar el camino, pero la confirmación final es tuya.',
+                    'Otro riesgo más sutil: la IA tiende a complacerte. Si le decís "tengo una idea buenísima para vender aceite de nuez, decime por qué va a funcionar", probablemente te entusiasme. Para decidir bien, pedile que evalúe sin darte la razón por compromiso: que marque riesgos, supuestos, costos, esfuerzo y primer experimento barato. Eso no apaga la motivación; la vuelve más inteligente.',
+                    'Cuando una decisión es grande, pedí investigación profunda: no solo una respuesta rápida, sino un informe con fuentes, comparación, riesgos y próximos pasos. Por ejemplo, para vender en otras ciudades, lanzar regalos empresariales o probar un producto derivado, conviene que la IA primero arme un plan de investigación, después busque, y al final separe datos verificados, supuestos y preguntas pendientes.',
+                    'La fórmula práctica es: explorar chico, probar barato y evaluar con datos. La IA puede ayudarte a imaginar caminos, pero el negocio se cuida probando de a poco. Antes de invertir fuerte, pedile un primer experimento simple: una preventa, una encuesta breve, una muestra a tres clientes, una publicación de prueba o una comparación de proveedores.'
+                ],
+                checklist: [
+                    'Pedir búsqueda web cuando el dato pueda cambiar: normas, precios, proveedores, ferias, herramientas.',
+                    'Priorizar fuentes oficiales o confiables cuando la decisión sea sensible.',
+                    'Pedir fecha de la fuente y qué falta verificar antes de actuar.',
+                    'Evitar preguntas que empujen a la IA a darme la razón.',
+                    'Usar rúbricas y primeros experimentos baratos para evaluar ideas grandes.'
+                ],
+                practice: 'Elegí una idea que te entusiasme para el negocio. Pedile a la IA que NO te dé la razón: que la evalúe con una rúbrica de 100 puntos, marque supuestos y proponga una prueba chica de bajo costo para esta semana.'
+            },
+            {
                 id: 't6',
                 title: 'Planillas de cálculo con IA (parte 1): modelar y calcular',
                 subtitle: 'Repaso y refuerzo para tus funciones de modelado de datos',
@@ -298,6 +319,28 @@
                 practice: 'Entrá a una IA de imagen que tengas a mano (ChatGPT, Gemini o Copilot) y pedile una foto de producto de un cesto de nueces sobre madera rústica con luz cálida. Mirá el resultado con ojo crítico: ¿qué cambiarías? Anotalo. Ese ojo crítico es la base de todo lo que viene en la pestaña Imágenes.'
             },
             {
+                id: 't9b',
+                title: 'IA multimedia para vender mejor: imagen, audio y video',
+                subtitle: 'De una foto suelta a una pieza de comunicación con intención',
+                reading: [
+                    'La IA multimedia no es solo "hacer imágenes lindas". Sirve para pensar y producir piezas de comunicación: fotos de producto, folletos, etiquetas, mini videos, guiones para reels, audios para explicar una promoción y series visuales coherentes. El salto importante es pasar de pedir una imagen aislada a diseñar una pequeña campaña visual con objetivo, público, estilo y revisión.',
+                    'Para imágenes, el método más seguro es trabajar por capas: primero definís el concepto, después el estilo, después la composición, luego generás una primera versión y finalmente pedís ajustes puntuales. Si intentás resolver producto, fondo, logo, precios, tipografía y formato todo en un solo prompt, la IA suele mezclar cosas, inventar texto o cambiar elementos que querías conservar.',
+                    'Una forma simple de entender la generación de imágenes es imaginar que la IA parte de ruido visual y va limpiándolo hasta que aparece una imagen que coincide con tu prompt. Por eso pequeños cambios en la consigna pueden producir resultados grandes. Para controlar mejor, repetí siempre el brief de estilo: luz, paleta, fondo, encuadre, textura, clima y formato.',
+                    'Texto dentro de imágenes: con precios, nombres, teléfonos y etiquetas, mucho cuidado. Los modelos todavía se equivocan con letras y números. Para tu negocio, lo profesional es pedir la imagen sin texto o con espacios limpios reservados, y después cargar vos los textos exactos en una herramienta de edición. La IA arma la escena y el diseño; vos controlás datos, marca y precio.',
+                    'Para video, conviene pensar en storyboard. Antes de pedir "haceme un video de mis nueces", pedí una secuencia de 4 a 6 planos: apertura, producto, proceso, detalle, cierre y llamado a la acción. El video cuesta más tiempo que el texto y la imagen, así que hay que llegar con una idea clara. Primero guion, después storyboard, después prompt visual.',
+                    'Para audio y voz, el valor está en explicar con calidez: un mensaje corto para WhatsApp, un guion para un reel, una narración de 20 segundos sobre la cosecha. Pero también hay riesgos: hoy se pueden crear audios falsos. No clones voces sin permiso y, ante pedidos urgentes por audio, verificá por otro canal. Oír una voz ya no alcanza como prueba absoluta.',
+                    'La regla de oro para multimedia: más planificación antes de generar. En texto podés iterar diez veces rápido; en imagen y video cada intento pesa más. Definí primero qué querés comunicar, a quién, con qué emoción, en qué formato y qué debe quedar bajo tu control. Ahí la IA se vuelve una aliada enorme para mostrar el valor de tu producción regional.'
+                ],
+                checklist: [
+                    'Definir objetivo, público, estilo y formato antes de generar.',
+                    'Trabajar por capas: concepto, estilo, composición, primera versión, ajustes.',
+                    'Pedir imágenes sin texto cuando haya precios, teléfonos o datos exactos.',
+                    'Usar storyboard para videos: planos breves antes del prompt final.',
+                    'Cuidar el uso de voz e imágenes de personas: consentimiento y verificación.'
+                ],
+                practice: 'Diseñá una mini pieza multimedia para una promoción: primero pedile a la IA 5 conceptos visuales, elegí uno, pedí un storyboard de 5 planos para reel, y recién después pedí el prompt de imagen o video. Guardá el brief de estilo que mejor funcione.'
+            },
+            {
                 id: 't10',
                 title: 'Seguridad y privacidad de los datos del negocio',
                 subtitle: 'Usar la IA con tranquilidad, cuidando tu información y la de tus clientes',
@@ -369,7 +412,7 @@ const promptLevels = [
 ];
 
 // ═══════════════════════════════════════════════════════════════
-// DATA: ITEMS DE PROMPTS (~65 items)
+// DATA: ITEMS DE PROMPTS (80 items)
 // ═══════════════════════════════════════════════════════════════
 
 const promptItems = [
@@ -519,7 +562,33 @@ objective: `Poner por escrito cómo funciona tu empresa.`, prompt: `Ayudame a ar
 { id: 'p67', level: 'proyectar', domain: `Plan de proyecto`, title: `Campaña de regalos empresariales de fin de año`,
 objective: `Capturar una oportunidad estacional grande.`, prompt: `Actuá como consultor de proyectos. Ayudame a diseñar, por fases, una campaña de regalos empresariales de fin de año con mis frutos secos: producto/presentación regalo, a qué empresas apuntar, propuesta y precios por volumen, plazos de producción y difusión. Incluí un cronograma con cuándo empezar cada cosa.`, why: `Los regalos empresariales pueden ser una de tus mayores ventas del año.` },
 { id: 'p68', level: 'proyectar', domain: `Pensamiento estratégico`, title: `Análisis FODA de la empresa`,
-objective: `Mirar el negocio con perspectiva para decidir.`, prompt: `Actuá como analista estratégico. Guiame para armar un análisis FODA (Fortalezas, Oportunidades, Debilidades, Amenazas) de mi empresa de nueces y avellanas. Haceme preguntas por cada cuadrante para que yo aporte mi realidad, y al final ayudame a sacar 3 decisiones concretas que surjan del análisis.`, why: `Te ordena la mirada del negocio y la convierte en decisiones.` }
+objective: `Mirar el negocio con perspectiva para decidir.`, prompt: `Actuá como analista estratégico. Guiame para armar un análisis FODA (Fortalezas, Oportunidades, Debilidades, Amenazas) de mi empresa de nueces y avellanas. Haceme preguntas por cada cuadrante para que yo aporte mi realidad, y al final ayudame a sacar 3 decisiones concretas que surjan del análisis.`, why: `Te ordena la mirada del negocio y la convierte en decisiones.` },
+
+// ─── NUEVOS PROMPTS: FUENTES, CRITERIO Y MULTIMEDIA ───
+{ id: 'p69', level: 'inicio', domain: `Búsqueda y fuentes`, title: `Buscar normativa o información actualizada`,
+objective: `No usar información vieja o dudosa en decisiones sensibles.`, prompt: `Necesito información actualizada sobre [tema: etiqueta de alimentos / feria regional / requisito para vender]. Buscá fuentes confiables y, si es posible, oficiales. Para cada dato importante indicá: fuente, fecha, qué tan confiable parece y qué debería verificar yo antes de usarlo en mi negocio. No uses foros o redes como evidencia principal.`, why: `Te entrena a pedir fuentes, fechas y verificación antes de actuar.` },
+{ id: 'p70', level: 'inicio', domain: `Evaluación estratégica`, title: `Que la IA no te dé la razón de más`,
+objective: `Evaluar una idea con mirada crítica antes de entusiasmarte.`, prompt: `Tengo esta idea para mi empresa de nueces y avellanas: [describir idea]. No quiero que me des la razón por compromiso. Evaluála como asesor exigente: puntos fuertes, riesgos, supuestos débiles, datos que faltan y una prueba chica de bajo costo para esta semana.`, why: `Evita la complacencia y convierte el entusiasmo en una prueba concreta.` },
+{ id: 'p71', level: 'inicio', domain: `Producción multimedia`, title: `Guion corto para un reel de producto`,
+objective: `Transformar una idea visual en una pieza simple para redes.`, prompt: `Actuá como guionista de videos cortos para productos regionales. Diseñá un reel de 20 segundos para mostrar mis nueces y avellanas. Dame: idea central, 5 planos, texto sugerido en pantalla (mínimo y revisable), voz en off opcional y cierre invitando a consultar por WhatsApp. Tono cálido y honesto.`, why: `Te permite planificar antes de generar imágenes o grabar video.` },
+{ id: 'p72', level: 'inicio', domain: `Imágenes para difusión`, title: `Imagen sin texto para cargar datos exactos después`,
+objective: `Evitar errores de letras, precios o teléfonos dentro de una imagen.`, prompt: `Generá una imagen/fondo para una publicación de mis frutos secos, sin ningún texto. Dejá un espacio limpio arriba para un título y otro abajo para precio o WhatsApp, que yo voy a agregar después. Estilo rústico, cálido, natural, con nueces y avellanas reales como protagonistas.`, why: `La IA arma la escena, pero vos conservás el control de los datos exactos.` },
+{ id: 'p73', level: 'profundizar', domain: `Investigación profunda`, title: `Investigar una oportunidad comercial`,
+objective: `Tomar una decisión grande con fuentes, supuestos y riesgos claros.`, prompt: `Quiero hacer una investigación profunda para decidir si conviene [oportunidad: vender en otra ciudad / regalos empresariales / producto derivado]. Contexto: empresa de nueces y avellanas en Viedma/IDEVI. Primero proponé un plan de investigación. Después analizá oportunidad, clientes posibles, costos, riesgos, fuentes confiables, supuestos y primer experimento barato. Separá datos verificados, inferencias y preguntas pendientes.`, why: `Lleva una idea grande a un informe accionable sin saltar directo a invertir.` },
+{ id: 'p74', level: 'profundizar', domain: `Evaluación estratégica`, title: `Rúbrica de 100 puntos para una idea de negocio`,
+objective: `Evaluar proyectos con criterios concretos y no con intuición sola.`, prompt: `Evaluá esta idea para mi empresa de nueces y avellanas: [idea]. Usá una rúbrica de 100 puntos: claridad de la idea (20), demanda probable (20), viabilidad con mis recursos actuales (20), margen o potencial económico (20), riesgos y primer experimento barato (20). No suavices la evaluación. Si falta información, descontá puntos y decime qué dato necesito conseguir.`, why: `Una rúbrica baja la ansiedad y muestra qué mejorar antes de avanzar.` },
+{ id: 'p75', level: 'profundizar', domain: `Búsqueda y fuentes`, title: `Comparar fuentes antes de imprimir o comprar`,
+objective: `Evitar decisiones basadas en una sola página o dato viejo.`, prompt: `Necesito decidir sobre [etiqueta / envase / proveedor / feria]. Compará al menos 3 fuentes distintas. Para cada una indicá: quién la publica, fecha, dato útil, posible límite o sesgo. Cerrá con qué puedo usar con confianza, qué debo verificar por teléfono o con un profesional, y qué no tomaría como seguro.`, why: `Te da un pequeño control de calidad antes de gastar plata o imprimir material.` },
+{ id: 'p76', level: 'profundizar', domain: `Producción multimedia`, title: `Storyboard para video de cosecha`,
+objective: `Diseñar un video antes de grabarlo o generarlo.`, prompt: `Actuá como director creativo de videos para productos regionales. Diseñá un storyboard de 6 planos para un video corto sobre la cosecha de nueces en la zona de Viedma/IDEVI. Para cada plano indicá: imagen, duración, texto mínimo, voz en off opcional, emoción buscada y qué material necesito grabar con el celular.`, why: `Convierte una idea difusa en una guía concreta de grabación o generación.` },
+{ id: 'p77', level: 'profundizar', domain: `Imágenes para difusión`, title: `Brief visual reutilizable de marca`,
+objective: `Mantener coherencia entre fotos, folletos y redes.`, prompt: `Ayudame a crear un brief visual reutilizable para mi marca de nueces y avellanas. Definí: paleta de colores, tipo de luz, fondos, encuadres, texturas, qué evitar y una frase corta de estilo que pueda pegar en todos mis prompts de imagen. Después dame 4 prompts distintos que usen exactamente ese brief.`, why: `Una marca se ve más profesional cuando sus imágenes parecen de la misma familia.` },
+{ id: 'p78', level: 'proyectar', domain: `Producción multimedia`, title: `Mini campaña multimedia de temporada`,
+objective: `Coordinar imagen, texto y video bajo una misma idea.`, prompt: `Actuá como estratega de comunicación multimedia para productos regionales. Diseñá una mini campaña de 2 semanas para la temporada de nueces y avellanas. Incluí: mensaje central, 4 publicaciones con foto, 2 reels con storyboard, 1 folleto simple, prompts de imagen para cada pieza y criterios para revisar que todo sea coherente y honesto.`, why: `Pasa de publicaciones sueltas a una comunicación visual con continuidad.` },
+{ id: 'p79', level: 'proyectar', domain: `Evaluación estratégica`, title: `Explorar, probar y evaluar una idea`,
+objective: `Probar sin invertir de más.`, prompt: `Quiero probar esta idea: [idea]. Ayudame a dividirla en tres etapas: 1) Exploración: qué necesito saber y qué fuentes consultar. 2) Prueba chica: qué puedo hacer esta semana con bajo costo. 3) Evaluación: qué datos miro para decidir si sigo, ajusto o abandono. Incluí riesgos y señales de alerta.`, why: `Reduce el riesgo: no mata la idea, la pone a prueba con inteligencia.` },
+{ id: 'p80', level: 'proyectar', domain: `Investigación profunda`, title: `Mapa de expansión a nuevos clientes`,
+objective: `Investigar crecimiento comercial con criterio y próximos pasos.`, prompt: `Actuá como investigador comercial. Quiero expandir mis ventas de nueces y avellanas a nuevos tipos de clientes: dietéticas, restaurantes, empresas para regalos, turismo regional y ferias. Hacé un mapa comparativo con: atractivo del canal, esfuerzo, requisitos, riesgos, fuentes a consultar y primer acercamiento posible. Cerrá recomendando por dónde empezar y qué dato verificar antes.`, why: `Ordena oportunidades y evita dispersarte tratando de ir a todos lados a la vez.` }
 ];
 
 // ═══════════════════════════════════════════════════════════════
@@ -561,7 +630,11 @@ const roleByDomain = {
 'fidelización de clientes': `especialista en fidelización de clientes`,
 'capacitación del equipo': `formador de equipos de trabajo`,
 'sostenibilidad': `asesor en producción sustentable`,
-'relación con la comunidad': `gestor de vínculos con la comunidad`
+'relación con la comunidad': `gestor de vínculos con la comunidad`,
+'búsqueda y fuentes': `investigador práctico con criterio de fuentes confiables`,
+'investigación profunda': `investigador estratégico para pequeñas empresas`,
+'evaluación estratégica': `asesor crítico de decisiones de negocio`,
+'producción multimedia': `director creativo multimedia para productos regionales`
 };
 
 const resolveRole = (domain) => roleByDomain[domain.toLowerCase()] || `asistente experto en diseño de prompts`;
@@ -575,6 +648,9 @@ if (domain.includes('docencia') || domain.includes('curso') || domain.includes('
 sesiones con objetivo, actividad, evidencia y cierre.`;
 if (domain.includes('investigación') || domain.includes('fuentes') || domain.includes('ciencia')) return `Matriz con
 columnas y estado de verificación.`;
+if (domain.includes('multimedia') || domain.includes('video') || domain.includes('storyboard')) return `Storyboard o
+plan de piezas con objetivo, planos, texto mínimo, materiales y revisión.`;
+if (domain.includes('evaluación estratégica')) return `Rúbrica con puntaje, supuestos, riesgos y primera prueba chica.`;
 if (domain.includes('comunicación') || domain.includes('familiar')) return `Tres versiones del mensaje con contexto de
 uso.`;
 if (domain.includes('proyecto') || domain.includes('estratégico') || domain.includes('impacto')) return `Plan por fases
@@ -622,7 +698,11 @@ const weakPromptByDomain = {
 'fidelización de clientes': `Cómo hago que vuelvan los clientes.`,
 'capacitación del equipo': `Enseñale a vender a mi ayudante.`,
 'sostenibilidad': `Decí que soy sustentable.`,
-'relación con la comunidad': `Qué hago con la comunidad.`
+'relación con la comunidad': `Qué hago con la comunidad.`,
+'búsqueda y fuentes': `Buscame info de esto.`,
+'investigación profunda': `Investigá si me conviene esta idea.`,
+'evaluación estratégica': `Decime si mi idea es buena.`,
+'producción multimedia': `Haceme un video lindo.`
 };
 
 const resolveBadPrompt = (item) => {
@@ -652,6 +732,10 @@ domain.includes('transferencia')) return `claridad didáctica, secuencia progres
 comprensión`;
 if (domain.includes('investigación') || domain.includes('fuentes') || domain.includes('ciencia')) return `trazabilidad
 de fuentes, distinción entre verificado/pendiente y riesgos de error`;
+if (domain.includes('multimedia') || domain.includes('video') || domain.includes('storyboard')) return `coherencia visual,
+claridad del mensaje, control de textos exactos y factibilidad de producción`;
+if (domain.includes('evaluación estratégica')) return `criterios explícitos, supuestos visibles, riesgos concretos y
+primer experimento verificable`;
 if (domain.includes('comunicación') || domain.includes('entrevista') || domain.includes('familiar')) return `tono
 adecuado, intención explícita, reducción de ambigüedad y salida accionable`;
 if (domain.includes('proyecto') || domain.includes('estratégico') || domain.includes('iniciativa') ||
@@ -729,7 +813,7 @@ techniques: levelTechniqueMap[item.level] || levelTechniqueMap.inicio,
 enhancedPrompt: buildEnhancedPrompt(item)
 }));
 // ═══════════════════════════════════════════════════════════════
-// DATA: HISTORIAS DE USO REALISTA (22 casos)
+// DATA: HISTORIAS DE USO REALISTA (26 casos)
 // ═══════════════════════════════════════════════════════════════
 
 const stories = [
@@ -1040,11 +1124,67 @@ conversation: [
 { role: 'resultado', text: `Resultado: en dos ajustes puntuales, una foto floja se volvió usable. Iterar, no descartar.` }
 ],
 reusablePrompt: `Esta imagen quedó [problema]. No la rehagas de cero: sobre la misma, ajustá SOLO [cambio puntual: más luz / fondo / detalle] y dejá el resto igual. Vamos puliéndola de a un cambio por vez.`
+},
+{
+id: 's23', title: `La fuente vieja que casi usamos`, focus: `Búsqueda web y verificación`,
+context: `Una recomendación útil en apariencia se corrige al pedir fecha y fuente confiable.`,
+conversation: [
+{ role: 'usuario', text: `La IA me dijo qué datos poner en la etiqueta. ¿Lo imprimo así?` },
+{ role: 'ia', text: `La etiqueta debería incluir nombre del producto, peso, origen y conservación.` },
+{ role: 'alerta', text: `La lista puede ser útil, pero no alcanza: para imprimir una etiqueta necesitás verificar normativa actual y fuente confiable.` },
+{ role: 'ajuste', text: `Buscá fuentes oficiales o confiables sobre etiquetado de alimentos. Indicá fecha, qué dato aporta y qué tengo que confirmar antes de imprimir.` },
+{ role: 'ia', text: `Acá separo información general, fuentes a consultar y puntos que conviene confirmar con autoridad o profesional antes de mandar a imprimir.` },
+{ role: 'usuario', text: `Perfecto. Uso esto como checklist, pero confirmo lo legal antes de imprimir.` },
+{ role: 'resultado', text: `Resultado: la IA dejó de ser "autoridad" y pasó a ser guía para verificar bien.` }
+],
+reusablePrompt: `Antes de usar este dato en mi negocio, buscá fuentes confiables y actualizadas. Para cada dato indicá fuente, fecha, qué tan confiable parece y qué debería verificar yo antes de actuar.`
+},
+{
+id: 's24', title: `La idea que parecía buenísima`, focus: `Evaluación crítica`,
+context: `Una idea de producto se evalúa con rúbrica en vez de entusiasmo automático.`,
+conversation: [
+{ role: 'usuario', text: `Tengo una idea buenísima: vender nueces saborizadas premium. Decime por qué va a funcionar.` },
+{ role: 'ia', text: `Es una gran oportunidad: suma valor, diferencia tu marca y puede atraer nuevos clientes.` },
+{ role: 'alerta', text: `La IA te está acompañando el entusiasmo, pero todavía no evaluó demanda, costo, esfuerzo ni riesgo.` },
+{ role: 'ajuste', text: `No me des la razón. Evaluá la idea con una rúbrica de 100 puntos: demanda, viabilidad, margen, esfuerzo, riesgos y prueba chica.` },
+{ role: 'ia', text: `Puntuación inicial: 62/100. Hay potencial, pero faltan datos sobre costos, vida útil, aceptación del cliente y proceso sanitario. Propongo una prueba con 20 unidades y encuesta breve.` },
+{ role: 'usuario', text: `Ahora sí: no descarto la idea, pero la pruebo chica antes de invertir.` },
+{ role: 'resultado', text: `Resultado: el entusiasmo se convirtió en experimento controlado.` }
+],
+reusablePrompt: `No me des la razón por compromiso. Evaluá esta idea con una rúbrica de 100 puntos: demanda, viabilidad, margen, esfuerzo, riesgos y primera prueba chica. Si falta información, descontá puntos y decime qué dato buscar.`
+},
+{
+id: 's25', title: `Investigar antes de vender en otra ciudad`, focus: `Investigación profunda`,
+context: `La expansión comercial se aborda como investigación y prueba, no como salto a ciegas.`,
+conversation: [
+{ role: 'usuario', text: `Quiero vender mis nueces en otras ciudades. Armame el plan completo.` },
+{ role: 'ia', text: `Podés vender por redes, contactar comercios y organizar envíos.` },
+{ role: 'alerta', text: `Eso es correcto pero genérico: todavía no sabemos qué ciudad, qué canal, qué costos ni qué cliente conviene priorizar.` },
+{ role: 'ajuste', text: `Primero hacé una investigación profunda: canales posibles, clientes, logística, riesgos, fuentes a consultar y primer experimento barato.` },
+{ role: 'ia', text: `Propongo comparar dietéticas, restaurantes, regalos empresariales y ferias. Para cada canal: atractivo, esfuerzo, requisitos, riesgos y primer contacto.` },
+{ role: 'usuario', text: `Elijo dietéticas como primer canal y preparo una propuesta chica con muestra.` },
+{ role: 'resultado', text: `Resultado: la expansión dejó de ser "salir a vender a todos lados" y se volvió un mapa de decisión.` }
+],
+reusablePrompt: `Quiero investigar si conviene expandir a [canal o ciudad]. Hacé un mapa comparativo con oportunidad, clientes, logística, costos, riesgos, fuentes a consultar y primer experimento barato. Separá datos verificados de supuestos.`
+},
+{
+id: 's26', title: `Del producto al reel`, focus: `Producción multimedia`,
+context: `Un video corto se planifica por planos antes de grabar o generar imágenes.`,
+conversation: [
+{ role: 'usuario', text: `Haceme un reel lindo de mis nueces.` },
+{ role: 'ia', text: `Puedo crear un video atractivo con nueces, música y texto promocional.` },
+{ role: 'alerta', text: `Pedido demasiado abierto: puede salir lindo pero genérico, con texto mal escrito o sin historia.` },
+{ role: 'ajuste', text: `Primero storyboard: 6 planos, duración, qué mostrar, texto mínimo, voz en off y qué tengo que grabar con el celular.` },
+{ role: 'ia', text: `Plano 1: manos abriendo una bolsa. Plano 2: detalle de textura. Plano 3: origen regional. Plano 4: preparación de pedido. Plano 5: producto listo. Plano 6: cierre con consulta por WhatsApp.` },
+{ role: 'usuario', text: `Con eso grabo mejor. Después uso la IA para mejorar fotos y armar el texto final.` },
+{ role: 'resultado', text: `Resultado: el video nació con intención, no como una imagen en movimiento improvisada.` }
+],
+reusablePrompt: `Antes de generar o grabar un video, diseñá un storyboard de 6 planos para [producto/tema]. Para cada plano indicá duración, imagen, texto mínimo, voz en off opcional, emoción buscada y qué material necesito grabar.`
 }
 ];
 
 // ═══════════════════════════════════════════════════════════════
-// DATA: DESAFÍOS COGNITIVOS (6 desafíos)
+// DATA: DESAFÍOS COGNITIVOS (7 desafíos)
 // ═══════════════════════════════════════════════════════════════
 
 const challengesData = [
@@ -1053,7 +1193,8 @@ id: 'c1', type: 'memoryPairs', title: `Pares de conceptos`, description: `Encont
 pairs: [
 ['Prompt', 'Instrucción que le das a la IA'], ['Alucinación', 'Dato inventado que suena creíble'],
 ['Iterar', 'Mejorar paso a paso'], ['Ofuscar', 'Reemplazar datos sensibles por genéricos'],
-['Margen', 'Diferencia entre precio y costo'], ['Tabla dinámica', 'Resumen de muchos datos sin fórmulas']
+['Margen', 'Diferencia entre precio y costo'], ['Tabla dinámica', 'Resumen de muchos datos sin fórmulas'],
+['Storyboard', 'Secuencia de planos antes de hacer un video'], ['Rúbrica', 'Criterios con puntaje para evaluar mejor']
 ]
 },
 {
@@ -1073,7 +1214,9 @@ comparisons: [
 { weak: `Armame una lista de precios.`, strong: `Armá una lista de precios como tabla con columnas Producto, Presentación, Precio minorista y mayorista, dejando los valores en [completar].`, improvement: `Define formato y deja los precios a mi cargo`, options: ['Define formato y deja los precios a mi cargo', 'Pide menos productos', 'Cambia el tono'], correct: 0 },
 { weak: `Decime cuánto me cuesta un kilo de nueces.`, strong: `Dame la lista de ítems de costo de un kilo de nueces con cada monto en [completar], sin inventar valores, para que yo los cargue.`, improvement: `Evita que la IA invente cifras`, options: ['Pide un número exacto ya', 'Evita que la IA invente cifras', 'Usa lenguaje formal'], correct: 1 },
 { weak: `Cambiá todo mi cartel.`, strong: `Mantené el nombre y el logo. Cambiá SOLO el fondo a madera clara y la tipografía a una más legible. No toques nada más.`, improvement: `Protege lo que funciona y acota el cambio`, options: ['Lo hace más corto', 'Protege lo que funciona y acota el cambio', 'Agrega colores'], correct: 1 },
-{ weak: `Analizá mi planilla de clientes.`, strong: `Te paso la planilla con los nombres reemplazados por códigos (Cliente 01, 02). Analizá quién compra más y en qué meses.`, improvement: `Anonimiza los datos antes de analizar`, options: ['Anonimiza los datos antes de analizar', 'Pide más datos personales', 'Cambia el formato'], correct: 0 }
+{ weak: `Analizá mi planilla de clientes.`, strong: `Te paso la planilla con los nombres reemplazados por códigos (Cliente 01, 02). Analizá quién compra más y en qué meses.`, improvement: `Anonimiza los datos antes de analizar`, options: ['Anonimiza los datos antes de analizar', 'Pide más datos personales', 'Cambia el formato'], correct: 0 },
+{ weak: `Decime si esta idea es buenísima.`, strong: `Evaluá esta idea con una rúbrica de 100 puntos, marcando riesgos, supuestos y una prueba chica de bajo costo. No me des la razón por compromiso.`, improvement: `Evita complacencia y exige criterios`, options: ['Evita complacencia y exige criterios', 'Pide una respuesta más amable', 'Elimina el contexto'], correct: 0 },
+{ weak: `Haceme un reel lindo.`, strong: `Diseñá primero un storyboard de 6 planos para un reel vertical: duración, qué se ve, texto mínimo, voz en off y material a grabar con el celular.`, improvement: `Planifica el video antes de producirlo`, options: ['Agrega más adornos', 'Planifica el video antes de producirlo', 'Pide una imagen cuadrada'], correct: 1 }
 ]
 },
 {
@@ -1082,7 +1225,9 @@ exercises: [
 { title: `Verificar un dato que dio la IA`, steps: ['Identificar el dato clave de la respuesta', 'Buscar la fuente oficial del dato', 'Comparar con otra fuente independiente', 'Decidir si el dato es confiable'] },
 { title: `Crear una imagen de producto que sirva`, steps: ['Describir el tema, estilo y luz que quiero', 'Generar una primera versión', 'Mirar con ojo crítico qué falta', 'Pedir un ajuste puntual', 'Repetir hasta lograr la imagen final'] },
 { title: `Anonimizar la planilla antes de subirla`, steps: ['Identificar las columnas con datos personales', 'Reemplazar nombres por códigos', 'Quitar teléfonos y direcciones', 'Verificar que el análisis funciona igual'] },
-{ title: `Armar un folleto con ayuda de IA`, steps: ['Mejorar primero la foto del producto', 'Definir un diseño simple', 'Dejar un espacio para los precios', 'Cargar yo los precios y revisar', 'Controlar que no haya errores antes de imprimir'] }
+{ title: `Armar un folleto con ayuda de IA`, steps: ['Mejorar primero la foto del producto', 'Definir un diseño simple', 'Dejar un espacio para los precios', 'Cargar yo los precios y revisar', 'Controlar que no haya errores antes de imprimir'] },
+{ title: `Crear un reel con criterio`, steps: ['Definir objetivo y público', 'Armar storyboard de planos', 'Grabar o generar cada plano', 'Agregar textos exactos en el editor', 'Revisar antes de publicar'] },
+{ title: `Investigar una oportunidad`, steps: ['Definir la pregunta de decisión', 'Pedir fuentes confiables y fechas', 'Separar datos de supuestos', 'Diseñar una prueba chica', 'Evaluar si conviene seguir'] }
 ]
 },
 {
@@ -1095,7 +1240,9 @@ pairs: [
 ['Alucinación', 'Invento presentado como dato real'],
 ['Resolución', 'Tamaño y nitidez para poder imprimir'],
 ['Ofuscación', 'Ocultar datos sensibles antes de enviar'],
-['Margen', 'Lo que te queda entre precio y costo']
+['Margen', 'Lo que te queda entre precio y costo'],
+['Fuente confiable', 'Lugar donde verificar un dato importante'],
+['Storyboard', 'Plan de escenas antes de hacer un video']
 ]
 },
 {
@@ -1105,7 +1252,17 @@ groups: [
 { items: ['Rol', 'Contexto', 'Formato', 'Apurarse', 'Criterio'], intruder: 3, reason: `"Apurarse" no es parte de un buen prompt; lo demás sí.` },
 { items: ['Nombre del cliente', 'Teléfono', 'Producto preferido', 'DNI', 'Dirección'], intruder: 2, reason: `"Producto preferido" no es un dato sensible que requiera protección.` },
 { items: ['Verificar el dato', 'Iterar la imagen', 'Copiar sin revisar', 'Ofuscar datos', 'Mostrar el cálculo'], intruder: 2, reason: `"Copiar sin revisar" es justamente lo que hay que evitar.` },
-{ items: ['Luz cálida', 'Fondo de madera', 'Estilo apetecible', 'Precio exacto inventado', 'Encuadre cerrado'], intruder: 3, reason: `El precio exacto no se deja a la IA: lo controlás vos.` }
+{ items: ['Luz cálida', 'Fondo de madera', 'Estilo apetecible', 'Precio exacto inventado', 'Encuadre cerrado'], intruder: 3, reason: `El precio exacto no se deja a la IA: lo controlás vos.` },
+{ items: ['Fuente oficial', 'Fecha de publicación', 'Foro anónimo como única prueba', 'Dato verificable', 'Consulta profesional'], intruder: 2, reason: `Un foro puede orientar, pero no debería ser la única prueba para una decisión sensible.` },
+{ items: ['Plano 1', 'Voz en off', 'Storyboard', 'Texto mínimo', 'Precio inventado'], intruder: 4, reason: `El precio no se inventa dentro del video: lo cargás y revisás vos.` }
+]
+},
+{
+id: 'c7', type: 'spotDifference', title: `Fuentes y criterio`, description: `Detectá qué mejora la consigna cuando necesitás información confiable.`,
+comparisons: [
+{ weak: `Buscame qué tiene que tener una etiqueta.`, strong: `Buscá fuentes oficiales o confiables sobre etiquetas de alimentos. Indicá fecha, fuente, dato útil y qué debo confirmar antes de imprimir.`, improvement: `Pide fuentes, fechas y verificación`, options: ['Pide fuentes, fechas y verificación', 'Pide una respuesta más corta', 'Evita usar internet'], correct: 0 },
+{ weak: `Mi idea de regalos empresariales es excelente, armá todo.`, strong: `Evaluá regalos empresariales con una rúbrica: demanda, viabilidad, margen, esfuerzo, riesgos y primera prueba chica. No me des la razón por compromiso.`, improvement: `Cambia entusiasmo por evaluación`, options: ['Cambia entusiasmo por evaluación', 'Pide más entusiasmo', 'Elimina riesgos'], correct: 0 },
+{ weak: `Haceme un video con texto y precios.`, strong: `Diseñá un reel sin datos exactos dentro del video; dejá espacios para agregar precio, WhatsApp y stock después en el editor.`, improvement: `Deja datos exactos bajo control humano`, options: ['Hace que la IA escriba más', 'Deja datos exactos bajo control humano', 'Quita el producto'], correct: 1 }
 ]
 }
 ];
@@ -1141,7 +1298,12 @@ const imageGlossary = [
 { term: `Edición / variación`, def: `Pedirle a la IA que modifique una imagen existente (cambiar fondo, luz, agregar o quitar algo) en vez de crear una desde cero.` },
 { term: `Negativos (qué evitar)`, def: `Decirle a la IA lo que NO querés ("sin texto", "sin personas", "sin fondo recargado"). Acota el resultado y evita sorpresas.` },
 { term: `Iteración`, def: `Mejorar la imagen en varias vueltas: generás, mirás, pedís un ajuste puntual y repetís. Es el método normal, no un fracaso.` },
-{ term: `Marca de agua / origen`, def: `Algunas IA marcan que la imagen fue generada. Es bueno saberlo y ser honesto sobre el uso de imágenes generadas.` }
+{ term: `Marca de agua / origen`, def: `Algunas IA marcan que la imagen fue generada. Es bueno saberlo y ser honesto sobre el uso de imágenes generadas.` },
+{ term: `Brief visual`, def: `Un mini acuerdo de estilo: paleta, luz, fondo, encuadre y clima. Lo repetís en cada prompt para que las piezas sean coherentes.` },
+{ term: `Storyboard`, def: `La secuencia de planos de un video antes de hacerlo. Te permite pensar qué se ve, cuánto dura y qué dice cada parte.` },
+{ term: `Texto en pantalla`, def: `Frases cortas que aparecen sobre una imagen o video. Conviene agregarlas vos al final si incluyen precios, WhatsApp o datos exactos.` },
+{ term: `Prompt negativo`, def: `Una lista de cosas que no querés que aparezcan: sin texto, sin manos deformes, sin fondo recargado, sin logo inventado.` },
+{ term: `Coherencia de marca`, def: `Que tus piezas se reconozcan como parte del mismo negocio: mismos tonos, luz, estilo, tipo de fondo y forma de presentar el producto.` }
 ];
 
 const imageConcepts = [
@@ -1168,6 +1330,24 @@ const imageConcepts = [
 `Trabajá por pasos: primero la foto, después el diseño, después el texto y el logo.`,
 `Cada intento "fallido" te dice qué pedir distinto la próxima vez: es información.`,
 `Guardá tus mejores prompts: van a ser tu caja de herramientas visual.`
+] },
+{ title: `Cómo pensar una pieza multimedia`, body: [
+`Antes de pedir una imagen o video, definí objetivo: vender, informar, recordar o generar confianza.`,
+`Decidí el público: minorista, mayorista, feria, cliente frecuente o nuevo contacto.`,
+`Elegí emoción buscada: calidez, calidad artesanal, producto fresco, origen regional o regalo cuidado.`,
+`Recién después pedí imagen, video, texto o audio. La herramienta ejecuta mejor cuando la intención está clara.`
+] },
+{ title: `Video: primero storyboard`, body: [
+`Un reel no empieza con "haceme un video": empieza con 4 a 6 planos pensados.`,
+`Cada plano debe tener una función: mostrar producto, origen, proceso, textura, pedido o cierre.`,
+`Pedí texto mínimo en pantalla y revisalo vos: los datos exactos se controlan al final.`,
+`Si vas a grabar con el celular, pedí qué tomas necesitás antes de salir a filmar.`
+] },
+{ title: `Lo que conviene dejar bajo tu control`, body: [
+`Precios, teléfonos, dirección, nombre exacto del negocio y datos legales.`,
+`Logo real: la IA puede limpiarlo o ubicarlo, pero no conviene que lo redibuje libremente.`,
+`Promesas comerciales: que la imagen sea atractiva, pero que no muestre calidad, cantidad o presentación que no ofrecés.`,
+`Aprobación final antes de imprimir o publicar: ortografía, coherencia, resolución y datos.`
 ] }
 ];
 
@@ -1220,6 +1400,40 @@ steps: [
 { goal: `Repetir el estilo en otras tomas`, prompt: `Manteniendo EXACTAMENTE el mismo estilo del brief, generá ahora: 1) avellanas sobre madera, 2) un mix de frutos secos en bolsa de tela, 3) una mano sosteniendo nueces. Misma luz, misma paleta, mismo clima.`, expect: `Varias fotos que se ven como una familia.`, adjust: `Si alguna se desvía: "esta cambió el estilo, ajustala para que coincida con la primera".` },
 { goal: `Revisar la coherencia`, prompt: `Mostrámelas juntas y decime si alguna rompe la coherencia del set y por qué.`, expect: `Una mirada crítica antes de usarlas.`, adjust: `Reemplazá las que no encajen repitiendo el brief.` },
 { goal: `Exportar el set`, prompt: `Generá todas en alta resolución, mismo formato (por ejemplo cuadrado 1:1 para redes).`, expect: `Un set listo para tus publicaciones y catálogo.`, adjust: `Guardá el brief: lo vas a reutilizar cada temporada.` }
+]
+},
+{
+id: 'r4',
+title: `Storyboard para un reel corto de temporada`,
+intro: `Antes de generar o grabar un video, conviene pensar la secuencia. Esta receta transforma tu producto y tu historia en un reel simple, cálido y realizable con el celular o con IA de video.`,
+toolNotes: [
+{ tool: `ChatGPT / Gemini / Claude`, note: `Muy útiles para diseñar guion, storyboard y texto de voz antes de producir.` },
+{ tool: `IA de imagen o video`, note: `Usala recién después de tener planos claros. El video cuesta más iterar que el texto.` },
+{ tool: `Editor simple del celular`, note: `Ideal para agregar textos exactos, precios, logo y WhatsApp sin depender de la IA.` }
+],
+steps: [
+{ goal: `Definir objetivo y público`, prompt: `Quiero hacer un reel de 20 segundos para promocionar mis nueces y avellanas. Antes de escribir el guion, haceme 5 preguntas para definir objetivo, público, producto principal, tono y llamado a la acción.`, expect: `La IA te ayuda a no arrancar a ciegas.`, adjust: `Respondé simple. Si no sabés algo, pedí opciones y elegí una.` },
+{ goal: `Armar el storyboard`, prompt: `Con este contexto: [pegá tus respuestas]. Diseñá un storyboard de 6 planos para un reel vertical 9:16. Para cada plano indicá duración, qué se ve, texto mínimo en pantalla, voz en off opcional y qué necesito grabar con el celular.`, expect: `Una lista concreta de tomas para grabar o generar.`, adjust: `Si parece largo: "reducilo a 4 planos y 15 segundos".` },
+{ goal: `Controlar textos exactos`, prompt: `Revisá el storyboard y marcá qué textos NO conviene dejar escritos por la IA de imagen/video porque tienen datos exactos (precio, WhatsApp, nombre, dirección). Proponé textos cortos que yo pueda agregar después en el editor.`, expect: `Separás diseño visual de datos exactos.`, adjust: `Mantené el texto breve: en video, menos es más.` },
+{ goal: `Generar prompts visuales por plano`, prompt: `Convertí cada plano del storyboard en un prompt visual breve, manteniendo este estilo: rústico, cálido, natural, producto regional del IDEVI, luz suave, fondo limpio. Sin texto dentro de la imagen.`, expect: `Prompts listos para generar imágenes o clips coherentes.`, adjust: `Si una imagen cambia de estilo, repetí el brief completo.` },
+{ goal: `Cerrar con revisión`, prompt: `Antes de publicar, revisá el reel con esta checklist: se entiende el producto, hay coherencia visual, no hay datos inventados, el texto se lee, el cierre invita a consultar y no promete algo que no vendo.`, expect: `Una revisión final profesional.`, adjust: `Si falla un punto, corregí solo ese punto.` }
+]
+},
+{
+id: 'r5',
+title: `Mini campaña multimedia con una misma identidad`,
+intro: `Una campaña chica puede tener foto, folleto, reel y mensaje de WhatsApp bajo la misma idea. Esta receta te ayuda a coordinar todo para que no parezcan piezas sueltas.`,
+toolNotes: [
+{ tool: `ChatGPT / Gemini`, note: `Buenos para pensar concepto, calendario, textos y prompts visuales.` },
+{ tool: `IA de imagen`, note: `Genera fondos, fotos y variantes manteniendo el brief visual.` },
+{ tool: `Editor externo`, note: `Usalo para poner precios, logo, WhatsApp y textos definitivos.` }
+],
+steps: [
+{ goal: `Elegir una idea central`, prompt: `Quiero una mini campaña de 2 semanas para mis nueces y avellanas. Dame 5 ideas centrales distintas, con tono regional, honesto y cálido. Para cada una indicá qué emoción busca y a qué cliente le habla.`, expect: `Opciones de enfoque antes de producir piezas.`, adjust: `Elegí una y pedí que descarte lo demás para no dispersarte.` },
+{ goal: `Crear el brief de campaña`, prompt: `Con esta idea elegida: [pegar]. Definí un brief de campaña: mensaje central, paleta de colores, tipo de foto, tipo de fondo, tono de textos, qué evitar y una frase de estilo para repetir en todos los prompts visuales.`, expect: `Un criterio común para que todo se vea de la misma familia.`, adjust: `Si queda muy largo, pedí "resumilo en 6 líneas reutilizables".` },
+{ goal: `Diseñar las piezas`, prompt: `Usando este brief: [pegar brief]. Diseñá 4 piezas: 1 foto de producto para redes, 1 folleto simple, 1 reel con storyboard de 5 planos y 1 mensaje de WhatsApp para clientes. Para cada pieza indicá objetivo, prompt visual y texto sugerido.`, expect: `Una campaña chica pero completa.`, adjust: `Si hay demasiado texto, pedí versiones más cortas por canal.` },
+{ goal: `Dejar datos exactos fuera de la IA`, prompt: `Revisá las 4 piezas y marcá dónde debo completar yo datos exactos: precios, teléfono, stock, nombre de presentación, fecha de entrega. Reescribí los prompts visuales para que no incluyan esos datos dentro de la imagen.`, expect: `Menos riesgo de publicar errores.`, adjust: `Usá [completar] en todo lo que dependa de datos reales.` },
+{ goal: `Evaluar coherencia`, prompt: `Evaluá la campaña con una rúbrica de 100 puntos: coherencia visual, claridad del mensaje, honestidad comercial, facilidad de producción y llamado a la acción. Señalá qué mejoraría antes de publicar.`, expect: `Un control de calidad antes de salir a redes o imprimir.`, adjust: `Corregí una cosa por vez y volvé a evaluar.` }
 ]
 }
 ];
@@ -1277,7 +1491,10 @@ const imageTroubleshoot = [
 { problem: `Cada imagen tiene un estilo distinto`, cause: `No fijaste un estilo común.`, fix: `Definí un brief de estilo y repetilo igual en cada prompt.` },
 { problem: `Quedó recargada`, cause: `Pediste demasiados elementos.`, fix: `Pedí composición simple, limpia, con espacio en blanco.` },
 { problem: `El logo sale distinto cada vez`, cause: `Los modelos no reproducen logos exactos.`, fix: `Usá tu logo real y pedí que lo respete sin redibujarlo; o pegalo vos al final.` },
-{ problem: `Me frustré, no me sale`, cause: `Intentás lograr todo de una sola vez.`, fix: `Dividí en pasos: primero la foto, después el diseño, después el texto y el logo.` }
+{ problem: `El reel quedó lindo pero no vende`, cause: `Faltó objetivo, público y llamado a la acción.`, fix: `Pedí storyboard con objetivo, público, cierre y qué debe hacer el cliente después.` },
+{ problem: `El video tiene textos o precios mal`, cause: `Dejaste datos exactos dentro de la generación.`, fix: `Generá video o imagen sin datos exactos y agregá precio, WhatsApp y stock en el editor.` },
+{ problem: `Las piezas de la campaña no parecen de la misma marca`, cause: `Cada prompt tuvo un estilo distinto.`, fix: `Creá un brief de campaña y repetilo igual en foto, folleto y reel.` },
+{ problem: `Me frustré, no me sale`, cause: `Intentás lograr todo de una sola vez.`, fix: `Dividí en pasos: primero la foto, después el diseño, después el texto, el logo y el video.` }
 ];
 
 const ImagesSection = () => {
@@ -1299,7 +1516,7 @@ return (
 <h3 className="text-xl font-bold text-amber-800 mb-2 flex items-center gap-2">
 <ImageIcon className="w-5 h-5" /> Laboratorio de Imágenes
 </h3>
-<p className="text-amber-900">Acá aprendés a crear y modificar material gráfico para tu negocio con IA: fotos de producto, folletos, carteles y logos. Primero el panorama, después un paso a paso bien concreto, un banco de frases para pedir cambios precisos, y una guía para no frustrarte. Recordá: el buen resultado llega iterando.</p>
+<p className="text-amber-900">Acá aprendés a crear y modificar material gráfico y multimedia para tu negocio con IA: fotos de producto, folletos, carteles, logos, storyboards y reels simples. Primero el panorama, después pasos concretos, frases para pedir cambios precisos y una guía para no frustrarte. Recordá: el buen resultado llega iterando.</p>
 </div>
 
 <div className="flex flex-wrap gap-2 mb-6">
