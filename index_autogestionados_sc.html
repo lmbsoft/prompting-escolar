@@ -125,7 +125,7 @@
                 subtitle: 'Un modelo mental claro para coordinar tus proyectos en Mar del Plata',
                 reading: [
                     'Una IA generativa no piensa como una persona ni "sabe" cosas como las sabe un arquitecto, un escribano o un contador. Funciona prediciendo, a gran velocidad, qué texto (o qué imagen) es el más probable a partir de patrones que aprendió de enormes volúmenes de información. Cuando le escribís un pedido, calcula la respuesta más plausible. Su fortaleza es combinar ideas, redactar y ordenar; su debilidad es la certeza de cada dato concreto.',
-                    'Pensala como un asistente nuevo, muy rápido y muy leído, pero que recién entra a tu empresa: puede redactar el mensaje a un proveedor, armarte una planilla para seguir varias obras a la vez o proponerte un cronograma en segundos, pero no conoce TU realidad hasta que se la contás. Cuanto mejor le expliques tu contexto (que en la empresa se construyen edificios de departamentos y se reciclan casas para volver a venderlas en Mar del Plata, que coordinás proveedores, equipos propios y tercerizados, y la relación con clientes y arquitectos), mejores y más útiles serán sus respuestas.',
+                    'Pensala como un asistente nuevo, muy rápido y muy leído, pero que recién entra a la empresa: puede redactar un mensaje a un proveedor, armarte una planilla para seguir una obra o proponerte un cronograma en segundos, pero no conoce TU realidad hasta que se la contás. Cuanto mejor le expliques el contexto —qué hace la empresa, en qué etapa está la obra, para quién es lo que estás preparando—, mejores y más útiles serán sus respuestas.',
                     'Toda la conversación que tenés con la IA forma su "memoria de trabajo" del momento: lee todo lo que escribiste desde el primer mensaje para responder el último. Por eso conviene escribir ordenado y dar contexto: le estás dando mejor materia prima. Si arrancás con un pedido vago, te responde algo genérico; si le das objetivo, contexto y formato, el resultado sube de nivel notablemente.',
                     'Hoy hay varias IA conversacionales importantes: ChatGPT, Claude, Gemini, Copilot y otras. Cada una tiene puntos fuertes distintos: algunas redactan mejor, otras analizan documentos largos (un boleto, un pliego, un presupuesto de obra), otras generan o editan imágenes y renders. No existe "la mejor" en abstracto; existe la más adecuada para cada tarea. Lo importante es perder el miedo a probar: es gratis equivocarse con la IA.',
                     'La regla práctica más importante: no la trates como una autoridad final, tratala como un asistente. Vos seguís siendo quien decide. La IA te acerca borradores, estructuras y opciones; vos ponés el criterio de quien conoce el negocio, la ciudad y a las personas con las que se trabaja. Esa combinación —tu conocimiento del negocio + la velocidad de la IA— es lo que la vuelve una herramienta poderosa.',
@@ -138,6 +138,25 @@
                     'Verificar fuera del chat todo dato crítico (precios, superficies, plazos, normas, cifras).'
                 ],
                 practice: 'Ejercicio 1: pedile a la IA que te explique algo que ya dominás (por ejemplo, qué mira un comprador al elegir un departamento, o cómo se certifica el avance de una obra). Marcá qué acertó y qué quedó flojo: así calibrás cuánto confiar. Ejercicio 2: hacele el mismo pedido a dos IA distintas (ChatGPT y Gemini, por ejemplo) y compará. Ese contraste te entrena para usarlas con criterio.'
+            },
+            {
+                id: 't1b',
+                title: 'Elegir y combinar tus asistentes de IA (gratis y pago)',
+                subtitle: 'No hay una "mejor": hay una más adecuada para cada tarea',
+                reading: [
+                    'Hoy los asistentes conversacionales más usados son tres: ChatGPT (de OpenAI), Gemini (de Google) y Claude (de Anthropic). Los tres tienen una versión gratuita y una paga, y conviene conocerlos sin casarse con ninguno: lo más práctico es tener dos a mano y elegir según la tarea, como quien no usa la misma herramienta para todo.',
+                    'La versión gratuita alcanza para muchísimo: probar, redactar, ordenar ideas, aprender. Su límite suele estar en la cantidad de uso por día, en el tamaño de los documentos que podés subir y en que a veces trabajás con un modelo menos potente. Es el lugar ideal para empezar y perder el miedo sin gastar un peso.',
+                    'La versión paga (en general un abono mensual) te da el modelo más potente y parejo, más capacidad para subir y analizar documentos largos (un pliego, un contrato, varios PDF a la vez), más generación y edición de imágenes, y menos cortes por límite de uso. Si la IA empieza a ahorrarte horas cada semana, el abono suele pagarse solo; si recién arrancás, no hace falta.',
+                    'Cada uno tiene su carácter, y cambia seguido. A grandes rasgos: Gemini está muy integrado con Google (Drive, Gmail, las planillas) y es fuerte buscando información actualizada; ChatGPT es muy versátil para conversar, redactar y generar imágenes; Claude suele destacar en redacción cuidada y en leer documentos largos con criterio. No lo tomes como regla fija: la mejor prueba es tu propia tarea.',
+                    'Una estrategia simple y poderosa: hacele el MISMO pedido a dos asistentes y compará las respuestas. Vas a descubrir cuál te sirve más para cada cosa —uno para textos de venta, otro para analizar una planilla, otro para imágenes— y vas a entrenar el ojo para distinguir una buena respuesta de una floja.'
+                ],
+                checklist: [
+                    'Tener al menos dos asistentes a mano y elegir según la tarea.',
+                    'Empezar con las versiones gratuitas; no hace falta pagar para aprender.',
+                    'Pasar a una versión paga solo cuando la IA ya te ahorra tiempo real.',
+                    'Comparar el mismo pedido en dos asistentes para ver cuál rinde mejor.'
+                ],
+                practice: 'Elegí una tarea concreta (por ejemplo, redactar un aviso o resumir un documento) y hacé el mismo pedido en ChatGPT y en Gemini. Compará cuál entendió mejor, cuál fue más útil y cuál te dio algo más listo para usar. Quedate con el que mejor te funcionó para ese tipo de tarea.'
             },
             {
                 id: 't2',
@@ -651,8 +670,6 @@ if (domain.includes('proyecto') || domain.includes('estratégico') || domain.inc
 con hitos y riesgos.`;
 if (domain.includes('matemáticas') || domain.includes('lógica')) return `Enunciados numerados con solución paso a
 paso.`;
-if (domain.includes('vida activa') || domain.includes('artes marciales') || domain.includes('bienestar') || domain.includes('salud')) return `Ficha práctica con dimensiones, escalas y
-acciones.`;
 if (domain.includes('seguridad') || domain.includes('trámites')) return `Checklist operativa con alertas y pasos
 verificables.`;
 if (domain.includes('precio') || domain.includes('lista')) return `Tabla con columnas Unidad, Tipología, Precio y notas.`;
@@ -736,8 +753,6 @@ if (domain.includes('proyecto') || domain.includes('estratégico') || domain.inc
 domain.includes('impacto')) return `fases realistas, hitos verificables, riesgos y plan de mitigación`;
 if (domain.includes('matemáticas') || domain.includes('lógica')) return `precisión del razonamiento, claridad de cada
 paso y verificabilidad del resultado`;
-if (domain.includes('salud') || domain.includes('vida activa') || domain.includes('artes marciales') || domain.includes('bienestar')) return `límites claros entre autocuidado y consulta
-profesional, lenguaje no alarmista`;
 if (domain.includes('seguridad') || domain.includes('trámites')) return `pasos verificables, canales oficiales
 identificados y alertas de riesgo`;
 if (domain.includes('precio') || domain.includes('finanzas') || domain.includes('costo') || domain.includes('planilla') || domain.includes('registro')) return `exactitud de los cálculos, claridad de las fórmulas y verificabilidad de cada número`;
@@ -1610,6 +1625,94 @@ purpose: `Comparar proveedores con criterios claros y tener a mano contactos y c
 columns: [`Proveedor`, `Rubro`, `Contacto`, `Precio ref.`, `Plazo de entrega`, `Calidad (1-5)`, `Cumplimiento (1-5)`, `Condición de pago`, `Notas`],
 formula: `Comparar por rubro: ordenar/filtrar por Rubro y mirar Calidad, Plazo y Precio juntos.`,
 prompt: `Ayudame a armar en Google Sheets una planilla de proveedores para una empresa constructora, con columnas para Proveedor, Rubro, Contacto, Precio de referencia, Plazo de entrega, Calidad, Cumplimiento, Condición de pago y Notas. Explicame cómo filtrar por rubro para comparar opciones y cómo evitar guardar datos sensibles de más.`
+}
+];
+
+const notebookLMExercises = [
+{
+id: 'nb1',
+level: 'Primeros pasos',
+title: 'Crear tu primer cuaderno y preguntarle a tus documentos',
+goal: 'Cargar fuentes propias y ver cómo responde citando de dónde sacó cada dato.',
+steps: [
+'Entrá a notebooklm.google.com e iniciá sesión con tu cuenta de Google.',
+'Tocá "Crear" para abrir un cuaderno nuevo y ponele un nombre claro (por ejemplo, el de una obra).',
+'Subí 2 o 3 documentos como fuente (un PDF, un Doc o una planilla) y esperá a que termine de procesarlos.',
+'Escribí una pregunta concreta sobre ese material, como se la harías a un asistente.',
+'Mirá los numeritos de cita en la respuesta: tocá uno y te lleva al pasaje exacto de la fuente.',
+'Verificá ese pasaje: así comprobás que la respuesta sale de tus documentos y no de una invención.'
+],
+tip: 'Para la primera prueba usá documentos que ya conozcas bien: es la mejor forma de calibrar si responde bien.'
+},
+{
+id: 'nb2',
+level: 'Práctica',
+title: 'Resumir un documento largo aprovechando tu prompting',
+goal: 'Aplicar rol, formato y criterio a un material denso, exigiendo siempre la cita.',
+steps: [
+'Subí un documento largo (un reglamento, un pliego o un contrato) como fuente.',
+'Pedí: "Resumime este documento en 8 puntos, en lenguaje claro y sin tecnicismos".',
+'Pedí que distinga lo esencial de lo accesorio: "marcá los 3 puntos más importantes".',
+'Pedí: "Armá 5 preguntas frecuentes con su respuesta, citando la fuente de cada una".',
+'Elegí 2 respuestas y verificá las citas contra el documento original.'
+],
+tip: 'Lo que ya sabés de prompting funciona igual: pedí rol, formato y criterio. Acá, además, exigí la cita.'
+},
+{
+id: 'nb3',
+level: 'Práctica',
+title: 'Comparar dos versiones de un documento',
+goal: 'Detectar diferencias entre dos contratos, presupuestos o reglamentos.',
+steps: [
+'Cargá la versión A y la versión B como dos fuentes distintas en el mismo cuaderno.',
+'Preguntá: "¿Qué cambió entre estos dos documentos?".',
+'Pedí una tabla con columnas: Punto, Versión A, Versión B, Implicancia.',
+'Pedí que marque qué conviene revisar con el escribano o el contador.',
+'Verificá los puntos críticos directamente en los documentos originales.'
+],
+tip: 'NotebookLM no reemplaza al profesional: te prepara la reunión para que llegues con las preguntas justas.'
+},
+{
+id: 'nb4',
+level: 'Studio',
+title: 'Generar un resumen en audio para escuchar',
+goal: 'Convertir un material denso en un resumen tipo charla para repasar sin leer.',
+steps: [
+'Con tus fuentes cargadas, abrí el panel "Studio".',
+'Elegí "Audio Overview" (resumen en audio).',
+'Si querés, personalizá el foco: "Enfocate en las obligaciones del comprador".',
+'Generá el audio y escuchalo para repasar el tema.',
+'Descargalo si querés compartirlo con alguien del equipo o volver a escucharlo.'
+],
+tip: 'Ideal para repasar un reglamento o un proceso mientras manejás o hacés otra cosa.'
+},
+{
+id: 'nb5',
+level: 'Studio',
+title: 'Crear una presentación o una infografía',
+goal: 'Transformar tus documentos en una pieza para comunicar, sin diseñarla desde cero.',
+steps: [
+'En el panel "Studio", elegí "Slide Deck" (presentación) o "Infografía".',
+'Si lo permite, elegí el estilo visual que mejor encaje con lo que querés transmitir.',
+'Generá la pieza y revisá que los datos coincidan con tus fuentes.',
+'Exportá la presentación a PowerPoint para ajustar textos y agregar los datos exactos a mano.',
+'Antes de mostrarla, controlá números, nombres y cualquier dato sensible.'
+],
+tip: 'La IA arma la estructura y el diseño; los datos finales y lo sensible los controlás vos, como con cualquier imagen.'
+},
+{
+id: 'nb6',
+level: 'Equipo',
+title: 'Armar una base de conocimiento del equipo y compartirla',
+goal: 'Que el equipo consulte solo y deje de interrumpirte con las mismas preguntas.',
+steps: [
+'Creá un cuaderno llamado, por ejemplo, "Base de conocimiento - [obra o área]".',
+'Anonimizá lo sensible y cargá procedimientos, contactos no sensibles, especificaciones y preguntas frecuentes.',
+'Probá 5 preguntas típicas que suele hacer el equipo y ajustá las fuentes si algo no queda claro.',
+'Compartí el cuaderno por enlace, con permiso de solo lectura, a las personas que correspondan.',
+'Avisales cómo usarlo y mantené las fuentes actualizadas (una fuente vieja da respuestas viejas).'
+],
+tip: 'Una base bien armada te devuelve horas: la consulta reemplaza muchas interrupciones del día.'
 }
 ];
 
@@ -2551,6 +2654,71 @@ return (
 );
 };
 
+const NotebookLMSection = () => {
+return (
+<div className="max-w-4xl mx-auto space-y-6">
+    <section className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-6 border border-indigo-200">
+        <h3 className="text-xl font-bold text-indigo-800 mb-2 flex items-center gap-2">
+            <Library className="w-5 h-5" /> NotebookLM · tu base de conocimiento con IA
+        </h3>
+        <p className="text-indigo-900">
+            NotebookLM (de Google, con versión gratuita) es distinto de un asistente general: trabaja sobre TUS
+            documentos. Le cargás tus fuentes (PDF, planillas, presentaciones, páginas web, audios o videos) y responde
+            basándose solo en eso, citando de dónde sacó cada cosa. Es ideal para ordenar, consultar y comunicar el
+            conocimiento propio de la empresa y de cada obra. Es un recurso aparte, complementario a todo lo anterior.
+        </p>
+    </section>
+
+    <section className="grid md:grid-cols-2 gap-4">
+        <div className="bg-white rounded-2xl border border-indigo-200 p-5 shadow-sm">
+            <h4 className="font-bold text-indigo-800 mb-3 flex items-center gap-2"><Sparkles className="w-4 h-4" /> Qué lo hace distinto</h4>
+            <ul className="list-disc pl-5 space-y-2 text-slate-700 text-sm">
+                <li>Responde solo con tus fuentes y cita cada dato: mucha menos invención.</li>
+                <li>El panel "Studio" genera resúmenes en audio y video, mapas mentales y tablas.</li>
+                <li>Crea presentaciones (exportables a PowerPoint) e infografías a partir de tus documentos.</li>
+                <li>Todo lo que sabés de prompting (rol, objetivo, formato, iterar) funciona igual acá.</li>
+            </ul>
+        </div>
+        <div className="bg-white rounded-2xl border border-emerald-200 p-5 shadow-sm">
+            <h4 className="font-bold text-emerald-800 mb-3 flex items-center gap-2"><MessageCircle className="w-4 h-4" /> Para tu equipo</h4>
+            <ul className="list-disc pl-5 space-y-2 text-slate-700 text-sm">
+                <li>Armás un cuaderno con la info clave (procedimientos, contactos, preguntas frecuentes) y lo compartís por enlace.</li>
+                <li>El equipo pregunta y obtiene respuestas rápidas y consistentes, con la fuente a la vista.</li>
+                <li>En vez de interrumpirte para preguntar lo mismo, consultan el cuaderno.</li>
+                <li>Anonimizá los datos sensibles antes de cargar o compartir.</li>
+            </ul>
+        </div>
+    </section>
+
+    <div className="bg-violet-50 border border-violet-200 rounded-xl p-4 flex items-start gap-2">
+        <Lightbulb className="w-5 h-5 text-violet-600 flex-shrink-0 mt-0.5" />
+        <p className="text-sm text-violet-900">
+            Ejercicios para practicar paso a paso. Hacelos en orden: cada uno suma una capacidad nueva, de lo básico a
+            trabajar en equipo. No hace falta terminar todo de una vez.
+        </p>
+    </div>
+
+    <div className="grid gap-5">
+        {notebookLMExercises.map((ex, index) => (
+        <article key={ex.id} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+            <p className="text-xs font-bold text-indigo-600 uppercase mb-1">Ejercicio {index + 1} · {ex.level}</p>
+            <h4 className="text-lg font-bold text-slate-800">{ex.title}</h4>
+            <p className="text-slate-600 text-sm mt-1 mb-3"><span className="font-semibold">Objetivo:</span> {ex.goal}</p>
+            <p className="text-xs font-bold text-slate-500 uppercase mb-2">Paso a paso</p>
+            <ol className="list-decimal pl-5 space-y-2 text-slate-700 text-sm mb-3">
+                {ex.steps.map((s, i) => <li key={i}>{s}</li>)}
+            </ol>
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-start gap-2">
+                <Lightbulb className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-amber-900">{ex.tip}</p>
+            </div>
+        </article>
+        ))}
+    </div>
+</div>
+);
+};
+
 const App = () => {
 const [view, setView] = useState('theory');
 const [moduleIndex, setModuleIndex] = useState(0);
@@ -2569,7 +2737,9 @@ const tabs = [
 { id: 'challenges', label: 'Desafíos', icon:
 <Zap className="w-4 h-4" /> },
 { id: 'stories', label: 'Historias', icon:
-<MessageCircle className="w-4 h-4" /> }
+<MessageCircle className="w-4 h-4" /> },
+{ id: 'notebooklm', label: 'NotebookLM', icon:
+<Library className="w-4 h-4" /> }
 ];
 
 return (
@@ -2584,7 +2754,7 @@ return (
                 </div>
                 <div>
                     <h1 className="text-lg font-extrabold text-slate-800 leading-tight">Laboratorio de IA para tu negocio</h1>
-                    <p className="text-xs text-slate-500">Desarrollo inmobiliario · de la obra a la venta · Mar del Plata</p>
+                    <p className="text-xs text-slate-500">Construcción, reforma y venta de propiedades · Mar del Plata</p>
                 </div>
             </div>
             <div className="flex gap-1 overflow-x-auto">
@@ -2699,6 +2869,10 @@ return (
         {/* SHEETS VIEW */}
         {view === 'sheets' &&
         <PlanillasSection />}
+
+        {/* NOTEBOOKLM VIEW */}
+        {view === 'notebooklm' &&
+        <NotebookLMSection />}
 
         {/* CHALLENGES VIEW */}
         {view === 'challenges' &&
