@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IA para tu desarrollo inmobiliario</title>
+    <title>IA para desarrollo, reforma y valorización inmobiliaria</title>
     <meta name="description"
-        content="Laboratorio de IA para un desarrollador inmobiliario que construye edificios de departamentos para la venta en Mar del Plata: textos, planillas, imágenes, gestión de obra y comercialización, con criterio y seguridad.">
+        content="Laboratorio de IA para construir departamentos, detectar oportunidades, recuperar propiedades deterioradas y comercializarlas con imágenes, planillas y criterio profesional.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script type="importmap">
     {
@@ -17,7 +17,7 @@
       }
     }
   </script>
-        <script src="./fr_visual_sequences.js"></script>
+        <script src="./aa_i_visual_sequences.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
         :root {
@@ -1362,18 +1362,19 @@ steps: [
 },
 {
 id: 'r2',
-title: `Renovar un cartel o folleto que ya tenés`,
-intro: `Tenés un cartel de obra o folleto viejo y querés modernizarlo sin perder lo que funciona (tu nombre, tu logo). La clave es la precisión: decir qué conservar y cambiar SOLO lo necesario, en vez de pedir "cambialo todo".`,
+title: `De casa deteriorada a propiedad renovada y vendible`,
+intro: `Esta receta sirve para analizar una casa comprada en malas condiciones, planificar su recuperación visual y documentar el avance sin inventar resultados. La clave es conservar la geometría real, separar diagnóstico de diseño y mejorar una etapa por vez.`,
 toolNotes: [
-{ tool: `Gemini / ChatGPT`, note: `Subí la captura del cartel y pedí ediciones puntuales conversando: "cambiá solo esto".` },
-{ tool: `Copilot Designer`, note: `Útil si querés rehacer el layout completo manteniendo los elementos.` }
+{ tool: `ChatGPT / Gemini`, note: `Subí fotos reales de cada ambiente y usalas como referencia. Pedí análisis antes de pedir una remodelación visual.` },
+{ tool: `IA de imagen`, note: `Sirve para explorar terminaciones y ambientación, pero no reemplaza planos, cómputos ni decisiones de profesionales.` }
 ],
 steps: [
-{ goal: `Subir y describir lo que tenés`, prompt: `Te subo la captura de mi cartel de obra actual. Antes de cambiar nada, describime qué ves: elementos, colores y qué se podría mejorar para que se vea más moderno y legible.`, expect: `La IA "entiende" tu material y te propone mejoras; vos decidís cuáles aceptar.`, adjust: `Si no interpreta bien la imagen, describísela vos en palabras.` },
-{ goal: `Conservar lo importante`, prompt: `Mantené EXACTAMENTE igual: el nombre del desarrollo y el logo. No los modifiques ni los muevas de lugar.`, expect: `La IA fija lo que no debe tocar.`, adjust: `Repetí esta instrucción en cada pedido siguiente: "recordá conservar nombre y logo".` },
-{ goal: `Cambiar de a un elemento`, prompt: `Ahora cambiá SOLO el fondo: poné un fondo sobrio y moderno. No toques el texto ni el logo.`, expect: `Un cambio puntual y controlado.`, adjust: `Una cosa por vez: primero fondo, después tipografía, después un render. Si cambia algo de más: "volvé a lo anterior y cambiá únicamente el fondo".` },
-{ goal: `Mejorar legibilidad`, prompt: `Cambiá la tipografía por una más legible y subí el contraste del texto para que se lea de lejos desde la calle. Mantené todo lo demás igual.`, expect: `Un cartel más claro y profesional.`, adjust: `Si el texto sigue costando: "letras más grandes y con más contraste sobre el fondo".` },
-{ goal: `Cerrar y exportar`, prompt: `Generá la versión final en alta resolución para imprimir en gran formato. Listame los cambios que hicimos respecto del original.`, expect: `El cartel renovado, con tu identidad intacta.`, adjust: `Compará lado a lado con el original y revisá que no se haya colado ningún cambio no deseado.` }
+{ goal: `Diagnosticar antes de diseñar`, prompt: `Te subo fotos reales de una casa que estoy evaluando comprar. Antes de modificar nada, describí problemas visibles, elementos valiosos para conservar, dudas que requieren inspección profesional y oportunidades de mejora. No diagnostiques estructura ni instalaciones solo por la foto.`, expect: `Una lectura visual ordenada, separando observación, oportunidad y dato que debe verificar un profesional.`, adjust: `Si propone soluciones demasiado pronto: "primero terminemos el diagnóstico; todavía no diseñes".` },
+{ goal: `Fijar lo que no debe cambiar`, prompt: `Usá esta foto como referencia y conservá EXACTAMENTE la geometría del ambiente: ubicación de puertas, ventanas, muros y altura. No agrandes el espacio ni inventes aberturas.`, expect: `Una base visual honesta que permite comparar antes y después.`, adjust: `Repetí estas restricciones en cada etapa para evitar una reforma imposible.` },
+{ goal: `Visualizar obra gruesa y reparaciones`, prompt: `Mostrá una etapa intermedia ordenada: ambiente vacío, superficies preparadas, reparaciones visibles e instalaciones en proceso. Mantené la geometría original y no agregues terminaciones todavía.`, expect: `Una imagen que documenta proceso, no una transformación mágica.`, adjust: `Si salta directo al resultado final: "retrocedé; mostrámelo todavía en obra".` },
+{ goal: `Probar terminaciones realistas`, prompt: `Sobre el mismo ambiente, aplicá terminaciones de costo medio: paredes blanco cálido, piso de madera clara o restaurado, iluminación simple y materiales durables. Sin muebles todavía.`, expect: `Poder evaluar paleta, luz y materiales sin que la decoración tape la reforma.`, adjust: `Si parece de lujo: "más sobrio, accesible y coherente con una propiedad de mercado medio".` },
+{ goal: `Ambientar para comunicar`, prompt: `Ambientá el espacio renovado con pocos muebles, circulación clara y escala realista. No cambies arquitectura ni agregues vistas inexistentes. La imagen debe ayudar a imaginar el uso, no prometer algo que no se entrega.`, expect: `Una visual comercial atractiva pero creíble.`, adjust: `Si queda recargado: "quitá la mitad de los objetos y dejá más aire".` },
+{ goal: `Armar el material de venta`, prompt: `Convertí las fotos del antes, proceso y resultado en una pieza comercial limpia. Dejá espacios editables para superficie, ubicación, precio, estado y contacto. Sin texto inventado y aclarando que las visualizaciones son ilustrativas.`, expect: `Un relato visual de valorización listo para completar con datos verificados.`, adjust: `Cargá precio, superficie y condiciones solamente en un editor, usando información real.` }
 ]
 },
 {
@@ -1525,12 +1526,12 @@ prompt: `Armá una planilla de campaña comercial de 6 semanas para el lanzamien
 }
 ];
 
-const frRecoveredVisuals = window.frRecoveredVisuals || { imageAssets: {}, imageExamples: [], imageSequences: [] };
-const recoveredImageExamples = Array.isArray(frRecoveredVisuals.imageExamples)
-? frRecoveredVisuals.imageExamples.filter((item) => frRecoveredVisuals.imageAssets?.[item.id]?.src)
+const aaIVisuals = window.aaIVisuals || { imageAssets: {}, imageExamples: [], imageSequences: [] };
+const recoveredImageExamples = Array.isArray(aaIVisuals.imageExamples)
+? aaIVisuals.imageExamples.filter((item) => aaIVisuals.imageAssets?.[item.id]?.src)
 : [];
-const recoveredImageSequences = Array.isArray(frRecoveredVisuals.imageSequences)
-? frRecoveredVisuals.imageSequences.filter((sequence) => Array.isArray(sequence.steps) && sequence.steps.length > 0)
+const recoveredImageSequences = Array.isArray(aaIVisuals.imageSequences)
+? aaIVisuals.imageSequences.filter((sequence) => Array.isArray(sequence.steps) && sequence.steps.length > 0)
 : [];
 const hasRecoveredVisuals = recoveredImageExamples.length > 0 && recoveredImageSequences.length > 0;
 
@@ -1621,7 +1622,7 @@ className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium tra
 <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
 {recoveredImageExamples.map((img) => (
 <figure key={img.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-<img src={frRecoveredVisuals.imageAssets[img.id]?.src} alt={img.title} className="w-full aspect-square object-cover bg-slate-100" loading="lazy" />
+<img src={aaIVisuals.imageAssets[img.id]?.src} alt={img.title} className="w-full aspect-square object-cover bg-slate-100" loading="lazy" />
 <figcaption className="p-4 space-y-2">
 <h4 className="font-bold text-slate-800">{img.title}</h4>
 <p className="text-sm text-slate-600">{img.caption}</p>
@@ -1644,7 +1645,7 @@ className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium tra
 <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-0">
 {sequence.steps.map((item) => (
 <article key={item.asset} className="border-b border-slate-200 xl:border-r xl:last:border-r-0">
-<img src={frRecoveredVisuals.imageAssets[item.asset]?.src} alt={item.title} className="w-full aspect-video object-cover bg-slate-100" loading="lazy" />
+<img src={aaIVisuals.imageAssets[item.asset]?.src} alt={item.title} className="w-full aspect-video object-cover bg-slate-100" loading="lazy" />
 <div className="p-4 space-y-3">
 <div className="flex items-center gap-3">
 <span className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">{item.step}</span>
