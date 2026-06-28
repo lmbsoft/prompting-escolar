@@ -48,11 +48,6 @@
         title: 'ElevenLabs Text to Speech',
         url: 'https://elevenlabs.io/docs/product-guides/playground/text-to-speech',
         note: 'ElevenLabs ofrece voces, modelos y controles de estilo para locución sintética. Es fuerte para producir piezas con voz cuidada, siempre con revisión humana y permisos claros si se usan voces clonadas.'
-      },
-      {
-        title: 'Búsqueda pública sobre identidad del medio',
-        url: '#',
-        note: 'No encontré una fuente pública suficientemente sólida para fijar identidad visual específica. Por eso el diseño usa una identidad prudente: red informativa regional, sobria, federal y operativa.'
       }
     ];
 
@@ -521,6 +516,11 @@
         <div className="grid md:grid-cols-3 gap-4">
           {['Guion limpio','TTS por bloques','Escucha crítica'].map((title, i) => <div key={title} className="bg-slate-900 text-white rounded-2xl p-5"><p className="text-4xl font-black text-teal-300">{i + 1}</p><h3 className="font-bold text-xl">{title}</h3><p className="text-slate-300 text-sm">{['Sin errores, con nombres y cifras revisadas.','Apertura, desarrollo, datos y cierre para controlar continuidad.','Nunca publicar un audio sintético sin escucharlo completo.'][i]}</p></div>)}
         </div>
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 mt-6 shadow-sm">
+          <h3 className="font-bold text-slate-900 mb-3">Referencias de herramientas de audio</h3>
+          <ul className="space-y-2 text-sm text-slate-700">{sourceNotes.map(s => <li key={s.title}><a href={s.url} className="font-bold text-teal-700 underline" target="_blank" rel="noreferrer">{s.title}</a>: {s.note}</li>)}</ul>
+          <p className="text-sm text-amber-900 bg-amber-50 border border-amber-200 rounded-xl p-3 mt-4">La herramienta puede generar una voz convincente, pero el estándar profesional lo define la escucha completa: nombres, cifras, pausas, tono, derechos de uso y claridad editorial.</p>
+        </div>
       </div>;
     }
 
@@ -613,13 +613,6 @@
       </div>;
     }
 
-    function SourcesFooter() {
-      return <div className="bg-white border border-slate-200 rounded-2xl p-5 mt-8">
-        <h3 className="font-bold text-slate-900 mb-3">Fuentes y criterio usado</h3>
-        <ul className="space-y-2 text-sm">{sourceNotes.map(s => <li key={s.title}>{s.url === '#' ? <strong>{s.title}</strong> : <a href={s.url} className="font-bold text-teal-700 underline" target="_blank" rel="noreferrer">{s.title}</a>}: {s.note}</li>)}</ul>
-      </div>;
-    }
-
     function App() {
       const [view, setView] = useState('theory');
       const content = {
@@ -632,7 +625,7 @@
             <nav className="flex gap-2 overflow-x-auto pb-1">{tabs.map(([id,label]) => <button key={id} onClick={() => setView(id)} className={`px-4 py-2 whitespace-nowrap text-sm font-bold ${view===id?'bg-teal-700 text-white shadow':'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}>{label}</button>)}</nav>
           </div>
         </header>
-        <main className="max-w-6xl mx-auto px-4 py-8">{content}<SourcesFooter /></main>
+        <main className="max-w-6xl mx-auto px-4 py-8">{content}</main>
         <footer className="border-t border-slate-200 bg-white mt-10"><div className="max-w-6xl mx-auto px-4 py-6 text-center text-slate-500 text-sm">Material formativo adaptado para producción radial regional. Usar IA como asistente, siempre con revisión editorial.</div></footer>
       </div>;
     }
