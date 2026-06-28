@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IA para producción radial regional</title>
+  <meta name="description" content="Laboratorio de IA para producción radial, investigación, automatizaciones, audio, video, planillas e imágenes." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.2.0",
+      "react-dom/client": "https://esm.sh/react-dom@18.2.0/client"
+    }
+  }
+  </script>
+  <script src="./hp_visual_sequences.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    :root { --text:#0f172a; --bg:#f8fafc; --focus:#0ea5e9; }
+    html { font-size: clamp(18px, 1vw + 14px, 21px); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+    body { background: var(--bg); color: var(--text); line-height: 1.7; letter-spacing: .01em; }
+    p, li, label, input, textarea, select, button { font-size: 1rem; }
+    h1, h2, h3, h4 { line-height: 1.25; letter-spacing: .005em; }
+    button, input, textarea, select { min-height: 46px; border-radius: .75rem; }
+    textarea { min-height: 130px; }
+    button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <div id="root"></div>
+  <script type="text/babel" data-type="module">
+    import React, { useMemo, useState } from 'react';
+    import { createRoot } from 'react-dom/client';
+
+    const hpVisuals = window.hpVisuals || { imageAssets: {}, imageExamples: [], imageSequences: [] };
+    const visualExamples = Array.isArray(hpVisuals.imageExamples) ? hpVisuals.imageExamples.filter(item => hpVisuals.imageAssets?.[item.id]?.src) : [];
+    const visualSequences = Array.isArray(hpVisuals.imageSequences) ? hpVisuals.imageSequences.filter(seq => Array.isArray(seq.steps) && seq.steps.length) : [];
+
+    const sourceNotes = [
+      {
+        title: 'Google AI Studio / Gemini TTS',
+        url: 'https://ai.google.dev/gemini-api/docs/speech-generation',
+        note: 'Gemini permite generar audio hablado a partir de texto, con prompts para tono, ritmo, acento, estilo y hasta voces múltiples. Para piezas largas conviene trabajar por bloques y escuchar antes de publicar.'
+      },
+      {
+        title: 'ElevenLabs Text to Speech',
+        url: 'https://elevenlabs.io/docs/product-guides/playground/text-to-speech',
+        note: 'ElevenLabs ofrece voces, modelos y controles de estilo para locución sintética. Es fuerte para producir piezas con voz cuidada, siempre con revisión humana y permisos claros si se usan voces clonadas.'
+      },
+      {
+        title: 'Búsqueda pública sobre identidad del medio',
+        url: '#',
+        note: 'No encontré una fuente pública suficientemente sólida para fijar identidad visual específica. Por eso el diseño usa una identidad prudente: red informativa regional, sobria, federal y operativa.'
+      }
+    ];
+
+    const theoryModules = [
+      {
+        id: 't1',
+        title: 'La IA como mesa de producción radial',
+        subtitle: 'Un asistente para ordenar entradas, no una autoridad editorial',
+        reading: [
+          'En una red radial regional, el problema diario no suele ser la falta de información: suele ser el exceso de entradas. Llegan audios, partes, mensajes, comunicados, notas locales, entrevistas, segmentos enlatados y datos que todavía no tienen jerarquía. La IA puede ayudarte a ordenar ese flujo antes de que se convierta en programa.',
+          'El modelo mental más útil es pensar la IA como un productor asistente: clasifica, resume, propone escaletas, transforma formatos, detecta duplicados y te obliga a explicitar criterios. No decide qué es noticia, no reemplaza el olfato periodístico y no conoce el territorio si no se lo contás.',
+          'La rutina correcta es separar cuatro momentos: entrada de material, clasificación editorial, verificación mínima y producción. Cuando se salta directo a “escribime el boletín”, la IA puede sonar profesional pero arrastrar errores, omisiones o tonos que no corresponden.'
+        ],
+        checklist: ['Distinguir entrada, clasificación, verificación y producción.', 'Pedirle a la IA que separe confirmado, probable y pendiente.', 'Mantener decisión editorial humana antes de emitir.', 'Guardar el prompt que ordena mejor la mañana.'],
+        practice: 'Pegá una lista desordenada de 12 temas del día y pedí: “clasificalos por región, urgencia, estado de verificación y formato posible para radio”.'
+      },
+      {
+        id: 't2',
+        title: 'Anatomía de un prompt editorial',
+        subtitle: 'Rol, objetivo, contexto, formato, criterio y límites',
+        reading: [
+          'Un buen prompt editorial no pide “haceme una nota”. Define rol, objetivo, contexto territorial, formato de salida, criterio de calidad y límites. Para radio, además conviene indicar duración, tono, ritmo, nivel de formalidad y si la pieza será leída, grabada o enviada a otra emisora.',
+          'La parte más importante es el criterio: “no inventes datos”, “marcá qué falta verificar”, “separá información de opinión”, “no uses adjetivos innecesarios”, “dejá las citas entre comillas solo si están transcriptas”. Esas instrucciones reducen riesgos.',
+          'También conviene pedir varias versiones por canal: una para aire, una para web, una para WhatsApp interno, una para redes y una para locución TTS. El contenido central puede ser el mismo, pero el formato cambia.'
+        ],
+        checklist: ['Incluir duración y destino de la pieza.', 'Pedir tono radial claro y profesional.', 'Separar datos verificados de pendientes.', 'Exigir cierre con próximos pasos editoriales.'],
+        practice: 'Reescribí un pedido vago de producción en formato completo: rol, objetivo, contexto, formato, criterio y límites.'
+      },
+      {
+        id: 't3',
+        title: 'Verificación, trazabilidad y derecho a corregir',
+        subtitle: 'La velocidad no justifica perder fuente, fecha y responsabilidad',
+        reading: [
+          'La IA puede resumir una noticia de manera convincente aunque la fuente sea débil. Por eso, en periodismo, cada resultado debe traer una marca de trazabilidad: de dónde salió, qué fecha tiene, qué parte está confirmada, qué falta consultar y qué riesgo tiene publicarlo así.',
+          'Una regla sana: si una pieza va al aire, debe tener al menos un rastro verificable. Puede ser fuente oficial, entrevista, audio original, documento, medio local confiable o archivo propio. La IA ayuda a construir esa ficha, no a saltarla.',
+          'También conviene preparar el hábito de corregir. Un sistema profesional no es el que nunca se equivoca, sino el que sabe detectar, rectificar y conservar el historial de cambios.'
+        ],
+        checklist: ['Pedir fuente, fecha y nivel de confianza.', 'No usar citas no verificadas como textuales.', 'Guardar links y audios originales.', 'Distinguir error, actualización y ampliación.'],
+        practice: 'Pedile a la IA que transforme una noticia en una ficha con columnas: dato, fuente, fecha, nivel de confianza, pendiente y uso permitido.'
+      },
+      {
+        id: 't4',
+        title: 'Buscar bien: Google e IA no son lo mismo',
+        subtitle: 'Google encuentra; la IA diseña estrategias de búsqueda',
+        reading: [
+          'Google es excelente para buscar en la web, pero depende de cómo preguntás. La IA es excelente para pensar variantes de búsqueda: sinónimos, actores, nombres alternativos, dominios posibles, tipos de documento, fechas, localidades y combinaciones.',
+          'Un buen investigador le pide a la IA: “dame 12 búsquedas avanzadas para encontrar documentos sobre este tema”. Después ejecuta esas búsquedas en Google, revisa fuentes y vuelve con hallazgos para analizarlos.',
+          'Operadores útiles: site: para limitar un dominio, filetype: para buscar PDF o planillas, comillas para frases exactas, OR para alternativas, signo menos para excluir ruido, rangos de fecha desde herramientas de búsqueda y combinaciones por localidad.'
+        ],
+        checklist: ['Usar IA para generar consultas, no para creer resultados sin fuente.', 'Buscar por localidad y por organismo.', 'Probar filetype:pdf, filetype:xls y site:.gob.ar cuando tenga sentido.', 'Guardar las búsquedas que funcionaron.'],
+        practice: 'Pedí: “construí 15 búsquedas avanzadas de Google para investigar [tema] en Río Negro, separadas por documentos oficiales, medios locales, archivos y actores involucrados”.'
+      },
+      {
+        id: 't5',
+        title: 'Mapa editorial de Río Negro',
+        subtitle: 'Pensar por regiones evita una mirada centralista',
+        reading: [
+          'Una red provincial tiene una ventaja: puede mirar el territorio como sistema. Viedma, Alto Valle, Línea Sur, Bariloche, zona andina y Costa Atlántica no producen las mismas agendas ni los mismos ritmos. La IA puede ayudarte a que la escaleta no quede sesgada por la fuente más ruidosa.',
+          'Conviene pedir análisis por región: qué temas entraron, qué zonas quedaron sin cobertura, qué voces faltan, qué dato requiere corresponsal o radio local, qué tema merece seguimiento semanal.',
+          'El objetivo no es llenar casilleros artificialmente, sino tener conciencia de cobertura. Un mapa editorial ayuda a ver ausencias.'
+        ],
+        checklist: ['Clasificar por región y no solo por orden de llegada.', 'Detectar zonas sin cobertura en la semana.', 'Pedir fuentes locales para contrastar.', 'Armar agenda de seguimiento provincial.'],
+        practice: 'Pegá temas de la semana y pedí una matriz por región: Viedma, Alto Valle, Línea Sur, Andina, Bariloche, Costa Atlántica y otros.'
+      },
+      {
+        id: 't6',
+        title: 'Automatizaciones: pensar flujos antes de pedir código',
+        subtitle: 'Prepararse para trabajar con Codex, Claude Code o un desarrollador',
+        reading: [
+          'Automatizar no empieza programando. Empieza dibujando un flujo: qué entra, dónde se guarda, quién lo revisa, qué se transforma, qué sale y en qué punto se detiene si falta verificación. Esa lógica después puede convertirse en un script, una app o una integración.',
+          'Para un medio regional, flujos posibles: monitorear RSS y sitios, resumir titulares, guardar audios recibidos, transcribir, etiquetar por región, cargar una planilla, generar una escaleta preliminar y preparar un resumen para el productor.',
+          'Cuando pidas automatizaciones a Codex o Claude Code, conviene entregar una especificación concreta: fuentes, formatos de entrada, carpeta de salida, reglas de nombre, ejemplos, datos sensibles, errores esperados y criterios de aceptación.'
+        ],
+        checklist: ['Escribir entrada, proceso, salida y revisión humana.', 'Definir nombres de archivos y carpetas.', 'Preparar ejemplos reales anonimizados.', 'Pedir primero un prototipo pequeño.'],
+        practice: 'Diseñá un flujo: “si llega un audio por carpeta, transcribirlo, resumirlo, etiquetarlo y cargarlo en una planilla de temas pendientes”.'
+      },
+      {
+        id: 't7',
+        title: 'Planillas para producción y gestión',
+        subtitle: 'La planilla como tablero de control del día',
+        reading: [
+          'Las planillas no son solo contabilidad. Para una red radial pueden ser el centro de coordinación: agenda, fuentes, audios recibidos, segmentos emitidos, colaboradores, pauta, tandas, vencimientos, métricas y seguimiento comercial.',
+          'La IA puede diseñar columnas, fórmulas, validaciones, formatos condicionales y tablas dinámicas. Pero los datos reales se cargan con cuidado y los datos sensibles se anonimizan si van a compartirse.',
+          'Un buen tablero no tiene mil columnas: tiene las columnas que permiten decidir. Estado, prioridad, región, responsable, próxima acción y fecha de actualización suelen ser más valiosas que una descripción larguísima.'
+        ],
+        checklist: ['Usar estados simples: recibido, verificar, producir, emitido, archivar.', 'Separar agenda editorial de gestión comercial.', 'Registrar fecha y responsable.', 'Evitar datos personales innecesarios.'],
+        practice: 'Pedí a la IA una planilla de “producción diaria” con estados, regiones, duración, formato, responsable y próxima acción.'
+      },
+      {
+        id: 't8',
+        title: 'Transformar contenidos entre formatos',
+        subtitle: 'De comunicado a guion, de entrevista a placa, de audio a resumen',
+        reading: [
+          'La misma información cambia según el canal. Un comunicado no sirve igual para aire, WhatsApp interno, web, reel, podcast o placa. La IA es muy buena transformando contenido si le indicás destino, duración y tono.',
+          'Ejemplos: convertir un audio largo en tres cortes posibles; transformar una entrevista en 5 titulares; convertir un parte en guion de 45 segundos; crear una versión neutral para aire y otra más breve para redes.',
+          'La clave es pedir conservación del dato central y adaptación del formato, no reescritura libre.'
+        ],
+        checklist: ['Definir formato destino.', 'Indicar duración y tono.', 'Pedir qué dato no debe perderse.', 'Revisar nombres, cargos, lugares y fechas.'],
+        practice: 'Pegá un comunicado y pedí: “convertí esto en guion radial de 45 segundos, post para web y placa de redes, sin agregar datos”.'
+      },
+      {
+        id: 't9',
+        title: 'Audio con IA: AI Studio y ElevenLabs',
+        subtitle: 'Voces sintéticas largas, claras y revisadas',
+        reading: [
+          'AI Studio de Google permite experimentar con Gemini y generación de audio desde texto. Es especialmente interesante para probar lecturas largas, cambios de tono y voces múltiples. Para producción real conviene dividir el guion en bloques con continuidad: apertura, desarrollo, datos, cierre y separador.',
+          'ElevenLabs es una herramienta fuerte para text-to-speech con voces de alta calidad, controles de estilo y flujos de audio más trabajados. Puede servir para separadores, boletines, narraciones, prototipos y piezas seriadas. Si se usa clonación o voces parecidas a personas reales, el permiso y la transparencia importan mucho.',
+          'La voz sintética no debe ocultar errores del texto. Primero se limpia el guion, se marcan pausas, se aclara pronunciación de nombres locales, se revisan números y recién entonces se genera audio. Después hay que escuchar completo.'
+        ],
+        checklist: ['Preparar guion limpio antes de generar voz.', 'Marcar pausas, énfasis y pronunciaciones difíciles.', 'Escuchar el audio completo antes de emitir.', 'No clonar ni imitar voces sin permiso explícito.'],
+        practice: 'Tomá un boletín de 3 minutos y pedí a la IA que lo prepare para TTS: pausas, pronunciaciones, tono sobrio y bloques de lectura.'
+      },
+      {
+        id: 't10',
+        title: 'Edición de audio asistida',
+        subtitle: 'Transcribir, cortar, limpiar y reutilizar',
+        reading: [
+          'La IA puede transcribir entrevistas, resumir audios, detectar posibles cortes, proponer títulos y separar bloques. Eso no reemplaza escuchar: ayuda a encontrar rápidamente dónde está el material valioso.',
+          'Una rutina productiva: transcribir, pedir un resumen, pedir marcas de tiempo, seleccionar cortes, verificar escuchando, escribir introducción y cierre. Para entrevistas largas, esto ahorra muchísimo tiempo.',
+          'También sirve para archivo: cada audio puede terminar con ficha, etiquetas, duración, participantes, tema, región y usos permitidos.'
+        ],
+        checklist: ['No editar solo desde la transcripción.', 'Verificar cortes escuchando el audio original.', 'Registrar nombre, tema, región y permiso de uso.', 'Guardar una versión cruda y una editada.'],
+        practice: 'Pedí una plantilla de ficha para audios recibidos: fuente, duración, tema, región, estado, cortes sugeridos y uso permitido.'
+      },
+      {
+        id: 't11',
+        title: 'Imagen y video para radio',
+        subtitle: 'La radio también necesita visuales',
+        reading: [
+          'Hoy una radio produce también para pantallas: historias, reels, placas, portadas, thumbnails y videos cortos. La IA de imagen ayuda a crear fondos, mapas, escenas ilustrativas y storyboards, pero los textos exactos se agregan después en editor.',
+          'Para video, lo correcto es empezar por storyboard. No pedir “haceme un video lindo”, sino plano por plano: qué se ve, duración, voz, música, texto mínimo y material disponible.',
+          'En periodismo, la imagen generada debe usarse con honestidad: ilustrativa, no como foto documental si no lo es.'
+        ],
+        checklist: ['Pedir imágenes sin texto interno.', 'Agregar títulos y fuentes en editor.', 'Marcar si una imagen es ilustrativa.', 'Diseñar storyboard antes de generar video.'],
+        practice: 'Pedí un storyboard de 6 planos para explicar una noticia provincial en formato vertical de 30 segundos.'
+      },
+      {
+        id: 't12',
+        title: 'NotebookLM y bases de conocimiento',
+        subtitle: 'Un cuaderno por tema, fuente o cobertura',
+        reading: [
+          'NotebookLM sirve para trabajar sobre documentos propios: PDFs, apuntes, entrevistas, transcripciones, informes y fuentes guardadas. A diferencia de un chat general, responde sobre el material que cargás y permite revisar citas.',
+          'Para una red radial, puede haber cuadernos por tema: energía, turismo, municipios, deportes, archivo de entrevistas, efemérides regionales, legislación provincial o proyectos de obra pública.',
+          'El valor aparece cuando no se usa como depósito, sino como archivo consultable: resumen, cronología, preguntas frecuentes, comparación de versiones, audio overview y preparación de entrevistas.'
+        ],
+        checklist: ['Crear cuadernos por cobertura.', 'Cargar fuentes confiables y actualizadas.', 'Exigir citas cuando se usen datos.', 'Revisar pasajes originales antes de emitir.'],
+        practice: 'Cargá 3 documentos sobre un tema y pedí: “armá una cronología, 10 preguntas para entrevista y 5 datos que debo verificar”.'
+      },
+      {
+        id: 't13',
+        title: 'Ética, derechos y privacidad',
+        subtitle: 'La automatización aumenta responsabilidad',
+        reading: [
+          'A más velocidad, más necesidad de criterio. La IA puede inventar, sesgar, recortar mal o sonar segura donde debería ser prudente. En medios, el daño de un error puede ser público.',
+          'Hay que cuidar datos personales, audios de terceros, imágenes generadas, voces sintéticas, derechos de música, permisos de entrevistas y fuentes sensibles. La IA ayuda a recordar la checklist, pero no asume la responsabilidad legal ni editorial.',
+          'Una buena práctica es incluir una revisión ética antes de publicar: ¿esto es verificable?, ¿la persona fue consultada?, ¿hay derecho a réplica?, ¿la imagen puede confundir?, ¿la voz sintética está aclarada cuando corresponde?'
+        ],
+        checklist: ['No subir datos sensibles innecesarios.', 'No clonar voces sin permiso.', 'No presentar imagen generada como documento real.', 'Cuidar derecho a réplica y atribución.'],
+        practice: 'Pedí una checklist ética para publicar una investigación radial con documentos, audios e imágenes ilustrativas.'
+      },
+      {
+        id: 't14',
+        title: 'Gestión empresarial del medio',
+        subtitle: 'Programación, pauta, colaboradores y control',
+        reading: [
+          'Un productor radial también gestiona: programación, pauta, contactos, pagos, colaboradores, segmentos, convenios, vencimientos y entregas. La IA puede ayudar a transformar ese trabajo invisible en sistemas simples.',
+          'La clave es no pedir “organizame todo”. Hay que empezar por una planilla, un calendario, un procedimiento o una automatización pequeña. Cada cosa que se ordena reduce carga mental.',
+          'También sirve para delegar: convertir pedidos vagos a colaboradores en briefs claros con formato, duración, fecha, tono, archivo esperado y criterio de revisión.'
+        ],
+        checklist: ['Crear tablero de programación semanal.', 'Registrar pauta y vencimientos.', 'Brief claro para cada colaborador.', 'Revisión semanal de pendientes.'],
+        practice: 'Pedí una planilla de programación radial con bloques, origen del contenido, duración, estado, responsable y vencimientos comerciales.'
+      },
+      {
+        id: 't15',
+        title: 'Trabajar con colaboradores',
+        subtitle: 'Briefs, devolución y estándares comunes',
+        reading: [
+          'Cuando varias personas producen audios o segmentos, el problema no es solo recibir material: es recibirlo con estándares parejos. La IA puede crear plantillas de pedido, checklist de entrega y devolución amable pero precisa.',
+          'Un brief debe decir tema, duración, enfoque, público, tono, fuentes sugeridas, formato de archivo, fecha límite y qué no debe incluir. También puede traer un ejemplo de apertura y cierre.',
+          'Para devolver correcciones, conviene separar calidad editorial, calidad técnica de audio y cumplimiento del pedido. Eso evita discusiones personales.'
+        ],
+        checklist: ['Pedir siempre duración y formato.', 'Definir tono y público.', 'Separar devolución editorial y técnica.', 'Usar plantillas repetibles.'],
+        practice: 'Pedí a la IA un modelo de brief para encargar un micro radial de 3 minutos a un colaborador.'
+      },
+      {
+        id: 't16',
+        title: 'Aprender sin abrumarse',
+        subtitle: 'Una habilidad nueva por semana',
+        reading: [
+          'El riesgo de la IA es querer aplicar todo el primer día: textos, audios, videos, planillas, automatizaciones, investigación. Es mejor elegir una habilidad semanal y producir un resultado concreto.',
+          'Un camino posible: semana 1, prompts editoriales; semana 2, planilla de producción; semana 3, búsqueda avanzada; semana 4, transcripción y resumen de audio; semana 5, TTS; semana 6, storyboard y piezas visuales.',
+          'El objetivo no es volverse programador ni diseñador: es volverse un productor más rápido, ordenado y crítico.'
+        ],
+        checklist: ['Elegir una habilidad por semana.', 'Guardar prompts que funcionen.', 'Medir tiempo ahorrado.', 'Revisar qué parte todavía necesita criterio humano.'],
+        practice: 'Pedí un plan de 6 semanas con sesiones de 30 minutos para incorporar IA a producción radial diaria.'
+      }
+    ];
+
+    const promptLevels = [
+      { id: 'inicio', label: 'Nivel 1: producción diaria', hint: 'Para tareas concretas de hoy.' },
+      { id: 'profundizar', label: 'Nivel 2: precisión editorial', hint: 'Para verificar, transformar y coordinar.' },
+      { id: 'proyectar', label: 'Nivel 3: sistemas y automatización', hint: 'Para diseñar flujos más grandes.' }
+    ];
+
+    const promptItems = [
+      { id:'p1', level:'inicio', domain:'Escaleta diaria', title:'Ordenar temas del día', objective:'Convertir entradas dispersas en una escaleta inicial.', prompt:'Actuá como productor radial. Te paso una lista de temas del día. Clasificalos por región, urgencia, estado de verificación, duración sugerida y formato posible para aire. Marcá qué falta chequear antes de emitir.', why:'Transforma caos en tablero editorial.' },
+      { id:'p2', level:'inicio', domain:'Guion radial', title:'Boletín de 60 segundos', objective:'Escribir una pieza breve y clara para leer al aire.', prompt:'Convertí esta información en un boletín radial de 60 segundos, tono profesional y claro. No agregues datos. Separá apertura, dato central, contexto y cierre. Marcá nombres, cifras y fechas que debo verificar.', why:'Produce rápido sin perder control.' },
+      { id:'p3', level:'inicio', domain:'WhatsApp interno', title:'Resumen para radios asociadas', objective:'Enviar un resumen operativo a otros medios.', prompt:'Resumí estos temas para un grupo interno de radios. Formato: título breve, región, estado, audio disponible sí/no, duración sugerida y próxima acción. Tono directo, sin adornos.', why:'Ayuda a coordinar la red.' },
+      { id:'p4', level:'inicio', domain:'Audio recibido', title:'Ficha de un audio entrante', objective:'Registrar material antes de producir.', prompt:'Te describo un audio recibido. Armá una ficha con: fuente, duración, tema, región, calidad técnica, cortes posibles, permiso de uso, estado de verificación y próximo paso.', why:'Evita perder audios valiosos.' },
+      { id:'p5', level:'inicio', domain:'Planillas', title:'Planilla de producción diaria', objective:'Diseñar columnas útiles para seguimiento.', prompt:'Diseñá una planilla de producción diaria para una red radial regional. Columnas: fecha, tema, región, fuente, formato, duración, estado, responsable, archivo, verificación y próxima acción. Explicá para qué sirve cada columna.', why:'Convierte la mañana en sistema.' },
+      { id:'p6', level:'inicio', domain:'Búsqueda web', title:'Búsquedas de Google avanzadas', objective:'Encontrar fuentes mejores sobre un tema.', prompt:'Necesito investigar [tema]. Dame 12 búsquedas avanzadas de Google usando operadores como site:, filetype:, comillas, OR y exclusiones. Separalas por documentos oficiales, medios locales, archivos y datos estadísticos.', why:'La IA diseña el mapa; Google ejecuta la búsqueda.' },
+      { id:'p7', level:'inicio', domain:'TTS', title:'Preparar texto para voz sintética', objective:'Convertir un guion en audio escuchable.', prompt:'Prepará este guion para text-to-speech: marcá pausas, pronunciación de nombres locales, énfasis, ritmo y tono. Que sea sobrio, claro y apto para un boletín radial. No cambies los datos.', why:'Mejora mucho el resultado de AI Studio o ElevenLabs.' },
+      { id:'p8', level:'inicio', domain:'Redes', title:'Placa sin datos inventados', objective:'Crear una pieza visual para una noticia.', prompt:'Actuá como editor multimedia. Diseñá un prompt de imagen para una placa ilustrativa de [tema], sin texto dentro de la imagen, con espacio para título, fuente y fecha que agregaré después. Estilo sobrio de medio regional.', why:'Evita textos erróneos dentro de imágenes.' },
+      { id:'p9', level:'inicio', domain:'Entrevistas', title:'Preguntas para una nota', objective:'Llegar mejor preparado a una entrevista.', prompt:'Con este contexto [pegar], proponé 12 preguntas para una entrevista radial. Separá preguntas de contexto, preguntas difíciles, repreguntas y cierre. Indicá qué dato debo verificar antes.', why:'Ayuda sin reemplazar el criterio del periodista.' },
+      { id:'p10', level:'inicio', domain:'Efemérides', title:'Micro de efeméride regional', objective:'Crear un segmento breve y correcto.', prompt:'Armá un micro radial de 2 minutos sobre [efeméride]. Incluí apertura, contexto, dato interesante, conexión regional y cierre. Marcá qué datos requieren fuente antes de grabar.', why:'Convierte efemérides en contenido útil.' },
+      { id:'p11', level:'inicio', domain:'Audio y edición', title:'Cortes sugeridos de entrevista', objective:'Encontrar segmentos valiosos.', prompt:'Te pego la transcripción de una entrevista. Sugerí 5 cortes posibles con tema, inicio estimado, cierre estimado, por qué sirve y qué frase conviene verificar escuchando el audio original.', why:'Acelera la edición sin dejar de escuchar.' },
+      { id:'p12', level:'inicio', domain:'Gestión', title:'Brief para colaborador', objective:'Pedir un segmento con claridad.', prompt:'Redactá un brief para encargar un micro radial de [duración] sobre [tema]. Debe incluir enfoque, público, tono, fuentes sugeridas, formato de entrega, fecha límite y checklist de calidad.', why:'Mejora lo que vuelve de terceros.' },
+      { id:'p13', level:'profundizar', domain:'Verificación', title:'Matriz de trazabilidad', objective:'Separar dato confirmado de pendiente.', prompt:'Tomá este borrador de noticia y armá una matriz: afirmación, fuente, fecha, evidencia, nivel de confianza, riesgo de publicarla y acción pendiente. No reescribas aún la noticia.', why:'Instala disciplina periodística.' },
+      { id:'p14', level:'profundizar', domain:'Investigación', title:'Dossier inicial de cobertura', objective:'Armar base de trabajo para un tema provincial.', prompt:'Diseñá un dossier inicial para investigar [tema] en Río Negro. Incluí actores, regiones afectadas, preguntas clave, documentos a buscar, fuentes posibles, riesgos de sesgo y primeras 10 búsquedas web.', why:'Pasa de intuición a plan.' },
+      { id:'p15', level:'profundizar', domain:'Automatización', title:'Especificar flujo para un agente de código', objective:'Preparar un pedido claro para Codex o Claude Code.', prompt:'Quiero automatizar este flujo: [describir]. Convertí la idea en especificación técnica: entradas, salidas, carpetas, formatos, reglas, errores esperados, pruebas y criterios de aceptación. No programes todavía.', why:'Facilita pedir software sin perderse.' },
+      { id:'p16', level:'profundizar', domain:'Programación radial', title:'Ordenar grilla semanal', objective:'Integrar enlatados, segmentos propios y noticias.', prompt:'Armá una grilla semanal para una radio regional combinando noticias, segmentos enlatados, música, deportes, efemérides y micros locales. Dejá espacios para tandas y marcá qué bloques requieren producción diaria.', why:'Ayuda a ver la semana entera.' },
+      { id:'p17', level:'profundizar', domain:'TTS', title:'Comparar voces y estilos', objective:'Elegir voz según uso.', prompt:'Para este guion, proponé tres estilos de voz: boletín informativo, micro documental y separador institucional. Indicá ritmo, pausas, emoción, volumen, pronunciaciones y qué revisar en AI Studio o ElevenLabs.', why:'No todas las voces sirven para todo.' },
+      { id:'p18', level:'profundizar', domain:'Video', title:'Storyboard de noticia vertical', objective:'Transformar una noticia en video corto.', prompt:'Convertí esta noticia en storyboard de 6 planos para video vertical de 30 segundos. Para cada plano: imagen, duración, voz en off, texto mínimo a agregar después, material necesario y riesgo de confusión.', why:'Produce video con intención.' },
+      { id:'p19', level:'profundizar', domain:'Planillas', title:'Tablero de pauta y vencimientos', objective:'Mejorar gestión comercial.', prompt:'Diseñá una planilla para pauta comercial de un medio regional: anunciante, contrato, monto, fecha de inicio, vencimiento, piezas, emisiones, estado de cobro y alerta. Incluí fórmulas simples y formato condicional.', why:'Ordena la parte empresaria.' },
+      { id:'p20', level:'profundizar', domain:'Fuentes', title:'Mapa de fuentes regionales', objective:'Equilibrar cobertura territorial.', prompt:'Armá una estructura de mapa de fuentes para una red provincial: región, tipo de fuente, contacto, temas, confiabilidad, última consulta y observaciones no sensibles. Explicá cómo usarlo sin exponer datos privados.', why:'La red se fortalece con memoria de fuentes.' },
+      { id:'p21', level:'profundizar', domain:'Derechos', title:'Checklist de publicación segura', objective:'Evitar problemas con audios, imágenes y voces.', prompt:'Creá una checklist antes de publicar una pieza multimedia: fuentes, permisos de audio, música, imagen generada, voz sintética, derecho a réplica, datos personales, créditos y archivo.', why:'La velocidad no debe multiplicar riesgos.' },
+      { id:'p22', level:'profundizar', domain:'Archivo', title:'Sistema de archivo sonoro', objective:'Encontrar materiales después.', prompt:'Diseñá una convención para nombrar y archivar audios: fecha, región, tema, fuente, duración, estado, versión y permisos. Incluí ejemplos y una planilla mínima de índice.', why:'Un archivo bien nombrado vale oro.' },
+      { id:'p23', level:'profundizar', domain:'Multiformato', title:'De entrevista a paquete completo', objective:'Reutilizar contenido con calidad.', prompt:'A partir de esta entrevista/transcripción, generá: resumen para productor, 3 cortes sugeridos, guion de presentación, post web, placa para redes y descripción de podcast. No agregues datos externos.', why:'Multiplica el valor de una entrevista.' },
+      { id:'p24', level:'profundizar', domain:'Editorial', title:'Tono y línea de tratamiento', objective:'Mantener profesionalidad sin rigidez.', prompt:'Definí una guía de tono para un medio regional: cómo escribir titulares, cómo tratar conflictos, cómo evitar adjetivación innecesaria, cómo citar fuentes y cómo cerrar piezas sin editorializar.', why:'Da consistencia entre colaboradores.' },
+      { id:'p25', level:'proyectar', domain:'Automatización', title:'Monitor provincial de fuentes', objective:'Diseñar un sistema futuro de monitoreo.', prompt:'Diseñá conceptualmente un monitor de fuentes para una red radial: RSS, sitios municipales, boletines, mails, audios entrantes y planilla. Explicá módulos, alertas, revisión humana, riesgos y primer prototipo pequeño.', why:'Prepara el salto a automatización real.' },
+      { id:'p26', level:'proyectar', domain:'Investigación', title:'Cobertura de largo aliento', objective:'Planificar una serie de informes.', prompt:'Diseñá una cobertura de 4 semanas sobre [tema provincial]. Incluí agenda de búsqueda, entrevistas, documentos, segmentos radiales, piezas para redes, verificación y archivo. Separá datos de hipótesis.', why:'Convierte un tema complejo en serie producible.' },
+      { id:'p27', level:'proyectar', domain:'Audio', title:'Sistema TTS para boletines largos', objective:'Crear proceso reproducible de generación de voz.', prompt:'Diseñá un procedimiento para producir boletines largos con TTS: preparación del guion, división en bloques, prompts de voz, prueba, escucha crítica, correcciones, exportación, nombres de archivo y aprobación.', why:'Hace productiva la herramienta sin improvisar.' },
+      { id:'p28', level:'proyectar', domain:'Gestión', title:'Manual operativo de la red', objective:'Documentar cómo se trabaja.', prompt:'Armá el índice de un manual operativo para una red radial regional: fuentes, recepción de materiales, producción diaria, verificación, audios, enlatados, grilla, pauta, archivo, redes y emergencias.', why:'Ordena el conocimiento del negocio.' },
+      { id:'p29', level:'proyectar', domain:'Multimedia', title:'Fábrica de paquetes por noticia', objective:'Estandarizar la salida por canales.', prompt:'Diseñá un sistema para que cada noticia importante produzca: guion de aire, audio corto, post web, placa, reel, mensaje interno y archivo. Indicá entradas, plantilla, revisión y responsable.', why:'Reduce trabajo repetido.' },
+      { id:'p30', level:'proyectar', domain:'Capacitación', title:'Entrenar al equipo en IA', objective:'Que colaboradores usen IA con criterio común.', prompt:'Diseñá un plan de capacitación de 6 semanas para un equipo de producción radial: prompting, verificación, búsqueda, planillas, TTS, edición de audio, imágenes y automatizaciones. Cada semana con práctica y entregable.', why:'Instala cultura, no solo herramientas.' }
+    ];
+
+    const roleByDomain = {
+      'escaleta diaria':'productor ejecutivo de radio regional',
+      'guion radial':'guionista radial informativo',
+      'whatsapp interno':'coordinador de red de medios',
+      'audio recibido':'productor de archivo y audios',
+      'planillas':'experto en Google Sheets para medios',
+      'búsqueda web':'investigador OSINT periodístico',
+      'tts':'director de locución y voz sintética',
+      'redes':'editor multimedia prudente',
+      'entrevistas':'productor periodístico de entrevistas',
+      'efemérides':'guionista de micro radial',
+      'audio y edición':'editor de audio periodístico',
+      'gestión':'consultor de gestión de medios',
+      'verificación':'editor de verificación periodística',
+      'investigación':'investigador periodístico regional',
+      'automatización':'arquitecto de flujos editoriales',
+      'programación radial':'programador radial',
+      'video':'director de contenido vertical informativo',
+      'fuentes':'responsable de mapa de fuentes',
+      'derechos':'asesor de ética y derechos en medios',
+      'archivo':'archivista sonoro',
+      'multiformato':'editor de adaptación multicanal',
+      'editorial':'editor responsable',
+      'audio':'productor de audio con IA',
+      'multimedia':'productor multimedia regional',
+      'capacitación':'formador de equipos editoriales'
+    };
+
+    const enhancedPrompt = (item) => {
+      const role = roleByDomain[item.domain.toLowerCase()] || 'asistente editorial experto';
+      const levelRules = item.level === 'inicio'
+        ? 'Si falta contexto, hacé hasta 3 preguntas. Entregá una versión útil para hoy y marcá qué debo revisar.'
+        : item.level === 'profundizar'
+        ? 'Trabajá con método: supuestos, criterios, fuentes o verificaciones pendientes, y una segunda ronda de mejora.'
+        : 'Diseñá por fases: prototipo chico, reglas, riesgos, revisión humana y criterios de aceptación.';
+      return `Actuá como ${role}.\n\nObjetivo: ${item.objective}\n\nContexto: trabajo en producción radial regional, con fuentes de distintas localidades, audios, textos, segmentos y necesidad de verificación.\n\nPedido base:\n${item.prompt}\n\nCondiciones:\n- No inventes datos, fuentes, cifras, citas ni nombres.\n- Separá información confirmada, inferencias y pendientes.\n- Adaptá el tono a radio: claro, sobrio, directo y profesional.\n- Si hay datos sensibles o personales, sugerí anonimización.\n- ${levelRules}\n\nCerrá con una checklist breve de control antes de usar el resultado.`;
+    };
+
+    const stories = [
+      { title:'El boletín que parecía listo', focus:'Verificación', context:'Un resumen sonaba perfecto, pero mezclaba datos confirmados y rumores.', steps:['Pedido inicial: “armá el boletín con todo lo que llegó”.','Alerta: el texto quedó fluido, pero sin fuentes visibles.','Ajuste: pedir matriz con dato, fuente, región y pendiente.','Resultado: boletín más corto, pero seguro y revisable.'], prompt:'Antes de escribir el boletín, armá una matriz de verificación. Recién después redactá solo con lo confirmado y marcá lo pendiente.' },
+      { title:'De audio largo a tres cortes', focus:'Edición', context:'Una entrevista extensa necesitaba salida rápida para aire y redes.', steps:['Transcripción completa.','Resumen por bloques temáticos.','Sugerencia de cortes con motivo editorial.','Escucha humana del audio original antes de publicar.'], prompt:'Analizá esta transcripción y sugerí 5 cortes con tema, inicio estimado, cierre estimado, valor editorial y frase a verificar escuchando.' },
+      { title:'El TTS que sonaba apurado', focus:'Audio con IA', context:'La voz sintética leía bien, pero sin pausas ni intención.', steps:['Se preparó el guion con pausas.','Se marcaron nombres locales y cifras.','Se pidió tono sobrio y ritmo de boletín.','Se escuchó completo y se corrigió el texto.'], prompt:'Prepará este guion para TTS con pausas, énfasis, pronunciación y ritmo. No cambies datos. Señalá qué debo escuchar con atención.' },
+      { title:'Una búsqueda que encontró documentos', focus:'Investigación', context:'La consulta común traía solo notas repetidas.', steps:['La IA propuso sinónimos y actores.','Se usaron operadores site: y filetype:.','Se guardaron links y fechas.','Se armó un dossier mínimo.'], prompt:'Construí búsquedas avanzadas para encontrar documentos oficiales y archivos sobre este tema. Incluí operadores y propósito de cada búsqueda.' },
+      { title:'El reel que no empezó por video', focus:'Multimedia', context:'Primero se escribió storyboard, después se generaron imágenes y voz.', steps:['Definir objetivo y público.','Storyboard de 6 planos.','Imágenes sin texto interno.','Textos y fuentes agregados después en editor.'], prompt:'Diseñá storyboard de 6 planos para una noticia regional en video vertical. Separá imagen, voz, texto mínimo y datos que deben agregarse al final.' },
+      { title:'Automatización sin programar todavía', focus:'Flujos', context:'La idea era grande; se convirtió en especificación.', steps:['Entrada: correos, audios, RSS.','Proceso: transcribir, resumir, etiquetar.','Salida: planilla y carpeta.','Revisión humana antes de publicar.'], prompt:'Convertí esta idea de automatización en especificación: entradas, salidas, reglas, errores, privacidad, pruebas y criterios de aceptación.' },
+      { title:'La planilla que ordenó la semana', focus:'Gestión', context:'La programación mezclaba segmentos propios, enlatados y tandas.', steps:['Columnas por bloque, duración y origen.','Estado y responsable.','Alertas de vencimiento.','Revisión semanal.'], prompt:'Diseñá una planilla de programación semanal con bloques, duración, origen, responsable, estado, pauta y próximas acciones.' },
+      { title:'La imagen que no debía fingir documentación', focus:'Imágenes', context:'Una placa generada podía confundirse con foto real.', steps:['Se pidió estilo ilustrativo.','Sin texto interno.','Espacios para fuente y fecha.','Aclaración de imagen ilustrativa.'], prompt:'Generá un prompt visual para una imagen ilustrativa de [tema], sin texto, sin fingir foto documental, con espacios para datos verificados.' }
+    ];
+
+    const challengesData = [
+      { title:'Pares de conceptos', type:'pairs', items:[['Escaleta','Orden de bloques del programa'],['Trazabilidad','Rastro de fuente y fecha'],['TTS','Texto convertido en voz'],['Storyboard','Plan de planos antes del video'],['RSS','Fuente automática de novedades'],['Operador site:','Limita búsqueda a un dominio'],['Prompt negativo','Lo que pedís que no aparezca'],['Dossier','Carpeta ordenada de evidencias']] },
+      { title:'Mejorá el prompt', type:'compare', items:[
+        { weak:'Haceme el boletín.', strong:'Armá un boletín radial de 60 segundos con estos datos, sin agregar información, separando confirmado y pendiente.', answer:'Define duración, límite y verificación.' },
+        { weak:'Buscame información.', strong:'Diseñá 12 búsquedas avanzadas con site:, filetype:, comillas y sinónimos para investigar este tema.', answer:'Usa IA para pensar cómo buscar.' },
+        { weak:'Haceme un audio.', strong:'Prepará este guion para TTS: pausas, énfasis, pronunciación de nombres locales y tono sobrio.', answer:'Controla voz y ritmo.' },
+        { weak:'Haceme una imagen de la noticia.', strong:'Generá imagen ilustrativa sin texto interno, con espacio para título, fuente y fecha que agregaré después.', answer:'Evita texto falso o confuso.' }
+      ] },
+      { title:'Ordená el proceso', type:'order', items:[
+        { title:'Boletín seguro', steps:['Reunir entradas','Clasificar por región y urgencia','Verificar datos clave','Escribir guion','Escuchar o revisar antes de emitir'] },
+        { title:'Audio TTS', steps:['Limpiar guion','Marcar pausas y pronunciaciones','Generar prueba','Escuchar completa','Corregir y exportar'] },
+        { title:'Investigación web', steps:['Definir pregunta','Diseñar búsquedas','Guardar fuentes','Comparar evidencia','Publicar con atribución'] }
+      ] },
+      { title:'Encontrá el intruso', type:'intruder', items:[
+        { list:['fuente','fecha','evidencia','apuro','nivel de confianza'], answer:'apuro' },
+        { list:['AI Studio','ElevenLabs','audición crítica','clonar voz sin permiso','guion limpio'], answer:'clonar voz sin permiso' },
+        { list:['site:','filetype:','comillas','inventar cita','OR'], answer:'inventar cita' },
+        { list:['título','fuente','fecha','precio inventado','crédito'], answer:'precio inventado' }
+      ] },
+      { title:'Checklist rápida', type:'checklist', items:['¿El dato tiene fuente?', '¿La región está clara?', '¿La cita fue escuchada?', '¿La imagen es ilustrativa?', '¿El audio TTS fue revisado completo?', '¿El archivo quedó nombrado y archivado?'] },
+      { title:'Vocabulario clave', type:'vocab', items:[['Bumper','Separador breve de identidad sonora'],['Lower third','Texto inferior en video con nombre o dato'],['Cortina','Música de fondo o transición'],['Lead','Entrada o dato inicial de una historia'],['Rundown','Escaleta operativa del programa'],['Slug','Nombre corto interno de una pieza']]}
+    ];
+
+    const imageConcepts = [
+      { title:'Imágenes para medios regionales', body:['Placas ilustrativas para noticias sin fingir documentación.', 'Mapas y fondos visuales con espacios para datos verificados.', 'Thumbnails de entrevistas y podcasts.', 'Fondos para reels y separadores audiovisuales.'] },
+      { title:'Regla central', body:['La IA genera escena y estilo; los textos exactos se agregan después.', 'No usar imagen generada como prueba documental.', 'Aclarar cuando una pieza sea ilustrativa.', 'Mantener identidad sobria y reconocible.'] },
+      { title:'Video primero en storyboard', body:['Definir objetivo, público y duración.', 'Pedir 4 a 6 planos antes de generar.', 'Separar voz, imagen y texto en pantalla.', 'Revisar fuentes y créditos al final.'] },
+      { title:'Edición fina', body:['Cambiar de a una cosa por vez.', 'Anclar lo que no debe modificarse.', 'Pedir fondos sin texto ni logos inventados.', 'Guardar el brief visual que funcionó.'] }
+    ];
+
+    const imageGlossary = [
+      ['Placa','Pieza visual fija para redes o web.'],
+      ['Imagen ilustrativa','Imagen generada que acompaña una noticia sin presentarse como documento real.'],
+      ['Storyboard','Secuencia de planos antes de producir video.'],
+      ['B-roll','Material visual de apoyo para cubrir una narración.'],
+      ['Lower third','Banda inferior con nombre, cargo o dato en video.'],
+      ['Prompt negativo','Lista de cosas que no deben aparecer.'],
+      ['Relación de aspecto','Formato: cuadrado, vertical, horizontal.'],
+      ['Brief visual','Reglas de estilo que se repiten en varias piezas.'],
+      ['Texto quemado','Texto integrado al video o imagen; conviene controlarlo en edición.'],
+      ['Thumbnail','Miniatura que invita a abrir un video o entrevista.']
+    ];
+
+    const imageRecipes = [
+      { title:'Placa ilustrativa de noticia', steps:['Definir tema, región y tono.', 'Pedir imagen sin texto interno.', 'Reservar zonas para título, fuente y fecha.', 'Agregar textos en editor.', 'Revisar que no parezca prueba documental.'] },
+      { title:'Reel de 30 segundos', steps:['Objetivo y público.', 'Storyboard de 6 planos.', 'Prompts visuales por plano.', 'Voz o TTS con guion revisado.', 'Subtítulos y datos finales en editor.'] },
+      { title:'Portada de podcast o entrevista', steps:['Definir invitado/tema sin usar datos privados.', 'Pedir fondo sobrio con micrófono o mapa.', 'Dejar espacio para nombre y título.', 'Agregar datos reales después.', 'Exportar cuadrado y horizontal.'] },
+      { title:'Kit de cobertura regional', steps:['Imagen base del tema.', 'Mapa o tarjeta territorial.', 'Placa de redes.', 'Storyboard vertical.', 'Miniatura de audio/podcast.', 'Archivo con fuentes y créditos.'] }
+    ];
+
+    const spreadsheetTemplates = [
+      { title:'Producción diaria', purpose:'Ver el estado de cada tema antes de emitir.', columns:['Fecha','Tema','Región','Fuente','Formato','Duración','Estado','Responsable','Archivo','Verificación','Próxima acción'], formula:'Formato condicional por Estado: verificar, producir, emitido, archivar.' },
+      { title:'Audios recibidos', purpose:'No perder material útil ni permisos.', columns:['Fecha','Origen','Tema','Región','Duración','Calidad','Cortes posibles','Permiso','Estado','Archivo'], formula:'Filtro por Estado y Región para priorizar edición.' },
+      { title:'Grilla semanal', purpose:'Integrar noticias, enlatados, música, deportes, efemérides y tandas.', columns:['Día','Horario','Bloque','Origen','Duración','Responsable','Estado','Tanda','Observación'], formula:'SUMAR.SI por duración para calcular minutos por origen.' },
+      { title:'Mapa de fuentes', purpose:'Mantener memoria editorial sin exponer datos innecesarios.', columns:['Región','Tipo de fuente','Tema','Confiabilidad','Última consulta','Canal','Notas no sensibles'], formula:'Ordenar por Región y Última consulta.' },
+      { title:'Pauta y vencimientos', purpose:'Controlar lo comercial sin mezclarlo con producción.', columns:['Anunciante','Pieza','Inicio','Vencimiento','Monto','Estado de cobro','Emisiones','Responsable'], formula:'Alerta si Vencimiento está próximo.' },
+      { title:'Archivo sonoro', purpose:'Encontrar entrevistas y segmentos meses después.', columns:['Fecha','Slug','Tema','Región','Participantes','Duración','Versión','Permiso','Ubicación','Etiquetas'], formula:'Convención: AAAA-MM-DD_region_tema_version.' }
+    ];
+
+    const automationFlows = [
+      { title:'Monitor de fuentes', input:'RSS, sitios, boletines y mails', process:'Recolectar, resumir, etiquetar por región y urgencia', output:'Planilla de temas candidatos', human:'Editor decide qué pasa a producción' },
+      { title:'Audios entrantes', input:'Carpeta o drive con archivos de audio', process:'Transcribir, estimar duración, detectar tema y calidad', output:'Ficha de audio y resumen', human:'Productor escucha cortes clave' },
+      { title:'Boletín preliminar', input:'Temas verificados del día', process:'Ordenar escaleta y proponer guion', output:'Borrador de boletín', human:'Revisión de fuente, tono y datos' },
+      { title:'Paquete multiformato', input:'Noticia aprobada', process:'Crear guion, post, placa, reel y mensaje interno', output:'Kit de distribución', human:'Agregar títulos, fuentes y créditos' },
+      { title:'Archivo automático', input:'Audio final y ficha', process:'Nombrar, guardar, indexar y etiquetar', output:'Archivo sonoro consultable', human:'Validar permisos y clasificación' },
+      { title:'Alertas comerciales', input:'Planilla de pauta', process:'Detectar vencimientos y piezas pendientes', output:'Resumen semanal', human:'Gestionar contacto y cobro' }
+    ];
+
+    const audioTools = [
+      { title:'AI Studio / Gemini TTS', use:'Probar locuciones largas, estilos de lectura y voces múltiples desde prompts.', prompts:['Leé este boletín con tono informativo sobrio, ritmo medio y pausas claras después de cada dato.', 'Generá dos voces: conductor y columnista, con intercambio natural y sin exagerar emoción.', 'Antes de generar, marcá posibles problemas de pronunciación de nombres de lugares.'], cautions:['Dividir guiones extensos en bloques si la herramienta lo requiere.', 'Escuchar completo antes de usar.', 'No asumir que la prosodia salió bien en nombres locales.'] },
+      { title:'ElevenLabs', use:'Generar locuciones de alta calidad, separadores, narraciones y voces consistentes para series.', prompts:['Voz masculina adulta, tono periodístico cercano, velocidad moderada, pausas naturales y énfasis leve en datos clave.', 'Narración documental sobria para micro de 3 minutos, sin dramatizar.', 'Separador breve institucional, energía contenida, claridad alta.'], cautions:['No clonar voces sin permiso.', 'Revisar costos/licencias según uso.', 'Controlar respiraciones, velocidad y estabilidad de voz.'] }
+    ];
+
+    const investigatorBlocks = [
+      { title:'Operadores útiles', items:['site:gob.ar tema localidad', 'filetype:pdf tema provincia', '"frase exacta" localidad', 'tema OR sinónimo región', 'tema -ruido -palabra', 'intitle:informe tema'] },
+      { title:'Ficha de fuente', items:['Quién publica', 'Fecha', 'Qué dato aporta', 'Qué interés puede tener', 'Qué falta verificar', 'Cómo citar o archivar'] },
+      { title:'Dossier mínimo', items:['Pregunta de investigación', 'Cronología', 'Actores', 'Documentos', 'Audios', 'Pendientes', 'Riesgos', 'Próxima llamada'] },
+      { title:'Prompts de búsqueda', items:['Dame sinónimos y nombres alternativos.', 'Listá organismos que podrían tener documentos.', 'Convertí este tema en 20 búsquedas Google.', 'Separá búsquedas por región y por tipo de fuente.'] }
+    ];
+
+    const notebookExercises = [
+      { title:'Cuaderno por cobertura', steps:['Crear cuaderno con nombre de tema.', 'Cargar documentos, audios transcriptos y notas.', 'Pedir resumen con citas.', 'Verificar pasajes originales.', 'Generar preguntas para entrevista.'] },
+      { title:'Comparar documentos', steps:['Cargar versión A y B.', 'Pedir tabla de cambios.', 'Marcar implicancia editorial.', 'Separar datos verificables.', 'Guardar citas útiles.'] },
+      { title:'Audio Overview como repaso', steps:['Cargar fuentes largas.', 'Pedir enfoque de la explicación.', 'Generar audio para repasar.', 'Escuchar con libreta.', 'Corregir o ampliar fuentes.'] }
+    ];
+
+    const tabs = [
+      ['theory','Teoría'], ['gym','Gimnasio'], ['research','Investigador'], ['audio','Audio y video'], ['automation','Automatizaciones'], ['images','Imágenes'], ['sheets','Planillas'], ['challenges','Juegos'], ['stories','Historias'], ['notebook','NotebookLM']
+    ];
+
+    function CopyButton({ text }) {
+      const [ok, setOk] = useState(false);
+      const copy = () => navigator.clipboard.writeText(text).then(() => { setOk(true); setTimeout(() => setOk(false), 1200); });
+      return <button onClick={copy} className="px-3 py-2 bg-slate-900 text-white text-sm rounded-lg">{ok ? 'Copiado' : 'Copiar prompt'}</button>;
+    }
+
+    function SectionTitle({ title, subtitle }) {
+      return <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm mb-6">
+        <h2 className="text-2xl font-extrabold text-slate-900">{title}</h2>
+        {subtitle && <p className="text-slate-600 mt-2">{subtitle}</p>}
+      </div>;
+    }
+
+    function TheorySection() {
+      const [idx, setIdx] = useState(0);
+      const mod = theoryModules[idx];
+      return <div className="grid md:grid-cols-[260px_1fr] gap-6">
+        <aside className="hidden md:block"><div className="sticky top-28 space-y-1">
+          <p className="text-xs font-bold text-slate-400 uppercase">Módulos ({theoryModules.length})</p>
+          {theoryModules.map((m, i) => <button key={m.id} onClick={() => setIdx(i)} className={`w-full text-left px-3 py-2 rounded-lg text-sm ${i === idx ? 'bg-teal-100 text-teal-900 font-bold border-l-4 border-teal-600' : 'hover:bg-slate-100 text-slate-600'}`}>{i + 1}. {m.title}</button>)}
+        </div></aside>
+        <div>
+          <select className="md:hidden w-full p-3 border border-slate-300 bg-white mb-4" value={idx} onChange={e => setIdx(Number(e.target.value))}>{theoryModules.map((m, i) => <option value={i} key={m.id}>{i + 1}. {m.title}</option>)}</select>
+          <article className="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm">
+            <p className="text-xs uppercase font-bold text-teal-700">Módulo {idx + 1} de {theoryModules.length}</p>
+            <h3 className="text-2xl font-extrabold text-slate-900 mt-1">{mod.title}</h3>
+            <p className="text-slate-500 mb-6">{mod.subtitle}</p>
+            <div className="space-y-4 text-slate-700">{mod.reading.map((p, i) => <p key={i}>{p}</p>)}</div>
+            <div className="bg-teal-50 border border-teal-200 rounded-xl p-5 mt-6">
+              <h4 className="font-bold text-teal-900 mb-2">Checklist</h4>
+              <ul className="space-y-2">{mod.checklist.map((c, i) => <li key={i}>• {c}</li>)}</ul>
+            </div>
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mt-6">
+              <h4 className="font-bold text-amber-900 mb-2">Práctica sugerida</h4>
+              <p>{mod.practice}</p>
+            </div>
+            <div className="flex justify-between mt-8 gap-3">
+              <button disabled={idx === 0} onClick={() => setIdx(Math.max(0, idx - 1))} className="px-4 py-2 bg-slate-100 disabled:opacity-40">Anterior</button>
+              <button disabled={idx === theoryModules.length - 1} onClick={() => setIdx(Math.min(theoryModules.length - 1, idx + 1))} className="px-4 py-2 bg-teal-700 text-white disabled:opacity-40">Siguiente</button>
+            </div>
+          </article>
+        </div>
+      </div>;
+    }
+
+    function GymSection() {
+      const [level, setLevel] = useState('inicio');
+      const items = promptItems.filter(p => p.level === level);
+      return <div>
+        <SectionTitle title="Gimnasio de prompts" subtitle="Prompts operativos para producir, verificar, transformar, investigar y coordinar una red radial regional." />
+        <div className="flex flex-wrap gap-2 mb-6">{promptLevels.map(l => <button key={l.id} onClick={() => setLevel(l.id)} className={`px-4 py-2 ${level === l.id ? 'bg-teal-700 text-white' : 'bg-white border border-slate-200 text-slate-700'}`}>{l.label}</button>)}</div>
+        <div className="grid gap-4">
+          {items.map(item => <article key={item.id} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+              <div><p className="text-xs uppercase font-bold text-teal-700">{item.domain}</p><h3 className="text-xl font-bold text-slate-900">{item.title}</h3><p className="text-slate-600">{item.objective}</p></div>
+              <CopyButton text={enhancedPrompt(item)} />
+            </div>
+            <details className="mt-4 bg-slate-50 border border-slate-200 rounded-xl p-4">
+              <summary className="cursor-pointer font-bold text-slate-800">Ver prompt mejorado</summary>
+              <pre className="whitespace-pre-wrap font-sans text-sm text-slate-700 mt-3">{enhancedPrompt(item)}</pre>
+            </details>
+            <p className="text-sm text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl p-3 mt-3"><strong>Por qué sirve:</strong> {item.why}</p>
+          </article>)}
+        </div>
+      </div>;
+    }
+
+    function ResearchSection() {
+      return <div>
+        <SectionTitle title="Investigador" subtitle="Usar la IA para buscar mejor, no para reemplazar fuentes. La idea es diseñar búsquedas, guardar evidencia y volver con material verificable." />
+        <div className="grid md:grid-cols-2 gap-4 mb-6">{investigatorBlocks.map(block => <div key={block.title} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm"><h3 className="font-bold text-slate-900 mb-3">{block.title}</h3><ul className="space-y-2">{block.items.map((it, i) => <li key={i} className="bg-slate-50 rounded-lg p-2 text-sm">{it}</li>)}</ul></div>)}</div>
+        <div className="bg-indigo-50 border border-indigo-200 rounded-2xl p-5">
+          <h3 className="font-bold text-indigo-900 mb-2">Prompt maestro de investigación</h3>
+          <pre className="whitespace-pre-wrap text-sm">Actuá como investigador periodístico regional. Quiero investigar [tema]. Primero formulá la pregunta central y 5 subpreguntas. Después diseñá búsquedas avanzadas de Google por fuente oficial, medios locales, documentos PDF, planillas, archivo y voces territoriales. Para cada búsqueda explicá qué espero encontrar y cómo evaluar confiabilidad. Cerrá con una matriz para registrar fuente, fecha, link, dato, riesgo y próximo paso.</pre>
+        </div>
+      </div>;
+    }
+
+    function AudioVideoSection() {
+      return <div>
+        <SectionTitle title="Audio y video con IA" subtitle="Guion, voz sintética, edición, storyboard y producción multiformato con revisión humana." />
+        <div className="grid md:grid-cols-2 gap-4 mb-6">{audioTools.map(tool => <div key={tool.title} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+          <h3 className="text-xl font-bold text-slate-900">{tool.title}</h3>
+          <p className="text-slate-600 mb-3">{tool.use}</p>
+          <h4 className="font-bold text-teal-800">Prompts útiles</h4>
+          <ul className="space-y-2 my-3">{tool.prompts.map((p, i) => <li key={i} className="bg-teal-50 border border-teal-100 rounded-xl p-3 text-sm">{p}</li>)}</ul>
+          <h4 className="font-bold text-rose-800">Cuidados</h4>
+          <ul className="space-y-1 text-sm">{tool.cautions.map((c, i) => <li key={i}>• {c}</li>)}</ul>
+        </div>)}</div>
+        <div className="grid md:grid-cols-3 gap-4">
+          {['Guion limpio','TTS por bloques','Escucha crítica'].map((title, i) => <div key={title} className="bg-slate-900 text-white rounded-2xl p-5"><p className="text-4xl font-black text-teal-300">{i + 1}</p><h3 className="font-bold text-xl">{title}</h3><p className="text-slate-300 text-sm">{['Sin errores, con nombres y cifras revisadas.','Apertura, desarrollo, datos y cierre para controlar continuidad.','Nunca publicar un audio sintético sin escucharlo completo.'][i]}</p></div>)}
+        </div>
+      </div>;
+    }
+
+    function AutomationSection() {
+      return <div>
+        <SectionTitle title="Automatizaciones" subtitle="Pensar flujos lógicos antes de pedir código. Cada automatización debe tener entrada, proceso, salida y revisión humana." />
+        <div className="grid md:grid-cols-2 gap-4">{automationFlows.map(flow => <article key={flow.title} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+          <h3 className="text-xl font-bold text-slate-900">{flow.title}</h3>
+          <p><strong>Entrada:</strong> {flow.input}</p>
+          <p><strong>Proceso:</strong> {flow.process}</p>
+          <p><strong>Salida:</strong> {flow.output}</p>
+          <p className="bg-amber-50 border border-amber-200 rounded-xl p-3 mt-3"><strong>Revisión humana:</strong> {flow.human}</p>
+        </article>)}</div>
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm mt-6">
+          <h3 className="font-bold text-slate-900 mb-2">Cómo pedirle una automatización a Codex o Claude Code</h3>
+          <pre className="whitespace-pre-wrap text-sm bg-slate-50 border border-slate-200 rounded-xl p-4">Quiero construir un prototipo pequeño. Entrada: [fuente y formato]. Salida: [archivo, planilla o carpeta]. Reglas: [etiquetas, nombres, estados]. Privacidad: [qué datos no deben enviarse ni guardarse]. Errores posibles: [audios corruptos, fuente caída, datos incompletos]. Pruebas: usá estos 3 ejemplos anonimizados. Criterio de aceptación: [qué debe funcionar para considerarlo listo]. Primero proponé arquitectura y tareas; no escribas código hasta que apruebe el plan.</pre>
+        </div>
+      </div>;
+    }
+
+    function ImagesSection() {
+      return <div>
+        <SectionTitle title="Imágenes para producción radial" subtitle="Ejemplos y genealogías visuales para crear placas, fondos, storyboards y paquetes multimedia sin confundir imagen generada con documentación real." />
+        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">{visualExamples.map(img => <figure key={img.id} className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+          <img src={hpVisuals.imageAssets[img.id]?.src} alt={img.title} className="w-full aspect-square object-cover bg-slate-100" loading="lazy" />
+          <figcaption className="p-4"><h3 className="font-bold text-slate-900">{img.title}</h3><p className="text-sm text-slate-600">{img.caption}</p><details className="mt-3 bg-slate-50 p-3 rounded-xl"><summary className="font-bold text-sm cursor-pointer">Ver prompt</summary><p className="text-xs mt-2">{img.prompt}</p></details></figcaption>
+        </figure>)}</div>
+        <div className="grid md:grid-cols-2 gap-4 mb-6">{imageConcepts.map(c => <div key={c.title} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm"><h3 className="font-bold text-slate-900 mb-2">{c.title}</h3><ul>{c.body.map((b, i) => <li key={i}>• {b}</li>)}</ul></div>)}</div>
+        <div className="space-y-6">{visualSequences.map(seq => <section key={seq.id} className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+          <div className="p-5 bg-gradient-to-r from-teal-50 to-sky-50 border-b border-slate-200"><h3 className="text-xl font-bold text-slate-900">{seq.title}</h3><p className="text-slate-700">{seq.intro}</p></div>
+          <div className="grid md:grid-cols-2 xl:grid-cols-3">{seq.steps.map(step => <article key={step.asset} className="border-b border-slate-200 xl:border-r">
+            <img src={hpVisuals.imageAssets[step.asset]?.src} alt={step.title} className="w-full aspect-video object-cover bg-slate-100" loading="lazy" />
+            <div className="p-4 space-y-3"><div className="flex gap-3 items-center"><span className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold">{step.step}</span><h4 className="font-bold text-slate-900">{step.title}</h4></div>
+            <details className="bg-slate-50 border border-slate-200 p-3 rounded-xl"><summary className="font-bold text-sm cursor-pointer">Prompt aplicado</summary><p className="text-xs mt-2">{step.prompt}</p></details>
+            <p className="text-sm bg-sky-50 border border-sky-200 rounded-xl p-3"><strong>Impacto visible:</strong> {step.change}</p>
+            <p className="text-sm bg-emerald-50 border border-emerald-200 rounded-xl p-3"><strong>Criterio:</strong> {step.lesson}</p></div>
+          </article>)}</div>
+        </section>)}</div>
+        <div className="grid md:grid-cols-2 gap-4 mt-6">
+          <div className="bg-white border border-slate-200 rounded-2xl p-5"><h3 className="font-bold text-slate-900">Glosario visual</h3><div className="grid gap-2 mt-3">{imageGlossary.map(([t,d]) => <p key={t} className="text-sm"><strong>{t}:</strong> {d}</p>)}</div></div>
+          <div className="bg-white border border-slate-200 rounded-2xl p-5"><h3 className="font-bold text-slate-900">Recetas</h3><div className="space-y-3 mt-3">{imageRecipes.map(r => <details key={r.title} className="bg-slate-50 rounded-xl p-3"><summary className="font-bold cursor-pointer">{r.title}</summary><ol className="list-decimal ml-5 mt-2 text-sm">{r.steps.map(s => <li key={s}>{s}</li>)}</ol></details>)}</div></div>
+        </div>
+      </div>;
+    }
+
+    function SheetsSection() {
+      return <div>
+        <SectionTitle title="Planillas" subtitle="Modelos para coordinar producción, audios, grilla, fuentes, pauta y archivo." />
+        <div className="grid md:grid-cols-2 gap-4">{spreadsheetTemplates.map(t => <article key={t.title} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+          <h3 className="text-xl font-bold text-slate-900">{t.title}</h3><p className="text-slate-600">{t.purpose}</p>
+          <p className="font-bold mt-3">Columnas</p><p className="text-sm text-slate-700">{t.columns.join(' · ')}</p>
+          <p className="bg-teal-50 border border-teal-200 rounded-xl p-3 mt-3 text-sm"><strong>Idea de fórmula o control:</strong> {t.formula}</p>
+        </article>)}</div>
+      </div>;
+    }
+
+    function ChallengesSection() {
+      const [open, setOpen] = useState(null);
+      return <div>
+        <SectionTitle title="Juegos de práctica" subtitle="Pequeños ejercicios para fijar vocabulario, orden de proceso y criterio de verificación." />
+        <div className="grid gap-4">{challengesData.map((c, idx) => <article key={c.title} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+          <div className="flex justify-between gap-4"><div><h3 className="text-xl font-bold text-slate-900">{c.title}</h3><p className="text-slate-600">Tipo: {c.type}</p></div><button onClick={() => setOpen(open === idx ? null : idx)} className="px-3 py-2 bg-teal-700 text-white">{open === idx ? 'Ocultar' : 'Practicar'}</button></div>
+          {open === idx && <div className="mt-4 bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm">
+            {c.type === 'pairs' && c.items.map(([a,b]) => <p key={a}><strong>{a}</strong>: {b}</p>)}
+            {c.type === 'compare' && c.items.map((it,i) => <div key={i} className="mb-3"><p><strong>Débil:</strong> {it.weak}</p><p><strong>Mejorado:</strong> {it.strong}</p><p className="text-emerald-700"><strong>Mejora:</strong> {it.answer}</p></div>)}
+            {c.type === 'order' && c.items.map(it => <div key={it.title} className="mb-3"><p className="font-bold">{it.title}</p><ol className="list-decimal ml-5">{it.steps.map(s => <li key={s}>{s}</li>)}</ol></div>)}
+            {c.type === 'intruder' && c.items.map(it => <p key={it.list.join()}><strong>{it.list.join(' · ')}</strong> → Intruso: {it.answer}</p>)}
+            {c.type === 'checklist' && <ul>{c.items.map(x => <li key={x}>• {x}</li>)}</ul>}
+            {c.type === 'vocab' && c.items.map(([a,b]) => <p key={a}><strong>{a}</strong>: {b}</p>)}
+          </div>}
+        </article>)}</div>
+      </div>;
+    }
+
+    function StoriesSection() {
+      const [idx, setIdx] = useState(0);
+      const story = stories[idx];
+      return <div>
+        <SectionTitle title="Historias de uso" subtitle="Casos cotidianos que muestran cómo ajustar un pedido, detectar riesgos y llegar a un resultado publicable." />
+        <div className="grid md:grid-cols-[260px_1fr] gap-6"><div className="space-y-2">{stories.map((s,i) => <button key={s.title} onClick={() => setIdx(i)} className={`w-full text-left px-3 py-2 rounded-lg text-sm ${idx===i?'bg-indigo-700 text-white':'bg-white border border-slate-200'}`}>{s.title}</button>)}</div>
+        <article className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm"><p className="text-xs uppercase text-indigo-700 font-bold">{story.focus}</p><h3 className="text-2xl font-bold text-slate-900">{story.title}</h3><p className="text-slate-600 mb-4">{story.context}</p><ol className="list-decimal ml-5 space-y-2">{story.steps.map(s => <li key={s}>{s}</li>)}</ol><div className="mt-5 bg-indigo-50 border border-indigo-200 rounded-xl p-4"><p className="font-bold text-indigo-900">Prompt reutilizable</p><pre className="whitespace-pre-wrap text-sm mt-2">{story.prompt}</pre></div></article></div>
+      </div>;
+    }
+
+    function NotebookSection() {
+      return <div>
+        <SectionTitle title="NotebookLM" subtitle="Una base documental para coberturas, entrevistas, documentos, audios transcriptos y archivo propio." />
+        <div className="grid md:grid-cols-3 gap-4">{notebookExercises.map(ex => <article key={ex.title} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm"><h3 className="font-bold text-slate-900">{ex.title}</h3><ol className="list-decimal ml-5 mt-3 text-sm space-y-1">{ex.steps.map(s => <li key={s}>{s}</li>)}</ol></article>)}</div>
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 mt-6"><h3 className="font-bold text-amber-900">Regla de uso</h3><p>Si un dato va al aire, abrí la cita o el documento original. NotebookLM ayuda a encontrar y resumir, pero la verificación final sigue siendo editorial.</p></div>
+      </div>;
+    }
+
+    function SourcesFooter() {
+      return <div className="bg-white border border-slate-200 rounded-2xl p-5 mt-8">
+        <h3 className="font-bold text-slate-900 mb-3">Fuentes y criterio usado</h3>
+        <ul className="space-y-2 text-sm">{sourceNotes.map(s => <li key={s.title}>{s.url === '#' ? <strong>{s.title}</strong> : <a href={s.url} className="font-bold text-teal-700 underline" target="_blank" rel="noreferrer">{s.title}</a>}: {s.note}</li>)}</ul>
+      </div>;
+    }
+
+    function App() {
+      const [view, setView] = useState('theory');
+      const content = {
+        theory: <TheorySection />, gym: <GymSection />, research: <ResearchSection />, audio: <AudioVideoSection />, automation: <AutomationSection />, images: <ImagesSection />, sheets: <SheetsSection />, challenges: <ChallengesSection />, stories: <StoriesSection />, notebook: <NotebookSection />
+      }[view];
+      return <div>
+        <header className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b border-slate-200">
+          <div className="max-w-6xl mx-auto px-4 py-4">
+            <div className="mb-3"><h1 className="text-2xl font-extrabold text-slate-900">Laboratorio de IA para producción radial regional</h1><p className="text-slate-500">Noticias, audio, investigación, automatizaciones y piezas multimedia</p></div>
+            <nav className="flex gap-2 overflow-x-auto pb-1">{tabs.map(([id,label]) => <button key={id} onClick={() => setView(id)} className={`px-4 py-2 whitespace-nowrap text-sm font-bold ${view===id?'bg-teal-700 text-white shadow':'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}>{label}</button>)}</nav>
+          </div>
+        </header>
+        <main className="max-w-6xl mx-auto px-4 py-8">{content}<SourcesFooter /></main>
+        <footer className="border-t border-slate-200 bg-white mt-10"><div className="max-w-6xl mx-auto px-4 py-6 text-center text-slate-500 text-sm">Material formativo adaptado para producción radial regional. Usar IA como asistente, siempre con revisión editorial.</div></footer>
+      </div>;
+    }
+
+    createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
