@@ -405,21 +405,23 @@
     ];
 
     const audioTools = [
-      { title:'AI Studio / Gemini TTS', use:'Probar locuciones largas, estilos de lectura y voces múltiples desde prompts.', prompts:['Leé este boletín con tono informativo sobrio, ritmo medio y pausas claras después de cada dato.', 'Generá dos voces: conductor y columnista, con intercambio natural y sin exagerar emoción.', 'Antes de generar, marcá posibles problemas de pronunciación de nombres de lugares.'], cautions:['Dividir guiones extensos en bloques si la herramienta lo requiere.', 'Escuchar completo antes de usar.', 'No asumir que la prosodia salió bien en nombres locales.'] },
-      { title:'ElevenLabs', use:'Generar locuciones de alta calidad, separadores, narraciones y voces consistentes para series.', prompts:['Voz masculina adulta, tono periodístico cercano, velocidad moderada, pausas naturales y énfasis leve en datos clave.', 'Narración documental sobria para micro de 3 minutos, sin dramatizar.', 'Separador breve institucional, energía contenida, claridad alta.'], cautions:['No clonar voces sin permiso.', 'Revisar costos/licencias según uso.', 'Controlar respiraciones, velocidad y estabilidad de voz.'] }
+      { title:'AI Studio · Gemini TTS & Modelos', use:'Locución guiada por prompts, multi-locutor y análisis profundo.', prompts:['Leé este boletín con tono informativo sobrio, ritmo medio y pausas claras después de cada frase.', 'Usá Gemini 1.5 Flash para un resumen rápido de este audio de 2 horas.', 'System Instruction: Actuá como locutor de radio provincial, pausado y con tono sobrio.'], cautions:['El plan gratuito comparte datos para entrenamiento; usá la API paga para temas confidenciales.', 'La versión gratuita no incluye licencia comercial para salir al aire.', 'Ajustá la Temperatura baja (0.1-0.3) para evitar inventiva en resúmenes o lecturas.'] },
+      { title:'ElevenLabs', use:'Locuciones ultra-humanas, separadores, narraciones consistentes y doblaje.', prompts:['Voz masculina adulta, acento rioplatense neutro, estabilidad 75%, claridad 80%, tono sobrio de noticias.', 'Voz para micro documental: estabilidad 45%, claridad 85%, para permitir más rango actoral.', 'Diseño de voz: generá una voz masculina de 40 años sin clonar a personas reales.'], cautions:['El plan gratuito prohíbe el uso comercial en radio y exige atribución.', 'Clonar voces de terceros sin consentimiento es ilegal y un grave riesgo ético.', 'Sliders: baja estabilidad permite actuar pero puede distorsionar o balbucear.'] },
+      { title:'Whisper & Google Pinpoint', use:'Transcripción ultra-rápida y análisis masivo de documentos/audios.', prompts:['Transcribí este audio de entrevista de calle (Whisper local o web Riverside).', 'Subí este corpus de 100 documentos y audios a Pinpoint para buscar menciones de obras públicas.', 'IA: extraé las 3 mejores citas de esta transcripción de Whisper respetando el texto original.'], cautions:['Whisper puede cometer faltas de ortografía en nombres o lugares de Río Negro.', 'Google Pinpoint requiere aprobación manual (gratuito pero con solicitud de acceso).', 'Whisper no separa voces de forma automática en todas sus versiones libres.'] }
     ];
 
     const investigatorBlocks = [
-      { title:'Operadores útiles', items:['site:gob.ar tema localidad', 'filetype:pdf tema provincia', '"frase exacta" localidad', 'tema OR sinónimo región', 'tema -ruido -palabra', 'intitle:informe tema'] },
-      { title:'Ficha de fuente', items:['Quién publica', 'Fecha', 'Qué dato aporta', 'Qué interés puede tener', 'Qué falta verificar', 'Cómo citar o archivar'] },
-      { title:'Dossier mínimo', items:['Pregunta de investigación', 'Cronología', 'Actores', 'Documentos', 'Audios', 'Pendientes', 'Riesgos', 'Próxima llamada'] },
-      { title:'Prompts de búsqueda', items:['Dame sinónimos y nombres alternativos.', 'Listá organismos que podrían tener documentos.', 'Convertí este tema en 20 búsquedas Google.', 'Separá búsquedas por región y por tipo de fuente.'] }
+      { title:'Operadores de búsqueda', items:['site:gob.ar "decreto" Río Negro', 'filetype:pdf "obra pública" Bariloche', '"licitación" AND Viedma -noticias', 'inurl:contratos site:gov.ar', 'intitle:"declaración jurada"', 'site:youtube.com "conferencia de prensa" El Bolsón'] },
+      { title:'Filtros de tiempo y región', items:['Búsqueda por rango de fechas (Herramientas > Cualquier fecha).', 'Restringir dominios de la región (site:gov.ar o site:gob.ar).', 'Excluir términos irrelevantes con el guion (-) (ej. -deportes -futbol).', 'Buscar en repositorios académicos (site:edu.ar o site:conicet.gov.ar).'] },
+      { title:'Ficha técnica de la fuente', items:['Autoría: quién escribe y qué intereses representa.', 'Fecha y vigencia del documento analizado.', 'Dato central que aporta a la investigación.', 'Conflicto de interés o sesgo potencial.', 'Puntos que contradicen otras fuentes.', 'Método de custodia y archivo seguro.'] },
+      { title:'Dossier y verificación', items:['Pregunta clave que guía la hipótesis.', 'Línea de tiempo detallada de los hechos.', 'Listado de actores involucrados y sus nexos.', 'Audios, desgrabaciones y documentos enlazados.', 'Riesgo legal y ético de la publicación.', 'Lista de pendientes obligatorios a chequear.'] }
     ];
 
     const notebookExercises = [
-      { title:'Cuaderno por cobertura', steps:['Crear cuaderno con nombre de tema.', 'Cargar documentos, audios transcriptos y notas.', 'Pedir resumen con citas.', 'Verificar pasajes originales.', 'Generar preguntas para entrevista.'] },
-      { title:'Comparar documentos', steps:['Cargar versión A y B.', 'Pedir tabla de cambios.', 'Marcar implicancia editorial.', 'Separar datos verificables.', 'Guardar citas útiles.'] },
-      { title:'Audio Overview como repaso', steps:['Cargar fuentes largas.', 'Pedir enfoque de la explicación.', 'Generar audio para repasar.', 'Escuchar con libreta.', 'Corregir o ampliar fuentes.'] }
+      { title:'Cuaderno por cobertura', steps:['Crear cuaderno con nombre de tema o expediente.', 'Cargar comunicados, informes, planillas y desgrabaciones.', 'Pedir resumen periodístico con citas explícitas.', 'Verificar pasajes haciendo clic en los números de cita.', 'Generar el primer borrador del cuestionario de la entrevista.'] },
+      { title:'Comparar documentos', steps:['Cargar versión A y B (ej. proyectos de ley o presupuestos).', 'Pedir tabla de cambios entre ambas versiones.', 'Marcar diferencias sustanciales e implicancia editorial.', 'Separar datos que requieren confirmación telefónica o medición.', 'Guardar citas textuales más comprometidas.'] },
+      { title:'Audio Overview personalizado', steps:['Cargar fuentes complejas y abrir "Studio".', 'Elegir "Audio Overview" y personalizar el foco con prompts.', 'Instrucción: "Conversen en español sobre el impacto vecinal sin tecnicismos".', 'Generar el audio de repaso para escuchar camino a la cobertura.', 'Escuchar de forma crítica; nunca usar el audio sintético al aire sin licencia comercial.'] },
+      { title:'Audio como fuente directa', steps:['Subir grabaciones MP3/WAV de entrevistas o ruedas de prensa.', 'Esperar la generación de la transcripción automática indexada.', 'Preguntar por contradicciones entre la grabación y los textos oficiales.', 'Pedir resúmenes del audio indicando marcas de tiempo.', 'Hacer clic en las citas para verificar que lo desgrabado coincide con el audio.'] }
     ];
 
     const tabs = [
@@ -507,7 +509,7 @@
     function AudioVideoSection() {
       return <div>
         <SectionTitle title="Audio y video con IA" subtitle="Guion, voz sintética, edición, storyboard y producción multiformato con revisión humana." />
-        <div className="grid md:grid-cols-2 gap-4 mb-6">{audioTools.map(tool => <div key={tool.title} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4 mb-6">{audioTools.map(tool => <div key={tool.title} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
           <h3 className="text-xl font-bold text-slate-900">{tool.title}</h3>
           <p className="text-slate-600 mb-3">{tool.use}</p>
           <h4 className="font-bold text-teal-800">Prompts útiles</h4>
@@ -610,7 +612,7 @@
     function NotebookSection() {
       return <div>
         <SectionTitle title="NotebookLM" subtitle="Una base documental para coberturas, entrevistas, documentos, audios transcriptos y archivo propio." />
-        <div className="grid md:grid-cols-3 gap-4">{notebookExercises.map(ex => <article key={ex.title} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm"><h3 className="font-bold text-slate-900">{ex.title}</h3><ol className="list-decimal ml-5 mt-3 text-sm space-y-1">{ex.steps.map(s => <li key={s}>{s}</li>)}</ol></article>)}</div>
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-4">{notebookExercises.map(ex => <article key={ex.title} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm"><h3 className="font-bold text-slate-900">{ex.title}</h3><ol className="list-decimal ml-5 mt-3 text-sm space-y-1">{ex.steps.map(s => <li key={s}>{s}</li>)}</ol></article>)}</div>
         <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 mt-6"><h3 className="font-bold text-amber-900">Regla de uso</h3><p>Si un dato va al aire, abrí la cita o el documento original. NotebookLM ayuda a encontrar y resumir, pero la verificación final sigue siendo editorial.</p></div>
       </div>;
     }
