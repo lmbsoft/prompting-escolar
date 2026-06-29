@@ -358,30 +358,32 @@
     ];
 
     const imageConcepts = [
-      { title:'Imágenes para medios regionales', body:['Placas ilustrativas para noticias sin fingir documentación.', 'Mapas y fondos visuales con espacios para datos verificados.', 'Thumbnails de entrevistas y podcasts.', 'Fondos para reels y separadores audiovisuales.'] },
-      { title:'Regla central', body:['La IA genera escena y estilo; los textos exactos se agregan después.', 'No usar imagen generada como prueba documental.', 'Aclarar cuando una pieza sea ilustrativa.', 'Mantener identidad sobria y reconocible.'] },
-      { title:'Video primero en storyboard', body:['Definir objetivo, público y duración.', 'Pedir 4 a 6 planos antes de generar.', 'Separar voz, imagen y texto en pantalla.', 'Revisar fuentes y créditos al final.'] },
-      { title:'Edición fina', body:['Cambiar de a una cosa por vez.', 'Anclar lo que no debe modificarse.', 'Pedir fondos sin texto ni logos inventados.', 'Guardar el brief visual que funcionó.'] }
+      { title:'Para qué usar imágenes en un medio regional', body:['Crear placas ilustrativas para acompañar noticias sin fingir documentación.', 'Diseñar miniaturas para entrevistas, columnas o especiales.', 'Armar mapas y tarjetas territoriales para ubicar una cobertura.', 'Crear fondos limpios y plantillas reutilizables para redes y web.'] },
+      { title:'Qué NO debe hacer la IA de imagen', body:['No escribir títulos, fechas, cargos, fuentes ni datos exactos dentro de la imagen.', 'No presentar una imagen generada como si fuera foto real del hecho.', 'No inventar logos, escudos, documentos, capturas ni personas involucradas.', 'No dramatizar una cobertura con símbolos que acusen o exageren.'] },
+      { title:'Método de trabajo gráfico', body:['Primero definir formato: cuadrado, vertical, horizontal, portada o mapa.', 'Después generar fondo, composición o ilustración sin texto.', 'Luego agregar título, fuente, fecha, crédito y aclaraciones en editor.', 'Finalmente revisar si la imagen puede confundir al público.'] },
+      { title:'Edición fina y controlada', body:['Trabajar con cambios de a uno: fondo, color, encuadre, espacio para texto.', 'Anclar lo que no debe cambiar: perspectiva, mapa, paleta, zona vacía.', 'Pedir variantes comparables del mismo diseño, no piezas totalmente distintas.', 'Guardar el brief visual que funcionó para repetir identidad.'] }
     ];
 
     const imageGlossary = [
       ['Placa','Pieza visual fija para redes o web.'],
       ['Imagen ilustrativa','Imagen generada que acompaña una noticia sin presentarse como documento real.'],
-      ['Storyboard','Secuencia de planos antes de producir video.'],
-      ['B-roll','Material visual de apoyo para cubrir una narración.'],
-      ['Lower third','Banda inferior con nombre, cargo o dato en video.'],
+      ['Miniatura','Imagen de portada para una entrevista, columna o especial.'],
+      ['Plantilla','Diseño base con espacios vacíos para completar datos reales después.'],
+      ['Mapa editorial','Representación visual de territorio, región o cobertura sin convertirlo en prueba documental.'],
       ['Prompt negativo','Lista de cosas que no deben aparecer.'],
       ['Relación de aspecto','Formato: cuadrado, vertical, horizontal.'],
       ['Brief visual','Reglas de estilo que se repiten en varias piezas.'],
-      ['Texto quemado','Texto integrado al video o imagen; conviene controlarlo en edición.'],
-      ['Thumbnail','Miniatura que invita a abrir un video o entrevista.']
+      ['Texto dentro de imagen','Texto generado como parte de la imagen; conviene evitarlo para datos verificables.'],
+      ['Zona segura','Espacio limpio reservado para agregar título, fuente o fecha en un editor.'],
+      ['Variación controlada','Cambiar solo un elemento para comparar opciones sin perder coherencia.']
     ];
 
     const imageRecipes = [
-      { title:'Placa ilustrativa de noticia', steps:['Definir tema, región y tono.', 'Pedir imagen sin texto interno.', 'Reservar zonas para título, fuente y fecha.', 'Agregar textos en editor.', 'Revisar que no parezca prueba documental.'] },
-      { title:'Reel de 30 segundos', steps:['Objetivo y público.', 'Storyboard de 6 planos.', 'Prompts visuales por plano.', 'Voz o TTS con guion revisado.', 'Subtítulos y datos finales en editor.'] },
-      { title:'Portada de podcast o entrevista', steps:['Definir invitado/tema sin usar datos privados.', 'Pedir fondo sobrio con micrófono o mapa.', 'Dejar espacio para nombre y título.', 'Agregar datos reales después.', 'Exportar cuadrado y horizontal.'] },
-      { title:'Kit de cobertura regional', steps:['Imagen base del tema.', 'Mapa o tarjeta territorial.', 'Placa de redes.', 'Storyboard vertical.', 'Miniatura de audio/podcast.', 'Archivo con fuentes y créditos.'] }
+      { title:'Placa ilustrativa de noticia', steps:['Definir tema, región, tono y si la imagen será ilustrativa.', 'Pedir una escena o fondo sin texto interno ni logos inventados.', 'Reservar zonas limpias para título, fuente, fecha y crédito.', 'Agregar textos exactos en editor.', 'Revisar que no parezca foto documental del hecho.'] },
+      { title:'Miniatura para entrevista o columna', steps:['Definir tema y clima visual sin usar datos personales innecesarios.', 'Pedir composición con micrófono, mapa o ambiente editorial sobrio.', 'Dejar espacio para nombre, cargo o título que se agregará después.', 'Generar 3 variantes de fondo o encuadre.', 'Elegir una y completar con datos reales.'] },
+      { title:'Mapa o tarjeta territorial', steps:['Definir qué región se quiere ubicar y qué nivel de detalle hace falta.', 'Pedir mapa abstracto o estilizado, sin nombres ni límites sensibles inventados.', 'Reservar espacio para rótulos agregados manualmente.', 'Revisar que no sugiera datos geográficos falsos.', 'Exportar una versión limpia reutilizable.'] },
+      { title:'Plantilla para cobertura recurrente', steps:['Elegir una cobertura que se repite: clima, rutas, deportes, municipios, turismo.', 'Definir paleta y jerarquía visual.', 'Crear plantilla con zonas fijas para foto, título, fuente y fecha.', 'Probarla con dos temas distintos.', 'Guardar prompt y versión editable para futuras publicaciones.'] },
+      { title:'Edición sobre una imagen propia', steps:['Subir o describir la imagen base y pedir primero una descripción sin modificar.', 'Indicar qué debe conservarse exactamente.', 'Pedir un solo cambio: limpiar fondo, mejorar luz, ampliar zona vacía o ajustar color.', 'Comparar antes/después.', 'Repetir con otro cambio puntual solo si el anterior quedó bien.'] }
     ];
 
     const spreadsheetTemplates = [
@@ -543,16 +545,16 @@
 
     function ImagesSection() {
       return <div>
-        <SectionTitle title="Imágenes para producción radial" subtitle="Ejemplos y genealogías visuales para crear placas, fondos, storyboards y paquetes multimedia sin confundir imagen generada con documentación real." />
+        <SectionTitle title="Laboratorio gráfico para medios regionales" subtitle="Ejercicios de imagen para crear placas, miniaturas, mapas, fondos y plantillas útiles, cuidando que la imagen no invente datos ni se confunda con documentación real." />
         <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">{visualExamples.map(img => <figure key={img.id} className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
-          <img src={hpVisuals.imageAssets[img.id]?.src} alt={img.title} className="w-full aspect-square object-cover bg-slate-100" loading="lazy" />
+          <img src={hpVisuals.imageAssets[img.id]?.src} alt={img.title} className="w-full aspect-square object-cover bg-slate-100" loading="eager" />
           <figcaption className="p-4"><h3 className="font-bold text-slate-900">{img.title}</h3><p className="text-sm text-slate-600">{img.caption}</p><details className="mt-3 bg-slate-50 p-3 rounded-xl"><summary className="font-bold text-sm cursor-pointer">Ver prompt</summary><p className="text-xs mt-2">{img.prompt}</p></details></figcaption>
         </figure>)}</div>
         <div className="grid md:grid-cols-2 gap-4 mb-6">{imageConcepts.map(c => <div key={c.title} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm"><h3 className="font-bold text-slate-900 mb-2">{c.title}</h3><ul>{c.body.map((b, i) => <li key={i}>• {b}</li>)}</ul></div>)}</div>
         <div className="space-y-6">{visualSequences.map(seq => <section key={seq.id} className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
           <div className="p-5 bg-gradient-to-r from-teal-50 to-sky-50 border-b border-slate-200"><h3 className="text-xl font-bold text-slate-900">{seq.title}</h3><p className="text-slate-700">{seq.intro}</p></div>
           <div className="grid md:grid-cols-2 xl:grid-cols-3">{seq.steps.map(step => <article key={step.asset} className="border-b border-slate-200 xl:border-r">
-            <img src={hpVisuals.imageAssets[step.asset]?.src} alt={step.title} className="w-full aspect-video object-cover bg-slate-100" loading="lazy" />
+            <img src={hpVisuals.imageAssets[step.asset]?.src} alt={step.title} className="w-full aspect-video object-cover bg-slate-100" loading="eager" />
             <div className="p-4 space-y-3"><div className="flex gap-3 items-center"><span className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold">{step.step}</span><h4 className="font-bold text-slate-900">{step.title}</h4></div>
             <details className="bg-slate-50 border border-slate-200 p-3 rounded-xl"><summary className="font-bold text-sm cursor-pointer">Prompt aplicado</summary><p className="text-xs mt-2">{step.prompt}</p></details>
             <p className="text-sm bg-sky-50 border border-sky-200 rounded-xl p-3"><strong>Impacto visible:</strong> {step.change}</p>
