@@ -1685,6 +1685,41 @@ purpose: `Comparar productoras y proveedores con criterios claros y tener a mano
 columns: [`Proveedor`, `Tipo de contenido`, `Contacto`, `Costo ref.`, `Frecuencia de entrega`, `Calidad (1-5)`, `Cumplimiento (1-5)`, `Condición de pago`, `Notas`],
 formula: `Comparar por tipo: ordenar/filtrar por Tipo de contenido y mirar Calidad, Frecuencia y Costo juntos.`,
 prompt: `Ayudame a armar en Google Sheets una planilla de productoras y proveedores de contenido para un medio (enlatados, columnas, cables de noticias), con columnas para Proveedor, Tipo de contenido, Contacto, Costo de referencia, Frecuencia de entrega, Calidad, Cumplimiento, Condición de pago y Notas. Explicame cómo filtrar por tipo para comparar y cómo evitar guardar datos sensibles de más.`
+},
+{
+title: `Calendario editorial (agenda de temas)`,
+purpose: `Planificar qué temas se trabajan cada semana, quién los cubre y cuándo salen, para no improvisar la agenda.`,
+columns: [`Semana`, `Tema`, `Tipo (nota/informe/columna)`, `Responsable`, `Estado`, `Fecha de salida`, `Programa/Canal`, `Fuentes a contactar`, `Prioridad`],
+formula: `Temas de la semana = CONTAR.SI(Semana;"[semana actual]")`,
+prompt: `Diseñá en Google Sheets un calendario editorial para una cadena de medios, con columnas: Semana, Tema, Tipo, Responsable, Estado, Fecha de salida, Programa/Canal, Fuentes a contactar y Prioridad. Explicame cómo usar listas desplegables para Estado y Prioridad y cómo filtrar la agenda de la semana.`
+},
+{
+title: `Seguimiento de una investigación`,
+purpose: `Llevar el avance de una nota de investigación: cada dato, su fuente, su respaldo y su estado de verificación.`,
+columns: [`Dato/Afirmación`, `Fuente`, `Tipo de fuente`, `Documento de respaldo`, `Estado (verificado/pendiente/descartado)`, `Riesgo legal`, `Próximo paso`, `Fecha`],
+formula: `Datos sin verificar = CONTAR.SI(Estado;"pendiente")`,
+prompt: `Ayudame a armar en Google Sheets una planilla para seguir una investigación periodística, con columnas: Dato/Afirmación, Fuente, Tipo de fuente, Documento de respaldo, Estado de verificación, Riesgo legal, Próximo paso y Fecha. Explicame cómo marcar con formato condicional los datos aún sin verificar y cómo no exponer fuentes reservadas.`
+},
+{
+title: `Banco de fuentes por especialidad`,
+purpose: `Tener a mano a quién llamar según el tema, cuidando los datos sensibles y a las fuentes reservadas.`,
+columns: [`Fuente (cód.)`, `Especialidad/Área`, `Cargo o rol`, `Confiabilidad (1-5)`, `Última vez consultada`, `Reservada (S/N)`, `Canal`, `Notas no sensibles`],
+formula: `Filtrar por Especialidad para encontrar rápido a quién consultar.`,
+prompt: `Diseñá una planilla de banco de fuentes por especialidad para un medio, con columnas: Fuente (codificada), Especialidad/Área, Cargo, Confiabilidad, Última consulta, si es reservada, Canal y Notas no sensibles. Debe servir para encontrar rápido a quién llamar sin exponer datos personales ni a fuentes reservadas.`
+},
+{
+title: `Monitoreo de temas y competencia`,
+purpose: `Ver qué temas están sonando y qué publican otros medios, para no quedarte atrás ni repetir.`,
+columns: [`Fecha`, `Tema`, `Medio/Fuente`, `Enfoque`, `¿Lo cubrimos?`, `Ángulo propio posible`, `Estado`],
+formula: `Temas sin cubrir = CONTAR.SI(Cubrimos;"No")`,
+prompt: `Armá en Google Sheets una planilla de monitoreo de temas y competencia para un medio, con columnas: Fecha, Tema, Medio/Fuente, Enfoque, si lo cubrimos, Ángulo propio posible y Estado. Explicame cómo resaltar los temas que están sonando y que todavía no cubrimos.`
+},
+{
+title: `Caja y flujo mensual`,
+purpose: `Ver el ingreso por pauta y los gastos del mes en un solo lugar, para anticipar los meses flojos.`,
+columns: [`Mes`, `Pauta privada`, `Pauta oficial`, `Otros ingresos`, `Sueldos`, `Enlatados/Derechos`, `Conectividad`, `Otros gastos`, `Resultado`],
+formula: `Resultado = (Pauta privada + Pauta oficial + Otros ingresos) - (Sueldos + Enlatados/Derechos + Conectividad + Otros gastos)`,
+prompt: `Ayudame a modelar en Google Sheets una planilla de caja y flujo mensual para una cadena de medios, con ingresos (pauta privada, pauta oficial, otros) y gastos (sueldos, enlatados/derechos, conectividad, otros) y una columna de Resultado por mes. Explicame cómo armar un gráfico de evolución y cómo anticipar un mes flojo.`
 }
 ];
 
@@ -1773,6 +1808,62 @@ steps: [
 'Mantené las fuentes actualizadas: una fuente vieja da respuestas viejas.'
 ],
 tip: 'Un archivo bien armado te devuelve horas: la consulta reemplaza muchas idas al expediente.'
+},
+{
+id: 'nb7',
+level: 'Investigación',
+title: 'Cruzar varias fuentes y encontrar contradicciones',
+goal: 'Subir muchos documentos de un mismo tema y dejar que la IA marque coincidencias, diferencias y huecos.',
+steps: [
+'Creá un cuaderno del tema y cargá 5 o 6 fuentes distintas (comunicados, informes, notas, una desgrabación).',
+'Preguntá: "¿En qué coinciden todas estas fuentes y en qué se contradicen?".',
+'Pedí una tabla: Afirmación, Fuentes que la sostienen, Fuentes que la contradicen, Qué falta verificar.',
+'Pedí una línea de tiempo de los hechos, citando la fuente de cada fecha.',
+'Verificá las contradicciones más importantes en los documentos originales antes de escribir.'
+],
+tip: 'Acá la cita es tu mejor aliada: cada contradicción que detecte tiene que poder rastrearse hasta la fuente exacta.'
+},
+{
+id: 'nb8',
+level: 'Investigación',
+title: 'Preparar el cuestionario de una entrevista desde el expediente',
+goal: 'Llegar a una entrevista con preguntas afiladas, basadas en lo que dicen los documentos.',
+steps: [
+'Cargá como fuentes el expediente, el informe o los antecedentes del entrevistado o del tema.',
+'Pedí: "Resumime los 5 puntos más sensibles o contradictorios de este material".',
+'Pedí: "Armame 10 preguntas, de la más general a la más incómoda, cada una anclada en un dato del documento".',
+'Pedí posibles repreguntas para las respuestas evasivas más probables.',
+'Revisá y quedate solo con las preguntas que podés respaldar con la fuente.'
+],
+tip: 'La IA prepara el terreno; la entrevista la conducís vos. Llevá siempre a mano el dato que respalda cada pregunta.'
+},
+{
+id: 'nb9',
+level: 'Studio',
+title: 'Un repaso a dos voces de un tema complejo',
+goal: 'Convertir un tema difícil en una conversación en audio para entenderlo (o para una pieza de divulgación).',
+steps: [
+'Con tus fuentes cargadas, abrí "Studio" y elegí "Audio Overview" (resumen en audio a dos voces).',
+'Personalizá el foco: "Conversen sobre las implicancias para los vecinos, en lenguaje claro y sin tecnicismos".',
+'Generá el audio y escuchalo: sirve para fijar el tema o para inspirar el enfoque de una nota.',
+'Si lo usás como contenido propio, reescribí el guion con tu criterio y verificá cada dato antes de difundir.',
+'Recordá: para sacarlo al aire necesitás una herramienta con licencia comercial.'
+],
+tip: 'Genial para estudiar un expediente árido; pero un audio generado no reemplaza tu verificación ni tu firma editorial.'
+},
+{
+id: 'nb10',
+level: 'Consulta',
+title: 'Detectar lo que falta: preguntas abiertas y datos sin confirmar',
+goal: 'Usar la IA para que te diga qué NO está respondido en tus fuentes, antes de dar un tema por cerrado.',
+steps: [
+'Con todas tus fuentes del tema cargadas, preguntá: "¿Qué preguntas importantes quedan sin responder en este material?".',
+'Pedí: "Listá los datos que se afirman pero no están respaldados por ninguna fuente".',
+'Pedí: "¿Qué fuente o documento debería conseguir para cerrar cada hueco?".',
+'Armá con eso tu lista de pendientes de verificación antes de publicar.',
+'Volvé a preguntar cuando sumes fuentes nuevas: el mapa de huecos se actualiza.'
+],
+tip: 'Lo más valioso que hace acá la IA no es lo que sabe, sino marcarte con honestidad lo que todavía no sabés.'
 }
 ];
 
@@ -2817,7 +2908,15 @@ const audioVocab = [
 { term: 'Emoción', use: 'La intención de la lectura', example: 'urgencia controlada para un alerta meteorológica' },
 { term: 'Voz y acento', use: 'Quién habla', example: 'voz masculina adulta, acento rioplatense neutro' },
 { term: 'Pronunciación', use: 'Evitar lecturas raras', example: 'deletreá las siglas la primera vez; decí los números en palabras' },
-{ term: 'Audio tags', use: 'Marcas entre corchetes (según la herramienta)', example: '[tono solemne], [susurro], [pausa]' }
+{ term: 'Audio tags', use: 'Marcas entre corchetes (según la herramienta)', example: '[tono solemne], [susurro], [pausa]' },
+{ term: 'Dicción / articulación', use: 'Que se entienda cada palabra', example: 'dicción clara y bien articulada, sin comerse las sílabas' },
+{ term: 'Respiración', use: 'Naturalidad de la lectura', example: 'respiración natural entre frases, sin sonar de corrido' },
+{ term: 'Entonación', use: 'La melodía de la voz', example: 'entonación de noticiero al abrir; más coloquial en la columna' },
+{ term: 'Números y porcentajes', use: 'Que no los lea mal', example: 'escribilos en palabras: "el veinte por ciento", "mil doscientos pesos"' },
+{ term: 'Fechas y horarios', use: 'Lectura correcta', example: '"el 9 de julio" mejor como "el nueve de julio"; "las 8" como "las ocho"' },
+{ term: 'Nombres y topónimos', use: 'Pronunciar lugares y apellidos', example: 'guía fonética la primera vez: "Choele Choel (cho-ele cho-él)"' },
+{ term: 'Siglas', use: 'Deletreo o lectura', example: 'aclarar si va deletreada o leída de corrido' },
+{ term: 'Registro según formato', use: 'Adaptar el tono al programa', example: 'sobrio para el informativo, cálido para el magazine, ágil para deportes' }
 ];
 const videoVocab = [
 { term: 'Tipo de plano', use: 'Qué tan cerca se ve', example: 'plano general de la costa; primer plano de un detalle' },
@@ -2827,7 +2926,14 @@ const videoVocab = [
 { term: 'Transición', use: 'Cómo se une un plano con otro', example: 'corte directo; fundido suave' },
 { term: 'Estilo', use: 'La estética general', example: 'documental sobrio, paleta seria, sin estridencias' },
 { term: 'Texto en pantalla', use: 'Dónde van los datos exactos', example: 'sin texto dentro del video; lo agrego en el editor' },
-{ term: 'Coherencia', use: 'Que se vea de la misma familia', example: 'mismo estilo y paleta en todos los planos' }
+{ term: 'Coherencia', use: 'Que se vea de la misma familia', example: 'mismo estilo y paleta en todos los planos' },
+{ term: 'Relación de aspecto', use: 'La forma del cuadro', example: 'vertical 9:16 para reel; horizontal 16:9 para YouTube' },
+{ term: 'Profundidad de campo', use: 'Qué está enfocado', example: 'fondo desenfocado para destacar el primer plano' },
+{ term: 'Rótulos / zócalos', use: 'Identificar a quien habla', example: 'dejá lugar abajo para un zócalo con nombre y cargo (lo cargo yo)' },
+{ term: 'B-roll', use: 'Imágenes de apoyo', example: 'planos de recurso de la zona mientras va la voz en off' },
+{ term: 'Ritmo de montaje', use: 'Velocidad de los cortes', example: 'cortes ágiles para un resumen; más calmos para un informe' },
+{ term: 'Música y clima', use: 'El fondo sonoro', example: 'música sobria de fondo; bajá el volumen debajo de la voz' },
+{ term: 'Duración total', use: 'Cuánto dura la pieza', example: 'reel de 20 a 30 segundos; informe de hasta 90' }
 ];
 const ttsSteps = [
 'Escribí el guion como lo dirías al aire: frases cortas, una idea por oración.',
@@ -2837,6 +2943,80 @@ const ttsSteps = [
 'Escuchá y editá: si una palabra quedó mal, reformulá esa frase o cambiá la marca, no todo el guion.',
 'Exportá en buena calidad y, si va al aire, usá una herramienta con licencia comercial.'
 ];
+const avRecipes = [
+{
+title: 'De un informe a un microprograma locutado',
+intro: 'Convertí un texto o un informe en una cápsula de audio de 60-90 segundos, lista para intercalar en la programación.',
+steps: [
+'Pedile a la IA que reescriba el texto en formato locución: frases cortas, una idea por oración, lenguaje hablado.',
+'Marcá la pronunciación dudosa (siglas, números en palabras, topónimos con guía fonética).',
+'Elegí voz, acento y tono ("voz adulta, acento rioplatense neutro, tono informativo sobrio").',
+'Generá por bloques (apertura, cuerpo, cierre) y escuchá cada uno antes de seguir.',
+'Pegá los bloques, sumá una cortina musical suave por debajo y exportá. Si va al aire, con licencia comercial.'
+]
+},
+{
+title: 'Doblar o traducir un testimonio a otro idioma',
+intro: 'Tenés un testimonio o una nota en otro idioma (o querés versionarla) y necesitás una voz clara y fiel.',
+steps: [
+'Subí el audio original a una herramienta de doblaje (ElevenLabs Dubbing u otra).',
+'Elegí el idioma de destino y revisá la transcripción automática antes de generar: ahí se cuelan los errores.',
+'Generá el doblaje y compará contra el original frase por frase: que no cambie el sentido.',
+'Si clonás la voz de la persona, asegurate de tener su permiso explícito.',
+'Al publicar, aclará que es una traducción/doblaje y conservá el audio original como respaldo.'
+]
+},
+{
+title: 'Separadores, cortinas y placas de audio',
+intro: 'Una identidad sonora coherente (separadores, "ya volvemos", placas de sección) ordena la programación.',
+steps: [
+'Definí la identidad: tipo de voz, ritmo, y una frase corta de estilo para repetir en cada pieza.',
+'Pedí 3 variantes de cada separador con esa misma identidad para elegir.',
+'Generá una tanda corta (apertura de noticiero, separador de sección, cierre) manteniendo la voz y el tono.',
+'Sumá una cortina musical sin derechos o licenciada, pareja en volumen entre piezas.',
+'Guardá los archivos nombrados por uso: así los reutilizás sin rehacerlos cada vez.'
+]
+},
+{
+title: 'Video corto desde imágenes con movimiento',
+intro: 'Armá un video para redes a partir de imágenes (propias o ilustrativas) con un suave movimiento de cámara.',
+steps: [
+'Diseñá primero un storyboard de 5-6 planos (apertura, dato, contexto, cita, cierre).',
+'Reuní o generá las imágenes de cada plano, sin texto y aclarando cuáles son ilustrativas.',
+'Aplicá un movimiento suave a cada imagen (zoom lento o paneo, efecto Ken Burns) para que no sea estático.',
+'Agregá los textos exactos (cifras, fuente, fecha) en el editor, no dentro de la generación.',
+'Sumá voz en off o música sobria, revisá la coherencia visual y publicá con la aclaración correspondiente.'
+]
+}
+];
+const ttsTemplate = `[VOZ] Voz adulta, acento rioplatense neutro.
+[TONO] Informativo y sobrio; un poco más cálido en el cierre.
+[RITMO] Pausado, con respiración natural entre frases.
+
+[GUION]
+Buenos días. (pausa breve)
+El intendente confirmó una inversión de mil doscientos millones de pesos
+para la obra de la ruta provincial. (pausa)
+La cifra —según el municipio— se ejecutará en tres etapas durante el año.
+(pausa breve) Seguiremos informando.
+
+[NOTAS DE PRONUNCIACIÓN]
+- "mil doscientos millones", no "1.200.000.000".
+- Topónimo: leer "Viedma" como ve-i-dma.`;
+const avTroubleshoot = [
+{ problem: 'La voz suena robótica o monótona', cause: 'No le diste tono ni variación.', fix: 'Indicá tono, entonación y dónde enfatizar; sumá pausas con marcas o puntuación.' },
+{ problem: 'Lee mal un número o un porcentaje', cause: 'Los TTS interpretan los dígitos a su manera.', fix: 'Escribilos en palabras: "el veinte por ciento", "mil doscientos".' },
+{ problem: 'Pronuncia mal una sigla o un nombre', cause: 'No sabe si deletrear o leer de corrido.', fix: 'Aclará la pronunciación o escribila fonética la primera vez.' },
+{ problem: 'El audio largo se corta o pierde calidad', cause: 'Pediste todo de una sola vez.', fix: 'Generá por bloques (apertura, cuerpo, cierre) y unilos en el editor.' },
+{ problem: 'Quiero sacarlo al aire pero es la versión gratuita', cause: 'El tier gratuito no tiene licencia comercial.', fix: 'Pasá a un plan pago con licencia comercial antes de emitir o monetizar.' },
+{ problem: 'Cloné una voz y suena rara', cause: 'Muestra de audio corta o con ruido.', fix: 'Usá una muestra limpia y más larga; y cloná solo con permiso de la persona.' },
+{ problem: 'El video quedó lindo pero con datos mal escritos', cause: 'Dejaste cifras o nombres dentro de la generación.', fix: 'Generá sin texto y cargá los datos exactos en el editor.' },
+{ problem: 'Los planos del video no combinan entre sí', cause: 'Cada imagen salió con un estilo distinto.', fix: 'Repetí el mismo brief de estilo en cada plano; descartá los que se desvíen.' },
+{ problem: 'La música puede tener derechos', cause: 'Usaste un tema conocido.', fix: 'Usá librerías de música sin derechos o licenciada, y guardá el comprobante.' },
+{ problem: 'Me llegó un audio/video como "primicia"', cause: 'Hoy se fabrican deepfakes muy creíbles.', fix: 'No lo difundas sin verificar por otro canal y confirmar el origen.' }
+];
+const [copiedTpl, setCopiedTpl] = useState(false);
+const copyTpl = () => { navigator.clipboard?.writeText(ttsTemplate); setCopiedTpl(true); setTimeout(() => setCopiedTpl(false), 1500); };
 return (
 <div className="max-w-4xl mx-auto space-y-6">
     <section className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-6 border border-indigo-200">
@@ -2920,6 +3100,52 @@ return (
         </div>
     </section>
 
+    <section>
+        <h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2"><Wand2 className="w-4 h-4 text-indigo-500" /> Recetas paso a paso</h4>
+        <div className="grid gap-4">
+            {avRecipes.map((r) => (
+            <article key={r.title} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+                <h5 className="text-base font-bold text-slate-800">{r.title}</h5>
+                <p className="text-sm text-slate-600 mb-3">{r.intro}</p>
+                <ol className="list-decimal pl-5 space-y-1.5 text-slate-700 text-sm">
+                    {r.steps.map((s, i) => <li key={i}>{s}</li>)}
+                </ol>
+            </article>
+            ))}
+        </div>
+    </section>
+
+    <section className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+        <div className="flex items-center justify-between mb-2">
+            <h4 className="font-bold text-slate-800 flex items-center gap-2"><PenSquare className="w-4 h-4 text-indigo-500" /> Plantilla de guion para TTS</h4>
+            <button onClick={copyTpl} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-medium hover:bg-indigo-700">
+                {copiedTpl ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />} {copiedTpl ? 'Copiada' : 'Copiar'}
+            </button>
+        </div>
+        <p className="text-sm text-slate-600 mb-3">Copiala, reemplazá el contenido y pegásela a la herramienta de voz. La estructura le da a la IA todo lo que necesita para leer bien.</p>
+        <pre className="bg-slate-900 text-slate-100 rounded-xl p-4 text-xs overflow-x-auto whitespace-pre-wrap">{ttsTemplate}</pre>
+    </section>
+
+    <section className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+        <h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2"><AlertTriangle className="w-4 h-4 text-amber-500" /> Si algo no sale: problemas comunes</h4>
+        <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+                <thead><tr className="text-left text-slate-500 border-b border-slate-200">
+                    <th className="py-2 pr-3 font-semibold">Problema</th><th className="py-2 pr-3 font-semibold">Por qué pasa</th><th className="py-2 font-semibold">Cómo resolverlo</th>
+                </tr></thead>
+                <tbody>
+                    {avTroubleshoot.map((t) => (
+                    <tr key={t.problem} className="border-b border-slate-100 align-top">
+                        <td className="py-2 pr-3 font-medium text-slate-800">{t.problem}</td>
+                        <td className="py-2 pr-3 text-slate-600">{t.cause}</td>
+                        <td className="py-2 text-slate-700">{t.fix}</td>
+                    </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
     <div className="bg-rose-50 border border-rose-200 rounded-xl p-4 flex items-start gap-2">
         <ShieldAlert className="w-5 h-5 text-rose-600 flex-shrink-0 mt-0.5" />
         <div className="text-sm text-rose-900 space-y-1">
@@ -2935,11 +3161,15 @@ const InvestigadorSection = () => {
 const [frase, setFrase] = useState('');
 const [sitio, setSitio] = useState('');
 const [tipo, setTipo] = useState('');
+const [titulo, setTitulo] = useState('');
+const [excluir, setExcluir] = useState('');
 const [copiado, setCopiado] = useState(false);
 const partes = [];
 if (frase.trim()) partes.push('"' + frase.trim() + '"');
+if (titulo.trim()) partes.push('intitle:' + titulo.trim());
 if (sitio.trim()) partes.push('site:' + sitio.trim());
 if (tipo.trim()) partes.push('filetype:' + tipo.trim());
+if (excluir.trim()) partes.push('-' + excluir.trim());
 const consulta = partes.join(' ');
 const url = 'https://www.google.com/search?q=' + encodeURIComponent(consulta);
 const copiar = () => {
@@ -2957,14 +3187,43 @@ const operadores = [
 { op: '- (menos)', what: 'Excluir un término', ex: 'subsidio -deportivo' },
 { op: 'OR', what: 'Una u otra palabra', ex: '(municipio OR comuna) audiencia' },
 { op: 'before: / after:', what: 'Acotar por fecha', ex: 'inundación after:2024-01-01 before:2024-04-01' },
-{ op: '*', what: 'Comodín: una palabra cualquiera', ex: '"plan * vivienda" Viedma' }
+{ op: '*', what: 'Comodín: una palabra cualquiera', ex: '"plan * vivienda" Viedma' },
+{ op: 'OR  |', what: 'Una u otra (también con la barra)', ex: 'intendente | concejal sueldo' },
+{ op: '( )', what: 'Agrupar términos', ex: '(licitación OR adjudicación) ruta' },
+{ op: 'AROUND(n)', what: 'Dos palabras a menos de n palabras de distancia', ex: 'presupuesto AROUND(4) educación' },
+{ op: '..  (rango)', what: 'Rango de números o años', ex: 'presupuesto 2023..2025' },
+{ op: 'allintitle:', what: 'Todas las palabras en el título', ex: 'allintitle: resolución designación' },
+{ op: 'allinurl:', what: 'Todas las palabras en la dirección', ex: 'allinurl: boletin oficial rio negro' },
+{ op: 'related:', what: 'Sitios parecidos a uno dado', ex: 'related:rionegro.gov.ar' }
 ];
 const dorks = [
 { goal: 'Documentos oficiales en PDF de la provincia', q: 'site:.gob.ar filetype:pdf "Río Negro" [tema]' },
 { goal: 'Licitaciones y contrataciones', q: 'filetype:pdf (licitación OR contratación) [organismo]' },
 { goal: 'Designaciones o decretos en el boletín', q: 'inurl:boletinoficial intitle:decreto "[nombre]"' },
 { goal: 'Encontrar un informe que citaron', q: '"título exacto del documento" filetype:pdf' },
-{ goal: 'Planillas con datos abiertos', q: 'filetype:xlsx (presupuesto OR ejecución) [organismo]' }
+{ goal: 'Planillas con datos abiertos', q: 'filetype:xlsx (presupuesto OR ejecución) [organismo]' },
+{ goal: 'Sueldos, viáticos o nóminas', q: 'filetype:pdf (sueldos OR viáticos OR nómina) [organismo]' },
+{ goal: 'Resoluciones o actas de un área', q: 'site:[dominio] intitle:(resolución OR acta) [tema]' },
+{ goal: 'Presentaciones oficiales (PPT)', q: 'filetype:ppt OR filetype:pptx "[tema]" [organismo]' },
+{ goal: 'Buscar dentro de un sitio sin buscador propio', q: 'site:[dominio] "[lo que busco]"' },
+{ goal: 'Una persona en documentos oficiales', q: 'site:.gob.ar "Nombre Apellido" filetype:pdf' },
+{ goal: 'Audiencias públicas o expedientes', q: '(audiencia pública OR expediente) "[tema]" [localidad]' },
+{ goal: 'Notas de la competencia sobre un tema', q: '[tema] -site:mipropiomedio.com after:2025-01-01' },
+{ goal: 'Documento citado que no encontrás', q: '"título exacto del informe" (filetype:pdf OR filetype:docx)' }
+];
+const factChecks = [
+{ q: 'Una foto', how: 'Hacé búsqueda inversa (Google Lens, TinEye, Yandex): si aparece en notas viejas o de otro lugar, está reciclada. Mirá carteles, patentes, idioma, clima y sombras para ubicarla.' },
+{ q: 'Un audio o video', how: 'Desconfiá de la "primicia" anónima. Buscá la fuente original, pedí más material, chequeá si hay cortes o saltos. Hoy se fabrican deepfakes: confirmá por otro canal antes de difundir.' },
+{ q: 'Una cuenta o un perfil', how: 'Revisá fecha de creación, historial, seguidores y si otros medios serios la citan. Una cuenta nueva con mucha actividad sobre un solo tema es señal de alerta.' },
+{ q: 'Un documento', how: 'Cruzá con la fuente oficial (boletín, organismo). Mirá fechas, números de expediente y firmas. Un PDF puede estar editado: buscá la versión publicada por el organismo.' },
+{ q: 'Una cita o una cifra', how: 'Pedí la fuente primaria, no el medio que la repitió. Si todos citan lo mismo sin enlace, puede ser un dato que se propagó sin verificar.' }
+];
+const openData = [
+{ name: 'Boletines oficiales', use: 'Decretos, designaciones, licitaciones y normativa (nacional y provincial).' },
+{ name: 'Portales de datos abiertos', use: 'Datasets de presupuesto, obras y gestión (datos.gob.ar y los portales provinciales y municipales).' },
+{ name: 'Registros y organismos públicos', use: 'Compras, contrataciones, audiencias y rendiciones de cuentas publicadas.' },
+{ name: 'Wayback Machine (web.archive.org)', use: 'Ver versiones viejas o borradas de una página y guardar evidencia con fecha.' },
+{ name: 'Hemerotecas y archivos', use: 'Notas y ediciones anteriores para reconstruir antecedentes y contexto.' }
 ];
 return (
 <div className="max-w-4xl mx-auto space-y-6">
@@ -3019,6 +3278,16 @@ return (
                 <input value={tipo} onChange={e => setTipo(e.target.value)} placeholder="pdf"
                     className="w-full p-2 rounded-lg border border-slate-300 text-sm" />
             </div>
+            <div>
+                <label className="block text-xs font-semibold text-slate-600 mb-1">En el título (intitle:)</label>
+                <input value={titulo} onChange={e => setTitulo(e.target.value)} placeholder="resolución"
+                    className="w-full p-2 rounded-lg border border-slate-300 text-sm" />
+            </div>
+            <div>
+                <label className="block text-xs font-semibold text-slate-600 mb-1">Excluir palabra (-)</label>
+                <input value={excluir} onChange={e => setExcluir(e.target.value)} placeholder="deportivo"
+                    className="w-full p-2 rounded-lg border border-slate-300 text-sm" />
+            </div>
         </div>
         <div className="bg-white rounded-lg border border-slate-200 p-3 font-mono text-sm text-slate-800 min-h-[2.5rem] break-words">
             {consulta || <span className="text-slate-400">Tu consulta aparecerá acá…</span>}
@@ -3058,6 +3327,34 @@ return (
             <li>Pedile que compare fuentes y marque contradicciones, y que separe lo verificado de lo que falta confirmar.</li>
             <li>Cuidado: la IA a veces inventa URLs, números de expediente o citas que parecen reales. Abrí siempre el enlace y confirmá el dato en la fuente original antes de publicar.</li>
         </ul>
+    </section>
+
+    <section className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+        <h4 className="font-bold text-slate-800 mb-1 flex items-center gap-2"><ShieldAlert className="w-4 h-4 text-sky-500" /> Verificar lo que encontrás (fact-checking)</h4>
+        <p className="text-sm text-slate-600 mb-3">Encontrar es la mitad del trabajo; la otra mitad es confirmar. Para cada tipo de material, un chequeo mínimo antes de publicar.</p>
+        <div className="space-y-3">
+            {factChecks.map((f) => (
+            <div key={f.q} className="border-l-4 border-sky-200 pl-3">
+                <p className="text-sm font-bold text-slate-800">{f.q}</p>
+                <p className="text-sm text-slate-600">{f.how}</p>
+            </div>
+            ))}
+        </div>
+        <div className="mt-4 bg-sky-50 border border-sky-200 rounded-xl p-3">
+            <p className="text-sm text-sky-900"><span className="font-bold">Búsqueda inversa de imágenes:</span> subí una foto a Google Lens, TinEye o Yandex y descubrí si ya circuló antes, en qué fecha y en qué contexto. Es la herramienta más rápida para desarmar una imagen sacada de contexto.</p>
+        </div>
+    </section>
+
+    <section className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+        <h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2"><Library className="w-4 h-4 text-sky-500" /> Datos abiertos y archivo</h4>
+        <div className="grid md:grid-cols-2 gap-3">
+            {openData.map((o) => (
+            <div key={o.name} className="border border-slate-100 rounded-xl p-3 bg-slate-50">
+                <p className="font-bold text-slate-800 text-sm">{o.name}</p>
+                <p className="text-slate-600 text-sm">{o.use}</p>
+            </div>
+            ))}
+        </div>
     </section>
 
     <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-2">
