@@ -1266,6 +1266,93 @@ const challengesData = [
   }
 ];
 
+
+const imageGlossary = [
+  { term: 'Imagen ilustrativa', def: 'Material visual creado para explicar una idea. No debe presentarse como documento, prueba ni registro real.' },
+  { term: 'Sin texto legible', def: 'Indicación para evitar que la IA invente palabras, sellos, números o datos dentro de la imagen.' },
+  { term: 'Datos identificables', def: 'Nombres, domicilios, documentos, expedientes, rostros reconocibles, logos o cualquier señal que permita asociar la imagen a un caso real.' },
+  { term: 'Espacio negativo', def: 'Zona limpia de la imagen donde después se puede agregar un título o una aclaración en un editor.' },
+  { term: 'Referencia de estilo', def: 'Imagen que orienta tono, luz o composición, sin copiar marcas, documentos ni personas.' },
+  { term: 'Iteración', def: 'Proceso de pedir ajustes sucesivos: primero seguridad, luego composición, luego claridad visual.' },
+  { term: 'Composición', def: 'Cómo se ordenan los elementos: mesa, papeles, pantalla, personas, luz y foco.' },
+  { term: 'Trazabilidad visual', def: 'Forma de mostrar proceso, revisión o fuentes sin exponer el contenido real de los documentos.' }
+];
+
+const imageConcepts = [
+  {
+    title: 'Para qué usar imágenes en este artefacto',
+    body: [
+      'Acompañar explicaciones sobre papel, digitalización, fuentes, citas y colaboración.',
+      'Crear portadas o placas de capacitación sin usar expedientes reales.',
+      'Mostrar procesos de trabajo: escanear, revisar, cargar, preguntar, verificar.',
+      'Evitar imágenes que parezcan prueba, documento oficial o captura de un caso concreto.'
+    ]
+  },
+  {
+    title: 'Regla de seguridad visual',
+    body: [
+      'No incluir nombres, números de expediente, firmas, sellos, logos ni rostros reconocibles.',
+      'Pedir documentos genéricos, texto no legible y pantallas abstractas.',
+      'Agregar títulos y datos exactos después, en un editor controlado.',
+      'Aclarar cuando una imagen es ilustrativa si puede confundirse con una situación real.'
+    ]
+  },
+  {
+    title: 'Método recomendado',
+    body: [
+      'Primero pedir una escena segura y genérica.',
+      'Después ajustar composición: más espacio, menos objetos, mejor luz.',
+      'Luego preparar versión para placa, portada o explicación paso a paso.',
+      'Al final revisar que no haya datos inventados ni elementos institucionales falsos.'
+    ]
+  },
+  {
+    title: 'Qué evitar',
+    body: [
+      'No pedir “un expediente realista” ni “una sentencia con texto”.',
+      'No subir fotos de documentos sensibles para mejorar visualmente una placa.',
+      'No usar rostros de personas reales sin autorización.',
+      'No dejar que la IA escriba datos dentro de la imagen.'
+    ]
+  }
+];
+
+const imageEditorPhrases = [
+  {
+    category: 'Seguridad y privacidad',
+    phrases: [
+      { want: 'Eliminar datos visibles', say: 'Quitá todo texto legible, números, firmas, sellos, logos y datos identificables. Reemplazalos por marcas abstractas.', avoid: 'Sacale lo privado.' },
+      { want: 'Evitar expediente real', say: 'Hacé que los documentos se vean genéricos e ilustrativos, sin apariencia de expediente, sentencia o prueba real.', avoid: 'Que parezca más legal.' },
+      { want: 'Ocultar identidades', say: 'No muestres rostros reconocibles; usá encuadres de manos, espaldas o siluetas no identificables.', avoid: 'Poné gente trabajando.' }
+    ]
+  },
+  {
+    category: 'Claridad de capacitación',
+    phrases: [
+      { want: 'Explicar proceso', say: 'Ordená la escena en tres zonas visuales: papel, revisión digital y consulta con fuentes. Sin texto dentro de la imagen.', avoid: 'Mostrá cómo funciona.' },
+      { want: 'Dejar lugar para título', say: 'Dejá un área limpia amplia en la parte superior izquierda para agregar un título luego.', avoid: 'Hacela para portada.' },
+      { want: 'Tono profesional', say: 'Usá estilo sobrio, institucional, adulto, con luz natural y pocos colores; evitá estética escolar o publicitaria.', avoid: 'Que quede linda.' }
+    ]
+  },
+  {
+    category: 'Ajustes de composición',
+    phrases: [
+      { want: 'Menos carga visual', say: 'Reducí la cantidad de objetos, dejá más espacio libre y mantené solo cuaderno, celular y computadora.', avoid: 'Está muy cargada.' },
+      { want: 'Más foco', say: 'Hacé foco en el gesto de revisar una fuente y dejá el fondo desenfocado, sin información legible.', avoid: 'Mejorá el foco.' },
+      { want: 'Más calidez sin perder sobriedad', say: 'Sumá luz natural suave y tonos neutros; mantené un ambiente profesional y tranquilo.', avoid: 'Más cálida.' }
+    ]
+  }
+];
+
+const imageTroubleshoot = [
+  { problem: 'Aparece texto inventado en documentos o pantallas', cause: 'Los generadores suelen inventar letras cuando se les pide material documental.', fix: 'Pedí “sin texto legible; usar líneas abstractas y bloques grises”.' },
+  { problem: 'La imagen parece un expediente real', cause: 'El prompt pidió demasiado realismo jurídico.', fix: 'Pedí documentos genéricos, estilo ilustrativo/editorial y ninguna firma, sello ni número.' },
+  { problem: 'Se ven caras reconocibles', cause: 'La escena pidió personas sin limitar identidad.', fix: 'Pedí manos, espaldas, siluetas o encuadres sin rostro.' },
+  { problem: 'La placa queda difícil de titular', cause: 'No se reservó espacio limpio.', fix: 'Pedí espacio negativo amplio en una zona concreta.' },
+  { problem: 'La imagen parece publicitaria o infantil', cause: 'El estilo quedó demasiado colorido o decorativo.', fix: 'Pedí tono institucional, adulto, sobrio, con paleta neutra y pocos elementos.' },
+  { problem: 'No representa el proceso de NotebookLM', cause: 'El prompt se quedó en una escena genérica de oficina.', fix: 'Pedí tres etapas visuales: fuente en papel, revisión digital y consulta con citas.' }
+];
+
 const imageRecipes = [
   {
     "id": "doc",
@@ -1691,7 +1778,7 @@ const notebookLMExercises = [
   }
 ];
 
-const hpVisuals = window.hpVisuals || { imageAssets: {}, imageExamples: [], imageSequences: [] };
+const hpVisuals = window.hpVisuals || window.dcVisuals || { imageAssets: {}, imageExamples: [], imageSequences: [] };
 const hpImageExamples = Array.isArray(hpVisuals.imageExamples)
 ? hpVisuals.imageExamples.filter((item) => hpVisuals.imageAssets?.[item.id]?.src)
 : [];
@@ -1701,7 +1788,7 @@ const hpImageSequences = Array.isArray(hpVisuals.imageSequences)
 const hasHpVisuals = hpImageExamples.length > 0 && hpImageSequences.length > 0;
 
 const ImagesSection = () => {
-const [sub, setSub] = useState(hasHpVisuals ? 'visuales' : 'guia');
+const [sub, setSub] = useState('guia');
 const [recipeId, setRecipeId] = useState(imageRecipes[0].id);
 const [copied, setCopied] = useState(null);
 const copyTxt = (t, id) => { if (!navigator.clipboard) return; navigator.clipboard.writeText(t).then(() => { setCopied(id); setTimeout(() => setCopied(null), 1500); }).catch(() => {}); };
