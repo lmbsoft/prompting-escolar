@@ -112,7 +112,7 @@
             ShieldAlert, CheckCircle2, ChevronLeft, ChevronRight, Copy, Check,
             Target, Lightbulb, Clock, PenSquare, Microscope, Library, ArrowUpRight,
             ClipboardList, AlertTriangle, Lock, Heart, RefreshCw, Zap, Image as ImageIcon, Wand2, Palette, Camera, Table2,
-            Mic, Search, Video, Cog, Filter, Volume2
+            Mic, Search, Video, Cog, Filter, Volume2, Share2, Route
         } from 'lucide-react';
 
         // ═══════════════════════════════════════════════════════════════
@@ -2720,21 +2720,295 @@ return (
 );
 };
 
+
 const NotebookLMSection = () => {
+const [copied, setCopied] = useState(null);
+const copyNotebookPrompt = (prompt, id) => { if (!navigator.clipboard) return; navigator.clipboard.writeText(prompt).then(() => { setCopied(id); setTimeout(() => setCopied(null), 1500); }).catch(() => {}); };
+const notebookConcepts = [
+  {
+    "title": "No es otro chat: es una mesa de lectura",
+    "body": "NotebookLM se vuelve valioso cuando el cuaderno tiene fuentes elegidas con criterio. El asistente general sirve para explorar ideas, diseñar búsquedas o redactar borradores; NotebookLM sirve para trabajar sobre documentos concretos, preguntar con cita y volver al pasaje original antes de usar una conclusión.",
+    "practice": "Antes de preguntar, escribir el propósito del cuaderno: tema, fuentes incluidas, fuentes excluidas, responsables y nivel de sensibilidad."
+  },
+  {
+    "title": "Fuente, cita, nota y artefacto son cosas distintas",
+    "body": "La fuente es el material cargado. La cita es el puente hacia el fragmento usado. La nota es una elaboración guardada dentro del cuaderno. El artefacto es una salida generada: informe, audio, video, infografía, presentación, guía de estudio, mapa mental, cuestionario o resumen. Cada pieza se revisa con un criterio diferente.",
+    "practice": "Para trabajo serio, pedir siempre una tabla que separe afirmación, fuente, cita, interpretación y pendiente de verificación."
+  },
+  {
+    "title": "La calidad empieza antes del prompt",
+    "body": "Un buen prompt no compensa un cuaderno desordenado. Si se cargan fuentes duplicadas, viejas, contradictorias o sin nombre claro, la respuesta puede mezclar materiales. Conviene nombrar archivos con fecha, tipo y origen, agrupar fuentes por tema y desactivar las que no correspondan a la pregunta.",
+    "practice": "Crear una nota inicial de alcance: qué puede responder este cuaderno, qué no puede responder y cuándo hay que revisar el documento original."
+  },
+  {
+    "title": "La IA ayuda a leer, pero no firma el criterio",
+    "body": "NotebookLM puede resumir, comparar, transformar y organizar. Esa potencia no lo convierte en autoridad jurídica ni documental. La revisión humana sigue siendo el punto de control: leer citas críticas, comprobar fechas, distinguir hechos de inferencias y no presentar borradores como conclusiones definitivas.",
+    "practice": "Cerrar cada respuesta importante con una pregunta de control: qué parte surge textual de las fuentes y qué parte es una interpretación."
+  }
+];
+const studioTools = [
+  {
+    "name": "Chat con citas",
+    "use": "Para interrogar documentos, pedir matrices, extraer plazos, comparar versiones y volver al fragmento citado.",
+    "legal": "Ideal para leer expedientes públicos, normativa, guías internas autorizadas o jurisprudencia descargada de fuentes confiables.",
+    "prompt": "Respondé solo con base en las fuentes seleccionadas. Separá hechos, citas textuales, interpretación y dudas. Si una respuesta no surge de las fuentes, escribí: no surge de las fuentes cargadas. Cuando cites, indicá fuente y pasaje."
+  },
+  {
+    "name": "Notas",
+    "use": "Para guardar respuestas útiles, pensamientos propios, minutas y criterios de lectura dentro del cuaderno.",
+    "legal": "Sirven para conservar hipótesis de trabajo sin confundirlas con el documento fuente.",
+    "prompt": "Convertí esta respuesta en una nota de trabajo. Mantené las citas, agregá una sección de pendientes y diferenciá claramente dato de fuente, interpretación y próxima acción."
+  },
+  {
+    "name": "Informes / Deep Research",
+    "use": "Para generar un desarrollo más extenso, con estructura, hallazgos, fuentes y síntesis de investigación. También permite importar resultados y fuentes cuando se usa investigación desde web o Drive.",
+    "legal": "Útil para preparar un primer panorama de un tema, siempre revisando qué fuentes fueron incorporadas y descartando lo que no sea oficial o confiable.",
+    "prompt": "Prepará un informe de trabajo sobre este tema. Incluí: alcance, fuentes consideradas, principales hallazgos con citas, contradicciones entre documentos, vacíos de información, riesgos de interpretación, preguntas pendientes y una lista de documentos que convendría buscar en fuentes oficiales."
+  },
+  {
+    "name": "Mapa mental",
+    "use": "Para ver relaciones entre normas, actores, etapas, documentos, conceptos y problemas recurrentes.",
+    "legal": "Ayuda a explicar un asunto complejo al equipo sin transformar el mapa en conclusión final.",
+    "prompt": "Generá un mapa mental orientado a preparar una conversación de equipo. Priorizá ramas de hechos, documentación, normativa, plazos, puntos controvertidos y pendientes de verificación."
+  },
+  {
+    "name": "Audio Overview",
+    "use": "Para repasar un cuaderno como conversación oral y detectar temas que requieren segunda lectura.",
+    "legal": "Sirve para estudio personal o capacitación interna, no como acta ni dictamen.",
+    "prompt": "Generá un audio breve, sobrio y en español. Enfocalo en explicar el tema a una persona que necesita entender el panorama, los documentos clave, las dudas y los puntos que deben verificarse antes de tomar una decisión."
+  },
+  {
+    "name": "Video Overview",
+    "use": "Para producir una explicación visual de un conjunto de fuentes, útil en capacitación o presentación interna.",
+    "legal": "Debe revisarse antes de circular porque puede simplificar de más, omitir matices o presentar una relación visual como si fuera concluyente.",
+    "prompt": "Creá un video de explicación interna. Usá estilo sobrio, sin dramatización. Mostrá el recorrido desde fuentes hacia conclusiones provisorias: documentos, hechos relevantes, citas de apoyo, dudas y próximos pasos."
+  },
+  {
+    "name": "Infografía",
+    "use": "Para transformar un tema complejo en una lámina clara: proceso, línea de tiempo, roles, riesgos o checklist.",
+    "legal": "Muy útil para capacitación o memoria de trabajo, siempre sin datos personales ni elementos que parezcan documentación real.",
+    "prompt": "Generá una infografía vertical y sobria para explicar este procedimiento. Debe incluir etapas, documentos necesarios, puntos de control, riesgos frecuentes y una advertencia visible: verificar siempre contra la fuente original."
+  },
+  {
+    "name": "Presentación / Slide Deck",
+    "use": "Para convertir fuentes en una presentación con estructura: problema, contexto, hallazgos, evidencia, pendientes y cierre.",
+    "legal": "Sirve para reuniones de equipo o capacitación; conviene descargarla, revisar cada diapositiva y corregir el lenguaje antes de usarla.",
+    "prompt": "Armá una presentación breve para reunión interna. Estructura: objetivo, fuentes revisadas, tres hallazgos principales con cita, una contradicción o duda, riesgos de uso, próximos pasos y diapositiva final de verificación."
+  },
+  {
+    "name": "Flashcards y cuestionarios",
+    "use": "Para entrenar comprensión de conceptos, pasos, criterios de privacidad o diferencias entre herramientas.",
+    "legal": "Útil para sensibilizar a equipos que recién empiezan, sin convertir el aprendizaje en examen formal.",
+    "prompt": "Creá preguntas de repaso de dificultad progresiva. No preguntes memoria mecánica solamente: incluí casos breves donde haya que decidir si corresponde usar asistente general, buscador oficial o NotebookLM."
+  }
+];
+const deepPrompts = [
+  {
+    "title": "Lectura jurídica con control de fuente",
+    "tag": "Análisis",
+    "prompt": "Actuá como asistente de lectura documental. Trabajá exclusivamente con las fuentes seleccionadas en este cuaderno. Necesito una respuesta en cinco partes: 1. síntesis breve del asunto, 2. hechos o afirmaciones que aparecen claramente en las fuentes, 3. citas o pasajes que sostienen cada punto, 4. interpretaciones posibles separadas de los hechos, 5. dudas, omisiones o documentos que habría que revisar antes de usar esta respuesta. No completes huecos con conocimiento general. Si algo no surge de las fuentes, escribilo expresamente. Usá una tabla cuando haya más de tres puntos."
+  },
+  {
+    "title": "Comparar documentos o versiones contradictorias",
+    "tag": "Comparación",
+    "prompt": "Compará las fuentes seleccionadas como si estuvieras preparando una matriz de control. Armá una tabla con estas columnas: tema, qué dice la fuente A, qué dice la fuente B, coincidencia, diferencia, posible impacto práctico, cita de respaldo y pendiente de verificación. No busques cerrar la contradicción si las fuentes no permiten hacerlo. Marcá con claridad qué diferencias son textuales, cuáles son de interpretación y cuáles dependen de información externa no cargada."
+  },
+  {
+    "title": "Del apunte manuscrito a minuta útil",
+    "tag": "Papel a digital",
+    "prompt": "A partir de esta fuente proveniente de apuntes o notas de trabajo, ayudame a convertirla en una minuta ordenada. Primero identificá qué partes parecen datos, qué partes parecen opiniones o recordatorios y qué partes son ilegibles o ambiguas. Después proponé una versión limpia con: asunto, fecha si surge, personas o áreas mencionadas solo si aparecen en la fuente, temas tratados, decisiones o acuerdos, pendientes, preguntas para confirmar y advertencias sobre posibles errores de transcripción. No inventes nombres, fechas ni conclusiones."
+  },
+  {
+    "title": "Preparar reunión, audiencia o entrevista desde fuentes",
+    "tag": "Preparación",
+    "prompt": "Prepará una guía de trabajo basada solo en las fuentes seleccionadas. Necesito: resumen del contexto en lenguaje claro, puntos que conviene tener presentes, preguntas que ayudarían a aclarar información, documentos que habría que tener a mano, riesgos de confusión, temas que no están suficientemente respaldados por fuentes y una lista final de verificación. Evitá tono concluyente cuando las fuentes sean incompletas. Mantené citas en los puntos relevantes."
+  },
+  {
+    "title": "Informe interno del estado de un cuaderno",
+    "tag": "Gestión",
+    "prompt": "Revisá el cuaderno como base de consulta interna y prepará un informe de calidad. Evaluá: claridad del objetivo, suficiencia de fuentes, fuentes duplicadas o desactualizadas, materiales que deberían excluirse por sensibilidad, temas bien cubiertos, temas pobres, preguntas que el cuaderno responde bien, preguntas que no debería responder y plan de mejora en siete acciones concretas. Cerrá con una nota de cautela sobre verificación humana y política institucional."
+  },
+  {
+    "title": "Búsqueda oficial primero, NotebookLM después",
+    "tag": "Investigación",
+    "prompt": "Ayudame a diseñar una investigación sin usar a la IA como fuente final. Primero proponé términos de búsqueda, operadores y sitios oficiales o bases autorizadas que convendría revisar. Después indicá qué documentos descargar, cómo nombrarlos, qué metadatos conservar y cómo cargarlos en NotebookLM. Finalmente proponé cinco preguntas para hacer en el cuaderno, todas con exigencia de cita y con una advertencia de qué debería verificarse en el documento original."
+  }
+];
+const sharingRules = [
+  {
+    "action": "Compartir cuaderno completo",
+    "what": "La otra persona puede acceder al cuaderno según el permiso asignado. Si tiene acceso suficiente, puede ver fuentes y artefactos disponibles.",
+    "care": "No compartir cuadernos con datos sensibles si no hay autorización, política institucional y criterio claro de permisos."
+  },
+  {
+    "action": "Copiar enlace de vista de chat",
+    "what": "La vista de chat puede ocultar materiales para una experiencia enfocada, pero no debe tratarse como una barrera absoluta: la documentación de Google advierte que viewers podrían acceder a fuentes y artefactos del cuaderno.",
+    "care": "Usarlo solo cuando el contenido completo del cuaderno también pueda ser visto por esa audiencia."
+  },
+  {
+    "action": "Compartir audio o video generado",
+    "what": "Cuando se comparte por enlace puede requerir que el cuaderno también esté compartido. También puede descargarse como archivo, según la función.",
+    "care": "Revisar el contenido antes de circularlo y aclarar que es material generado para repaso o explicación, no fuente original."
+  },
+  {
+    "action": "Descargar infografía, presentación o material generado",
+    "what": "El archivo descargado sale del entorno del cuaderno y pasa a circular con las reglas del canal donde se comparta.",
+    "care": "Quitar datos personales, revisar citas, corregir lenguaje y decidir si corresponde compartir como borrador o versión final."
+  },
+  {
+    "action": "Exportar notas a Docs o Sheets",
+    "what": "La exportación crea un archivo nuevo. Los cambios posteriores no sincronizan con la nota original y los permisos no se trasladan automáticamente.",
+    "care": "Configurar permisos del documento exportado y dejar claro cuál es la versión vigente."
+  },
+  {
+    "action": "Dar feedback con pulgar arriba o abajo",
+    "what": "En cuentas personales, el feedback puede incluir prompts, fuentes, cargas y salidas asociadas para revisión/mejora. En Workspace/Education, Google indica reglas más restrictivas de no revisión humana ni entrenamiento.",
+    "care": "Evitar enviar feedback sobre interacciones con información confidencial o sensible salvo que la política institucional lo permita."
+  }
+];
+const sourceChecklist = [
+  "Nombrar cada archivo con fecha, origen y tipo de documento.",
+  "Separar fuentes oficiales, apuntes personales, borradores y material de capacitación.",
+  "Desactivar fuentes que no correspondan antes de hacer una pregunta precisa.",
+  "Guardar una nota inicial con objetivo, alcance, responsables y reglas de privacidad.",
+  "Revisar citas críticas en el original antes de usar una síntesis fuera del cuaderno.",
+  "Registrar qué se compartió, con quién y bajo qué permiso."
+];
 return (
-<div className="max-w-4xl mx-auto space-y-6">
+  <div className="max-w-5xl mx-auto space-y-8">
     <section className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-6 border border-indigo-200">
-        <h3 className="text-xl font-bold text-indigo-800 mb-2 flex items-center gap-2"><Library className="w-5 h-5" /> NotebookLM · mesa de trabajo documental</h3>
-        <p className="text-indigo-900">NotebookLM es la pieza central de este recorrido porque trabaja con fuentes que vos cargás: documentos, PDFs, textos, planillas, imágenes, audios, URLs y videos públicos con transcripción. La diferencia práctica es que podés preguntarle a tu propio material y volver a la cita. Para trabajo jurídico, eso permite pasar de papeles, apuntes y archivos dispersos a una base de consulta ordenada, siempre con revisión humana.</p>
+      <h3 className="text-xl font-bold text-indigo-800 mb-2 flex items-center gap-2"><Library className="w-5 h-5" /> NotebookLM · mesa de trabajo documental</h3>
+      <p className="text-indigo-900 mb-3">NotebookLM es la pieza central de este recorrido porque cambia la relación con la IA: en vez de preguntarle a un modelo general y esperar que recuerde bien, se construye un cuaderno con fuentes propias, se pregunta sobre esas fuentes y se vuelve a las citas. Para trabajo jurídico, documental o institucional, esta diferencia es decisiva: permite ordenar papeles, PDFs, notas, audios, planillas y enlaces en una base de consulta revisable.</p>
+      <p className="text-indigo-900">La regla de oro es simple: NotebookLM puede acelerar lectura, comparación y producción de materiales, pero no reemplaza la verificación profesional. Se usa como índice inteligente, asistente de lectura y generador de borradores controlados. La fuente original sigue mandando.</p>
     </section>
-    <section className="grid md:grid-cols-3 gap-4">
-        <div className="bg-white rounded-2xl border border-indigo-200 p-5 shadow-sm"><h4 className="font-bold text-indigo-800 mb-3 flex items-center gap-2"><Sparkles className="w-4 h-4" /> Por qué sirve</h4><ul className="list-disc pl-5 space-y-2 text-slate-700 text-sm"><li>Trabaja sobre fuentes delimitadas y muestra citas hacia el documento.</li><li>Ayuda a resumir, comparar, preguntar, detectar huecos y armar líneas de tiempo.</li><li>Permite incorporar apuntes, audios y videos como material consultable.</li><li>Reduce alucinaciones cuando se exige responder solo desde fuentes cargadas.</li></ul></div>
-        <div className="bg-white rounded-2xl border border-emerald-200 p-5 shadow-sm"><h4 className="font-bold text-emerald-800 mb-3 flex items-center gap-2"><Lock className="w-4 h-4" /> Privacidad práctica</h4><ul className="list-disc pl-5 space-y-2 text-slate-700 text-sm"><li>Clasificá materiales antes de subirlos: público, interno, reservado o sensible.</li><li>Anonimizá cuando el nombre o dato personal no sea necesario para la consulta.</li><li>No uses feedback con contenido confidencial.</li><li>Respetá siempre la política institucional y el tipo de cuenta utilizada.</li></ul></div>
-        <div className="bg-white rounded-2xl border border-violet-200 p-5 shadow-sm"><h4 className="font-bold text-violet-800 mb-3 flex items-center gap-2"><MessageCircle className="w-4 h-4" /> Para equipos</h4><ul className="list-disc pl-5 space-y-2 text-slate-700 text-sm"><li>Un cuaderno compartido evita reconstruir la misma lectura varias veces.</li><li>Las fuentes deben tener nombre claro, responsable y fecha de revisión.</li><li>Los permisos de lectura y edición deben diferenciarse.</li><li>Una nota inicial fija finalidad, reglas y límites del cuaderno.</li></ul></div>
+
+    <section className="grid md:grid-cols-2 gap-4">
+      {notebookConcepts.map((concept, index) => (
+        <article key={concept.title} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <p className="text-xs font-bold text-indigo-600 uppercase mb-1">Idea clave {index + 1}</p>
+          <h4 className="font-bold text-slate-800 mb-2">{concept.title}</h4>
+          <p className="text-slate-700 text-sm mb-3">{concept.body}</p>
+          <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-3 text-sm text-indigo-900"><span className="font-bold">Práctica:</span> {concept.practice}</div>
+        </article>
+      ))}
     </section>
-    <div className="bg-violet-50 border border-violet-200 rounded-xl p-4 flex items-start gap-2"><Lightbulb className="w-5 h-5 text-violet-600 flex-shrink-0 mt-0.5" /><p className="text-sm text-violet-900">Estos ejercicios están pensados para hacerse en orden. La progresión va desde crear un cuaderno de práctica hasta construir una base de consulta interna. La regla constante: fuente, cita, revisión y prudencia.</p></div>
-    <div className="grid gap-5">{notebookLMExercises.map((ex, index) => (<article key={ex.id} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm"><p className="text-xs font-bold text-indigo-600 uppercase mb-1">Ejercicio {index + 1} · {ex.level}</p><h4 className="text-lg font-bold text-slate-800">{ex.title}</h4><p className="text-slate-600 text-sm mt-1 mb-3"><span className="font-semibold">Objetivo:</span> {ex.goal}</p><p className="text-xs font-bold text-slate-500 uppercase mb-2">Paso a paso</p><ol className="list-decimal pl-5 space-y-2 text-slate-700 text-sm mb-3">{ex.steps.map((st, i) => <li key={i}>{st}</li>)}</ol><div className="bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-start gap-2"><Lightbulb className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" /><p className="text-sm text-amber-900">{ex.tip}</p></div></article>))}</div>
-</div>
+
+    <section className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+      <h4 className="font-bold text-slate-800 mb-4 flex items-center gap-2"><ClipboardList className="w-4 h-4 text-indigo-500" /> Preparar un cuaderno antes de preguntar</h4>
+      <div className="grid md:grid-cols-3 gap-3">
+        {sourceChecklist.map((item, index) => (
+          <div key={item} className="bg-slate-50 border border-slate-100 rounded-xl p-3 flex gap-2 text-sm text-slate-700">
+            <span className="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold flex-shrink-0">{index + 1}</span>
+            <span>{item}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section className="space-y-4">
+      <div>
+        <p className="text-xs font-bold text-indigo-600 uppercase mb-1">Studio y recursos útiles</p>
+        <h4 className="text-lg font-bold text-slate-800">Herramientas que conviene enseñar dentro de NotebookLM</h4>
+        <p className="text-slate-600 text-sm mt-1">No alcanza con decir “subí documentos y preguntá”. La riqueza está en elegir la salida correcta: una matriz para controlar, una nota para conservar criterio, un informe para desarrollar, un mapa para ordenar, o un audio para repasar.</p>
+      </div>
+      <div className="grid md:grid-cols-3 gap-4">
+        {studioTools.map((tool, index) => (
+          <article key={tool.name} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm flex flex-col">
+            <div className="flex items-start justify-between gap-3 mb-2">
+              <h5 className="font-bold text-slate-800">{tool.name}</h5>
+              <span className="text-xs font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 rounded-full px-2 py-1">{index + 1}</span>
+            </div>
+            <p className="text-sm text-slate-700 mb-2"><span className="font-semibold">Para qué:</span> {tool.use}</p>
+            <p className="text-sm text-slate-600 mb-3"><span className="font-semibold">Uso cuidadoso:</span> {tool.legal}</p>
+            <div className="mt-auto bg-slate-900 rounded-xl p-3">
+              <p className="text-xs font-bold text-indigo-200 mb-1">Prompt sugerido</p>
+              <p className="text-sm text-slate-100">{tool.prompt}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section className="space-y-4">
+      <div>
+        <p className="text-xs font-bold text-emerald-600 uppercase mb-1">Prompts largos reutilizables</p>
+        <h4 className="text-lg font-bold text-slate-800">Consignas con suficiente criterio para trabajo real</h4>
+        <p className="text-slate-600 text-sm mt-1">Estos prompts están escritos para acompañar una práctica completa: delimitan fuentes, piden estructura, exigen citas, separan hechos de interpretación y fuerzan una lista de pendientes. Son mejores puntos de partida que consignas cortas como “resumí esto”.</p>
+      </div>
+      <div className="grid gap-4">
+        {deepPrompts.map((item, index) => (
+          <article key={item.title} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+              <div>
+                <p className="text-xs font-bold text-emerald-600 uppercase">{item.tag} · Prompt {index + 1}</p>
+                <h5 className="font-bold text-slate-800">{item.title}</h5>
+              </div>
+              <button onClick={() => copyNotebookPrompt(item.prompt, 'deep-' + index)} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700">
+                {copied === 'deep-' + index ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />} {copied === 'deep-' + index ? 'Copiado' : 'Copiar'}
+              </button>
+            </div>
+            <pre className="whitespace-pre-wrap text-sm font-sans bg-slate-50 border border-slate-100 rounded-xl p-4 text-slate-800">{item.prompt}</pre>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section className="bg-amber-50 border border-amber-200 rounded-2xl p-5">
+      <h4 className="font-bold text-amber-800 mb-3 flex items-center gap-2"><Share2 className="w-4 h-4" /> Qué se comparte cuando compartís</h4>
+      <p className="text-amber-900 text-sm mb-4">La prudencia no consiste en evitar NotebookLM, sino en entender el alcance de cada acción. Compartir un enlace, descargar un archivo, exportar una nota o dar feedback no tienen el mismo efecto.</p>
+      <div className="overflow-x-auto bg-white rounded-xl border border-amber-100">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="text-left text-slate-600 border-b border-amber-100 bg-amber-100/50">
+              <th className="p-3">Acción</th>
+              <th className="p-3">Qué implica</th>
+              <th className="p-3">Cuidado práctico</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sharingRules.map((row) => (
+              <tr key={row.action} className="border-b border-amber-50 align-top">
+                <td className="p-3 font-bold text-slate-800">{row.action}</td>
+                <td className="p-3 text-slate-700">{row.what}</td>
+                <td className="p-3 text-amber-900">{row.care}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+      <h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2"><Route className="w-4 h-4 text-indigo-500" /> Flujo prudente: asistente general, fuente oficial, NotebookLM</h4>
+      <ol className="list-decimal pl-5 space-y-2 text-sm text-slate-700">
+        <li>Usar ChatGPT, Gemini u otro asistente para pensar términos de búsqueda, sin tomar la respuesta como fuente.</li>
+        <li>Buscar en sitios oficiales o bases autorizadas, registrar enlace, fecha y criterio de selección.</li>
+        <li>Descargar documentos y nombrarlos de forma clara antes de cargarlos.</li>
+        <li>Cargar en NotebookLM solo fuentes elegidas; desactivar las que no correspondan a la pregunta.</li>
+        <li>Preguntar con exigencia de cita, tabla de evidencia y lista de dudas.</li>
+        <li>Volver al documento original para todo punto crítico antes de redactar o compartir.</li>
+      </ol>
+    </section>
+
+    <section className="space-y-4">
+      <div>
+        <p className="text-xs font-bold text-indigo-600 uppercase mb-1">Ejercicios guiados</p>
+        <h4 className="text-lg font-bold text-slate-800">Prácticas para incorporar NotebookLM de a poco</h4>
+      </div>
+      <div className="grid gap-5">
+        {notebookLMExercises.map((ex, index) => (
+          <article key={ex.id} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+            <p className="text-xs font-bold text-indigo-600 uppercase mb-1">Ejercicio {index + 1} · {ex.level}</p>
+            <h4 className="text-lg font-bold text-slate-800">{ex.title}</h4>
+            <p className="text-slate-600 text-sm mt-1 mb-3"><span className="font-semibold">Objetivo:</span> {ex.goal}</p>
+            <p className="text-xs font-bold text-slate-500 uppercase mb-2">Paso a paso</p>
+            <ol className="list-decimal pl-5 space-y-2 text-slate-700 text-sm mb-3">{ex.steps.map((st, i) => <li key={i}>{st}</li>)}</ol>
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-start gap-2"><Lightbulb className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" /><p className="text-sm text-amber-900">{ex.tip}</p></div>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
 );
 };
 
