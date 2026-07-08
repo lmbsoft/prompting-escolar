@@ -1270,38 +1270,118 @@ const imageRecipes = [
   {
     "id": "doc",
     "title": "Imagen institucional sin datos sensibles",
-    "goal": "Crear una placa o portada sobria para capacitación o comunicación interna.",
-    "basePrompt": "Creá una imagen institucional sobria para representar organización documental y trabajo jurídico, sin personas identificables, sin texto legible, con escritorio ordenado, documentos genéricos, luz natural y tono profesional.",
+    "intro": "Una pieza visual sobria para capacitación, portada de material o comunicación interna, sin representar expedientes reales ni datos identificables.",
+    "toolNotes": [
+      {
+        "tool": "ChatGPT / Gemini",
+        "note": "Útil para crear una primera imagen conceptual y luego pedir ajustes puntuales."
+      },
+      {
+        "tool": "Canva",
+        "note": "Conviene para agregar títulos exactos, fecha y logo institucional si corresponde."
+      },
+      {
+        "tool": "NotebookLM",
+        "note": "No es editor de imagen; puede ayudar a extraer ideas de fuentes para decidir qué comunicar."
+      }
+    ],
     "steps": [
-      "Definir finalidad de la pieza",
-      "Evitar expedientes reales o datos visibles",
-      "Pedir imagen sin texto legible",
-      "Agregar textos exactos luego en editor",
-      "Revisar que no parezca documento oficial real"
+      {
+        "goal": "Definir una escena segura",
+        "prompt": "Creá una imagen institucional sobria para representar organización documental y trabajo jurídico. Debe mostrar documentos genéricos, una mesa ordenada y luz natural. No incluyas texto legible, nombres, sellos, expedientes reales, logos ni datos personales.",
+        "expect": "Una escena genérica y profesional que no parece evidencia ni documento real.",
+        "adjust": "Si aparece texto, pedí: eliminá todo texto legible y reemplazalo por marcas abstractas."
+      },
+      {
+        "goal": "Preparar una portada de capacitación",
+        "prompt": "A partir de la imagen anterior, adaptala como fondo para una portada de capacitación interna. Dejá espacio limpio arriba y a la izquierda para agregar un título después. Mantené estilo sobrio, claro y profesional.",
+        "expect": "Una imagen usable como fondo, con aire suficiente para editar encima.",
+        "adjust": "Si queda cargada, pedí más espacio negativo y menos objetos sobre la mesa."
+      },
+      {
+        "goal": "Separar imagen de documento real",
+        "prompt": "Revisá la imagen y eliminá cualquier elemento que pueda parecer un expediente real, sello oficial, firma o dato identificable. Debe quedar claramente como imagen ilustrativa genérica.",
+        "expect": "Una pieza segura para material didáctico.",
+        "adjust": "Si se ve demasiado realista, pedí estilo editorial/ilustrativo y documentos sin detalles."
+      }
     ]
   },
   {
     "id": "paper",
     "title": "Del papel al flujo digital",
-    "goal": "Ilustrar el puente entre notas manuscritas y cuaderno digital.",
-    "basePrompt": "Ilustración realista de una mesa de trabajo con cuaderno manuscrito, celular escaneando una hoja y computadora con interfaz abstracta de organización documental; estilo sobrio, sin marcas, sin datos reales, luz clara.",
+    "intro": "Una secuencia visual para explicar que el papel no se abandona: se captura, revisa y convierte en fuente consultable.",
+    "toolNotes": [
+      {
+        "tool": "Generador de imagen",
+        "note": "Sirve para representar el flujo sin usar notas reales."
+      },
+      {
+        "tool": "Editor simple",
+        "note": "Agregá flechas, números o títulos fuera de la imagen generada."
+      },
+      {
+        "tool": "Celular",
+        "note": "En la práctica real, se usa para escanear o fotografiar apuntes con buena luz."
+      }
+    ],
     "steps": [
-      "Mostrar papel como parte del proceso",
-      "No incluir nombres ni expedientes reales",
-      "Mantener tono de aprendizaje adulto",
-      "Dejar espacio limpio para título externo"
+      {
+        "goal": "Mostrar el puente papel-digital",
+        "prompt": "Ilustración realista y sobria de una mesa de trabajo con un cuaderno manuscrito genérico, un celular escaneando una hoja y una computadora con interfaz abstracta de organización documental. Sin texto legible, sin marcas, sin datos reales, luz clara.",
+        "expect": "Una imagen que comunica continuidad entre apuntes y trabajo digital.",
+        "adjust": "Si el manuscrito es legible, pedí trazos abstractos no interpretables."
+      },
+      {
+        "goal": "Crear una versión por pasos",
+        "prompt": "Generá una variante con composición limpia y espacio para agregar tres etiquetas externas: 1 papel, 2 revisión, 3 consulta. No pongas las etiquetas dentro de la imagen.",
+        "expect": "Fondo preparado para explicar el proceso en una placa.",
+        "adjust": "Si agrega texto, pedí nuevamente sin texto y con espacios vacíos."
+      },
+      {
+        "goal": "Cuidar el tono adulto",
+        "prompt": "Ajustá la imagen para que parezca material de formación profesional adulta: sobria, clara, sin estética escolar, sin exceso de colores y sin elementos infantiles.",
+        "expect": "Una imagen acorde al público del artefacto.",
+        "adjust": "Si queda fría, pedí más luz natural y escritorio realista sin perder sobriedad."
+      }
     ]
   },
   {
     "id": "team",
     "title": "Colaboración de equipo",
-    "goal": "Representar trabajo compartido sin exponer identidades ni casos.",
-    "basePrompt": "Escena institucional discreta de equipo revisando documentos genéricos alrededor de una mesa, pantallas con diagramas abstractos, ambiente profesional, sin rostros reconocibles, sin texto legible, colores sobrios.",
+    "intro": "Una imagen para explicar trabajo compartido con fuentes, permisos y revisión, sin mostrar personas identificables ni casos concretos.",
+    "toolNotes": [
+      {
+        "tool": "Generador de imagen",
+        "note": "Crea una escena conceptual segura para hablar de colaboración."
+      },
+      {
+        "tool": "Canva / PowerPoint",
+        "note": "Agregá después los textos de reglas, roles o pasos."
+      },
+      {
+        "tool": "NotebookLM",
+        "note": "Puede ayudar a redactar la nota inicial de reglas del cuaderno compartido."
+      }
+    ],
     "steps": [
-      "Evitar caras reconocibles",
-      "Usar documentos genéricos",
-      "Transmitir colaboración y trazabilidad",
-      "No sugerir automatización total de decisiones"
+      {
+        "goal": "Representar equipo sin identidades",
+        "prompt": "Escena institucional discreta de un equipo revisando documentos genéricos alrededor de una mesa. Pantallas con diagramas abstractos, ambiente profesional, sin rostros reconocibles, sin texto legible, sin logos ni expedientes reales.",
+        "expect": "Una escena de colaboración segura y genérica.",
+        "adjust": "Si aparecen caras reconocibles, pedí encuadres de manos, espaldas o siluetas no identificables."
+      },
+      {
+        "goal": "Mostrar trazabilidad",
+        "prompt": "Adaptá la escena para sugerir trazabilidad: documentos genéricos ordenados por colores suaves, una planilla abstracta en pantalla y marcas visuales de revisión. Sin texto legible.",
+        "expect": "Una imagen que comunica orden y seguimiento.",
+        "adjust": "Si parece vigilancia o control excesivo, pedí tono colaborativo y calmo."
+      },
+      {
+        "goal": "Preparar placa de reglas",
+        "prompt": "Generá una versión más limpia con espacio libre a la derecha para agregar luego una lista de reglas del cuaderno compartido. No incluyas la lista dentro de la imagen.",
+        "expect": "Fondo apto para una placa explicativa.",
+        "adjust": "Si el espacio queda chico, pedí composición más despejada y objetos a la izquierda."
+      }
     ]
   }
 ];
@@ -1624,7 +1704,7 @@ const ImagesSection = () => {
 const [sub, setSub] = useState(hasHpVisuals ? 'visuales' : 'guia');
 const [recipeId, setRecipeId] = useState(imageRecipes[0].id);
 const [copied, setCopied] = useState(null);
-const copyTxt = (t, id) => { navigator.clipboard.writeText(t).then(() => { setCopied(id); setTimeout(() => setCopied(null), 1500); }); };
+const copyTxt = (t, id) => { if (!navigator.clipboard) return; navigator.clipboard.writeText(t).then(() => { setCopied(id); setTimeout(() => setCopied(null), 1500); }).catch(() => {}); };
 const recipe = imageRecipes.find(r => r.id === recipeId);
 const subs = [
 { id: 'guia', label: 'Guía general', icon: <Sparkles className="w-4 h-4" /> },
@@ -2301,14 +2381,30 @@ const StoriesGallery = ({ onSelect }) => (
 </div>
 );
 
+const roleColor = {
+usuario: 'bg-slate-50 border-slate-200 text-slate-800',
+ia: 'bg-indigo-50 border-indigo-200 text-indigo-900',
+alerta: 'bg-rose-50 border-rose-200 text-rose-900',
+ajuste: 'bg-amber-50 border-amber-200 text-amber-900',
+resultado: 'bg-emerald-50 border-emerald-200 text-emerald-900'
+};
+
+const roleLabel = {
+usuario: 'Pedido inicial',
+ia: 'Respuesta de IA',
+alerta: 'Alerta',
+ajuste: 'Ajuste de prompt',
+resultado: 'Resultado'
+};
+
 const StoryPlayer = ({ story, onBack }) => {
 const [step, setStep] = useState(0);
 const [copied, setCopied] = useState(false);
 const visibleMsgs = story.conversation.slice(0, step + 1);
 
 const copyPrompt = () => {
-navigator.clipboard.writeText(story.reusablePrompt).then(() => { setCopied(true); setTimeout(() => setCopied(false),
-2000); });
+if (!navigator.clipboard) return;
+navigator.clipboard.writeText(story.reusablePrompt).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); }).catch(() => {});
 };
 
 return (
@@ -2333,7 +2429,7 @@ return (
             </button>
             ) : (
             <div className="bg-sky-50 rounded-xl p-5 border border-sky-200">
-                <p className="font-bold text-sky-800 mb-2">📋 Prompt reutilizable</p>
+                <p className="font-bold text-sky-800 mb-2">Prompt reutilizable</p>
                 <p className="text-sky-900 italic mb-3">"{story.reusablePrompt}"</p>
                 <button onClick={copyPrompt}
                     className="flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700">
@@ -2359,7 +2455,7 @@ const currentPrompts = enrichedPromptItems.filter(p => p.level === level);
 const active = enrichedPromptItems.find(p => p.id === activePrompt);
 
 const copyText = (text, id) => {
-navigator.clipboard.writeText(text).then(() => { setCopiedId(id); setTimeout(() => setCopiedId(null), 2000); });
+if (!navigator.clipboard) return; navigator.clipboard.writeText(text).then(() => { setCopiedId(id); setTimeout(() => setCopiedId(null), 2000); }).catch(() => {});
 };
 
 if (!level) {
@@ -2452,7 +2548,7 @@ const PlanillasSection = () => {
 const [activeTemplate, setActiveTemplate] = useState(spreadsheetTemplates[0].title);
 const [copiedId, setCopiedId] = useState(null);
 const copyText = (text, id) => {
-    navigator.clipboard.writeText(text).then(() => { setCopiedId(id); setTimeout(() => setCopiedId(null), 2000); });
+    if (!navigator.clipboard) return; navigator.clipboard.writeText(text).then(() => { setCopiedId(id); setTimeout(() => setCopiedId(null), 2000); }).catch(() => {});
 };
 const tpl = spreadsheetTemplates.find(t => t.title === activeTemplate);
 return (
@@ -2570,7 +2666,7 @@ const partes = []; if (frase.trim()) partes.push('"' + frase.trim() + '"'); if (
 const consulta = partes.join(' '); const url = 'https://www.google.com/search?q=' + encodeURIComponent(consulta); const copiar = () => { if (!consulta) return; navigator.clipboard?.writeText(consulta); setCopiado(true); setTimeout(() => setCopiado(false), 1500); };
 const operadores = [{op:'site:',what:'Buscar dentro de un dominio oficial',ex:'site:jusrionegro.gov.ar amparo salud'},{op:'filetype:',what:'Limitar a PDF, DOCX, XLSX',ex:'filetype:pdf resolución defensoría'},{op:'"comillas"',what:'Frase exacta',ex:'"interés superior del niño"'},{op:'intitle:',what:'Palabra en el título',ex:'intitle:sentencia alimentos'},{op:'after: / before:',what:'Acotar por fecha',ex:'after:2024-01-01 before:2025-01-01'},{op:'OR',what:'Alternativas',ex:'(sentencia OR resolución) "Río Negro"'}];
 const flujo = ['Definir pregunta jurídica o documental','Pedir a la IA consultas posibles','Buscar en fuentes oficiales o bases autorizadas','Descargar documentos y registrar URL/fecha','Cargar fuentes seleccionadas en NotebookLM','Preguntar con cita obligatoria','Verificar pasajes críticos en el original'];
-return (<div className="max-w-4xl mx-auto space-y-6"><section className="bg-gradient-to-br from-sky-50 to-cyan-50 rounded-2xl p-6 border border-sky-200"><h3 className="text-xl font-bold text-sky-800 mb-2 flex items-center gap-2"><Search className="w-5 h-5" /> Investigador: buscar sin alucinar</h3><p className="text-sky-900">La IA es muy útil para diseñar búsquedas, pero la fuente final debe ser el documento oficial o autorizado. Este constructor ayuda a preparar consultas que luego pueden alimentar un cuaderno de NotebookLM con materiales reales.</p></section><section className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm"><h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2"><Filter className="w-4 h-4 text-sky-500" /> Operadores útiles</h4><div className="overflow-x-auto"><table className="w-full text-sm"><thead><tr className="text-left text-slate-500 border-b border-slate-200"><th className="py-2 pr-3">Operador</th><th className="py-2 pr-3">Qué hace</th><th className="py-2">Ejemplo</th></tr></thead><tbody>{operadores.map((o)=><tr key={o.op} className="border-b border-slate-100 align-top"><td className="py-2 pr-3 font-mono text-sky-700">{o.op}</td><td className="py-2 pr-3 text-slate-600">{o.what}</td><td className="py-2 font-mono text-xs text-slate-700">{o.ex}</td></tr>)}</tbody></table></div></section><section className="bg-sky-50 rounded-2xl border border-sky-200 p-5"><h4 className="font-bold text-sky-800 mb-3 flex items-center gap-2"><Search className="w-4 h-4" /> Constructor de búsqueda</h4><div className="grid sm:grid-cols-5 gap-3 mb-3"><input value={frase} onChange={e=>setFrase(e.target.value)} placeholder="frase exacta" className="p-2 rounded-lg border border-slate-300 text-sm" /><input value={sitio} onChange={e=>setSitio(e.target.value)} placeholder="dominio oficial" className="p-2 rounded-lg border border-slate-300 text-sm" /><input value={tipo} onChange={e=>setTipo(e.target.value)} placeholder="pdf" className="p-2 rounded-lg border border-slate-300 text-sm" /><input value={titulo} onChange={e=>setTitulo(e.target.value)} placeholder="intitle" className="p-2 rounded-lg border border-slate-300 text-sm" /><input value={fecha} onChange={e=>setFecha(e.target.value)} placeholder="after:2024-01-01" className="p-2 rounded-lg border border-slate-300 text-sm" /></div><div className="bg-white rounded-lg border border-slate-200 p-3 font-mono text-sm text-slate-800 min-h-[2.5rem] break-words">{consulta || <span className="text-slate-400">Tu consulta aparecerá acá...</span>}</div><div className="flex gap-2 mt-3"><button onClick={copiar} disabled={!consulta} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-600 text-white text-sm font-medium hover:bg-sky-700 disabled:opacity-40">{copiado ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />} {copiado ? 'Copiado' : 'Copiar'}</button>{consulta && <a href={url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white border border-sky-300 text-sky-700 text-sm font-medium hover:bg-sky-50"><ArrowUpRight className="w-4 h-4" /> Abrir</a>}</div></section><section className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm"><h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2"><ClipboardList className="w-4 h-4 text-sky-500" /> Flujo recomendado</h4><ol className="list-decimal pl-5 space-y-2 text-slate-700 text-sm">{flujo.map((f,i)=><li key={i}>{f}</li>)}</ol></section></div>);
+return (<div className="max-w-4xl mx-auto space-y-6"><section className="bg-gradient-to-br from-sky-50 to-cyan-50 rounded-2xl p-6 border border-sky-200"><h3 className="text-xl font-bold text-sky-800 mb-2 flex items-center gap-2"><Search className="w-5 h-5" /> Investigador: buscar sin alucinar</h3><p className="text-sky-900">La IA es muy útil para diseñar búsquedas, pero la fuente final debe ser el documento oficial o autorizado. Este constructor ayuda a preparar consultas que luego pueden alimentar un cuaderno de NotebookLM con materiales reales.</p></section><section className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm"><h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2"><Filter className="w-4 h-4 text-sky-500" /> Operadores útiles</h4><div className="overflow-x-auto"><table className="w-full text-sm"><thead><tr className="text-left text-slate-500 border-b border-slate-200"><th className="py-2 pr-3">Operador</th><th className="py-2 pr-3">Qué hace</th><th className="py-2">Ejemplo</th></tr></thead><tbody>{operadores.map((o)=><tr key={o.op} className="border-b border-slate-100 align-top"><td className="py-2 pr-3 font-mono text-sky-700">{o.op}</td><td className="py-2 pr-3 text-slate-600">{o.what}</td><td className="py-2 font-mono text-xs text-slate-700">{o.ex}</td></tr>)}</tbody></table></div></section><section className="bg-sky-50 rounded-2xl border border-sky-200 p-5"><h4 className="font-bold text-sky-800 mb-3 flex items-center gap-2"><Search className="w-4 h-4" /> Constructor de búsqueda</h4><div className="grid sm:grid-cols-5 gap-3 mb-3"><input value={frase} onChange={e=>setFrase(e.target.value)} placeholder="frase exacta" className="p-2 rounded-lg border border-slate-300 text-sm" /><input value={sitio} onChange={e=>setSitio(e.target.value)} placeholder="dominio oficial" className="p-2 rounded-lg border border-slate-300 text-sm" /><input value={tipo} onChange={e=>setTipo(e.target.value)} placeholder="pdf" className="p-2 rounded-lg border border-slate-300 text-sm" /><input value={titulo} onChange={e=>setTitulo(e.target.value)} placeholder="intitle" className="p-2 rounded-lg border border-slate-300 text-sm" /><input value={fecha} onChange={e=>setFecha(e.target.value)} placeholder="after:2024-01-01" className="p-2 rounded-lg border border-slate-300 text-sm" /></div><div className="bg-white rounded-lg border border-slate-200 p-3 font-mono text-sm text-slate-800 min-h-[2.5rem] break-words">{consulta || <span className="text-slate-400">Tu consulta aparecerá acá...</span>}</div><div className="flex gap-2 mt-3"><button onClick={copiar} disabled={!consulta} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-600 text-white text-sm font-medium hover:bg-sky-700 disabled:opacity-40">{copiado ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />} {copiado ? 'Copiado' : 'Copiar'}</button>{consulta && <button onClick={() => { navigator.clipboard?.writeText(url); setCopiado(true); setTimeout(() => setCopiado(false), 1500); }} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white border border-sky-300 text-sky-700 text-sm font-medium hover:bg-sky-50"><Copy className="w-4 h-4" /> Copiar enlace</button>}</div></section><section className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm"><h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2"><ClipboardList className="w-4 h-4 text-sky-500" /> Flujo recomendado</h4><ol className="list-decimal pl-5 space-y-2 text-slate-700 text-sm">{flujo.map((f,i)=><li key={i}>{f}</li>)}</ol></section></div>);
 };
 
 const App = () => {
