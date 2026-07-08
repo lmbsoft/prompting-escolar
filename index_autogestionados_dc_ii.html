@@ -143,11 +143,12 @@
   {
     "id": "t2",
     "title": "La estructura de un prompt efectivo para defensores",
-    "subtitle": "Rol, objetivo, contexto del caso, formato y criterios de calidad",
+    "subtitle": "Rol, objetivo, contexto, fuentes disponibles, formato y calidad",
     "reading": [
-      "Un prompt no es una consulta informal; es una instrucción de trabajo clara para tu asistente. En el contexto de la defensa pública, un prompt de calidad debe estructurarse con cinco elementos esenciales: el rol de la IA, el objetivo de la tarea, el contexto de la situación jurídica, el formato en que deseas la respuesta y los criterios de calidad o restricciones.",
+      "Un prompt no es una consulta informal; es una instrucción de trabajo clara para tu asistente. En el contexto de la defensa pública, un prompt de calidad debe estructurarse con seis elementos esenciales: el rol de la IA, el objetivo de la tarea, el contexto de la situación jurídica, las fuentes disponibles, el formato de salida y los criterios de calidad o restricciones.",
       "El rol le indica a la IA desde qué perspectiva técnica debe responder. Para tus tareas cotidianas, puedes pedirle que actúe como 'asistente técnico de análisis documental', 'corrector de estilo institucional', 'organizador de legajos' o 'preparador de esquemas de argumentación'. Esto evita respuestas genéricas y alinea el tono del resultado con el ámbito del Ministerio Público.",
       "El objetivo y el contexto deben ser sumamente específicos. En lugar de pedir 'ayúdame con una defensa de alimentos', el prompt debe detallar: 'Necesito estructurar un esquema de argumentos de defensa frente a una demanda de alimentos, considerando que el demandado realiza aportes en especie que no están siendo valorados'. El contexto debe incluir que nos regimos por el Código Civil y Comercial de la Nación y las particularidades de la defensoría provincial.",
+      "Las fuentes disponibles definen sobre qué base documental debe trabajar la IA. Al interrogar a tu asistente, debes aclararle qué textos tiene permitidos usar: 'analizá esta transcripción de audiencia que te pego', 'basate solo en los documentos en PDF cargados en este cuaderno de NotebookLM' o 'utilizá la ley provincial de Río Negro que te indico'. Delimitar el material de origen es crucial para que la IA no improvise ni alucine.",
       "El formato de salida determina cómo se presentará la información para que sea directamente útil en tu flujo de trabajo. Puedes solicitar que la IA te responda con una tabla de tres columnas (Hecho, Prueba asociada, Debilidad detectada), una lista de puntos numerados, una minuta estructurada para tu equipo, o un esquema con títulos y subtítulos. Esto evita bloques de texto interminables y difíciles de procesar.",
       "El criterio de calidad es el escudo contra errores. Consiste en indicarle a la IA qué debe evitar y cómo debe comportarse ante dudas. Un criterio básico en defensa es: 'No inventes normas ni precedentes; si un dato no está en el texto provisto, márcalo como [Falta información] y no asumas nada'. Esta restricción obliga a la IA a ser honesta y te ahorra tiempo en la revisión posterior."
     ],
@@ -155,10 +156,11 @@
       "Definir un rol de asistencia específico antes de hacer la consulta.",
       "Indicar con precisión el objetivo del borrador o análisis requerido.",
       "Aportar el contexto normativo y procesal sin incluir identidades reales.",
+      "Especificar las fuentes o documentos que la IA tiene permitido utilizar.",
       "Especificar el formato de salida (tablas, listas, esquemas) que facilite la lectura.",
       "Establecer la restricción explícita de no inventar datos y marcar vacíos."
     ],
-    "practice": "Reescribe una consulta vaga como 'ayudame a responder una demanda' usando la estructura: Rol + Objetivo + Contexto + Formato + Restricciones de Calidad. Compara la utilidad de la respuesta con la que obtendrías de una consulta simple."
+    "practice": "Reescribe una consulta vaga como 'ayudame a responder una demanda' usando la estructura completa de seis elementos: Rol + Objetivo + Contexto + Fuentes disponibles + Formato + Criterio de calidad. Pruébala en un asistente con un texto corto."
   },
   {
     "id": "t3",
@@ -178,14 +180,14 @@
       "Anonimizar datos sensibles en tus apuntes antes de subirlos a la nube.",
       "Usar la consulta digital de tus notas como apoyo, conservando el papel original como referencia."
     ],
-    "practice": "Toma una hoja de notas manuscritas que hayas tomado recientemente (que no contenga datos reservados). Escanéala con tu celular, extrae el texto mediante IA y pídele al asistente que organice una minuta de trabajo con base en tus anotaciones. Corrige cualquier palabra que haya sido leída de forma incorrecta."
+    "practice": "Toma una hoja de notas manuscritas que hayas tomado recently (que no contenga datos reservados). Escanéala con tu celular, extrae el texto mediante IA y pídele al asistente que organice una minuta de trabajo con base en tus anotaciones. Corrige cualquier palabra que haya sido leída de forma incorrecta."
   },
   {
     "id": "t4",
     "title": "Privacidad y reserva en el Ministerio Público",
     "subtitle": "Diferencias de uso entre chats públicos y la seguridad de NotebookLM",
     "reading": [
-      "En el ámbito de la defensa pública, la confidencialidad no es opcional; es un deber legal y ético. Por ello, la incorporación de herramientas de IA debe realizarse con un conocimiento claro de las condiciones de privacidad de cada plataforma. La regla de oro es simple: no todos los chats en internet manejan la información de la misma manera, y es vital saber dónde pones los datos de tu trabajo.",
+      "En el ámbito de la defensa pública, la privacidad y la confidencialidad no deben enseñarse como un susto que paralice el trabajo, sino como un criterio profesional indispensable. La pregunta que debemos hacernos no es simplemente '¿la IA es peligrosa?', sino '¿qué tipo de información estoy cargando, en qué herramienta específica, bajo qué tipo de cuenta, con qué finalidad técnica y bajo qué reglas institucionales?'. Ese enfoque permite incorporar tecnología con tranquilidad y cuidado.",
       "Los asistentes de chat públicos generales (como las versiones gratuitas de ChatGPT, Gemini o Copilot) suelen guardar las conversaciones para que sus equipos revisores las auditen y para utilizarlas en el reentrenamiento de sus futuros modelos de lenguaje. Si pegas un escrito con datos de un asistido o un borrador interno, esa información sale de tu control y podría ser expuesta. Por ende, estas herramientas deben usarse únicamente para tareas genéricas o con datos de práctica completamente despersonalizados.",
       "NotebookLM de Google presenta un esquema de privacidad diferente que lo vuelve muy adecuado para la gestión documental de uso profesional. Según los términos de servicio actuales de la herramienta, las fuentes que cargas en tus cuadernos de trabajo no se utilizan para entrenar los modelos públicos de Google. Los documentos quedan restringidos a tu espacio privado y a las personas con quienes decidas compartir activamente el cuaderno, ofreciendo un entorno seguro para analizar normativa, apuntes o jurisprudencia.",
       "A pesar de esta seguridad adicional, la prudencia exige adoptar la práctica de la anonimización u ofuscación de datos. Antes de cargar cualquier documento de trabajo, acostúmbrate a realizar un filtrado sencillo: reemplaza nombres reales por iniciales o etiquetas neutras (ej. 'Asistido A', 'Demandante B'), borra números de expedientes específicos o reemplázalos por códigos ficticios, y quita DNI, domicilios o datos de contacto. La IA conservará la lógica del problema y podrá ayudarte exactamente igual.",
