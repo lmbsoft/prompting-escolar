@@ -1,0 +1,3221 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio de IA para la Defensa Pública y Gestión Documental</title>
+    <meta name="description"
+        content="Laboratorio de IA para defensa pública, privacidad, búsqueda en buscadores oficiales y procesamiento seguro con NotebookLM.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "lucide-react": "https://esm.sh/lucide-react@0.292.0"
+      }
+    }
+  </script>
+    <script src="./dc_ii_visual_sequences.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        :root {
+            --text: #0f172a;
+            --bg: #f8fafc;
+            --focus: #0ea5e9;
+        }
+
+        html {
+            font-size: clamp(18px, 1.2vw + 14px, 22px);
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.72;
+            letter-spacing: 0.01em;
+        }
+
+        p,
+        li,
+        label,
+        input,
+        textarea,
+        select,
+        button {
+            font-size: 1rem;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            line-height: 1.3;
+            letter-spacing: 0.005em;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            min-height: 48px;
+            border-radius: 0.75rem;
+        }
+
+        textarea {
+            min-height: 120px;
+        }
+
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible,
+        select:focus-visible,
+        a:focus-visible {
+            outline: 3px solid var(--focus);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 768px) {
+
+            button,
+            input,
+            textarea,
+            select {
+                min-height: 52px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800">
+    <div id="root"></div>
+    <script type="text/babel" data-type="module">
+        import React, { useMemo, useState } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import {
+            BrainCircuit, GraduationCap, Gamepad2, MessageCircle, BookOpen, Sparkles,
+            ShieldAlert, CheckCircle2, ChevronLeft, ChevronRight, Copy, Check,
+            Target, Lightbulb, Clock, PenSquare, Microscope, Library, ArrowUpRight,
+            ClipboardList, AlertTriangle, Lock, Heart, RefreshCw, Zap, Image as ImageIcon, Wand2, Palette, Camera, Table2,
+            Mic, Search, Video, Cog, Filter, Volume2, Share2, Route
+        } from 'lucide-react';
+
+        // ═══════════════════════════════════════════════════════════════
+        // DATA: MÓDULOS DE TEORÍA (12 módulos para Defensa Pública)
+        // ═══════════════════════════════════════════════════════════════
+
+        const theoryModules = [
+  {
+    "id": "t1",
+    "title": "IA generativa en la defensa pública: asistente, no autoridad",
+    "subtitle": "Cómo pensar la herramienta en el Ministerio Público sin delegar el criterio técnico",
+    "reading": [
+      "Una IA generativa puede procesar, resumir, estructurar, redactar y proponer esquemas de trabajo con una velocidad excepcional. Sin embargo, no razona como un profesional del derecho ni asume responsabilidad por las decisiones tomadas. Su funcionamiento se basa en la predicción estadística de palabras a partir de patrones de entrenamiento. Por ello, puede sonar sumamente convincente incluso al cometer errores. En la defensa pública, este límite es fundamental: la herramienta sirve para preparar, ordenar y redactar borradores, pero el control final y la decisión estratégica son siempre del defensor.",
+      "Conviene ver a la IA como una asistente nueva, muy rápida y disponible, pero que no conoce la realidad de tu defensoría ni las particularidades de la provincia de Río Negro hasta que se las detallas. Si le pides una instrucción vaga como 'haceme un escrito', obtendrás una respuesta genérica y de poco valor. Si en cambio le explicas el tipo de caso, el rol de la defensa, las normas de procedimiento locales aplicables, el tono institucional y los límites de lo que no debe inventar, el borrador resultante será de alta calidad.",
+      "El primer paso para trabajar de forma segura es separar la fase de generación de la fase de verificación. Generar implica usar la IA para organizar notas de audiencias, crear un esquema de argumentos o redactar borradores de oficios. Verificar implica revisar de manera exhaustiva cada norma, fecha, precedente, plazo procesal o dato del caso contra el expediente y las fuentes oficiales. La IA te ahorra tiempo en la primera etapa, pero la verificación final es una tarea profesional intransferible.",
+      "Para el trabajo con expedientes y documentos de la defensa, la IA es mucho más útil y segura cuando se limita a procesar fuentes cargadas por ti mismo, en lugar de consultar su conocimiento general de internet. Aquí radica la diferencia entre asistentes de chat públicos y herramientas como NotebookLM. Mientras que los chats generales pueden alucinar respuestas basados en probabilidades, NotebookLM se ciñe a los textos que tú le provees y genera citas directas hacia esos documentos, facilitando la revisión.",
+      "No es necesario comenzar automatizando tareas complejas de la defensoría. El mejor inicio consiste en delegar tareas sencillas y de bajo riesgo: convertir notas manuscritas de una reunión de equipo en una minuta, pedir una lista de puntos a verificar en un caso genérico, o resumir una capacitación procesal extensa en puntos clave. La familiaridad con la tecnología se construye paso a paso, integrándola en tu rutina diaria con calma."
+    ],
+    "checklist": [
+      "Tratar siempre los textos generados por IA como borradores sujetos a revisión.",
+      "Dar contexto de la defensa, normas aplicables y formato al formular una pregunta.",
+      "Separar la fase de generación (asistente) de la fase de verificación (profesional).",
+      "Utilizar herramientas con fuentes delimitadas (NotebookLM) al trabajar con expedientes.",
+      "Comenzar con tareas pequeñas y conocidas para calibrar la confianza en el sistema."
+    ],
+    "practice": "Toma un fallo público o una resolución judicial genérica de la provincia que ya conozcas bien. Pídele a un asistente de chat general que la resuma a partir de tu descripción, y luego sube el PDF oficial a un cuaderno de NotebookLM y hazle la misma pregunta. Compara cómo la presencia de la fuente delimitada reduce la vaguedad."
+  },
+  {
+    "id": "t2",
+    "title": "La estructura de un prompt efectivo para defensores",
+    "subtitle": "Rol, objetivo, contexto del caso, formato y criterios de calidad",
+    "reading": [
+      "Un prompt no es una consulta informal; es una instrucción de trabajo clara para tu asistente. En el contexto de la defensa pública, un prompt de calidad debe estructurarse con cinco elementos esenciales: el rol de la IA, el objetivo de la tarea, el contexto de la situación jurídica, el formato en que deseas la respuesta y los criterios de calidad o restricciones.",
+      "El rol le indica a la IA desde qué perspectiva técnica debe responder. Para tus tareas cotidianas, puedes pedirle que actúe como 'asistente técnico de análisis documental', 'corrector de estilo institucional', 'organizador de legajos' o 'preparador de esquemas de argumentación'. Esto evita respuestas genéricas y alinea el tono del resultado con el ámbito del Ministerio Público.",
+      "El objetivo y el contexto deben ser sumamente específicos. En lugar de pedir 'ayúdame con una defensa de alimentos', el prompt debe detallar: 'Necesito estructurar un esquema de argumentos de defensa frente a una demanda de alimentos, considerando que el demandado realiza aportes en especie que no están siendo valorados'. El contexto debe incluir que nos regimos por el Código Civil y Comercial de la Nación y las particularidades de la defensoría provincial.",
+      "El formato de salida determina cómo se presentará la información para que sea directamente útil en tu flujo de trabajo. Puedes solicitar que la IA te responda con una tabla de tres columnas (Hecho, Prueba asociada, Debilidad detectada), una lista de puntos numerados, una minuta estructurada para tu equipo, o un esquema con títulos y subtítulos. Esto evita bloques de texto interminables y difíciles de procesar.",
+      "El criterio de calidad es el escudo contra errores. Consiste en indicarle a la IA qué debe evitar y cómo debe comportarse ante dudas. Un criterio básico en defensa es: 'No inventes normas ni precedentes; si un dato no está en el texto provisto, márcalo como [Falta información] y no asumas nada'. Esta restricción obliga a la IA a ser honesta y te ahorra tiempo en la revisión posterior."
+    ],
+    "checklist": [
+      "Definir un rol de asistencia específico antes de hacer la consulta.",
+      "Indicar con precisión el objetivo del borrador o análisis requerido.",
+      "Aportar el contexto normativo y procesal sin incluir identidades reales.",
+      "Especificar el formato de salida (tablas, listas, esquemas) que facilite la lectura.",
+      "Establecer la restricción explícita de no inventar datos y marcar vacíos."
+    ],
+    "practice": "Reescribe una consulta vaga como 'ayudame a responder una demanda' usando la estructura: Rol + Objetivo + Contexto + Formato + Restricciones de Calidad. Compara la utilidad de la respuesta con la que obtendrías de una consulta simple."
+  },
+  {
+    "id": "t3",
+    "title": "Del papel al flujo digital sin perder el hábito de pensar",
+    "subtitle": "Estrategias para digitalizar y procesar tus apuntes de audiencias",
+    "reading": [
+      "El apego al papel no es un obstáculo para la incorporación de tecnología; al contrario, escribir a mano es una de las mejores herramientas de análisis intelectual que existen. Escribir notas manuscritas durante una audiencia, una entrevista de defensa o una inspección ayuda a fijar la atención y estructurar ideas. La IA no viene a reemplazar el papel, sino a construir un puente digital para que esos apuntes se vuelvan consultables y útiles para todo tu equipo.",
+      "El proceso para integrar tus notas en papel al flujo de trabajo digital consta de tres pasos sencillos: captura, extracción y consulta. En primer lugar, utilizas el celular para tomar una fotografía clara o escanear la hoja (usando aplicaciones gratuitas de escaneo con buena iluminación). Luego, utilizas una herramienta de reconocimiento de texto (OCR) para extraer el contenido de la imagen a texto digital. Por último, cargas ese texto en tu cuaderno de NotebookLM para poder interrogarlo.",
+      "Para facilitar que la IA lea tus apuntes manuscritos, no es necesario que cambies tu caligrafía personal, sino que incorpores pequeños hábitos de orden visual. Intenta usar encabezados claros con fecha y tema, y separa la hoja en bloques definidos (por ejemplo, una sección para 'Hechos relatados', otra para 'Prueba mencionada' y una última para 'Pendientes de verificar'). Una estructura mínima en papel mejora drásticamente el reconocimiento digital.",
+      "Una vez que tus notas están digitalizadas en NotebookLM, puedes pedirle a la IA que realice tareas operativas que te ahorrarían horas de transcripción manual: 'Extrae los compromisos asumidos por cada parte en esta reunión', 'Arma una lista de preguntas para la próxima audiencia basándote en estas anotaciones' o 'Resume los puntos críticos que debo contrastar con el expediente judicial'.",
+      "Recuerda siempre la regla de privacidad. Al digitalizar apuntes personales que contienen datos de personas asistidas, evalúa si es necesario subir el texto completo o si es más prudente anonimizar los nombres antes de procesarlos. La digitalización inteligente te permite conservar el placer de escribir a mano sobre tu escritorio, mientras disfrutas de la velocidad de búsqueda de un archivo digital."
+    ],
+    "checklist": [
+      "Escanear las hojas de apuntes con buena iluminación y encuadre completo.",
+      "Revisar el texto extraído digitalmente para corregir errores de lectura de nombres o fechas.",
+      "Estructurar notas futuras con secciones separadas (hechos, dudas, tareas).",
+      "Anonimizar datos sensibles en tus apuntes antes de subirlos a la nube.",
+      "Usar la consulta digital de tus notas como apoyo, conservando el papel original como referencia."
+    ],
+    "practice": "Toma una hoja de notas manuscritas que hayas tomado recientemente (que no contenga datos reservados). Escanéala con tu celular, extrae el texto mediante IA y pídele al asistente que organice una minuta de trabajo con base en tus anotaciones. Corrige cualquier palabra que haya sido leída de forma incorrecta."
+  },
+  {
+    "id": "t4",
+    "practice": "Tomá un párrafo inventado con datos personales ficticios. Practicá dos versiones: una completa y otra anonimizada. Pedile a la IA que explique si la versión anonimizada conserva lo necesario para trabajar."
+  },
+  {
+    "id": "t5",
+    "title": "Alucinaciones en derecho: dónde están los riesgos",
+    "subtitle": "Normas, precedentes, citas y plazos deben verificarse siempre",
+    "reading": [
+      "En derecho, una alucinación no es solo un error simpático de una herramienta. Puede ser una cita inexistente, una norma derogada presentada como vigente, un tribunal mal identificado, una fecha procesal equivocada, una doctrina inventada o una síntesis que omite un matiz decisivo. El riesgo aumenta porque la IA escribe con mucha seguridad: una referencia falsa puede sonar perfectamente verosímil.",
+      "El primer recaudo es no pedirle a un asistente general que 'busque jurisprudencia' y confiar en el resultado como si fuera una base oficial. Puede ayudar a imaginar términos de búsqueda, clasificar líneas argumentales o sugerir qué tipo de precedente podría ser relevante, pero la búsqueda real debería hacerse en sistemas oficiales o bases confiables. Una vez encontrados y descargados los documentos, NotebookLM puede ayudar a leerlos, compararlos y resumirlos con citas.",
+      "Un flujo prudente sería: pedir a la IA que proponga palabras clave y operadores de búsqueda; buscar en fuentes oficiales o bases autorizadas; descargar los fallos, resoluciones o normas; cargar esos documentos en NotebookLM; preguntar con exigencia de cita; verificar los pasajes relevantes en el original. La IA guía el camino, pero el documento fuente manda.",
+      "También conviene pedirle que exponga incertidumbre. Frases útiles: 'no completes datos ausentes', 'si una fuente no lo dice, marcá [no surge de las fuentes]', 'separá hechos, inferencias y recomendaciones', 'mostrá la cita exacta o indicá que no hay cita'. Estas instrucciones no eliminan el riesgo, pero lo reducen y educan a la herramienta a trabajar con más prudencia.",
+      "La revisión humana debe concentrarse en los puntos de mayor impacto: identidad de personas, fechas, números, competencia, estado procesal, vigencia normativa, citas textuales, sentido de una sentencia y consecuencias prácticas. Una respuesta puede ser útil aunque no sea final; lo peligroso es usarla como cierre cuando solo debería ser punto de partida."
+    ],
+    "checklist": [
+      "No confiar en citas jurídicas generadas sin fuente verificable.",
+      "Usar IA para construir búsquedas, no para inventar jurisprudencia.",
+      "Descargar documentos desde fuentes oficiales o autorizadas.",
+      "Cargar los documentos en NotebookLM y pedir respuestas con cita.",
+      "Verificar en el original todo lo que tenga impacto jurídico."
+    ],
+    "practice": "Pedile a un asistente general: 'ayudame a diseñar una búsqueda oficial sobre [tema]'. Después usá esas palabras clave en una fuente real, descargá un documento y procesalo en NotebookLM."
+  },
+  {
+    "id": "t6",
+    "title": "Búsqueda jurídica asistida",
+    "subtitle": "Usar IA para buscar mejor en sitios oficiales y no depender de respuestas inventadas",
+    "reading": [
+      "La IA puede ser muy útil antes de buscar. Muchas veces el problema no es la falta de información, sino no saber con qué palabras, filtros o dominios encontrarla. Un asistente puede ayudar a transformar una necesidad difusa en una estrategia de búsqueda: sinónimos, términos técnicos, operadores, dominios oficiales, tipos de archivo y rangos de fecha.",
+      "Para búsquedas jurídicas, los operadores ayudan mucho: comillas para frase exacta, site: para limitar a un dominio oficial, filetype:pdf para encontrar documentos descargables, intitle: para localizar resoluciones o sentencias, after: y before: para acotar fechas. La IA puede construir varias consultas y explicar para qué sirve cada una.",
+      "La diferencia clave es que el asistente no debería ser la fuente final. Puede decir: 'probá buscar site:jusrionegro.gov.ar filetype:pdf amparo salud' o 'buscá en el boletín oficial con estas palabras'. Después la persona entra al sitio, revisa resultados, descarga documentos y conserva el enlace o archivo. Recién ahí el material puede ir a NotebookLM.",
+      "Cuando un buscador oficial es limitado, se puede usar Google para buscar dentro del sitio con site:. Cuando una página cambia o desaparece, conviene guardar PDF, fecha de consulta y enlace. La IA puede ayudar a armar una ficha de fuente: nombre del documento, organismo, fecha, enlace, resumen y motivo por el que se incorpora al cuaderno.",
+      "Esta práctica también enseña a no confundir 'respuesta rápida' con 'fuente'. Una respuesta rápida puede orientar; una fuente descargada y revisada respalda. Para trabajo jurídico, ese hábito vale más que cualquier truco de IA."
+    ],
+    "checklist": [
+      "Pedir a la IA una estrategia de búsqueda, no una verdad final.",
+      "Usar operadores: site:, filetype:, comillas, intitle:, after:, before:.",
+      "Priorizar sitios oficiales y documentos primarios.",
+      "Guardar documentos, enlaces y fecha de consulta.",
+      "Cargar a NotebookLM solo fuentes seleccionadas y revisadas."
+    ],
+    "practice": "Pedile a la IA cinco consultas distintas para encontrar normativa o jurisprudencia sobre un tema. Ejecutá al menos una, descargá un PDF y armá una ficha de fuente."
+  },
+  {
+    "id": "t7",
+    "title": "NotebookLM como mesa de trabajo documental",
+    "subtitle": "Cuadernos, fuentes, citas, notas y preguntas recurrentes",
+    "reading": [
+      "NotebookLM funciona mejor cuando se lo piensa como una mesa de trabajo documental, no como un chat suelto. Cada cuaderno debería tener un propósito claro: un tema, un conjunto de normativa, una carpeta de jurisprudencia, un expediente preparado para estudio, una capacitación interna o una base de consulta del equipo. El nombre del cuaderno importa porque ayuda a no mezclar materiales.",
+      "Las fuentes son el corazón del cuaderno. Pueden ser PDFs, documentos, planillas, presentaciones, textos pegados, imágenes, archivos de audio, URLs web y videos públicos de YouTube con transcripción disponible. Cada fuente debe tener un nombre claro. Si se cargan diez documentos llamados 'descarga.pdf', el cuaderno se vuelve confuso; si se renombran como 'Ley X - texto vigente', 'Fallo A - cámara - fecha', 'Informe pericial - versión 2', la consulta mejora.",
+      "La potencia aparece cuando se pregunta con precisión: 'respondé solo con base en las fuentes cargadas', 'citá cada afirmación', 'si no surge de las fuentes, decilo', 'armá una tabla con fuente, pasaje y conclusión'. NotebookLM muestra citas hacia los documentos, lo que permite volver al párrafo original. Esa vuelta al original es la diferencia entre usar IA como atajo riesgoso y usarla como índice inteligente.",
+      "También se pueden guardar notas dentro del cuaderno. Una nota puede ser una conclusión preliminar, una lista de pendientes, un criterio de lectura o una pregunta que quedó abierta. Con el tiempo, el cuaderno no solo contiene fuentes: contiene una memoria de trabajo. Para equipos, esto evita que cada persona vuelva a reconstruir desde cero lo que ya se leyó.",
+      "La disciplina de mantenimiento es sencilla: separar cuadernos por tema, revisar fuentes viejas, eliminar duplicados, actualizar versiones y dejar una nota inicial que explique para qué existe el cuaderno y qué no debe hacerse con él. Esa nota inicial funciona como instrucciones de uso para la persona y para el equipo."
+    ],
+    "checklist": [
+      "Crear un cuaderno por tema o finalidad, no uno gigante para todo.",
+      "Nombrar fuentes con claridad antes de cargarlas.",
+      "Preguntar siempre con exigencia de cita.",
+      "Guardar notas de conclusiones, dudas y pendientes.",
+      "Actualizar fuentes cuando cambie una versión o aparezca material nuevo."
+    ],
+    "practice": "Diseñá la estructura de tres cuadernos posibles: uno de normativa, uno de jurisprudencia y uno de preparación de reunión. Para cada uno, listá fuentes, preguntas típicas y cuidados de privacidad."
+  },
+  {
+    "id": "t8",
+    "title": "Multimedia dentro del trabajo documental",
+    "subtitle": "Audios, videos, imágenes y transcripciones como fuentes consultables",
+    "reading": [
+      "NotebookLM no se limita a PDFs. Puede trabajar con archivos de audio, imágenes, documentos, planillas, URLs y videos públicos de YouTube cuando tienen transcripción. Esto es muy importante para equipos que reciben explicaciones orales, grabaciones de reuniones, capacitaciones, entrevistas, audiencias públicas, conferencias o videos institucionales. Un material que antes quedaba como 'hay que escucharlo entero' puede convertirse en una fuente consultable.",
+      "Con audios, la herramienta transcribe al importar y permite preguntar sobre el contenido. El valor no está solo en obtener una desgrabación, sino en cruzarla con documentos escritos: '¿qué puntos del audio coinciden con el informe?', '¿qué temas se mencionan oralmente pero no aparecen en el documento?', 'armá una lista de compromisos asumidos', 'extraé marcas de tiempo aproximadas para revisar'.",
+      "Con videos públicos, la fuente suele ser la transcripción disponible. Eso significa que no analiza necesariamente toda la imagen del video, sino el texto asociado. Para capacitaciones o exposiciones, alcanza para resumir conceptos, extraer definiciones y preparar preguntas. Para hechos visuales o evidencia audiovisual, siempre hay que revisar el video original.",
+      "Con imágenes, puede ser útil para notas manuscritas, capturas, fotos de pizarras o documentos escaneados. Pero la lectura de imagen puede fallar. En nombres, fechas, números y abreviaturas, hay que controlar contra el original. La imagen sirve como puerta de entrada, no como garantía.",
+      "La producción multimedia de NotebookLM, como resúmenes de audio o video, puede ayudar a estudiar y compartir internamente. Un resumen en audio de fuentes cargadas sirve para repasar mientras se viaja o antes de una reunión. Un video overview o una presentación puede servir para explicar un conjunto de documentos. Pero si el contenido va a circular formalmente, debe revisarse, editarse y validarse."
+    ],
+    "checklist": [
+      "Usar audios para transcribir y preguntar sobre reuniones o capacitaciones.",
+      "Cruzar audio con documentos escritos para detectar coincidencias y huecos.",
+      "Recordar que YouTube aporta principalmente transcripción, no verificación visual completa.",
+      "Revisar imágenes y OCR contra el original cuando haya datos críticos.",
+      "Usar resúmenes multimedia para estudiar, no como documento final sin revisión."
+    ],
+    "practice": "Subí un audio no sensible o un video público de capacitación. Pedí resumen, lista de conceptos, preguntas pendientes y una tabla de marcas de tiempo aproximadas para revisar."
+  },
+  {
+    "id": "t9",
+    "title": "Colaboración de equipo con IA",
+    "subtitle": "Compartir cuadernos, distribuir tareas y conservar trazabilidad",
+    "reading": [
+      "La IA se vuelve más útil cuando deja de ser una herramienta individual y pasa a formar parte de una rutina de equipo. No significa que todos hagan todo en IA, sino que haya acuerdos mínimos: qué herramienta se usa para cada tarea, qué datos pueden cargarse, cómo se nombran fuentes, quién verifica, dónde queda la versión final y qué se comparte.",
+      "NotebookLM puede funcionar como base común. Un cuaderno compartido permite que varias personas consulten las mismas fuentes, vean citas y eviten repetir preguntas. Para que eso no sea caótico, conviene crear una nota inicial con reglas: finalidad del cuaderno, fuentes incluidas, responsable de actualización, criterios de privacidad y usos permitidos.",
+      "Un flujo colaborativo posible: una persona reúne documentos oficiales; otra los revisa y renombra; otra carga fuentes y hace preguntas preliminares; otra valida citas; otra redacta una minuta. La IA ayuda a ordenar el proceso, pero el equipo conserva roles claros. La herramienta no reemplaza el acuerdo de trabajo.",
+      "También conviene distinguir permisos. No todo cuaderno debe ser público ni compartido ampliamente. Algunos pueden ser de lectura para el equipo; otros solo de edición para responsables. Si se generan audios, presentaciones o infografías, hay que decidir si son materiales internos de estudio o piezas que requieren revisión formal antes de circular.",
+      "La colaboración también incluye capacitación. Una persona con más práctica puede crear prompts modelo, plantillas de cuadernos y listas de chequeo para que el resto no empiece de cero. El objetivo no es que todos sean expertos en IA, sino que el equipo tenga una forma común y prudente de trabajar."
+    ],
+    "checklist": [
+      "Definir qué herramienta se usa para cada tipo de tarea.",
+      "Crear reglas de privacidad y nombrado de fuentes.",
+      "Asignar responsable de carga, revisión y actualización.",
+      "Separar permisos de lectura y edición según necesidad.",
+      "Guardar prompts y plantillas útiles para el equipo."
+    ],
+    "practice": "Diseñá una rutina de equipo de 30 minutos para crear un cuaderno compartido: quién trae fuentes, quién carga, quién pregunta, quién verifica y qué queda documentado."
+  },
+  {
+    "id": "t10",
+    "title": "Borradores, escritos y estilo institucional",
+    "subtitle": "Cómo usar IA para redactar sin perder voz, rigor ni control",
+    "reading": [
+      "La IA puede redactar rápido, pero la velocidad no debe confundirse con calidad. En documentos jurídicos o institucionales, el objetivo inicial puede ser ordenar ideas, convertir notas en estructura, simplificar lenguaje, detectar repeticiones o preparar una primera versión. La versión final requiere lectura humana, revisión técnica y adecuación al estilo del organismo o del equipo.",
+      "Para pedir un borrador, conviene evitar que la IA invente hechos o fundamentos. Una instrucción prudente sería: 'no agregues hechos, normas ni jurisprudencia que no estén en mis fuentes; cuando falte algo, dejá [completar] o [verificar]'. Esto permite aprovechar la redacción sin abrir la puerta a contenido falso.",
+      "Una técnica útil es trabajar en capas. Primero pedir un esquema. Después revisar ese esquema. Luego pedir desarrollo de una sección. Después pedir mejora de claridad. Finalmente pedir una checklist de verificación. Cada capa tiene control humano. Pedir 'hacé todo el escrito' en un solo paso suele producir textos más largos, genéricos y difíciles de revisar.",
+      "También puede usarse para adaptar tono: de una nota informal a una minuta institucional; de un informe técnico a lenguaje claro; de una lista de apuntes a un correo breve; de una explicación larga a un resumen ejecutivo. En esos casos, el contenido ya existe y la IA ayuda a mejorar forma, orden y comprensión.",
+      "La regla práctica: cuanto más se acerque el resultado a una decisión formal, más estricta debe ser la revisión. La IA puede ser excelente para preparar el terreno y ahorrar tiempo de escritura, pero la firma, el criterio y la responsabilidad no se automatizan."
+    ],
+    "checklist": [
+      "Pedir primero estructura y después desarrollo por partes.",
+      "Prohibir expresamente inventar hechos, normas o precedentes.",
+      "Usar [completar] y [verificar] para datos ausentes.",
+      "Mejorar claridad y estilo sin cambiar el sentido jurídico.",
+      "Hacer revisión técnica antes de cualquier uso formal."
+    ],
+    "practice": "Tomá notas ficticias de un caso simple. Pedí primero un esquema, corregilo, y recién después pedí una minuta institucional de una página con campos [verificar]."
+  },
+  {
+    "id": "t11",
+    "title": "Planillas y registros para controlar trabajo",
+    "subtitle": "Datos mínimos, seguimiento de pendientes y uso prudente de información",
+    "reading": [
+      "Aunque el trabajo principal esté en sistemas de gestión institucionales, muchas tareas previas o complementarias se ordenan mejor con planillas simples: seguimiento de documentos, agenda de audiencias, fuentes descargadas, normativa relevante, pedidos pendientes, control de versiones, tareas del equipo. La IA puede ayudar a diseñar esas planillas sin exigir conocimientos avanzados.",
+      "Una buena planilla no es una colección de textos sueltos. Cada fila debe representar un registro y cada columna un tipo de dato. Por ejemplo: fecha, tema, fuente, estado, responsable, próximo paso, vencimiento, observaciones no sensibles. Esa estructura permite filtrar, ordenar y convertir el seguimiento en rutina.",
+      "La IA puede proponer columnas, fórmulas simples y formatos condicionales. Por ejemplo, colorear tareas vencidas, contar pendientes por responsable o separar fuentes verificadas de fuentes por revisar. Lo importante es que la planilla no duplique información sensible innecesaria ni compita con el sistema oficial. Debe ser apoyo de organización, no repositorio paralelo descontrolado.",
+      "Para equipos, una planilla compartida con permisos adecuados puede reducir mensajes dispersos. Pero hay que definir qué datos van y cuáles no. A veces alcanza con códigos, etiquetas y estados sin incluir nombres completos o detalles sensibles. El diseño debe cuidar tanto la eficiencia como la confidencialidad.",
+      "El hábito clave es actualizar poco y seguido. Cinco minutos al cierre del día para marcar qué se hizo, qué falta y quién sigue pueden ahorrar mucho tiempo. La IA puede ayudar a revisar la planilla y preguntar: '¿qué está atrasado?', '¿qué fuente falta?', '¿qué tareas conviene priorizar mañana?'."
+    ],
+    "checklist": [
+      "Diseñar columnas claras y estables.",
+      "No duplicar datos sensibles si no son necesarios.",
+      "Usar estados simples: pendiente, en revisión, verificado, cerrado.",
+      "Agregar responsable y próximo paso para cada fila.",
+      "Revisar la planilla semanalmente con ayuda de IA."
+    ],
+    "practice": "Pedile a la IA una planilla de seguimiento documental con 10 columnas, fórmula para contar pendientes y reglas de privacidad sobre qué no registrar."
+  },
+  {
+    "id": "t12",
+    "title": "Aprender IA con paciencia adulta",
+    "subtitle": "Una habilidad por vez, con práctica real y sin sentirse fuera de tiempo",
+    "reading": [
+      "Aprender IA no exige volverse técnica ni abandonar formas de trabajo que ya funcionan. Exige construir algunas rutinas nuevas: formular pedidos claros, revisar resultados, distinguir herramientas, cuidar datos y practicar con casos reales. Esa curva se puede transitar de manera tranquila, especialmente si se empieza por tareas que ya forman parte del día laboral.",
+      "La sensación de 'ya soy grande para aprender esto' suele aparecer cuando la tecnología se presenta como un mundo cerrado. Pero en IA, muchas habilidades valiosas son habilidades profesionales conocidas: preguntar bien, dar contexto, detectar inconsistencias, organizar información, pedir fuentes, revisar borradores. La diferencia es que ahora esas habilidades se aplican en conversación con una herramienta.",
+      "Un plan razonable es aprender por semanas. Semana uno: prompts básicos y privacidad. Semana dos: papel a digital y NotebookLM. Semana tres: búsqueda oficial y verificación. Semana cuatro: colaboración y planillas. No hace falta dominar todo. Hace falta incorporar una rutina útil que ahorre tiempo y mejore el control del trabajo.",
+      "La práctica debe ser segura. Usar ejemplos ficticios o documentos públicos al principio permite equivocarse sin consecuencias. Después se avanza a materiales propios de baja sensibilidad. Recién cuando hay criterio, se evalúa qué información sensible puede o no puede cargarse, bajo qué cuenta y con qué autorización.",
+      "La medida del éxito no es usar IA para todo. Es saber cuándo conviene usarla, cuándo no, qué herramienta elegir y cómo revisar. Esa combinación de prudencia y utilidad es la que puede ayudar a una persona y a su equipo a incorporar IA sin perder identidad profesional ni control del trabajo."
+    ],
+    "checklist": [
+      "Aprender una habilidad por semana, no todo junto.",
+      "Practicar primero con documentos públicos o ficticios.",
+      "Guardar prompts que funcionaron como plantillas.",
+      "Elegir herramienta según tarea: asistente general, buscador oficial o NotebookLM.",
+      "Medir utilidad por tiempo ahorrado y mejor control, no por novedad."
+    ],
+    "practice": "Armá un plan personal de cuatro semanas con sesiones de 30 minutos. Cada sesión debe terminar con un resultado concreto: un prompt guardado, un cuaderno creado, una búsqueda oficial o una plantilla de equipo."
+  }
+];
+
+const promptLevels = [
+{ id: 'inicio', label: `Nivel 1: Exploración guiada`, hint: `Para empezar con seguridad y foco.` },
+{ id: 'profundizar', label: `Nivel 2: Trabajo con precisión`, hint: `Para producir resultados más sólidos.` },
+{ id: 'proyectar', label: `Nivel 3: Interacción sofisticada`, hint: `Para proyectos largos y motivantes.` }
+];
+
+// ═══════════════════════════════════════════════════════════════
+// DATA: ITEMS DE PROMPTS (80 items)
+// ═══════════════════════════════════════════════════════════════
+
+const promptItems = [
+  {
+    "id": "p1",
+    "level": "inicio",
+    "domain": "Primeros pasos",
+    "title": "Explicación paciente de una herramienta",
+    "objective": "Aprender una función digital sin sentirse apurada.",
+    "prompt": "Actuá como instructor digital paciente. Necesito aprender a usar [herramienta o función] desde cero. Explicame en pasos cortos, sin jerga, con una acción por paso. Después de cada paso, decime qué debería ver en pantalla y cuál es el error más común.",
+    "why": "Convierte una dificultad tecnológica en una secuencia practicable."
+  },
+  {
+    "id": "p2",
+    "level": "inicio",
+    "domain": "Papel a digital",
+    "title": "Convertir apuntes manuscritos en minuta",
+    "objective": "Aprovechar notas en papel como insumo de trabajo.",
+    "prompt": "Te voy a pasar el texto extraído de una nota manuscrita. Actuá como asistente de organización documental. Convertí estas notas en una minuta clara con secciones: tema, hechos mencionados, dudas, compromisos, próximos pasos y datos a verificar. No agregues información que no esté en la nota.",
+    "why": "Respeta el modo de tomar apuntes y lo transforma en material reutilizable."
+  },
+  {
+    "id": "p3",
+    "level": "inicio",
+    "domain": "Privacidad",
+    "title": "Anonimizar antes de consultar",
+    "objective": "Preparar un texto para usar IA sin exponer datos personales.",
+    "prompt": "Actuá como asistente de privacidad. Te voy a pegar un texto ficticio o de práctica. Indicame qué datos deberían anonimizarse antes de usarlo en una IA pública. Proponé una versión reemplazando nombres, domicilios, documentos, teléfonos y números de expediente por etiquetas genéricas.",
+    "why": "Instala una rutina prudente sin frenar el aprendizaje."
+  },
+  {
+    "id": "p4",
+    "level": "inicio",
+    "domain": "Borradores",
+    "title": "De notas sueltas a esquema",
+    "objective": "Ordenar ideas antes de redactar.",
+    "prompt": "A partir de estas notas, armá solo un esquema de trabajo. No redactes todavía. Separá: hechos, documentación disponible, puntos dudosos, posibles líneas de análisis y datos que faltan. Marcá con [verificar] todo lo que no esté respaldado.",
+    "why": "Evita saltar directo a un escrito largo y permite controlar la estructura."
+  },
+  {
+    "id": "p5",
+    "level": "inicio",
+    "domain": "NotebookLM",
+    "title": "Primera pregunta con cita",
+    "objective": "Aprender a exigir respaldo documental.",
+    "prompt": "Estoy trabajando en NotebookLM con fuentes cargadas. Respondé solo con base en esas fuentes. Armá una respuesta breve y citá cada afirmación. Si algo no surge de las fuentes, escribí: no surge de las fuentes cargadas.",
+    "why": "Entrena el reflejo de pedir citas y no aceptar afirmaciones sueltas."
+  },
+  {
+    "id": "p6",
+    "level": "inicio",
+    "domain": "Búsqueda oficial",
+    "title": "Diseñar consultas para buscadores",
+    "objective": "Usar IA para buscar mejor en sitios oficiales.",
+    "prompt": "Necesito encontrar documentos oficiales sobre [tema]. No me des una respuesta final. Ayudame a construir 8 consultas de búsqueda con operadores como site:, filetype:pdf, comillas, intitle:, after: y before:. Para cada consulta explicá qué intenta encontrar.",
+    "why": "Usa la IA como guía de búsqueda, no como fuente inventada."
+  },
+  {
+    "id": "p7",
+    "level": "inicio",
+    "domain": "Lectura",
+    "title": "Resumen con límites",
+    "objective": "Resumir sin perder advertencias importantes.",
+    "prompt": "Resumí este documento en lenguaje claro. Separá: idea principal, puntos relevantes, citas o pasajes importantes, dudas, y qué debería revisar en el original. No completes datos ausentes ni inventes contexto.",
+    "why": "Hace el resumen útil para estudiar y revisar."
+  },
+  {
+    "id": "p8",
+    "level": "inicio",
+    "domain": "Equipo",
+    "title": "Lista de pendientes para equipo",
+    "objective": "Pasar de una conversación a tareas claras.",
+    "prompt": "Convertí estas notas de reunión en una lista de tareas para equipo. Para cada tarea indicá responsable [si surge], plazo [si surge], fuente o motivo, prioridad y dato pendiente. Si no surge responsable o plazo, dejá [definir].",
+    "why": "Ordena colaboración sin perder trazabilidad."
+  },
+  {
+    "id": "p9",
+    "level": "inicio",
+    "domain": "Estilo",
+    "title": "Correo institucional breve",
+    "objective": "Redactar comunicaciones claras.",
+    "prompt": "Ayudame a redactar un correo institucional breve sobre [tema]. Tono respetuoso, claro y sobrio. No agregues compromisos ni datos que no estén en mi texto. Dejá [completar] donde falten datos concretos.",
+    "why": "Produce borradores útiles sin prometer de más."
+  },
+  {
+    "id": "p10",
+    "level": "inicio",
+    "domain": "Vida cotidiana",
+    "title": "Organizar una gestión personal",
+    "objective": "Practicar IA en un contexto no sensible.",
+    "prompt": "Actuá como organizador personal. Ayudame a planificar [trámite, viaje o compra importante] con una checklist de pasos, documentos a reunir, preguntas que debo hacer y datos que tengo que confirmar en fuentes oficiales. No inventes precios ni horarios.",
+    "why": "Permite aprender la lógica de prompting con bajo riesgo."
+  },
+  {
+    "id": "p11",
+    "level": "inicio",
+    "domain": "Multimedia",
+    "title": "Audio a lista de temas",
+    "objective": "Aprovechar una grabación como fuente de consulta.",
+    "prompt": "Voy a transcribir o subir un audio no sensible. Extraé los temas principales, compromisos mencionados, dudas y marcas de tiempo aproximadas que conviene revisar. No presentes la transcripción como textual si no estás seguro.",
+    "why": "Muestra que el audio puede convertirse en material de trabajo."
+  },
+  {
+    "id": "p12",
+    "level": "inicio",
+    "domain": "Verificación",
+    "title": "Separar hechos de inferencias",
+    "objective": "Detectar qué está probado y qué es interpretación.",
+    "prompt": "Leé este texto y separá en una tabla: hechos afirmados, fuente o respaldo, inferencias, opiniones, datos faltantes y riesgo de error. Marcá con [verificar] lo que no tenga respaldo claro.",
+    "why": "Entrena una lectura crítica compatible con trabajo jurídico."
+  },
+  {
+    "id": "p13",
+    "level": "profundizar",
+    "domain": "NotebookLM",
+    "title": "Línea de tiempo con citas",
+    "objective": "Reconstruir secuencia de hechos desde fuentes cargadas.",
+    "prompt": "En NotebookLM, con estas fuentes seleccionadas, armá una línea de tiempo. Columnas: fecha, hecho, fuente, cita o pasaje, nivel de certeza y dato pendiente. Si una fecha no surge claramente, no la inventes: poné [fecha no determinada].",
+    "why": "Ordena hechos y obliga a volver al documento."
+  },
+  {
+    "id": "p14",
+    "level": "profundizar",
+    "domain": "Jurisprudencia",
+    "title": "Búsqueda sin alucinaciones",
+    "objective": "Preparar búsqueda de precedentes sin confiar en citas inventadas.",
+    "prompt": "Necesito buscar jurisprudencia sobre [tema]. No inventes fallos. Proponé términos de búsqueda, sinónimos, filtros, posibles organismos o bases donde buscar, y una planilla para registrar resultados. Indicá cómo verificar cada documento encontrado.",
+    "why": "Convierte la IA en asistente de investigación, no en fuente final."
+  },
+  {
+    "id": "p15",
+    "level": "profundizar",
+    "domain": "Comparación",
+    "title": "Comparar dos versiones",
+    "objective": "Detectar cambios entre documentos.",
+    "prompt": "Compará la versión A y la versión B de este documento. Armá una tabla con: punto modificado, texto en A, texto en B, cambio sustantivo, posible impacto y qué debe revisarse en el original. No agregues valoración jurídica si no surge del texto.",
+    "why": "Acelera revisión de versiones sin perder control."
+  },
+  {
+    "id": "p16",
+    "level": "profundizar",
+    "domain": "Audiencia",
+    "title": "Preparar preguntas desde fuentes",
+    "objective": "Llegar a una reunión o audiencia con preguntas ordenadas.",
+    "prompt": "A partir de las fuentes cargadas, prepará 12 preguntas ordenadas de general a específico. Para cada una indicá qué dato o pasaje la justifica y qué respuesta permitiría aclarar. Separá preguntas informativas, aclaratorias y de contraste.",
+    "why": "Transforma documentos en preparación práctica."
+  },
+  {
+    "id": "p17",
+    "level": "profundizar",
+    "domain": "Privacidad",
+    "title": "Matriz de sensibilidad",
+    "objective": "Decidir qué se puede cargar y qué no.",
+    "prompt": "Ayudame a clasificar esta lista de materiales según sensibilidad: público, interno, reservado, dato personal, dato especialmente sensible. Para cada categoría sugerí si se puede usar en asistente público, en NotebookLM, solo anonimizado o no subir. No reemplaza la política institucional.",
+    "why": "Crea criterio antes de operar con documentos reales."
+  },
+  {
+    "id": "p18",
+    "level": "profundizar",
+    "domain": "Planillas",
+    "title": "Seguimiento documental",
+    "objective": "Diseñar una planilla simple para controlar fuentes y pendientes.",
+    "prompt": "Diseñá una planilla de seguimiento documental para una defensoría pública. Columnas: ID, tema, tipo de fuente, origen, fecha, estado, responsable, próximo paso, vencimiento, observaciones no sensibles. Sumá fórmulas simples para contar pendientes y vencidos.",
+    "why": "Ordena trabajo sin crear un sistema paralelo complejo."
+  },
+  {
+    "id": "p19",
+    "level": "profundizar",
+    "domain": "NotebookLM",
+    "title": "Preguntas que el cuaderno no puede responder",
+    "objective": "Detectar huecos de información.",
+    "prompt": "Con las fuentes cargadas, listá las preguntas importantes que NO pueden responderse todavía. Para cada una indicá qué fuente faltaría conseguir, por qué importa y qué riesgo hay si se decide sin ese dato.",
+    "why": "Usa la IA para mostrar ausencia de evidencia, no solo respuestas."
+  },
+  {
+    "id": "p20",
+    "level": "profundizar",
+    "domain": "Redacción",
+    "title": "Mejorar claridad sin cambiar sentido",
+    "objective": "Pulir un texto institucional.",
+    "prompt": "Revisá este texto para hacerlo más claro y ordenado, sin cambiar el sentido ni agregar fundamentos. Marcá en una tabla cada cambio importante y explicá por qué mejora claridad, precisión o tono institucional.",
+    "why": "Aprovecha IA como correctora controlada."
+  },
+  {
+    "id": "p21",
+    "level": "profundizar",
+    "domain": "Multimedia",
+    "title": "Resumen de audio para repaso",
+    "objective": "Convertir fuentes en audio de estudio.",
+    "prompt": "En NotebookLM Studio, generá un resumen en audio de estas fuentes. Instrucciones: tono sobrio, en español, enfocado en hechos, dudas y puntos a verificar. No presentes conclusiones como definitivas si las fuentes no las sostienen.",
+    "why": "Permite estudiar documentos mientras se escucha, con foco definido."
+  },
+  {
+    "id": "p22",
+    "level": "profundizar",
+    "domain": "Equipo",
+    "title": "Reglas para cuaderno compartido",
+    "objective": "Crear acuerdos de uso colaborativo.",
+    "prompt": "Redactá una nota inicial para un cuaderno compartido de NotebookLM. Debe incluir finalidad, fuentes incluidas, reglas de privacidad, cómo nombrar nuevas fuentes, quién actualiza, qué preguntas son adecuadas y qué no debe usarse como conclusión final sin revisión.",
+    "why": "Ordena la colaboración desde el inicio."
+  },
+  {
+    "id": "p23",
+    "level": "proyectar",
+    "domain": "Sistema de trabajo",
+    "title": "Circuito papel a NotebookLM",
+    "objective": "Diseñar una rutina completa para notas manuscritas.",
+    "prompt": "Diseñá un circuito de trabajo para aprovechar apuntes en papel: toma de nota, escaneo, OCR o extracción, revisión, anonimización, carga en NotebookLM, preguntas tipo, minuta final y archivo. Incluí recaudos de privacidad y errores frecuentes.",
+    "why": "Integra hábitos existentes con herramientas nuevas."
+  },
+  {
+    "id": "p24",
+    "level": "proyectar",
+    "domain": "Equipo",
+    "title": "Protocolo de uso de IA",
+    "objective": "Definir reglas internas prudentes.",
+    "prompt": "Ayudame a redactar un protocolo breve de uso de IA para una defensoría pública. Ejes: herramientas permitidas, datos que no se suben, anonimización, NotebookLM, verificación de fuentes, uso de borradores, responsabilidades y capacitación mínima. Formato claro y aplicable.",
+    "why": "Lleva el aprendizaje individual a una práctica compartida."
+  },
+  {
+    "id": "p25",
+    "level": "proyectar",
+    "domain": "Investigación",
+    "title": "Flujo búsqueda oficial + NotebookLM",
+    "objective": "Convertir una necesidad jurídica en un proceso verificable.",
+    "prompt": "Diseñá un flujo paso a paso para investigar [tema]: formular preguntas, generar consultas de búsqueda, revisar fuentes oficiales, descargar documentos, registrar metadatos, cargar en NotebookLM, preguntar con citas, verificar y preparar síntesis. Incluí puntos de control.",
+    "why": "Reduce alucinaciones y mejora trazabilidad."
+  },
+  {
+    "id": "p26",
+    "level": "proyectar",
+    "domain": "Capacitación",
+    "title": "Plan de aprendizaje de cuatro semanas",
+    "objective": "Aprender IA con ritmo realista.",
+    "prompt": "Diseñá un plan de 4 semanas, con sesiones de 30 minutos, para que una profesional jurídica con conocimiento tecnológico básico incorpore IA. Semana 1 prompts y privacidad; semana 2 papel a digital y NotebookLM; semana 3 búsqueda oficial; semana 4 colaboración. Cada sesión con práctica y resultado.",
+    "why": "Hace que la incorporación sea posible y gradual."
+  },
+  {
+    "id": "p27",
+    "level": "proyectar",
+    "domain": "Base de conocimiento",
+    "title": "Cuaderno maestro de normativa",
+    "objective": "Crear una biblioteca consultable con control.",
+    "prompt": "Ayudame a diseñar un cuaderno maestro de NotebookLM para normativa y guías internas. Indicá estructura de fuentes, nombres, etiquetas, preguntas frecuentes, responsables de actualización, rutina mensual de revisión y criterios para retirar fuentes viejas.",
+    "why": "Convierte documentación dispersa en consulta organizada."
+  },
+  {
+    "id": "p28",
+    "level": "proyectar",
+    "domain": "Calidad",
+    "title": "Auditoría de una respuesta de IA",
+    "objective": "Revisar si una salida es segura antes de usarla.",
+    "prompt": "Actuá como revisor crítico. Evaluá esta respuesta generada por IA. Marcá: afirmaciones sin fuente, posibles alucinaciones, lenguaje demasiado seguro, datos sensibles, ambigüedades, mejoras de prompt y pasos de verificación antes de usarla.",
+    "why": "Desarrolla criterio para no aceptar respuestas solo porque suenan bien."
+  }
+];
+
+const levelTechniqueMap = {
+inicio: [`Rol explícito`, `Objetivo concreto`, `Formato de salida definido`, `Lenguaje claro y acotado`],
+profundizar: [`Restricciones de calidad`, `Criterios de evaluación`, `Iteración por etapas`, `Control de ambigüedad`],
+proyectar: [`Diseño por fases`, `Supuestos y riesgos`, `Entregables verificables`, `Cierre con siguiente acción`]
+};
+
+const roleByDomain = {
+'primeros pasos': `instructor digital paciente`,
+'papel a digital': `asistente de organización documental`,
+'privacidad': `asesor de privacidad y uso prudente de IA`,
+'borradores': `asistente de redacción institucional controlada`,
+'notebooklm': `especialista en organización de fuentes para NotebookLM`,
+'búsqueda oficial': `investigador documental con foco en fuentes oficiales`,
+'lectura': `asistente de lectura y síntesis documental`,
+'equipo': `coordinador de trabajo colaborativo`,
+'estilo': `corrector de estilo institucional`,
+'vida cotidiana': `organizador práctico de gestiones personales`,
+'multimedia': `asistente para transformar audio y video en fuentes consultables`,
+'verificación': `revisor crítico de afirmaciones y fuentes`,
+'jurisprudencia': `asistente de búsqueda jurídica sin inventar citas`,
+'comparación': `analista de versiones documentales`,
+'audiencia': `preparador de preguntas basadas en fuentes`,
+'planillas': `experto en hojas de cálculo para seguimiento documental`,
+'redacción': `asistente de redacción sobria y verificable`,
+'sistema de trabajo': `diseñador de procesos documentales`,
+'investigación': `investigador documental con trazabilidad`,
+'capacitación': `formador en uso práctico de IA`,
+'base de conocimiento': `arquitecto de bases documentales internas`,
+'calidad': `auditor crítico de respuestas generadas por IA`
+};
+
+const resolveRole = (domain) => roleByDomain[domain.toLowerCase()] || `asistente experto en diseño de prompts`;
+
+const resolveOutputFormat = (item) => {
+const domain = item.domain.toLowerCase();
+if (domain.includes('escritura') || domain.includes('editorial') || domain.includes('divulgación') ||
+domain.includes('legado') || domain.includes('memorias') || domain.includes('guías') || domain.includes('guía')) return `Estructura en apartados con subtítulos y un bloque
+final de mejora.`;
+if (domain.includes('docencia') || domain.includes('curso') || domain.includes('capacitación') || domain.includes('transferencia')) return `Tabla por
+sesiones con objetivo, actividad, evidencia y cierre.`;
+if (domain.includes('investigación') || domain.includes('fuentes') || domain.includes('búsqueda') || domain.includes('ciencia')) return `Matriz con
+columnas y estado de verificación.`;
+if (domain.includes('multimedia') || domain.includes('video') || domain.includes('storyboard')) return `Storyboard o
+plan de piezas con objetivo, planos, texto mínimo, materiales y revisión.`;
+if (domain.includes('evaluación estratégica')) return `Rúbrica con puntaje, supuestos, riesgos y primera prueba chica.`;
+if (domain.includes('comunicación') || domain.includes('familiar')) return `Tres versiones del mensaje con contexto de
+uso.`;
+if (domain.includes('proyecto') || domain.includes('estratégico') || domain.includes('impacto')) return `Plan por fases
+con hitos y riesgos.`;
+if (domain.includes('matemáticas') || domain.includes('lógica')) return `Enunciados numerados con solución paso a
+paso.`;
+if (domain.includes('seguridad') || domain.includes('trámites')) return `Checklist operativa con alertas y pasos
+verificables.`;
+if (domain.includes('precio') || domain.includes('lista')) return `Tabla con columnas Servicio/Equipo, Detalle, Precio y notas.`;
+if (domain.includes('planilla') || domain.includes('registro') || domain.includes('cálculo') || domain.includes('finanzas') || domain.includes('costo')) return `Indicación de columnas y fórmulas paso a paso, con cómo verificar el resultado.`;
+if (domain.includes('imágen') || domain.includes('imagen') || domain.includes('difusión') || domain.includes('marketing') || domain.includes('redes') || domain.includes('cartelería')) return `Prompt de imagen o plan de contenidos, con detalle de estilo y formato.`;
+if (domain.includes('obra') || domain.includes('cronograma') || domain.includes('control') || domain.includes('calidad') || domain.includes('sustentable')) return `Calendario o checklist por etapas con qué controlar en cada punto.`;
+if (domain.includes('logística') || domain.includes('proveedor') || domain.includes('material') || domain.includes('organización') || domain.includes('cliente') || domain.includes('comprador') || domain.includes('comercial') || domain.includes('evento') || domain.includes('entorno')) return `Tabla comparativa o lista práctica con pasos accionables.`;
+return `Lista estructurada con pasos, criterios y cierre accionable.`;
+};
+
+const weakPromptByDomain = {
+'primeros pasos': `Enseñame esta herramienta.`,
+'papel a digital': `Pasá mis apuntes en limpio.`,
+'privacidad': `Decime si puedo subir esto.`,
+'borradores': `Haceme un escrito con estas notas.`,
+'notebooklm': `Respondeme según el cuaderno.`,
+'búsqueda oficial': `Buscame documentos de esto.`,
+'lectura': `Resumime este documento.`,
+'equipo': `Ordená estas tareas.`,
+'estilo': `Mejorá este correo.`,
+'vida cotidiana': `Organizame este trámite.`,
+'multimedia': `Resumime este audio.`,
+'verificación': `Decime si está bien.`,
+'jurisprudencia': `Buscame fallos sobre esto.`,
+'comparación': `Compará estos documentos.`,
+'audiencia': `Dame preguntas para una audiencia.`,
+'planillas': `Haceme una planilla.`,
+'redacción': `Dejalo mejor redactado.`,
+'sistema de trabajo': `Armame un proceso.`,
+'investigación': `Investigá este tema.`,
+'capacitación': `Haceme un plan para aprender IA.`,
+'base de conocimiento': `Armame una base de consulta.`,
+'calidad': `Revisá esta respuesta.`
+};
+
+const resolveBadPrompt = (item) => {
+const domainKey = item.domain.toLowerCase();
+if (weakPromptByDomain[domainKey]) return weakPromptByDomain[domainKey];
+if (item.level === 'inicio') return `Necesito ayuda con ${item.domain.toLowerCase()} para
+${item.objective.toLowerCase()}.`;
+if (item.level === 'profundizar') return `Trabaja este tema: ${item.title}. Dame una versión útil para hoy.`;
+return `Resuelve completo este proyecto: ${item.title}.`;
+};
+
+const resolveWhyBad = (item) => {
+if (item.level === 'inicio') return `Es específico en tema, pero no define público, formato de salida ni criterios para
+evaluar si la respuesta sirve.`;
+if (item.level === 'profundizar') return `Pide una tarea exigente, pero no fija alcance, límites ni método de revisión.
+La salida puede quedar correcta en apariencia y floja en calidad.`;
+return `Intenta resolver un proyecto complejo de una sola vez, sin fases ni entregables intermedios. Eso aumenta errores
+y reduce control de autoría.`;
+};
+
+const resolveQualityCriteria = (item) => {
+const domain = item.domain.toLowerCase();
+if (domain.includes('escritura') || domain.includes('editorial') || domain.includes('memorias') ||
+domain.includes('legado') || domain.includes('guías') || domain.includes('guía')) return `coherencia argumental, voz propia, transiciones y cierre con sentido`;
+if (domain.includes('docencia') || domain.includes('curso') || domain.includes('aprendizaje') ||
+domain.includes('capacitación') || domain.includes('transferencia')) return `claridad didáctica, secuencia progresiva, actividad aplicable y evidencia de
+comprensión`;
+if (domain.includes('investigación') || domain.includes('fuentes') || domain.includes('búsqueda') || domain.includes('ciencia')) return `trazabilidad
+de fuentes, distinción entre verificado/pendiente y riesgos de error`;
+if (domain.includes('multimedia') || domain.includes('video') || domain.includes('storyboard')) return `coherencia visual,
+claridad del mensaje, control de textos exactos y factibilidad de producción`;
+if (domain.includes('evaluación estratégica')) return `criterios explícitos, supuestos visibles, riesgos concretos y
+primer experimento verificable`;
+if (domain.includes('comunicación') || domain.includes('entrevista') || domain.includes('familiar')) return `tono
+adecuado, intención explícita, reducción de ambigüedad y salida accionable`;
+if (domain.includes('proyecto') || domain.includes('estratégico') || domain.includes('iniciativa') ||
+domain.includes('impacto')) return `fases realistas, hitos verificables, riesgos y plan de mitigación`;
+if (domain.includes('matemáticas') || domain.includes('lógica')) return `precisión del razonamiento, claridad de cada
+paso y verificabilidad del resultado`;
+if (domain.includes('seguridad') || domain.includes('trámites')) return `pasos verificables, canales oficiales
+identificados y alertas de riesgo`;
+if (domain.includes('precio') || domain.includes('finanzas') || domain.includes('costo') || domain.includes('planilla') || domain.includes('registro')) return `exactitud de los cálculos, claridad de las fórmulas y verificabilidad de cada número`;
+if (domain.includes('imágen') || domain.includes('imagen') || domain.includes('marketing') || domain.includes('difusión') || domain.includes('redes') || domain.includes('cartelería')) return `claridad del estilo, coherencia de marca, honestidad del mensaje y formato listo para usar`;
+if (domain.includes('obra') || domain.includes('cronograma') || domain.includes('control') || domain.includes('calidad') || domain.includes('sustentable')) return `pasos verificables, criterios de control claros y respeto del criterio profesional`;
+if (domain.includes('cliente') || domain.includes('comprador') || domain.includes('comercial') || domain.includes('logística') || domain.includes('proveedor') || domain.includes('material') || domain.includes('evento') || domain.includes('entorno')) return `tono adecuado, propuesta accionable y reducción de ambigüedad`;
+return `claridad, utilidad práctica, control de supuestos y siguiente paso concreto`;
+};
+
+const resolveToneFrame = (item, role, outputFormat, qualityCriteria, techniques) => {
+if (item.level === 'inicio') {
+return [
+`Actúa como ${role} con tono cercano, claro y paciente.`,
+``, `Meta de esta sesión: ${item.objective}`,
+`Pedido base: ${item.prompt}`,
+``, `Trabajemos paso a paso:`,
+`- Si falta contexto, hazme primero 2 o 3 preguntas breves de calibración.`,
+`- Evita tecnicismos innecesarios y usa ejemplos concretos.`,
+`- Formato de salida solicitado: ${outputFormat}`,
+`- Cierra con una mini revisión de calidad (criterios: ${qualityCriteria}).`,
+``, `Antes de cerrar, sugiere una versión 2 de este pedido para mejorar precisión sin complejizar de más.`,
+`Técnicas aplicadas: ${techniques.join(', ')}.`
+];
+}
+if (item.level === 'profundizar') {
+return [
+`Actúa como ${role} con enfoque riguroso y criterio crítico.`,
+``, `Objetivo de trabajo: ${item.objective}`,
+`Consigna inicial: ${item.prompt}`,
+``, `Condiciones metodológicas:`,
+`1) Si hay ambigüedad, abre con preguntas de calibración antes de producir la versión final.`,
+`2) Entrega una propuesta estructurada, con supuestos explícitos y justificación breve por bloque.`,
+`3) Respeta este formato de salida: ${outputFormat}`,
+`4) Incluye control de calidad al final con estos criterios: ${qualityCriteria}.`,
+`5) Señala qué conviene iterar en una segunda ronda y por qué.`,
+``, `Técnicas aplicadas en este prompt: ${techniques.join(', ')}.`
+];
+}
+return [
+`Actúa como ${role} con enfoque estratégico y orientación a ejecución.`,
+``, `Resultado buscado: ${item.objective}`,
+`Desafío base: ${item.prompt}`,
+``, `Diseña la respuesta como un plan por fases:`,
+`Fase 1 - Delimitación: supuestos, alcance y preguntas críticas de calibración.`,
+`Fase 2 - Diseño: propuesta principal en formato solicitado (${outputFormat}).`,
+`Fase 3 - Implementación: hitos, entregables y métricas de avance.`,
+`Fase 4 - Control: riesgos, límites y revisión final con criterios (${qualityCriteria}).`,
+``, `Cierre obligatorio: incluye una versión 2 del pedido para iterar con mayor precisión y menor riesgo.`,
+`Técnicas aplicadas: ${techniques.join(', ')}.`
+];
+};
+
+const buildEnhancedPrompt = (item) => {
+const techniques = levelTechniqueMap[item.level] || levelTechniqueMap.inicio;
+const role = resolveRole(item.domain);
+const outputFormat = resolveOutputFormat(item);
+const qualityCriteria = resolveQualityCriteria(item);
+const frame = resolveToneFrame(item, role, outputFormat, qualityCriteria, techniques);
+return frame.join('\n');
+};
+
+const enrichedPromptItems = promptItems.map((item) => ({
+...item,
+badPrompt: resolveBadPrompt(item),
+badReason: resolveWhyBad(item),
+techniques: levelTechniqueMap[item.level] || levelTechniqueMap.inicio,
+enhancedPrompt: buildEnhancedPrompt(item)
+}));
+// ═══════════════════════════════════════════════════════════════
+// DATA: HISTORIAS DE USO REALISTA (26 casos)
+// ═══════════════════════════════════════════════════════════════
+
+const stories = [
+  {
+    "id": "s1",
+    "title": "La nota en papel que se volvió minuta",
+    "focus": "Papel a digital",
+    "context": "Una hoja manuscrita se convierte en una minuta útil sin abandonar el hábito de tomar notas.",
+    "conversation": [
+      {
+        "role": "usuario",
+        "text": "Tengo una foto de mis apuntes. Convertí todo en un informe final."
+      },
+      {
+        "role": "alerta",
+        "text": "Riesgo: la foto puede leerse mal y un informe final salta demasiados controles."
+      },
+      {
+        "role": "ajuste",
+        "text": "Primero extraé el texto, marcá lo dudoso entre corchetes y no completes datos que no se lean."
+      },
+      {
+        "role": "ia",
+        "text": "Extraigo el contenido, señalo palabras dudosas y separo hechos, dudas y próximos pasos."
+      },
+      {
+        "role": "usuario",
+        "text": "Ahora armá una minuta interna breve, dejando [verificar] donde haya dudas."
+      },
+      {
+        "role": "resultado",
+        "text": "Resultado: el papel siguió siendo punto de partida, pero el equipo recibió una minuta revisable."
+      }
+    ],
+    "reusablePrompt": "Extraé texto de esta nota, marcá lo dudoso, no completes datos faltantes y convertí solo después en minuta con hechos, dudas y próximos pasos."
+  },
+  {
+    "id": "s2",
+    "title": "El fallo que la IA quiso inventar",
+    "focus": "Alucinaciones",
+    "context": "Un asistente general sugiere referencias inexistentes y se redirige hacia búsqueda oficial.",
+    "conversation": [
+      {
+        "role": "usuario",
+        "text": "Buscame fallos sobre este tema y dame las citas."
+      },
+      {
+        "role": "ia",
+        "text": "Podrían existir fallos con nombres y fechas..."
+      },
+      {
+        "role": "alerta",
+        "text": "Riesgo alto: una cita jurídica plausible puede ser falsa."
+      },
+      {
+        "role": "ajuste",
+        "text": "No inventes fallos. Dame consultas para buscar en fuentes oficiales y una planilla para registrar resultados."
+      },
+      {
+        "role": "ia",
+        "text": "Propongo consultas con site:, filetype:pdf y términos alternativos; también una tabla de registro."
+      },
+      {
+        "role": "resultado",
+        "text": "Resultado: la IA no fue fuente final; ayudó a buscar documentos verificables."
+      }
+    ],
+    "reusablePrompt": "No inventes jurisprudencia. Diseñá consultas oficiales, términos alternativos y una tabla para registrar documentos encontrados."
+  },
+  {
+    "id": "s3",
+    "title": "NotebookLM encontró el hueco",
+    "focus": "NotebookLM",
+    "context": "El cuaderno no solo responde: también muestra qué falta probar.",
+    "conversation": [
+      {
+        "role": "usuario",
+        "text": "Con estas fuentes, decime cuál es la conclusión."
+      },
+      {
+        "role": "ia",
+        "text": "Las fuentes sugieren una línea, pero faltan datos."
+      },
+      {
+        "role": "ajuste",
+        "text": "Listá exactamente qué preguntas no pueden responderse con las fuentes cargadas."
+      },
+      {
+        "role": "ia",
+        "text": "Faltan fecha precisa, constancia documental y versión actualizada de una resolución."
+      },
+      {
+        "role": "resultado",
+        "text": "Resultado: el valor no fue cerrar rápido, sino detectar qué documento faltaba."
+      }
+    ],
+    "reusablePrompt": "Con las fuentes cargadas, listá preguntas importantes que no pueden responderse y qué fuente faltaría para cada una."
+  },
+  {
+    "id": "s4",
+    "title": "Audio de reunión a lista de tareas",
+    "focus": "Multimedia",
+    "context": "Una grabación se transforma en compromisos y pendientes revisables.",
+    "conversation": [
+      {
+        "role": "usuario",
+        "text": "Subí el audio, resumilo y pasalo al equipo."
+      },
+      {
+        "role": "alerta",
+        "text": "Riesgo: una transcripción automática puede equivocar nombres o compromisos."
+      },
+      {
+        "role": "ajuste",
+        "text": "Extraé temas, compromisos y dudas con marcas de tiempo aproximadas. No lo presentes como textual."
+      },
+      {
+        "role": "ia",
+        "text": "Genero lista de temas, pendientes y pasajes a revisar en el audio original."
+      },
+      {
+        "role": "resultado",
+        "text": "Resultado: el audio quedó como fuente de trabajo, no como verdad cerrada."
+      }
+    ],
+    "reusablePrompt": "Extraé temas, compromisos y dudas de este audio, con marcas de tiempo aproximadas y advertencia de revisión del original."
+  },
+  {
+    "id": "s5",
+    "title": "El cuaderno compartido que dejó de ser caótico",
+    "focus": "Colaboración",
+    "context": "Un equipo ordena permisos, nombres de fuentes y reglas de uso.",
+    "conversation": [
+      {
+        "role": "usuario",
+        "text": "Compartamos el cuaderno y que cada uno suba lo que quiera."
+      },
+      {
+        "role": "alerta",
+        "text": "Riesgo: fuentes duplicadas, datos sensibles y versiones mezcladas."
+      },
+      {
+        "role": "ajuste",
+        "text": "Redactá reglas de uso: finalidad, qué se sube, cómo nombrar, quién actualiza y qué no se comparte."
+      },
+      {
+        "role": "ia",
+        "text": "Armo una nota inicial con reglas y responsabilidades."
+      },
+      {
+        "role": "resultado",
+        "text": "Resultado: el cuaderno pasó a ser una base común con trazabilidad."
+      }
+    ],
+    "reusablePrompt": "Redactá reglas para un cuaderno compartido: finalidad, fuentes permitidas, nombres, privacidad, actualización y revisión."
+  },
+  {
+    "id": "s6",
+    "title": "La búsqueda oficial antes del resumen",
+    "focus": "Investigación",
+    "context": "La IA ayuda a llegar a documentos oficiales y recién después se resumen.",
+    "conversation": [
+      {
+        "role": "usuario",
+        "text": "Respondeme qué dice la normativa actual sobre este punto."
+      },
+      {
+        "role": "alerta",
+        "text": "Si el dato puede cambiar, conviene buscar fuente vigente."
+      },
+      {
+        "role": "ajuste",
+        "text": "Armá consultas para encontrar normativa oficial vigente y decime cómo registrar cada documento."
+      },
+      {
+        "role": "ia",
+        "text": "Propongo búsquedas, dominios y una ficha de fuente."
+      },
+      {
+        "role": "resultado",
+        "text": "Resultado: primero se obtuvo el documento; después se lo cargó al cuaderno para analizar."
+      }
+    ],
+    "reusablePrompt": "Antes de responder, ayudame a encontrar fuente oficial vigente con consultas, dominios y ficha de registro."
+  },
+  {
+    "id": "s7",
+    "title": "Borrador con campos de control",
+    "focus": "Redacción",
+    "context": "La IA redacta sin inventar porque se le exige dejar huecos visibles.",
+    "conversation": [
+      {
+        "role": "usuario",
+        "text": "Haceme un borrador completo con estos apuntes."
+      },
+      {
+        "role": "alerta",
+        "text": "Riesgo: completar huecos con datos plausibles."
+      },
+      {
+        "role": "ajuste",
+        "text": "Redactá solo con mis datos. Donde falte algo, poné [completar] o [verificar]."
+      },
+      {
+        "role": "ia",
+        "text": "Genero un borrador sobrio con campos pendientes visibles."
+      },
+      {
+        "role": "resultado",
+        "text": "Resultado: el texto ayuda a avanzar sin ocultar incertidumbres."
+      }
+    ],
+    "reusablePrompt": "Redactá con los datos dados. No agregues hechos, normas ni citas. Usá [completar] y [verificar] cuando falte respaldo."
+  },
+  {
+    "id": "s8",
+    "title": "La planilla que mostró vencidos",
+    "focus": "Planillas",
+    "context": "Un seguimiento simple evita depender de memoria o mensajes sueltos.",
+    "conversation": [
+      {
+        "role": "usuario",
+        "text": "Tengo tareas dispersas en mensajes y papeles."
+      },
+      {
+        "role": "ajuste",
+        "text": "Diseñá una planilla con estado, responsable, vencimiento y próximo paso, sin datos sensibles."
+      },
+      {
+        "role": "ia",
+        "text": "Propongo columnas, fórmula para pendientes vencidos y colores de alerta."
+      },
+      {
+        "role": "resultado",
+        "text": "Resultado: el equipo ve qué falta sin exponer información innecesaria."
+      }
+    ],
+    "reusablePrompt": "Diseñá una planilla de seguimiento con columnas mínimas, fórmula de vencidos y regla de no incluir datos sensibles."
+  }
+];
+
+const challengesData = [
+  {
+    "id": "c1",
+    "type": "memoryPairs",
+    "title": "Pares de uso seguro",
+    "description": "Encontrá qué práctica corresponde a cada riesgo.",
+    "pairs": [
+      [
+        "Dato personal",
+        "Anonimizar o no subir"
+      ],
+      [
+        "Cita jurídica",
+        "Verificar en fuente original"
+      ],
+      [
+        "NotebookLM",
+        "Preguntar con citas"
+      ],
+      [
+        "Asistente general",
+        "Explorar y redactar borradores"
+      ],
+      [
+        "Feedback",
+        "No incluir contenido sensible"
+      ],
+      [
+        "Audio grabado",
+        "Revisar transcripción"
+      ]
+    ]
+  },
+  {
+    "id": "c2",
+    "type": "orderSteps",
+    "title": "Del papel a NotebookLM",
+    "description": "Ordená los pasos para convertir una nota en fuente útil.",
+    "exercises": [
+      {
+        "title": "Convertir una nota manuscrita en fuente consultable",
+        "steps": [
+          "Tomar nota con fecha y tema",
+          "Escanear o fotografiar con buena luz",
+          "Extraer texto y revisar errores",
+          "Anonimizar si corresponde",
+          "Cargar como fuente",
+          "Preguntar con cita y verificar"
+        ]
+      },
+      {
+        "title": "De búsqueda oficial a cuaderno",
+        "steps": [
+          "Definir la pregunta",
+          "Buscar en fuente oficial",
+          "Descargar documento",
+          "Registrar URL y fecha",
+          "Cargar en NotebookLM",
+          "Preguntar con cita"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "c3",
+    "type": "spotDifference",
+    "title": "Mejorá el prompt",
+    "description": "Compará un pedido débil y uno robusto.",
+    "comparisons": [
+      {
+        "weak": "Resumime este expediente y decime qué hacer.",
+        "strong": "Actuá como asistente de organización documental. Con base solo en las fuentes cargadas, armá una tabla con hechos, fuente, cita, duda y próximo paso. No hagas recomendación final y marcá [verificar] lo no respaldado.",
+        "options": [
+          "La segunda versión pide una tabla verificable y limita el alcance.",
+          "La segunda versión es más corta.",
+          "La segunda versión pide una recomendación final automática."
+        ],
+        "correct": 0,
+        "improvement": "Define rol, fuentes, formato, límites y criterio de verificación."
+      },
+      {
+        "weak": "Buscame fallos sobre este tema.",
+        "strong": "No inventes fallos. Proponé consultas para buscar en fuentes oficiales, con operadores y términos alternativos. Después indicaré qué documentos encontré para analizarlos con cita.",
+        "options": [
+          "La segunda delega menos y prepara búsqueda verificable.",
+          "La segunda pide inventar mejores citas.",
+          "La segunda elimina la necesidad de revisar documentos."
+        ],
+        "correct": 0,
+        "improvement": "Usa la IA para diseñar la búsqueda, no como fuente final."
+      }
+    ]
+  },
+  {
+    "id": "c4",
+    "type": "sequence",
+    "title": "Qué sigue en el flujo",
+    "description": "Elegí el paso faltante en una secuencia de trabajo prudente.",
+    "questions": [
+      {
+        "sequence": [
+          "Pedir consultas",
+          "Buscar fuente oficial",
+          "?",
+          "Cargar en NotebookLM"
+        ],
+        "options": [
+          "Descargar y registrar documento",
+          "Inventar una cita probable",
+          "Enviar feedback con el expediente",
+          "Publicar el resumen"
+        ],
+        "correct": 0,
+        "hint": "Antes de cargar o resumir, hay que conservar fuente, enlace y fecha."
+      },
+      {
+        "sequence": [
+          "Escanear apunte",
+          "Extraer texto",
+          "?",
+          "Usarlo como fuente"
+        ],
+        "options": [
+          "Revisar errores de OCR",
+          "Borrar el original",
+          "Compartirlo públicamente",
+          "Asumir que todo está bien leído"
+        ],
+        "correct": 0,
+        "hint": "Las notas manuscritas pueden leerse mal: nombres y fechas se controlan."
+      }
+    ]
+  },
+  {
+    "id": "c5",
+    "type": "association",
+    "title": "Herramienta adecuada",
+    "description": "Asociá tarea y herramienta.",
+    "pairs": [
+      [
+        "Aprender concepto básico",
+        "ChatGPT o Gemini"
+      ],
+      [
+        "Trabajar sobre PDFs propios",
+        "NotebookLM"
+      ],
+      [
+        "Encontrar documento vigente",
+        "Buscador oficial"
+      ],
+      [
+        "Registrar pendientes",
+        "Planilla"
+      ],
+      [
+        "Repasar fuentes caminando",
+        "Audio overview"
+      ],
+      [
+        "Extraer texto de foto",
+        "OCR o visión"
+      ]
+    ]
+  },
+  {
+    "id": "c6",
+    "type": "intruder",
+    "title": "Detectá el intruso",
+    "description": "Elegí qué elemento no corresponde al grupo.",
+    "groups": [
+      {
+        "items": [
+          "site:",
+          "filetype:pdf",
+          "comillas",
+          "inventar fallo"
+        ],
+        "intruder": 3,
+        "reason": "Inventar un fallo no es búsqueda; es una alucinación riesgosa."
+      },
+      {
+        "items": [
+          "nombre completo",
+          "domicilio",
+          "DNI",
+          "Persona A"
+        ],
+        "intruder": 3,
+        "reason": "Persona A es una forma de anonimización, no un dato sensible."
+      },
+      {
+        "items": [
+          "fuente",
+          "cita",
+          "pasaje",
+          "me suena"
+        ],
+        "intruder": 3,
+        "reason": "Me suena no alcanza como respaldo documental."
+      }
+    ]
+  }
+];
+
+
+const imageGlossary = [
+  { term: 'Imagen ilustrativa', def: 'Material visual creado para explicar una idea. No debe presentarse como documento, prueba ni registro real.' },
+  { term: 'Sin texto legible', def: 'Indicación para evitar que la IA invente palabras, sellos, números o datos dentro de la imagen.' },
+  { term: 'Datos identificables', def: 'Nombres, domicilios, documentos, expedientes, rostros reconocibles, logos o cualquier señal que permita asociar la imagen a un caso real.' },
+  { term: 'Espacio negativo', def: 'Zona limpia de la imagen donde después se puede agregar un título o una aclaración en un editor.' },
+  { term: 'Referencia de estilo', def: 'Imagen que orienta tono, luz o composición, sin copiar marcas, documentos ni personas.' },
+  { term: 'Iteración', def: 'Proceso de pedir ajustes sucesivos: primero seguridad, luego composición, luego claridad visual.' },
+  { term: 'Composición', def: 'Cómo se ordenan los elementos: mesa, papeles, pantalla, personas, luz y foco.' },
+  { term: 'Trazabilidad visual', def: 'Forma de mostrar proceso, revisión o fuentes sin exponer el contenido real de los documentos.' }
+];
+
+const imageConcepts = [
+  {
+    title: 'Para qué usar imágenes en este artefacto',
+    body: [
+      'Acompañar explicaciones sobre papel, digitalización, fuentes, citas y colaboración.',
+      'Crear portadas o placas de capacitación sin usar expedientes reales.',
+      'Mostrar procesos de trabajo: escanear, revisar, cargar, preguntar, verificar.',
+      'Evitar imágenes que parezcan prueba, documento oficial o captura de un caso concreto.'
+    ]
+  },
+  {
+    title: 'Regla de seguridad visual',
+    body: [
+      'No incluir nombres, números de expediente, firmas, sellos, logos ni rostros reconocibles.',
+      'Pedir documentos genéricos, texto no legible y pantallas abstractas.',
+      'Agregar títulos y datos exactos después, en un editor controlado.',
+      'Aclarar cuando una imagen es ilustrativa si puede confundirse con una situación real.'
+    ]
+  },
+  {
+    title: 'Método recomendado',
+    body: [
+      'Primero pedir una escena segura y genérica.',
+      'Después ajustar composición: más espacio, menos objetos, mejor luz.',
+      'Luego preparar versión para placa, portada o explicación paso a paso.',
+      'Al final revisar que no haya datos inventados ni elementos institucionales falsos.'
+    ]
+  },
+  {
+    title: 'Qué evitar',
+    body: [
+      'No pedir “un expediente realista” ni “una sentencia con texto”.',
+      'No subir fotos de documentos sensibles para mejorar visualmente una placa.',
+      'No usar rostros de personas reales sin autorización.',
+      'No dejar que la IA escriba datos dentro de la imagen.'
+    ]
+  }
+];
+
+const imageEditorPhrases = [
+  {
+    category: 'Seguridad y privacidad',
+    phrases: [
+      { want: 'Eliminar datos visibles', say: 'Quitá todo texto legible, números, firmas, sellos, logos y datos identificables. Reemplazalos por marcas abstractas.', avoid: 'Sacale lo privado.' },
+      { want: 'Evitar expediente real', say: 'Hacé que los documentos se vean genéricos e ilustrativos, sin apariencia de expediente, sentencia o prueba real.', avoid: 'Que parezca más legal.' },
+      { want: 'Ocultar identidades', say: 'No muestres rostros reconocibles; usá encuadres de manos, espaldas o siluetas no identificables.', avoid: 'Poné gente trabajando.' }
+    ]
+  },
+  {
+    category: 'Claridad de capacitación',
+    phrases: [
+      { want: 'Explicar proceso', say: 'Ordená la escena en tres zonas visuales: papel, revisión digital y consulta con fuentes. Sin texto dentro de la imagen.', avoid: 'Mostrá cómo funciona.' },
+      { want: 'Dejar lugar para título', say: 'Dejá un área limpia amplia en la parte superior izquierda para agregar un título luego.', avoid: 'Hacela para portada.' },
+      { want: 'Tono profesional', say: 'Usá estilo sobrio, institucional, adulto, con luz natural y pocos colores; evitá estética escolar o publicitaria.', avoid: 'Que quede linda.' }
+    ]
+  },
+  {
+    category: 'Ajustes de composición',
+    phrases: [
+      { want: 'Menos carga visual', say: 'Reducí la cantidad de objetos, dejá más espacio libre y mantené solo cuaderno, celular y computadora.', avoid: 'Está muy cargada.' },
+      { want: 'Más foco', say: 'Hacé foco en el gesto de revisar una fuente y dejá el fondo desenfocado, sin información legible.', avoid: 'Mejorá el foco.' },
+      { want: 'Más calidez sin perder sobriedad', say: 'Sumá luz natural suave y tonos neutros; mantené un ambiente profesional y tranquilo.', avoid: 'Más cálida.' }
+    ]
+  }
+];
+
+const imageTroubleshoot = [
+  { problem: 'Aparece texto inventado en documentos o pantallas', cause: 'Los generadores suelen inventar letras cuando se les pide material documental.', fix: 'Pedí “sin texto legible; usar líneas abstractas y bloques grises”.' },
+  { problem: 'La imagen parece un expediente real', cause: 'El prompt pidió demasiado realismo jurídico.', fix: 'Pedí documentos genéricos, estilo ilustrativo/editorial y ninguna firma, sello ni número.' },
+  { problem: 'Se ven caras reconocibles', cause: 'La escena pidió personas sin limitar identidad.', fix: 'Pedí manos, espaldas, siluetas o encuadres sin rostro.' },
+  { problem: 'La placa queda difícil de titular', cause: 'No se reservó espacio limpio.', fix: 'Pedí espacio negativo amplio en una zona concreta.' },
+  { problem: 'La imagen parece publicitaria o infantil', cause: 'El estilo quedó demasiado colorido o decorativo.', fix: 'Pedí tono institucional, adulto, sobrio, con paleta neutra y pocos elementos.' },
+  { problem: 'No representa el proceso de NotebookLM', cause: 'El prompt se quedó en una escena genérica de oficina.', fix: 'Pedí tres etapas visuales: fuente en papel, revisión digital y consulta con citas.' }
+];
+
+const imageRecipes = [
+  {
+    "id": "doc",
+    "title": "Imagen institucional sin datos sensibles",
+    "intro": "Una pieza visual sobria para capacitación, portada de material o comunicación interna, sin representar expedientes reales ni datos identificables.",
+    "toolNotes": [
+      {
+        "tool": "ChatGPT / Gemini",
+        "note": "Útil para crear una primera imagen conceptual y luego pedir ajustes puntuales."
+      },
+      {
+        "tool": "Canva",
+        "note": "Conviene para agregar títulos exactos, fecha y logo institucional si corresponde."
+      },
+      {
+        "tool": "NotebookLM",
+        "note": "No es editor de imagen; puede ayudar a extraer ideas de fuentes para decidir qué comunicar."
+      }
+    ],
+    "steps": [
+      {
+        "goal": "Definir una escena segura",
+        "prompt": "Creá una imagen institucional sobria para representar organización documental y trabajo en la defensa pública. Debe mostrar documentos genéricos, una mesa ordenada y luz natural. No incluyas texto legible, nombres, sellos, expedientes reales, logos ni datos personales.",
+        "expect": "Una escena genérica y profesional que no parece evidencia ni documento real.",
+        "adjust": "Si aparece texto, pedí: eliminá todo texto legible y reemplazalo por marcas abstractas."
+      },
+      {
+        "goal": "Preparar una portada de capacitación",
+        "prompt": "A partir de la imagen anterior, adaptala como fondo para una portada de capacitación interna. Dejá espacio limpio arriba y a la izquierda para agregar un título después. Mantené estilo sobrio, claro y profesional.",
+        "expect": "Una imagen usable como fondo, con aire suficiente para editar encima.",
+        "adjust": "Si queda cargada, pedí más espacio negativo y menos objetos sobre la mesa."
+      },
+      {
+        "goal": "Separar imagen de documento real",
+        "prompt": "Revisá la imagen y eliminá cualquier elemento que pueda parecer un expediente real, sello oficial, firma o dato identificable. Debe quedar claramente como imagen ilustrativa genérica.",
+        "expect": "Una pieza segura para material didáctico.",
+        "adjust": "Si se ve demasiado realista, pedí estilo editorial/ilustrativo y documentos sin detalles."
+      }
+    ]
+  },
+  {
+    "id": "paper",
+    "title": "Del papel al flujo digital",
+    "intro": "Una secuencia visual para explicar que el papel no se abandona: se captura, revisa y convierte en fuente consultable.",
+    "toolNotes": [
+      {
+        "tool": "Generador de imagen",
+        "note": "Sirve para representar el flujo sin usar notas reales."
+      },
+      {
+        "tool": "Editor simple",
+        "note": "Agregá flechas, números o títulos fuera de la imagen generada."
+      },
+      {
+        "tool": "Celular",
+        "note": "En la práctica real, se usa para escanear o fotografiar apuntes con buena luz."
+      }
+    ],
+    "steps": [
+      {
+        "goal": "Mostrar el puente papel-digital",
+        "prompt": "Ilustración realista y sobria de una mesa de trabajo con un cuaderno manuscrito genérico, un celular escaneando una hoja y una computadora con interfaz abstracta de organización documental. Sin texto legible, sin marcas, sin datos reales, luz clara.",
+        "expect": "Una imagen que comunica continuidad entre apuntes y trabajo digital.",
+        "adjust": "Si el manuscrito es legible, pedí trazos abstractos no interpretables."
+      },
+      {
+        "goal": "Crear una versión por pasos",
+        "prompt": "Generá una variante con composición limpia y espacio para agregar tres etiquetas externas: 1 papel, 2 revisión, 3 consulta. No pongas las etiquetas dentro de la imagen.",
+        "expect": "Fondo preparado para explicar el proceso en una placa.",
+        "adjust": "Si agrega texto, pedí nuevamente sin texto y con espacios vacíos."
+      },
+      {
+        "goal": "Cuidar el tono adulto",
+        "prompt": "Ajustá la imagen para que parezca material de formación profesional adulta: sobria, clara, sin estética escolar, sin exceso de colores y sin elementos infantiles.",
+        "expect": "Una imagen acorde al público del artefacto.",
+        "adjust": "Si queda fría, pedí más luz natural y escritorio realista sin perder sobriedad."
+      }
+    ]
+  },
+  {
+    "id": "team",
+    "title": "Colaboración de equipo",
+    "intro": "Una imagen para explicar trabajo compartido con fuentes, permisos y revisión, sin mostrar personas identificables ni casos concretos.",
+    "toolNotes": [
+      {
+        "tool": "Generador de imagen",
+        "note": "Crea una escena conceptual segura para hablar de colaboración."
+      },
+      {
+        "tool": "Canva / PowerPoint",
+        "note": "Agregá después los textos de reglas, roles o pasos."
+      },
+      {
+        "tool": "NotebookLM",
+        "note": "Puede ayudar a redactar la nota inicial de reglas del cuaderno compartido."
+      }
+    ],
+    "steps": [
+      {
+        "goal": "Representar equipo sin identidades",
+        "prompt": "Escena institucional discreta de un equipo revisando documentos genéricos alrededor de una mesa. Pantallas con diagramas abstractos, ambiente profesional, sin rostros reconocibles, sin texto legible, sin logos ni expedientes reales.",
+        "expect": "Una escena de colaboración segura y genérica.",
+        "adjust": "Si aparecen caras reconocibles, pedí encuadres de manos, espaldas o siluetas no identificables."
+      },
+      {
+        "goal": "Mostrar trazabilidad",
+        "prompt": "Adaptá la escena para sugerir trazabilidad: documentos genéricos ordenados por colores suaves, una planilla abstracta en pantalla y marcas visuales de revisión. Sin texto legible.",
+        "expect": "Una imagen que comunica orden y seguimiento.",
+        "adjust": "Si parece vigilancia o control excesivo, pedí tono colaborativo y calmo."
+      },
+      {
+        "goal": "Preparar placa de reglas",
+        "prompt": "Generá una versión más limpia con espacio libre a la derecha para agregar luego una lista de reglas del cuaderno compartido. No incluyas la lista dentro de la imagen.",
+        "expect": "Fondo apto para una placa explicativa.",
+        "adjust": "Si el espacio queda chico, pedí composición más despejada y objetos a la izquierda."
+      }
+    ]
+  }
+];
+
+const spreadsheetTemplates = [
+  {
+    "title": "Seguimiento documental",
+    "purpose": "Registrar fuentes, estado de revisión y próximos pasos sin duplicar datos sensibles.",
+    "columns": [
+      "ID",
+      "Tema",
+      "Tipo de fuente",
+      "Origen",
+      "Fecha",
+      "Estado",
+      "Responsable",
+      "Próximo paso",
+      "Vencimiento",
+      "Observación no sensible"
+    ],
+    "formula": "Pendientes vencidos = CONTAR.SI.CONJUNTO(Estado;\"Pendiente\";Vencimiento;\"<\"&HOY())",
+    "prompt": "Diseñá una planilla de seguimiento documental con estas columnas y reglas para no cargar datos personales innecesarios."
+  },
+  {
+    "title": "Matriz de privacidad",
+    "purpose": "Decidir qué materiales pueden usarse en cada herramienta y bajo qué recaudos.",
+    "columns": [
+      "Material",
+      "Sensibilidad",
+      "Datos personales",
+      "Herramienta permitida",
+      "Anonimización requerida",
+      "Autorización",
+      "Observaciones"
+    ],
+    "formula": "Filtrar por Sensibilidad para revisar primero reservado y dato personal.",
+    "prompt": "Armá una matriz de privacidad para clasificar materiales antes de usar IA: público, interno, reservado, dato personal y dato sensible."
+  },
+  {
+    "title": "Registro de búsquedas oficiales",
+    "purpose": "Guardar trazabilidad de documentos encontrados en fuentes confiables.",
+    "columns": [
+      "Fecha búsqueda",
+      "Pregunta",
+      "Consulta usada",
+      "Sitio",
+      "Documento",
+      "URL",
+      "Fecha documento",
+      "Descargado S/N",
+      "Verificado S/N",
+      "Notas"
+    ],
+    "formula": "Usar filtros por Verificado S/N y Descargado S/N.",
+    "prompt": "Diseñá una planilla para registrar búsquedas oficiales, consultas usadas, documentos descargados y estado de verificación."
+  },
+  {
+    "title": "Cuadernos NotebookLM",
+    "purpose": "Controlar qué cuadernos existen, quién los mantiene y cuándo actualizar fuentes.",
+    "columns": [
+      "Cuaderno",
+      "Finalidad",
+      "Responsable",
+      "Fuentes principales",
+      "Permiso",
+      "Última actualización",
+      "Próxima revisión",
+      "Riesgo privacidad"
+    ],
+    "formula": "Próximas revisiones = filtrar por fecha menor o igual a HOY()+7.",
+    "prompt": "Armá una planilla para administrar cuadernos NotebookLM compartidos, responsables, permisos y revisión de fuentes."
+  },
+  {
+    "title": "Agenda de pendientes",
+    "purpose": "Pasar de notas y reuniones a tareas concretas de equipo.",
+    "columns": [
+      "ID",
+      "Tema",
+      "Tarea",
+      "Responsable",
+      "Prioridad",
+      "Estado",
+      "Fecha alta",
+      "Vencimiento",
+      "Fuente",
+      "Comentario"
+    ],
+    "formula": "Pendientes por responsable = tabla dinámica contando Estado = Pendiente.",
+    "prompt": "Diseñá una agenda de pendientes para un equipo de defensa pública con estados simples y sin incluir datos sensibles en comentarios."
+  }
+];
+
+const notebookLMExercises = [
+  {
+    "id": "nb1",
+    "level": "Primeros pasos",
+    "title": "Crear un cuaderno de prueba en la defensoría",
+    "goal": "Entender la lógica de cuaderno, fuente, pregunta y cita sin usar material sensible.",
+    "steps": [
+      "Entrá a notebooklm.google.com con una cuenta adecuada para práctica.",
+      "Creá un cuaderno con nombre claro, por ejemplo: Practica - normativa publica.",
+      "Cargá 2 o 3 documentos públicos o ficticios que ya conozcas.",
+      "Preguntá algo simple y pedí que cite cada afirmación.",
+      "Tocá las citas y verificá que llevan al pasaje correcto.",
+      "Anotá qué respondió bien, qué omitió y qué conviene preguntar distinto."
+    ],
+    "tip": "Para aprender, empezá con documentos públicos. La confianza se calibra comparando contra algo que ya podés revisar."
+  },
+  {
+    "id": "nb2",
+    "level": "Papel a digital",
+    "title": "Subir notas manuscritas como fuente de trabajo",
+    "goal": "Aprovechar apuntes en papel sin perder control sobre errores de lectura.",
+    "steps": [
+      "Elegí una nota no sensible y sacale una foto con buena luz.",
+      "Si podés, convertí la imagen en PDF o extraé el texto con una herramienta OCR.",
+      "Cargá la imagen, PDF o texto como fuente en un cuaderno de práctica.",
+      "Pedí: extraé hechos, dudas y próximos pasos; marcá palabras dudosas.",
+      "Compará la respuesta contra la hoja original y corregí errores.",
+      "Guardá una nota dentro del cuaderno con la versión revisada."
+    ],
+    "tip": "La hoja manuscrita puede entrar al flujo digital, pero siempre con revisión humana de nombres, fechas y abreviaturas."
+  },
+  {
+    "id": "nb3",
+    "level": "Privacidad",
+    "title": "Decidir qué puede cargarse",
+    "goal": "Crear una rutina de clasificación antes de subir documentos.",
+    "steps": [
+      "Armá una lista de materiales posibles: normativa pública, fallo descargado, notas internas, audio, planilla, expediente, apunte personal.",
+      "Clasificá cada uno como público, interno, reservado, dato personal o dato sensible.",
+      "Pedí a NotebookLM o a un asistente general una matriz de decisión, sin pegar contenido real.",
+      "Definí qué se puede cargar, qué requiere anonimización y qué no debería subirse.",
+      "Guardá esa matriz como guía del equipo."
+    ],
+    "tip": "La prudencia se decide antes de cargar, no cuando el documento ya está dentro de una herramienta."
+  },
+  {
+    "id": "nb4",
+    "level": "Fuentes",
+    "title": "Nombrar y ordenar fuentes",
+    "goal": "Evitar cuadernos caóticos con archivos indistinguibles.",
+    "steps": [
+      "Antes de subir, renombrá archivos con criterio: tipo, tema, fecha y versión.",
+      "Cargá las fuentes al cuaderno y revisá que el panel lateral sea entendible.",
+      "Creá una nota inicial: finalidad del cuaderno, fuentes incluidas y fecha de armado.",
+      "Preguntá: qué fuentes hay y para qué sirve cada una.",
+      "Corregí nombres o eliminá duplicados si la respuesta muestra confusión."
+    ],
+    "tip": "Un buen nombre de fuente ahorra muchas preguntas y reduce errores de interpretación."
+  },
+  {
+    "id": "nb5",
+    "level": "Consulta",
+    "title": "Preguntar con cita obligatoria",
+    "goal": "Usar NotebookLM como índice inteligente hacia documentos reales.",
+    "steps": [
+      "Seleccioná una o varias fuentes concretas.",
+      "Pedí una respuesta en tabla: afirmación, fuente, cita, comentario y dato pendiente.",
+      "Agregá la instrucción: si no surge de la fuente, no lo completes.",
+      "Abrí dos citas al azar y verificá si sostienen lo que dice la tabla.",
+      "Reformulá la pregunta si la cita es débil o demasiado general."
+    ],
+    "tip": "La cita no es decoración; es el camino de vuelta al documento."
+  },
+  {
+    "id": "nb6",
+    "level": "Resumen",
+    "title": "Resumir documentos largos sin perder advertencias",
+    "goal": "Obtener una síntesis útil para estudio y revisión.",
+    "steps": [
+      "Cargá un documento largo público o autorizado.",
+      "Pedí un resumen por secciones, no solo un resumen general.",
+      "Pedí que separe hechos, argumentos, definiciones, dudas y datos a verificar.",
+      "Pedí una versión de media página y otra de 10 puntos.",
+      "Compará ambas contra el documento original y ajustá el prompt."
+    ],
+    "tip": "En documentos extensos, pedir estructura evita resúmenes demasiado genéricos."
+  },
+  {
+    "id": "nb7",
+    "level": "Comparación",
+    "title": "Comparar versiones o documentos relacionados",
+    "goal": "Detectar cambios, contradicciones y puntos de impacto.",
+    "steps": [
+      "Cargá versión A y versión B con nombres claros.",
+      "Preguntá qué cambió entre ambas.",
+      "Pedí tabla: punto, versión A, versión B, cambio sustantivo, posible impacto, cita.",
+      "Pedí que marque cambios menores de redacción por separado.",
+      "Verificá en los originales los cambios más importantes."
+    ],
+    "tip": "La comparación acelera lectura, pero el impacto jurídico lo evalúa una persona."
+  },
+  {
+    "id": "nb8",
+    "level": "Línea de tiempo",
+    "title": "Reconstruir hechos y actuaciones",
+    "goal": "Ordenar fechas sin inventarlas.",
+    "steps": [
+      "Cargá las fuentes que contengan fechas o secuencias.",
+      "Pedí una línea de tiempo con cita para cada fecha.",
+      "Indicá que use [fecha no determinada] cuando no haya fecha clara.",
+      "Pedí separar hechos, actuaciones, comunicaciones y documentos.",
+      "Revisá las fechas críticas contra la fuente original."
+    ],
+    "tip": "Una fecha mal leída puede cambiar todo; por eso cada fecha debe volver a su fuente."
+  },
+  {
+    "id": "nb9",
+    "level": "Huecos",
+    "title": "Detectar lo que falta",
+    "goal": "Usar el cuaderno para identificar preguntas abiertas.",
+    "steps": [
+      "Con las fuentes cargadas, preguntá qué preguntas importantes no se pueden responder.",
+      "Pedí que proponga qué documento o fuente faltaría para cada hueco.",
+      "Pedí clasificar huecos por importancia: alta, media, baja.",
+      "Convertí la respuesta en lista de tareas para búsqueda o pedido de información.",
+      "Actualizá el cuaderno cuando consigas nuevas fuentes."
+    ],
+    "tip": "Una buena IA no solo responde; también ayuda a saber qué todavía no se sabe."
+  },
+  {
+    "id": "nb10",
+    "level": "Búsqueda",
+    "title": "De buscador oficial a NotebookLM",
+    "goal": "Combinar IA, fuentes oficiales y lectura con citas.",
+    "steps": [
+      "Pedí a un asistente general consultas con operadores para encontrar documentos oficiales.",
+      "Ejecutá las búsquedas en sitios oficiales o confiables.",
+      "Descargá documentos y registrá URL, fecha y origen.",
+      "Cargalos en NotebookLM con nombres claros.",
+      "Pedí resumen, citas y contradicciones entre fuentes.",
+      "Verificá los puntos críticos antes de usar la síntesis."
+    ],
+    "tip": "El asistente ayuda a encontrar; NotebookLM ayuda a leer; la fuente original decide."
+  },
+  {
+    "id": "nb11",
+    "level": "Audio",
+    "title": "Subir audios como fuentes",
+    "goal": "Convertir reuniones, capacitaciones o exposiciones en material consultable.",
+    "steps": [
+      "Elegí un audio no sensible o autorizado.",
+      "Subilo como fuente y esperá la transcripción automática.",
+      "Pedí temas principales, compromisos, dudas y marcas de tiempo aproximadas.",
+      "Pedí una tabla que cruce audio con documentos escritos si los hay.",
+      "Revisá los pasajes importantes escuchando el audio original."
+    ],
+    "tip": "La transcripción automática es ayuda, no acta. Los pasajes sensibles se escuchan de nuevo."
+  },
+  {
+    "id": "nb12",
+    "level": "Video",
+    "title": "Trabajar con videos públicos o capacitaciones",
+    "goal": "Aprovechar transcripciones de video para estudiar y preparar preguntas.",
+    "steps": [
+      "Usá un video público con transcripción disponible o una fuente autorizada.",
+      "Cargá la URL o material compatible en el cuaderno.",
+      "Pedí resumen de conceptos, definiciones y preguntas de repaso.",
+      "Pedí marcas temporales aproximadas para volver al video.",
+      "Si el punto depende de lo visual, revisá el video original."
+    ],
+    "tip": "En videos, muchas veces NotebookLM trabaja sobre la transcripción; lo visual requiere revisión directa."
+  },
+  {
+    "id": "nb13",
+    "level": "Studio",
+    "title": "Crear audio de repaso",
+    "goal": "Usar Audio Overview como herramienta de estudio, no como documento final.",
+    "steps": [
+      "Con fuentes cargadas, abrí Studio y elegí Audio Overview.",
+      "Personalizá el foco: hechos principales, dudas y puntos a verificar, en español y tono sobrio.",
+      "Escuchá el audio mientras revisás el cuaderno.",
+      "Anotá cualquier afirmación que parezca demasiado cerrada y volvé a la cita.",
+      "Compartilo solo si corresponde y aclarando que es material de repaso."
+    ],
+    "tip": "El audio ayuda a estudiar, pero no reemplaza la lectura de documentos ni la revisión de citas."
+  },
+  {
+    "id": "nb14",
+    "level": "Colaboración",
+    "title": "Compartir un cuaderno con reglas",
+    "goal": "Convertir NotebookLM en base común de equipo.",
+    "steps": [
+      "Creá una nota inicial con finalidad, fuentes, reglas de privacidad y responsable.",
+      "Definí quién puede editar y quién solo consultar.",
+      "Guardá prompts modelo dentro del cuaderno.",
+      "Pedí al equipo que toda nueva fuente tenga nombre claro y motivo de carga.",
+      "Agendá una revisión periódica para actualizar fuentes y retirar material viejo."
+    ],
+    "tip": "La colaboración funciona cuando el cuaderno tiene reglas, no cuando cada persona carga documentos sin criterio común."
+  },
+  {
+    "id": "nb15",
+    "level": "Avanzado",
+    "title": "Crear una base de consulta interna",
+    "goal": "Construir un cuaderno durable para preguntas recurrentes del equipo.",
+    "steps": [
+      "Elegí un tema recurrente y de bajo riesgo para empezar.",
+      "Cargá normativa pública, guías internas autorizadas, preguntas frecuentes y modelos no sensibles.",
+      "Creá una nota de alcance: qué responde el cuaderno y qué no.",
+      "Probá 10 preguntas reales del equipo y verificá citas.",
+      "Ajustá fuentes y prompts hasta que las respuestas sean consistentes.",
+      "Definí rutina mensual de mantenimiento."
+    ],
+    "tip": "Una buena base interna no nace grande: empieza con un tema, buenas fuentes y mantenimiento."
+  }
+];
+
+const hpVisuals = window.hpVisuals || window.dcVisuals || { imageAssets: {}, imageExamples: [], imageSequences: [] };
+const hpImageExamples = Array.isArray(hpVisuals.imageExamples)
+? hpVisuals.imageExamples.filter((item) => hpVisuals.imageAssets?.[item.id]?.src)
+: [];
+const hpImageSequences = Array.isArray(hpVisuals.imageSequences)
+? hpVisuals.imageSequences.filter((sequence) => Array.isArray(sequence.steps) && sequence.steps.length > 0)
+: [];
+const hasHpVisuals = hpImageExamples.length > 0 && hpImageSequences.length > 0;
+
+const ImagesSection = () => {
+const [sub, setSub] = useState('guia');
+const [recipeId, setRecipeId] = useState(imageRecipes[0].id);
+const [copied, setCopied] = useState(null);
+const copyTxt = (t, id) => { if (!navigator.clipboard) return; navigator.clipboard.writeText(t).then(() => { setCopied(id); setTimeout(() => setCopied(null), 1500); }).catch(() => {}); };
+const recipe = imageRecipes.find(r => r.id === recipeId);
+const subs = [
+{ id: 'guia', label: 'Guía general', icon: <Sparkles className="w-4 h-4" /> },
+{ id: 'visuales', label: 'Secuencias visuales', icon: <Camera className="w-4 h-4" /> },
+{ id: 'folleto', label: 'Paso a paso', icon: <Wand2 className="w-4 h-4" /> },
+{ id: 'editor', label: 'Editor profesional', icon: <Palette className="w-4 h-4" /> },
+{ id: 'iterar', label: 'Iterar sin frustrarse', icon: <RefreshCw className="w-4 h-4" /> }
+];
+
+return (
+<div className="max-w-4xl mx-auto">
+<div className="bg-gradient-to-br from-amber-50 to-rose-50 rounded-2xl p-6 mb-6 border border-amber-200">
+<h3 className="text-xl font-bold text-amber-800 mb-2 flex items-center gap-2">
+<ImageIcon className="w-5 h-5" /> Laboratorio de Imágenes
+</h3>
+<p className="text-amber-900">Acá aprendés a crear o adaptar imágenes de apoyo para capacitación, comunicación interna y explicación de procesos documentales. La idea no es representar casos reales ni mostrar expedientes verdaderos, sino producir materiales genéricos, sobrios y seguros: placas, portadas, diagramas visuales y escenas institucionales sin datos sensibles. El buen resultado llega iterando, y toda imagen generada debe quedar claramente separada de cualquier documento o evidencia real.</p>
+</div>
+
+<div className="flex flex-wrap gap-2 mb-6">
+{subs.map(s => (
+<button key={s.id} onClick={() => setSub(s.id)}
+className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${sub === s.id ? 'bg-amber-600 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`}>
+{s.icon} {s.label}
+</button>
+))}
+</div>
+
+{sub === 'guia' && (
+<div className="space-y-6">
+<div className="grid md:grid-cols-2 gap-4">
+{imageConcepts.map((c, i) => (
+<div key={i} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+<h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2"><Sparkles className="w-4 h-4 text-amber-500" /> {c.title}</h4>
+<ul className="space-y-2">
+{c.body.map((b, j) => (
+<li key={j} className="flex items-start gap-2 text-slate-700 text-sm"><CheckCircle2 className="w-4 h-4 text-amber-500 mt-1 flex-shrink-0" /><span>{b}</span></li>
+))}
+</ul>
+</div>
+))}
+</div>
+<div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+<h4 className="font-bold text-slate-800 mb-4 flex items-center gap-2"><BookOpen className="w-4 h-4 text-amber-500" /> Glosario para entenderte con la IA</h4>
+<div className="grid md:grid-cols-2 gap-3">
+{imageGlossary.map((g, i) => (
+<div key={i} className="border border-slate-100 rounded-xl p-3 bg-slate-50">
+<p className="font-bold text-slate-800 text-sm">{g.term}</p>
+<p className="text-slate-600 text-sm">{g.def}</p>
+</div>
+))}
+</div>
+</div>
+</div>
+)}
+
+{sub === 'visuales' && (
+<div className="space-y-6">
+{hasHpVisuals ? (
+<>
+<div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+<h4 className="font-bold text-slate-800 mb-2 flex items-center gap-2"><Camera className="w-4 h-4 text-rose-500" /> Genealogía visual: de las fuentes dispersas al material listo para publicar</h4>
+<p className="text-slate-700 text-sm">Esta pestaña recorre dos procesos cercanos a tu trabajo: el armado de un boletín provincial a partir de fuentes dispersas y la construcción de un informe verificable a partir de un indicio confuso. No es una galería decorativa: cada imagen incorpora una decisión editorial, muestra qué evidencia conviene conservar y deja un criterio reutilizable para investigar, verificar o comunicar.</p>
+</div>
+
+<div className="grid md:grid-cols-3 gap-3">
+<div className="bg-rose-50 border border-rose-200 rounded-2xl p-4">
+<p className="text-xs font-bold text-rose-700 uppercase mb-1">1. Prompt</p>
+<p className="text-sm text-rose-900">Qué instrucción se agregó: ordenar las fuentes, resumir, conservar el dato exacto, mostrar una etapa del proceso, verificar o preparar la comunicación.</p>
+</div>
+<div className="bg-sky-50 border border-sky-200 rounded-2xl p-4">
+<p className="text-xs font-bold text-sky-700 uppercase mb-1">2. Impacto visible</p>
+<p className="text-sm text-sky-900">Qué cambió en el material: recopilación, resumen, jerarquía, contexto, verificación, edición o presentación al aire.</p>
+</div>
+<div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4">
+<p className="text-xs font-bold text-emerald-700 uppercase mb-1">3. Criterio aprendido</p>
+<p className="text-sm text-emerald-900">Qué regla práctica queda: no saltar a la conclusión, separar el dato del comentario, conservar la fuente y verificar antes de publicar.</p>
+</div>
+</div>
+
+<div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
+{hpImageExamples.map((img) => (
+<figure key={img.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+<img src={hpVisuals.imageAssets[img.id]?.src} alt={img.title} className="w-full aspect-square object-cover bg-slate-100" loading="lazy" />
+<figcaption className="p-4 space-y-2">
+<h4 className="font-bold text-slate-800">{img.title}</h4>
+<p className="text-sm text-slate-600">{img.caption}</p>
+<details className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+<summary className="cursor-pointer text-sm font-bold text-rose-700">Ver prompt usado</summary>
+<p className="text-xs text-slate-700 mt-2">{img.prompt}</p>
+</details>
+</figcaption>
+</figure>
+))}
+</div>
+
+<div className="space-y-6">
+{hpImageSequences.map((sequence) => (
+<section key={sequence.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+<div className="bg-gradient-to-r from-emerald-50 to-rose-50 p-5 border-b border-slate-200">
+<h4 className="font-bold text-slate-800 text-lg">{sequence.title}</h4>
+<p className="text-slate-700 text-sm mt-2">{sequence.intro}</p>
+</div>
+<div className="grid md:grid-cols-2 xl:grid-cols-3 gap-0">
+{sequence.steps.map((item) => (
+<article key={item.asset} className="border-b border-slate-200 xl:border-r xl:last:border-r-0">
+<img src={hpVisuals.imageAssets[item.asset]?.src} alt={item.title} className="w-full aspect-video object-cover bg-slate-100" loading="lazy" />
+<div className="p-4 space-y-3">
+<div className="flex items-center gap-3">
+<span className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">{item.step}</span>
+<h5 className="font-bold text-slate-800">{item.title}</h5>
+</div>
+<details className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+<summary className="cursor-pointer text-sm font-bold text-rose-700">1. Decisión aplicada: ver prompt</summary>
+<pre className="whitespace-pre-wrap text-xs font-sans text-slate-700 mt-2">{item.prompt}</pre>
+</details>
+<p className="text-sm text-sky-900 bg-sky-50 border border-sky-200 rounded-xl p-3"><span className="font-bold">2. Impacto visible:</span> {item.change}</p>
+<p className="text-sm text-emerald-900 bg-emerald-50 border border-emerald-200 rounded-xl p-3"><span className="font-bold">3. Criterio aprendido:</span> {item.lesson}</p>
+</div>
+</article>
+))}
+</div>
+</section>
+))}
+</div>
+
+<div className="bg-amber-50 border border-amber-200 rounded-2xl p-5">
+<h4 className="font-bold text-amber-800 mb-2 flex items-center gap-2"><Lightbulb className="w-4 h-4" /> Cómo leer estas secuencias</h4>
+<ul className="space-y-2 text-sm text-amber-900">
+<li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 mt-1 flex-shrink-0" /><span>Primero mirá el cambio visible para entender qué mejoró realmente en la pieza.</span></li>
+<li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 mt-1 flex-shrink-0" /><span>Después abrí el prompt aplicado y comparalo con el resultado: así entrenás el ojo y el lenguaje.</span></li>
+<li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 mt-1 flex-shrink-0" /><span>Cuando quieras repetir el proceso con tu caso real, pasá a la pestaña “Paso a paso”, donde está el procedimiento completo y más reutilizable.</span></li>
+</ul>
+</div>
+</>
+) : (
+<div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+<p className="text-slate-700">No se pudieron cargar las secuencias visuales. La guía textual sigue disponible en “Paso a paso”, “Editor profesional” e “Iterar sin frustrarse”, donde se mantiene el método de refinamiento por etapas.</p>
+</div>
+)}
+</div>
+)}
+
+{sub === 'folleto' && (
+<div className="space-y-5">
+<div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+<div>
+<h4 className="font-bold text-slate-800 mb-1 flex items-center gap-2"><Camera className="w-4 h-4 text-rose-500" /> Ver y hacer</h4>
+<p className="text-slate-600 text-sm">Esta pestaña toma lo aprendido en la genealogía visual y lo convierte en procedimiento repetible. Si primero querés ver cómo cada refinamiento cambia una imagen, abrí “Secuencias visuales”; si querés replicarlo con tu caso, seguí estas recetas.</p>
+</div>
+{hasHpVisuals && (
+<button onClick={() => setSub('visuales')} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-600 text-white hover:bg-rose-700 text-sm font-medium">
+<Camera className="w-4 h-4" /> Ver secuencias visuales
+</button>
+)}
+</div>
+<div className="flex flex-wrap gap-2">
+{imageRecipes.map(r => (
+<button key={r.id} onClick={() => setRecipeId(r.id)}
+className={`text-left px-4 py-2 rounded-lg text-sm font-medium transition-all ${recipeId === r.id ? 'bg-rose-600 text-white shadow-md' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`}>
+{r.title}
+</button>
+))}
+</div>
+<div className="bg-rose-50 border border-rose-200 rounded-2xl p-5">
+<h4 className="font-bold text-rose-800 mb-1">{recipe.title}</h4>
+<p className="text-rose-900 text-sm">{recipe.intro}</p>
+</div>
+<div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+<p className="text-xs font-bold text-slate-400 uppercase mb-3">En qué herramienta</p>
+<div className="grid md:grid-cols-3 gap-3">
+{recipe.toolNotes.map((t, i) => (
+<div key={i} className="border border-slate-100 rounded-xl p-3 bg-slate-50">
+<p className="font-bold text-slate-800 text-sm flex items-center gap-1"><Wand2 className="w-3 h-3 text-rose-500" /> {t.tool}</p>
+<p className="text-slate-600 text-sm">{t.note}</p>
+</div>
+))}
+</div>
+</div>
+<div className="space-y-4">
+{recipe.steps.map((st, i) => {
+const id = recipe.id + '-' + i;
+return (
+<div key={i} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+<div className="flex items-start gap-3 mb-3">
+<div className="w-8 h-8 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold flex-shrink-0">{i + 1}</div>
+<h4 className="font-bold text-slate-800 mt-1">{st.goal}</h4>
+</div>
+<div className="bg-slate-900 rounded-xl p-4 mb-3">
+<pre className="whitespace-pre-wrap text-slate-100 text-sm font-sans">{st.prompt}</pre>
+</div>
+<button onClick={() => copyTxt(st.prompt, id)} className="flex items-center gap-2 px-4 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 text-sm mb-3">
+{copied === id ? <><Check className="w-4 h-4" /> Copiado</> : <><Copy className="w-4 h-4" /> Copiar prompt</>}
+</button>
+<div className="grid md:grid-cols-2 gap-3">
+<div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3">
+<p className="text-xs font-bold text-emerald-700 mb-1">Qué esperar</p>
+<p className="text-sm text-emerald-900">{st.expect}</p>
+</div>
+<div className="bg-amber-50 border border-amber-200 rounded-xl p-3">
+<p className="text-xs font-bold text-amber-700 mb-1">Cómo ajustar</p>
+<p className="text-sm text-amber-900">{st.adjust}</p>
+</div>
+</div>
+</div>
+);
+})}
+</div>
+</div>
+)}
+
+{sub === 'editor' && (
+<div className="space-y-5">
+<div className="bg-indigo-50 border border-indigo-200 rounded-2xl p-5">
+<h4 className="font-bold text-indigo-800 mb-1 flex items-center gap-2"><Palette className="w-4 h-4" /> Convertite en editor profesional</h4>
+<p className="text-indigo-900 text-sm">Modificar una imagen con calidad es cuestión de elegir las palabras correctas. Acá tenés, por tipo de cambio, qué decir para lograrlo y qué frases vagas conviene evitar. Usalas como repertorio: cuanto más preciso pedís, más preciso recibís.</p>
+</div>
+{imageEditorPhrases.map((cat, i) => (
+<div key={i} className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+<h4 className="font-bold text-slate-800 mb-3">{cat.category}</h4>
+<div className="space-y-3">
+{cat.phrases.map((p, j) => (
+<div key={j} className="border border-slate-100 rounded-xl p-3 bg-slate-50">
+<p className="text-sm text-slate-500 mb-1">Querés: <span className="text-slate-800 font-medium">{p.want}</span></p>
+<p className="text-sm text-emerald-800 mb-1"><span className="font-bold">Decí:</span> "{p.say}"</p>
+<p className="text-sm text-rose-700"><span className="font-bold">Evitá:</span> "{p.avoid}"</p>
+</div>
+))}
+</div>
+</div>
+))}
+</div>
+)}
+
+{sub === 'iterar' && (
+<div className="space-y-5">
+<div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-5">
+<h4 className="font-bold text-emerald-800 mb-1 flex items-center gap-2"><RefreshCw className="w-4 h-4" /> Iterar es el método, no el fracaso</h4>
+<p className="text-emerald-900 text-sm">Casi ninguna imagen sale perfecta al primer intento, y eso es completamente normal. Cada resultado que no te convence te dice qué pedir distinto. Acá tenés los problemas más comunes y la frase exacta para corregirlos. Paciencia: cada vuelta te acerca.</p>
+</div>
+<div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+<table className="w-full text-sm">
+<thead>
+<tr className="bg-slate-100 text-slate-600 text-left">
+<th className="p-3 font-bold">Si pasa esto...</th>
+<th className="p-3 font-bold">Por qué</th>
+<th className="p-3 font-bold">Qué pedir</th>
+</tr>
+</thead>
+<tbody>
+{imageTroubleshoot.map((t, i) => (
+<tr key={i} className="border-t border-slate-100 align-top">
+<td className="p-3 font-medium text-slate-800">{t.problem}</td>
+<td className="p-3 text-slate-500">{t.cause}</td>
+<td className="p-3 text-emerald-800">{t.fix}</td>
+</tr>
+))}
+</tbody>
+</table>
+</div>
+<div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+<h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2"><Lightbulb className="w-4 h-4 text-amber-500" /> Cuatro recordatorios para no bajar los brazos</h4>
+<ul className="space-y-2 text-slate-700 text-sm">
+<li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 mt-1 flex-shrink-0" /><span>Metas chicas: lográ primero una buena foto, después el diseño, después el texto.</span></li>
+<li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 mt-1 flex-shrink-0" /><span>Si algo no sale tras varios intentos, cambiá la estrategia en vez de repetir igual.</span></li>
+<li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 mt-1 flex-shrink-0" /><span>Pedile ayuda a la IA con el propio pedido: "este prompt no me da lo que busco, ¿cómo lo reescribirías?".</span></li>
+<li className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-500 mt-1 flex-shrink-0" /><span>Guardá tus prompts que funcionaron: son tu caja de herramientas para la próxima.</span></li>
+</ul>
+</div>
+</div>
+)}
+</div>
+);
+};
+
+// ═══════════════════════════════════════════════════════════════
+// COMPONENTES DE DESAFÍOS COGNITIVOS
+// ═══════════════════════════════════════════════════════════════
+
+const MemoryPairsGame = ({ data, onReset }) => {
+const [cards, setCards] = useState(() => {
+return data.pairs.flatMap((pair, i) => [
+{ id: i * 2, pairId: i, text: pair[0] },
+{ id: i * 2 + 1, pairId: i, text: pair[1] }
+]).sort(() => Math.random() - 0.5);
+});
+const [revealed, setRevealed] = useState([]);
+const [matched, setMatched] = useState([]);
+const [moves, setMoves] = useState(0);
+const [checking, setChecking] = useState(false);
+
+const handleFlip = (cardId) => {
+if (checking || revealed.includes(cardId) || matched.includes(cardId)) return;
+const newRevealed = [...revealed, cardId];
+setRevealed(newRevealed);
+if (newRevealed.length === 2) {
+setMoves(m => m + 1);
+setChecking(true);
+const c1 = cards.find(c => c.id === newRevealed[0]);
+const c2 = cards.find(c => c.id === newRevealed[1]);
+if (c1.pairId === c2.pairId) {
+setTimeout(() => { setMatched(p => [...p, c1.id, c2.id]); setRevealed([]); setChecking(false); }, 700);
+} else {
+setTimeout(() => { setRevealed([]); setChecking(false); }, 1200);
+}
+}
+};
+
+const allDone = matched.length === cards.length;
+
+return (
+<div>
+    <div className="grid grid-cols-3 md:grid-cols-4 gap-3 mb-4">
+        {cards.map(card => {
+        const isUp = revealed.includes(card.id) || matched.includes(card.id);
+        const isDone = matched.includes(card.id);
+        return (
+        <button key={card.id} onClick={()=> handleFlip(card.id)}
+            className={`p-3 rounded-xl border-2 min-h-[72px] text-center transition-all duration-300 font-medium ${
+            isDone ? 'bg-emerald-100 border-emerald-400 text-emerald-800' :
+            isUp ? 'bg-indigo-100 border-indigo-400 text-indigo-800' :
+            'bg-white border-slate-300 hover:border-indigo-400 hover:bg-indigo-50 cursor-pointer text-slate-400'
+            }`}>
+            {isUp ? card.text : '?'}
+        </button>
+        );
+        })}
+    </div>
+    {allDone && (
+    <div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+        <p className="text-emerald-800 font-bold text-lg">🎉 ¡Completaste el desafío en {moves} intentos!</p>
+        <button onClick={onReset}
+            className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Jugar de nuevo</button>
+    </div>
+    )}
+    {!allDone && <p className="text-sm text-slate-500 text-center">Intentos: {moves} — Pares encontrados:
+        {matched.length / 2} de {data.pairs.length}</p>}
+</div>
+);
+};
+
+const SequenceGame = ({ data, onReset }) => {
+const [qi, setQi] = useState(0);
+const [score, setScore] = useState(0);
+const [picked, setPicked] = useState(null);
+const [showHint, setShowHint] = useState(false);
+const q = data.questions[qi];
+const done = qi >= data.questions.length;
+
+const pick = (i) => {
+if (picked !== null) return;
+setPicked(i);
+if (i === q.correct) setScore(s => s + 1);
+};
+const next = () => { setPicked(null); setShowHint(false); setQi(i => i + 1); };
+
+if (done) return (
+<div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+    <p className="text-emerald-800 font-bold text-lg">🎉 Completaste {score} de {data.questions.length}</p>
+    <button onClick={onReset}
+        className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Reiniciar</button>
+</div>
+);
+
+return (
+<div>
+    <p className="text-sm text-slate-500 mb-3">Pregunta {qi + 1} de {data.questions.length}</p>
+    <div className="flex items-center gap-2 mb-4 flex-wrap">
+        {q.sequence.map((s, i) => (
+        <span key={i} className={`px-4 py-2 rounded-lg font-bold text-lg ${s==='?'
+            ? 'bg-amber-100 border-2 border-amber-400 text-amber-700' : 'bg-slate-100 border border-slate-300'
+            }`}>{s}</span>
+        ))}
+    </div>
+    <div className="grid grid-cols-2 gap-3 mb-4">
+        {q.options.map((opt, i) => (
+        <button key={i} onClick={()=> pick(i)} className={`p-3 rounded-xl border-2 font-medium transition-all ${
+            picked === null ? 'bg-white border-slate-300 hover:border-indigo-400 cursor-pointer' :
+            i === q.correct ? 'bg-emerald-100 border-emerald-400 text-emerald-800' :
+            i === picked ? 'bg-rose-100 border-rose-400 text-rose-800' :
+            'bg-slate-50 border-slate-200 text-slate-400'
+            }`}>{opt}</button>
+        ))}
+    </div>
+    {picked !== null && picked !== q.correct && <p className="text-rose-700 mb-2">Esa no es — intentá otra vez o mirá la
+        pista.</p>}
+    {picked === q.correct && <p className="text-emerald-700 mb-2 font-medium">¡Correcto! {q.hint}</p>}
+    {!showHint && picked !== q.correct && <button onClick={()=> setShowHint(true)} className="text-sm text-indigo-600
+        underline mb-2">Ver pista</button>}
+    {showHint && <p className="text-sm text-indigo-700 italic mb-2">💡 {q.hint}</p>}
+    {picked !== null && <button onClick={next}
+        className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Siguiente →</button>}
+</div>
+);
+};
+
+const SpotDifferenceGame = ({ data, onReset }) => {
+const [qi, setQi] = useState(0);
+const [picked, setPicked] = useState(null);
+const [score, setScore] = useState(0);
+const c = data.comparisons[qi];
+const done = qi >= data.comparisons.length;
+
+const pick = (i) => { if (picked !== null) return; setPicked(i); if (i === c.correct) setScore(s => s + 1); };
+const next = () => { setPicked(null); setQi(i => i + 1); };
+
+if (done) return (
+<div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+    <p className="text-emerald-800 font-bold text-lg">🎉 Identificaste {score} de {data.comparisons.length} mejoras
+        correctamente</p>
+    <button onClick={onReset}
+        className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Reiniciar</button>
+</div>
+);
+
+return (
+<div>
+    <p className="text-sm text-slate-500 mb-3">Comparación {qi + 1} de {data.comparisons.length}</p>
+    <div className="grid md:grid-cols-2 gap-4 mb-4">
+        <div className="p-4 bg-rose-50 rounded-xl border border-rose-200">
+            <p className="text-xs font-bold text-rose-600 mb-1">❌ Versión débil</p>
+            <p className="text-rose-900 italic">"{c.weak}"</p>
+        </div>
+        <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+            <p className="text-xs font-bold text-emerald-600 mb-1">✅ Versión mejorada</p>
+            <p className="text-emerald-900 italic">"{c.strong}"</p>
+        </div>
+    </div>
+    <p className="font-medium mb-3">¿Qué mejoró en la segunda versión?</p>
+    <div className="space-y-2 mb-4">
+        {c.options.map((opt, i) => (
+        <button key={i} onClick={()=> pick(i)} className={`w-full text-left p-3 rounded-xl border-2 transition-all ${
+            picked === null ? 'bg-white border-slate-300 hover:border-indigo-400 cursor-pointer' :
+            i === c.correct ? 'bg-emerald-100 border-emerald-400' :
+            i === picked ? 'bg-rose-100 border-rose-400' : 'bg-slate-50 border-slate-200 opacity-50'
+            }`}>{opt}</button>
+        ))}
+    </div>
+    {picked !== null && picked === c.correct && <p className="text-emerald-700 mb-2 font-medium">¡Exacto!
+        {c.improvement}</p>}
+    {picked !== null && picked !== c.correct && <p className="text-rose-700 mb-2">No exactamente. La mejora clave fue:
+        {c.improvement}</p>}
+    {picked !== null && <button onClick={next}
+        className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Siguiente →</button>}
+</div>
+);
+};
+
+const OrderStepsGame = ({ data, onReset }) => {
+const [ei, setEi] = useState(0);
+const [selected, setSelected] = useState([]);
+const [shuffled] = useState(() => data.exercises.map(ex => [...ex.steps].sort(() => Math.random() - 0.5)));
+const ex = data.exercises[ei];
+const done = ei >= data.exercises.length;
+const available = shuffled[ei] ? shuffled[ei].filter(s => !selected.includes(s)) : [];
+const isCorrect = selected.length === ex?.steps.length && selected.every((s, i) => s === ex.steps[i]);
+const isWrong = selected.length > 0 && selected.length === ex?.steps.length && !isCorrect;
+
+const addStep = (step) => { setSelected(p => [...p, step]); };
+const reset = () => { setSelected([]); };
+const next = () => { setSelected([]); setEi(i => i + 1); };
+
+if (done) return (
+<div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+    <p className="text-emerald-800 font-bold text-lg">🎉 ¡Completaste todos los ejercicios de orden!</p>
+    <button onClick={onReset}
+        className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Reiniciar</button>
+</div>
+);
+
+return (
+<div>
+    <p className="text-sm text-slate-500 mb-1">Ejercicio {ei + 1} de {data.exercises.length}</p>
+    <p className="font-bold text-slate-800 mb-4">{ex.title}</p>
+    {selected.length > 0 && (
+    <div className="mb-4 space-y-2">
+        <p className="text-xs font-bold text-slate-500">Tu orden:</p>
+        {selected.map((s, i) => (
+        <div key={i} className={`p-2 rounded-lg border text-sm ${isCorrect ? 'bg-emerald-50 border-emerald-300' :
+            isWrong ? 'bg-rose-50 border-rose-300' : 'bg-indigo-50 border-indigo-200' }`}>
+            <span className="font-bold mr-2">{i + 1}.</span>{s}
+        </div>
+        ))}
+    </div>
+    )}
+    {!isCorrect && !isWrong && available.length > 0 && (
+    <div className="space-y-2 mb-4">
+        <p className="text-xs font-bold text-slate-500">Tocá el siguiente paso:</p>
+        {available.map((s, i) => (
+        <button key={i} onClick={()=> addStep(s)} className="w-full text-left p-3 rounded-xl border-2 bg-white
+            border-slate-300 hover:border-indigo-400 hover:bg-indigo-50 transition-all">{s}</button>
+        ))}
+    </div>
+    )}
+    {isCorrect && <p className="text-emerald-700 font-medium mb-3">¡Perfecto! El orden es correcto.</p>}
+    {isWrong && <p className="text-rose-700 mb-3">No exactamente. Intentalo de nuevo.</p>}
+    <div className="flex gap-2">
+        {(isWrong || selected.length > 0) && !isCorrect && <button onClick={reset}
+            className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300">Reiniciar este</button>}
+        {isCorrect && <button onClick={next}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Siguiente →</button>}
+    </div>
+</div>
+);
+};
+
+const AssociationGame = ({ data, onReset }) => {
+const [selectedLeft, setSelectedLeft] = useState(null);
+const [matched, setMatched] = useState({});
+const [wrong, setWrong] = useState(null);
+const shuffledRight = useMemo(() => [...data.pairs.map(p => p[1])].sort(() => Math.random() - 0.5), []);
+const allDone = Object.keys(matched).length === data.pairs.length;
+
+const clickLeft = (concept) => { if (matched[concept]) return; setSelectedLeft(concept); setWrong(null); };
+const clickRight = (def) => {
+if (!selectedLeft || Object.values(matched).includes(def)) return;
+const pair = data.pairs.find(p => p[0] === selectedLeft && p[1] === def);
+if (pair) { setMatched(p => ({...p, [selectedLeft]: def})); setSelectedLeft(null); }
+else { setWrong(def); setTimeout(() => setWrong(null), 800); }
+};
+
+return (
+<div>
+    <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+            <p className="text-xs font-bold text-slate-500 mb-1">Conceptos</p>
+            {data.pairs.map(([concept], i) => (
+            <button key={i} onClick={()=> clickLeft(concept)} className={`w-full text-left p-3 rounded-xl border-2
+                transition-all text-sm ${
+                matched[concept] ? 'bg-emerald-100 border-emerald-300 text-emerald-700' :
+                selectedLeft === concept ? 'bg-indigo-100 border-indigo-400 text-indigo-800 ring-2 ring-indigo-300' :
+                'bg-white border-slate-300 hover:border-indigo-400 cursor-pointer'
+                }`}>{concept}</button>
+            ))}
+        </div>
+        <div className="space-y-2">
+            <p className="text-xs font-bold text-slate-500 mb-1">Definiciones</p>
+            {shuffledRight.map((def, i) => (
+            <button key={i} onClick={()=> clickRight(def)} className={`w-full text-left p-3 rounded-xl border-2
+                transition-all text-sm ${
+                Object.values(matched).includes(def) ? 'bg-emerald-100 border-emerald-300 text-emerald-700' :
+                wrong === def ? 'bg-rose-100 border-rose-400' :
+                'bg-white border-slate-300 hover:border-indigo-400 cursor-pointer'
+                }`}>{def}</button>
+            ))}
+        </div>
+    </div>
+    {allDone && (
+    <div className="mt-4 text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+        <p className="text-emerald-800 font-bold text-lg">🎉 ¡Todas las asociaciones correctas!</p>
+        <button onClick={onReset}
+            className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Jugar de nuevo</button>
+    </div>
+    )}
+    {!allDone && <p className="text-sm text-slate-500 mt-3 text-center">Asociaciones: {Object.keys(matched).length} de
+        {data.pairs.length}</p>}
+</div>
+);
+};
+
+const IntruderGame = ({ data, onReset }) => {
+const [gi, setGi] = useState(0);
+const [picked, setPicked] = useState(null);
+const [score, setScore] = useState(0);
+const g = data.groups[gi];
+const done = gi >= data.groups.length;
+
+const pick = (i) => { if (picked !== null) return; setPicked(i); if (i === g.intruder) setScore(s => s + 1); };
+const next = () => { setPicked(null); setGi(i => i + 1); };
+
+if (done) return (
+<div className="text-center p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+    <p className="text-emerald-800 font-bold text-lg">🎉 Encontraste {score} de {data.groups.length} intrusos</p>
+    <button onClick={onReset}
+        className="mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">Reiniciar</button>
+</div>
+);
+
+return (
+<div>
+    <p className="text-sm text-slate-500 mb-3">Grupo {gi + 1} de {data.groups.length}</p>
+    <div className="flex flex-wrap gap-3 mb-4">
+        {g.items.map((item, i) => (
+        <button key={i} onClick={()=> pick(i)} className={`px-4 py-3 rounded-xl border-2 font-medium transition-all ${
+            picked === null ? 'bg-white border-slate-300 hover:border-indigo-400 cursor-pointer' :
+            i === g.intruder ? 'bg-amber-100 border-amber-400 text-amber-800' :
+            i === picked && i !== g.intruder ? 'bg-rose-100 border-rose-300 text-rose-700' :
+            'bg-slate-50 border-slate-200'
+            }`}>{item}</button>
+        ))}
+    </div>
+    {picked !== null && picked === g.intruder && <p className="text-emerald-700 font-medium mb-2">¡Correcto! {g.reason}
+    </p>}
+    {picked !== null && picked !== g.intruder && <p className="text-rose-700 mb-2">No es ese. El intruso era:
+        <strong>{g.items[g.intruder]}</strong>. {g.reason}</p>}
+    {picked !== null && <button onClick={next}
+        className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">Siguiente →</button>}
+</div>
+);
+};
+
+const ChallengesSection = () => {
+const [activeChallenge, setActiveChallenge] = useState(null);
+const [resetKey, setResetKey] = useState(0);
+const challenge = challengesData.find(c => c.id === activeChallenge);
+const doReset = () => setResetKey(k => k + 1);
+
+const renderChallenge = () => {
+if (!challenge) return null;
+const props = { data: challenge, onReset: doReset, key: resetKey };
+switch (challenge.type) {
+case 'memoryPairs': return <MemoryPairsGame {...props} />;
+case 'sequence': return <SequenceGame {...props} />;
+case 'spotDifference': return <SpotDifferenceGame {...props} />;
+case 'orderSteps': return <OrderStepsGame {...props} />;
+case 'association': return <AssociationGame {...props} />;
+case 'intruder': return <IntruderGame {...props} />;
+default: return null;
+}
+};
+
+if (activeChallenge && challenge) {
+return (
+<div className="max-w-3xl mx-auto">
+    <button onClick={()=> setActiveChallenge(null)} className="flex items-center gap-2 text-indigo-600 hover:underline
+        mb-4">
+        <ChevronLeft className="w-4 h-4" /> Volver a los desafíos
+    </button>
+    <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6">
+        <h3 className="text-xl font-bold text-slate-800 mb-1">{challenge.title}</h3>
+        <p className="text-slate-600 mb-6">{challenge.description}</p>
+        {renderChallenge()}
+    </div>
+</div>
+);
+}
+
+return (
+<div className="max-w-3xl mx-auto">
+    <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 mb-6 border border-amber-200">
+        <h3 className="text-xl font-bold text-amber-800 mb-2 flex items-center gap-2">
+            <Zap className="w-5 h-5" /> Desafíos para la mente
+        </h3>
+        <p className="text-amber-900">Ejercicios breves que activan memoria, atención y lógica. Son completamente
+            opcionales y podés hacer los que quieras, en el orden que prefieras. ¡Disfrutalos!</p>
+    </div>
+    <div className="grid md:grid-cols-2 gap-4">
+        {challengesData.map(ch => (
+        <button key={ch.id} onClick={()=> { setActiveChallenge(ch.id); setResetKey(k => k + 1); }}
+            className="text-left bg-white rounded-xl p-5 border-2 border-slate-200 hover:border-indigo-400
+            hover:shadow-md transition-all">
+            <h4 className="font-bold text-slate-800 mb-1">{ch.title}</h4>
+            <p className="text-sm text-slate-600">{ch.description}</p>
+        </button>
+        ))}
+    </div>
+</div>
+);
+};
+
+// ═══════════════════════════════════════════════════════════════
+// APP PRINCIPAL
+// ═══════════════════════════════════════════════════════════════
+
+const StoriesGallery = ({ onSelect }) => (
+<div className="grid gap-4 md:grid-cols-2 max-w-4xl mx-auto">
+    {stories.map(s => (
+    <button key={s.id} onClick={()=> onSelect(s)} className="text-left bg-white rounded-xl p-5 border-2 border-slate-200
+        hover:border-indigo-400 hover:shadow-md transition-all">
+        <h4 className="font-bold text-slate-800 mb-1">{s.title}</h4>
+        <p className="text-sm text-slate-500 mb-2">{s.focus}</p>
+        <p className="text-sm text-slate-600">{s.context}</p>
+    </button>
+    ))}
+</div>
+);
+
+const roleColor = {
+usuario: 'bg-slate-50 border-slate-200 text-slate-800',
+ia: 'bg-indigo-50 border-indigo-200 text-indigo-900',
+alerta: 'bg-rose-50 border-rose-200 text-rose-900',
+ajuste: 'bg-amber-50 border-amber-200 text-amber-900',
+resultado: 'bg-emerald-50 border-emerald-200 text-emerald-900'
+};
+
+const roleLabel = {
+usuario: 'Pedido inicial',
+ia: 'Respuesta de IA',
+alerta: 'Alerta',
+ajuste: 'Ajuste de prompt',
+resultado: 'Resultado'
+};
+
+const StoryPlayer = ({ story, onBack }) => {
+const [step, setStep] = useState(0);
+const [copied, setCopied] = useState(false);
+const visibleMsgs = story.conversation.slice(0, step + 1);
+
+const copyPrompt = () => {
+if (!navigator.clipboard) return;
+navigator.clipboard.writeText(story.reusablePrompt).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); }).catch(() => {});
+};
+
+return (
+<div className="max-w-3xl mx-auto">
+    <button onClick={onBack} className="flex items-center gap-2 text-indigo-600 hover:underline mb-4">
+        <ChevronLeft className="w-4 h-4" /> Volver a las historias
+    </button>
+    <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6 mb-6">
+        <h3 className="text-xl font-bold text-slate-800 mb-1">{story.title}</h3>
+        <p className="text-sm text-slate-500 mb-4">{story.focus} — {story.context}</p>
+        <div className="space-y-3 mb-6">
+            {visibleMsgs.map((msg, i) => (
+            <div key={i} className={`p-4 rounded-xl border-2 ${roleColor[msg.role] || 'bg-white border-slate-200' }`}>
+                <p className="text-xs font-bold uppercase mb-1 opacity-70">{roleLabel[msg.role] || msg.role}</p>
+                <p>{msg.text}</p>
+            </div>
+            ))}
+        </div>
+        {step < story.conversation.length - 1 ? ( <button onClick={()=> setStep(s => s + 1)} className="px-6 py-3
+            bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-medium">
+            Siguiente paso →
+            </button>
+            ) : (
+            <div className="bg-sky-50 rounded-xl p-5 border border-sky-200">
+                <p className="font-bold text-sky-800 mb-2">Prompt reutilizable</p>
+                <p className="text-sky-900 italic mb-3">"{story.reusablePrompt}"</p>
+                <button onClick={copyPrompt}
+                    className="flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700">
+                    {copied ? <>
+                        <Check className="w-4 h-4" /> Copiado
+                    </> : <>
+                        <Copy className="w-4 h-4" /> Copiar prompt
+                    </>}
+                </button>
+            </div>
+            )}
+    </div>
+</div>
+);
+};
+
+const PromptGym = () => {
+const [level, setLevel] = useState(null);
+const [activePrompt, setActivePrompt] = useState(null);
+const [copiedId, setCopiedId] = useState(null);
+
+const currentPrompts = enrichedPromptItems.filter(p => p.level === level);
+const active = enrichedPromptItems.find(p => p.id === activePrompt);
+
+const copyText = (text, id) => {
+if (!navigator.clipboard) return; navigator.clipboard.writeText(text).then(() => { setCopiedId(id); setTimeout(() => setCopiedId(null), 2000); }).catch(() => {});
+};
+
+if (!level) {
+return (
+<div className="max-w-3xl mx-auto">
+    <div className="bg-gradient-to-br from-indigo-50 to-sky-50 rounded-2xl p-6 mb-6 border border-indigo-200">
+        <h3 className="text-xl font-bold text-indigo-800 mb-2 flex items-center gap-2">
+            <Target className="w-5 h-5" /> Gimnasio de Prompts
+        </h3>
+        <p className="text-indigo-900">Elegí tu nivel de práctica. Cada prompt incluye una versión débil (para entender
+            qué evitar) y una versión robusta (para copiar y usar directamente).</p>
+    </div>
+    <div className="space-y-4">
+        {promptLevels.map(pl => (
+        <button key={pl.id} onClick={()=> setLevel(pl.id)} className="w-full text-left bg-white rounded-xl p-5 border-2
+            border-slate-200 hover:border-indigo-400 hover:shadow-md transition-all">
+            <h4 className="font-bold text-slate-800">{pl.label}</h4>
+            <p className="text-sm text-slate-600">{pl.hint}</p>
+        </button>
+        ))}
+    </div>
+</div>
+);
+}
+
+if (active) {
+return (
+<div className="max-w-3xl mx-auto">
+    <button onClick={()=> setActivePrompt(null)} className="flex items-center gap-2 text-indigo-600 hover:underline
+        mb-4">
+        <ChevronLeft className="w-4 h-4" /> Volver al nivel
+    </button>
+    <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6 space-y-6">
+        <div>
+            <p className="text-xs font-bold text-indigo-600 uppercase">{active.domain}</p>
+            <h3 className="text-xl font-bold text-slate-800">{active.title}</h3>
+            <p className="text-slate-600">{active.objective}</p>
+        </div>
+        <div className="bg-rose-50 rounded-xl p-5 border border-rose-200">
+            <p className="text-xs font-bold text-rose-600 mb-2">❌ Prompt débil</p>
+            <p className="text-rose-900 italic mb-2">"{active.badPrompt}"</p>
+            <p className="text-sm text-rose-700">{active.badReason}</p>
+        </div>
+        <div className="bg-emerald-50 rounded-xl p-5 border border-emerald-200">
+            <p className="text-xs font-bold text-emerald-600 mb-2">✅ Prompt robusto</p>
+            <pre className="whitespace-pre-wrap text-emerald-900 text-sm mb-3 font-sans">{active.enhancedPrompt}</pre>
+            <button onClick={()=> copyText(active.enhancedPrompt, active.id)} className="flex items-center gap-2 px-4
+                py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700">
+                {copiedId === active.id ? <>
+                    <Check className="w-4 h-4" /> Copiado
+                </> : <>
+                    <Copy className="w-4 h-4" /> Copiar prompt
+                </>}
+            </button>
+        </div>
+        <div className="flex flex-wrap gap-2">
+            {active.techniques.map((t, i) => <span key={i}
+                className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-medium">{t}</span>)}
+        </div>
+        <div className="bg-sky-50 rounded-xl p-4 border border-sky-200">
+            <p className="text-xs font-bold text-sky-600 mb-1">💡 ¿Por qué funciona?</p>
+            <p className="text-sm text-sky-900">{active.why}</p>
+        </div>
+    </div>
+</div>
+);
+}
+
+return (
+<div className="max-w-3xl mx-auto">
+    <button onClick={()=> setLevel(null)} className="flex items-center gap-2 text-indigo-600 hover:underline mb-4">
+        <ChevronLeft className="w-4 h-4" /> Elegir otro nivel
+    </button>
+    <h3 className="text-lg font-bold text-slate-800 mb-4">{promptLevels.find(p => p.id === level)?.label} — {currentPrompts.length} prompts</h3>
+    <div className="grid gap-3">
+        {currentPrompts.map(p => (
+        <button key={p.id} onClick={()=> setActivePrompt(p.id)} className="text-left bg-white rounded-xl p-4 border-2
+            border-slate-200 hover:border-indigo-400 hover:shadow-md transition-all">
+            <p className="text-xs text-indigo-600 font-bold">{p.domain}</p>
+            <h4 className="font-bold text-slate-800">{p.title}</h4>
+            <p className="text-sm text-slate-600">{p.objective}</p>
+        </button>
+        ))}
+    </div>
+</div>
+);
+};
+
+const PlanillasSection = () => {
+const [activeTemplate, setActiveTemplate] = useState(spreadsheetTemplates[0].title);
+const [copiedId, setCopiedId] = useState(null);
+const copyText = (text, id) => {
+    if (!navigator.clipboard) return; navigator.clipboard.writeText(text).then(() => { setCopiedId(id); setTimeout(() => setCopiedId(null), 2000); }).catch(() => {});
+};
+const tpl = spreadsheetTemplates.find(t => t.title === activeTemplate);
+return (
+<div className="max-w-4xl mx-auto space-y-6">
+    <section className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-6 border border-emerald-200">
+        <h3 className="text-xl font-bold text-emerald-800 mb-2 flex items-center gap-2">
+            <Table2 className="w-5 h-5" /> Planillas de seguimiento documental
+        </h3>
+        <p className="text-emerald-900">
+            Las planillas pueden ordenar fuentes, pendientes, búsquedas y cuadernos compartidos sin reemplazar los sistemas institucionales. Con columnas simples y una IA como asistente, sirven para ver qué falta, quién revisa y qué documento debe verificarse.
+        </p>
+    </section>
+
+    <div className="grid md:grid-cols-[200px_1fr] gap-6">
+        {/* Sidebar de plantillas */}
+        <div className="flex md:flex-col overflow-x-auto md:overflow-x-visible gap-1 whitespace-nowrap md:whitespace-normal">
+            {spreadsheetTemplates.map((t) => (
+            <button key={t.title} onClick={() => setActiveTemplate(t.title)}
+                className={`text-left px-3 py-2 rounded-lg text-sm transition-all ${t.title === activeTemplate ? 'bg-emerald-100 text-emerald-800 font-bold border-l-4 border-emerald-500' : 'text-slate-600 hover:bg-slate-100'}`}>
+                {t.title}
+            </button>
+            ))}
+        </div>
+
+        {/* Detalle de plantilla */}
+        <article className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
+            <div>
+                <h4 className="font-bold text-slate-800 text-lg">{tpl.title}</h4>
+                <p className="text-sm text-slate-500">{tpl.purpose}</p>
+            </div>
+
+            <div>
+                <p className="text-xs font-bold text-slate-500 uppercase mb-2">Columnas sugeridas</p>
+                <div className="flex flex-wrap gap-1">
+                    {tpl.columns.map((c) => (
+                    <span key={c} className="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg text-xs font-mono">{c}</span>
+                    ))}
+                </div>
+            </div>
+
+            <div className="grid md:grid-cols-[0.9fr_1.1fr] gap-3">
+                <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3">
+                    <p className="text-xs font-bold text-emerald-700 mb-1">Fórmula o uso clave</p>
+                    <p className="text-sm text-emerald-900">{tpl.formula}</p>
+                </div>
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                    <div className="flex items-center justify-between mb-1">
+                        <p className="text-xs font-bold text-slate-500">Prompt base</p>
+                        <button onClick={() => copyText(tpl.prompt, tpl.title)} className="text-xs text-indigo-600 hover:underline flex items-center gap-1">
+                            {copiedId === tpl.title ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />} {copiedId === tpl.title ? 'Copiado' : 'Copiar'}
+                        </button>
+                    </div>
+                    <p className="text-sm text-slate-700">{tpl.prompt}</p>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <section className="grid md:grid-cols-2 gap-4">
+        <div className="bg-white rounded-2xl border border-emerald-200 p-5 shadow-sm">
+            <h4 className="font-bold text-emerald-800 mb-3 flex items-center gap-2"><RefreshCw className="w-4 h-4" /> Rutina semanal sugerida</h4>
+            <ol className="list-decimal pl-5 space-y-2 text-emerald-950 text-sm">
+                <li>Actualizar fuentes nuevas, versiones y documentos descargados.</li>
+                <li>Marcar pendientes, vencimientos y responsables.</li>
+                <li>Revisar qué cuadernos NotebookLM requieren actualización.</li>
+                <li>Registrar búsquedas oficiales realizadas y documentos verificados.</li>
+                <li>Definir una mejora concreta de privacidad, orden o colaboración para la semana.</li>
+            </ol>
+        </div>
+        <div className="bg-white rounded-2xl border border-rose-200 p-5 shadow-sm">
+            <h4 className="font-bold text-rose-800 mb-3 flex items-center gap-2"><ShieldAlert className="w-4 h-4" /> Datos que no conviene pegar en IA pública</h4>
+            <ul className="list-disc pl-5 space-y-2 text-rose-950 text-sm">
+                <li>Nombres, domicilios, documentos, teléfonos, claves o cuentas.</li>
+                <li>Estrategias, datos reservados o información institucional no autorizada.</li>
+                <li>Datos identificables de personas o terceros.</li>
+                <li>Expedientes, informes o documentación con datos sensibles sin autorización.</li>
+                <li>Planillas completas con información personal o reservada.</li>
+            </ul>
+        </div>
+    </section>
+</div>
+);
+};
+
+
+const NotebookLMSection = () => {
+const [copied, setCopied] = useState(null);
+const copyNotebookPrompt = (prompt, id) => { if (!navigator.clipboard) return; navigator.clipboard.writeText(prompt).then(() => { setCopied(id); setTimeout(() => setCopied(null), 1500); }).catch(() => {}); };
+const notebookConcepts = [
+  {
+    "title": "No es otro chat: es una mesa de lectura",
+    "body": "NotebookLM se vuelve valioso cuando el cuaderno tiene fuentes elegidas con criterio. El asistente general sirve para explorar ideas, diseñar búsquedas o redactar borradores; NotebookLM sirve para trabajar sobre documentos concretos, preguntar con cita y volver al pasaje original antes de usar una conclusión.",
+    "practice": "Antes de preguntar, escribir el propósito del cuaderno: tema, fuentes incluidas, fuentes excluidas, responsables y nivel de sensibilidad."
+  },
+  {
+    "title": "Fuente, cita, nota y artefacto son cosas distintas",
+    "body": "La fuente es el material cargado. La cita es el puente hacia el fragmento usado. La nota es una elaboración guardada dentro del cuaderno. El artefacto es una salida generada: informe, audio, video, infografía, presentación, guía de estudio, mapa mental, cuestionario o resumen. Cada pieza se revisa con un criterio diferente.",
+    "practice": "Para trabajo serio, pedir siempre una tabla que separe afirmación, fuente, cita, interpretación y pendiente de verificación."
+  },
+  {
+    "title": "La calidad empieza antes del prompt",
+    "body": "Un buen prompt no compensa un cuaderno desordenado. Si se cargan fuentes duplicadas, viejas, contradictorias o sin nombre claro, la respuesta puede mezclar materiales. Conviene nombrar archivos con fecha, tipo y origen, agrupar fuentes por tema y desactivar las que no correspondan a la pregunta.",
+    "practice": "Crear una nota inicial de alcance: qué puede responder este cuaderno, qué no puede responder y cuándo hay que revisar el documento original."
+  },
+  {
+    "title": "La IA ayuda a leer, pero no firma el criterio",
+    "body": "NotebookLM puede resumir, comparar, transformar y organizar. Esa potencia no lo convierte en autoridad jurídica ni documental. La revisión humana sigue siendo el punto de control: leer citas críticas, comprobar fechas, distinguir hechos de inferencias y no presentar borradores como conclusiones definitivas.",
+    "practice": "Cerrar cada respuesta importante con una pregunta de control: qué parte surge textual de las fuentes y qué parte es una interpretación."
+  }
+];
+const studioTools = [
+  {
+    "name": "Chat con citas",
+    "use": "Para interrogar documentos, pedir matrices, extraer plazos, comparar versiones y volver al fragmento citado.",
+    "legal": "Ideal para leer expedientes públicos, normativa, guías internas autorizadas o jurisprudencia descargada de fuentes confiables.",
+    "prompt": "Respondé solo con base en las fuentes seleccionadas. Separá hechos, citas textuales, interpretación y dudas. Si una respuesta no surge de las fuentes, escribí: no surge de las fuentes cargadas. Cuando cites, indicá fuente y pasaje."
+  },
+  {
+    "name": "Notas",
+    "use": "Para guardar respuestas útiles, pensamientos propios, minutas y criterios de lectura dentro del cuaderno.",
+    "legal": "Sirven para conservar hipótesis de trabajo sin confundirlas con el documento fuente.",
+    "prompt": "Convertí esta respuesta en una nota de trabajo. Mantené las citas, agregá una sección de pendientes y diferenciá claramente dato de fuente, interpretación y próxima acción."
+  },
+  {
+    "name": "Informes / Deep Research",
+    "use": "Para generar un desarrollo más extenso, con estructura, hallazgos, fuentes y síntesis de investigación. También permite importar resultados y fuentes cuando se usa investigación desde web o Drive.",
+    "legal": "Útil para preparar un primer panorama de un tema, siempre revisando qué fuentes fueron incorporadas y descartando lo que no sea oficial o confiable.",
+    "prompt": "Prepará un informe de trabajo sobre este tema. Incluí: alcance, fuentes consideradas, principales hallazgos con citas, contradicciones entre documentos, vacíos de información, riesgos de interpretación, preguntas pendientes y una lista de documentos que convendría buscar en fuentes oficiales."
+  },
+  {
+    "name": "Mapa mental",
+    "use": "Para ver relaciones entre normas, actores, etapas, documentos, conceptos y problemas recurrentes.",
+    "legal": "Ayuda a explicar un asunto complejo al equipo sin transformar el mapa en conclusión final.",
+    "prompt": "Generá un mapa mental orientado a preparar una conversación de equipo. Priorizá ramas de hechos, documentación, normativa, plazos, puntos controvertidos y pendientes de verificación."
+  },
+  {
+    "name": "Audio Overview",
+    "use": "Para repasar un cuaderno como conversación oral y detectar temas que requieren segunda lectura.",
+    "legal": "Sirve para estudio personal o capacitación interna, no como acta ni dictamen.",
+    "prompt": "Generá un audio breve, sobrio y en español. Enfocalo en explicar el tema a una persona que necesita entender el panorama, los documentos clave, las dudas y los puntos que deben verificarse antes de tomar una decisión."
+  },
+  {
+    "name": "Video Overview",
+    "use": "Para producir una explicación visual de un conjunto de fuentes, útil en capacitación o presentación interna.",
+    "legal": "Debe revisarse antes de circular porque puede simplificar de más, omitir matices o presentar una relación visual como si fuera concluyente.",
+    "prompt": "Creá un video de explicación interna. Usá estilo sobrio, sin dramatización. Mostrá el recorrido desde fuentes hacia conclusiones provisorias: documentos, hechos relevantes, citas de apoyo, dudas y próximos pasos."
+  },
+  {
+    "name": "Infografía",
+    "use": "Para transformar un tema complejo en una lámina clara: proceso, línea de tiempo, roles, riesgos o checklist.",
+    "legal": "Muy útil para capacitación o memoria de trabajo, siempre sin datos personales ni elementos que parezcan documentación real.",
+    "prompt": "Generá una infografía vertical y sobria para explicar este procedimiento. Debe incluir etapas, documentos necesarios, puntos de control, riesgos frecuentes y una advertencia visible: verificar siempre contra la fuente original."
+  },
+  {
+    "name": "Presentación / Slide Deck",
+    "use": "Para convertir fuentes en una presentación con estructura: problema, contexto, hallazgos, evidencia, pendientes y cierre.",
+    "legal": "Sirve para reuniones de equipo o capacitación; conviene descargarla, revisar cada diapositiva y corregir el lenguaje antes de usarla.",
+    "prompt": "Armá una presentación breve para reunión interna. Estructura: objetivo, fuentes revisadas, tres hallazgos principales con cita, una contradicción o duda, riesgos de uso, próximos pasos y diapositiva final de verificación."
+  },
+  {
+    "name": "Flashcards y cuestionarios",
+    "use": "Para entrenar comprensión de conceptos, pasos, criterios de privacidad o diferencias entre herramientas.",
+    "legal": "Útil para sensibilizar a equipos que recién empiezan, sin convertir el aprendizaje en examen formal.",
+    "prompt": "Creá preguntas de repaso de dificultad progresiva. No preguntes memoria mecánica solamente: incluí casos breves donde haya que decidir si corresponde usar asistente general, buscador oficial o NotebookLM."
+  }
+];
+const deepPrompts = [
+  {
+    "title": "Lectura jurídica con control de fuente",
+    "tag": "Análisis",
+    "prompt": "Actuá como asistente de lectura documental. Trabajá exclusivamente con las fuentes seleccionadas en este cuaderno. Necesito una respuesta en cinco partes: 1. síntesis breve del asunto, 2. hechos o afirmaciones que aparecen claramente en las fuentes, 3. citas o pasajes que sostienen cada punto, 4. interpretaciones posibles separadas de los hechos, 5. dudas, omisiones o documentos que habría que revisar antes de usar esta respuesta. No completes huecos con conocimiento general. Si algo no surge de las fuentes, escribilo expresamente. Usá una tabla cuando haya más de tres puntos."
+  },
+  {
+    "title": "Comparar documentos o versiones contradictorias",
+    "tag": "Comparación",
+    "prompt": "Compará las fuentes seleccionadas como si estuvieras preparando una matriz de control. Armá una tabla con estas columnas: tema, qué dice la fuente A, qué dice la fuente B, coincidencia, diferencia, posible impacto práctico, cita de respaldo y pendiente de verificación. No busques cerrar la contradicción si las fuentes no permiten hacerlo. Marcá con claridad qué diferencias son textuales, cuáles son de interpretación y cuáles dependen de información externa no cargada."
+  },
+  {
+    "title": "Del apunte manuscrito a minuta útil",
+    "tag": "Papel a digital",
+    "prompt": "A partir de esta fuente proveniente de apuntes o notas de trabajo, ayudame a convertirla en una minuta ordenada. Primero identificá qué partes parecen datos, qué partes parecen opiniones o recordatorios y qué partes son ilegibles o ambiguas. Después proponé una versión limpia con: asunto, fecha si surge, personas o áreas mencionadas solo si aparecen en la fuente, temas tratados, decisiones o acuerdos, pendientes, preguntas para confirmar y advertencias sobre posibles errores de transcripción. No inventes nombres, fechas ni conclusiones."
+  },
+  {
+    "title": "Preparar reunión, audiencia o entrevista desde fuentes",
+    "tag": "Preparación",
+    "prompt": "Prepará una guía de trabajo basada solo en las fuentes seleccionadas. Necesito: resumen del contexto en lenguaje claro, puntos que conviene tener presentes, preguntas que ayudarían a aclarar información, documentos que habría que tener a mano, riesgos de confusión, temas que no están suficientemente respaldados por fuentes y una lista final de verificación. Evitá tono concluyente cuando las fuentes sean incompletas. Mantené citas en los puntos relevantes."
+  },
+  {
+    "title": "Informe interno del estado de un cuaderno",
+    "tag": "Gestión",
+    "prompt": "Revisá el cuaderno como base de consulta interna y prepará un informe de calidad. Evaluá: claridad del objetivo, suficiencia de fuentes, fuentes duplicadas o desactualizadas, materiales que deberían excluirse por sensibilidad, temas bien cubiertos, temas pobres, preguntas que el cuaderno responde bien, preguntas que no debería responder y plan de mejora en siete acciones concretas. Cerrá con una nota de cautela sobre verificación humana y política institucional."
+  },
+  {
+    "title": "Búsqueda oficial primero, NotebookLM después",
+    "tag": "Investigación",
+    "prompt": "Ayudame a diseñar una investigación sin usar a la IA como fuente final. Primero proponé términos de búsqueda, operadores y sitios oficiales o bases autorizadas que convendría revisar. Después indicá qué documentos descargar, cómo nombrarlos, qué metadatos conservar y cómo cargarlos en NotebookLM. Finalmente proponé cinco preguntas para hacer en el cuaderno, todas con exigencia de cita y con una advertencia de qué debería verificarse en el documento original."
+  }
+];
+const sharingRules = [
+  {
+    "action": "Compartir cuaderno completo",
+    "what": "La otra persona puede acceder al cuaderno según el permiso asignado. Si tiene acceso suficiente, puede ver fuentes y artefactos disponibles.",
+    "care": "No compartir cuadernos con datos sensibles si no hay autorización, política institucional y criterio claro de permisos."
+  },
+  {
+    "action": "Copiar enlace de vista de chat",
+    "what": "La vista de chat puede ocultar materiales para una experiencia enfocada, pero no debe tratarse como una barrera absoluta: la documentación de Google advierte que viewers podrían acceder a fuentes y artefactos del cuaderno.",
+    "care": "Usarlo solo cuando el contenido completo del cuaderno también pueda ser visto por esa audiencia."
+  },
+  {
+    "action": "Compartir audio o video generado",
+    "what": "Cuando se comparte por enlace puede requerir que el cuaderno también esté compartido. También puede descargarse como archivo, según la función.",
+    "care": "Revisar el contenido antes de circularlo y aclarar que es material generado para repaso o explicación, no fuente original."
+  },
+  {
+    "action": "Descargar infografía, presentación o material generado",
+    "what": "El archivo descargado sale del entorno del cuaderno y pasa a circular con las reglas del canal donde se comparta.",
+    "care": "Quitar datos personales, revisar citas, corregir lenguaje y decidir si corresponde compartir como borrador o versión final."
+  },
+  {
+    "action": "Exportar notas a Docs o Sheets",
+    "what": "La exportación crea un archivo nuevo. Los cambios posteriores no sincronizan con la nota original y los permisos no se trasladan automáticamente.",
+    "care": "Configurar permisos del documento exportado y dejar claro cuál es la versión vigente."
+  },
+  {
+    "action": "Dar feedback con pulgar arriba o abajo",
+    "what": "En cuentas personales, el feedback puede incluir prompts, fuentes, cargas y salidas asociadas para revisión/mejora. En Workspace/Education, Google indica reglas más restrictivas de no revisión humana ni entrenamiento.",
+    "care": "Evitar enviar feedback sobre interacciones con información confidencial o sensible salvo que la política institucional lo permita."
+  }
+];
+const sourceChecklist = [
+  "Nombrar cada archivo con fecha, origen y tipo de documento.",
+  "Separar fuentes oficiales, apuntes personales, borradores y material de capacitación.",
+  "Desactivar fuentes que no correspondan antes de hacer una pregunta precisa.",
+  "Guardar una nota inicial con objetivo, alcance, responsables y reglas de privacidad.",
+  "Revisar citas críticas en el original antes de usar una síntesis fuera del cuaderno.",
+  "Registrar qué se compartió, con quién y bajo qué permiso."
+];
+return (
+  <div className="max-w-5xl mx-auto space-y-8">
+    <section className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-6 border border-indigo-200">
+      <h3 className="text-xl font-bold text-indigo-800 mb-2 flex items-center gap-2"><Library className="w-5 h-5" /> NotebookLM · mesa de trabajo documental</h3>
+      <p className="text-indigo-900 mb-3">NotebookLM es la pieza central de este recorrido porque cambia la relación con la IA: en vez de preguntarle a un modelo general y esperar que recuerde bien, se construye un cuaderno con fuentes propias, se pregunta sobre esas fuentes y se vuelve a las citas. Para la defensa pública y el trabajo documental o institucional, esta diferencia es decisiva: permite ordenar papeles, PDFs, notas, audios, planillas y enlaces en una base de consulta revisable.</p>
+      <p className="text-indigo-900">La regla de oro es simple: NotebookLM puede acelerar lectura, comparación y producción de materiales, pero no reemplaza la verificación profesional. Se usa como índice inteligente, asistente de lectura y generador de borradores controlados. La fuente original sigue mandando.</p>
+    </section>
+
+    <section className="grid md:grid-cols-2 gap-4">
+      {notebookConcepts.map((concept, index) => (
+        <article key={concept.title} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+          <p className="text-xs font-bold text-indigo-600 uppercase mb-1">Idea clave {index + 1}</p>
+          <h4 className="font-bold text-slate-800 mb-2">{concept.title}</h4>
+          <p className="text-slate-700 text-sm mb-3">{concept.body}</p>
+          <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-3 text-sm text-indigo-900"><span className="font-bold">Práctica:</span> {concept.practice}</div>
+        </article>
+      ))}
+    </section>
+
+    <section className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+      <h4 className="font-bold text-slate-800 mb-4 flex items-center gap-2"><ClipboardList className="w-4 h-4 text-indigo-500" /> Preparar un cuaderno antes de preguntar</h4>
+      <div className="grid md:grid-cols-3 gap-3">
+        {sourceChecklist.map((item, index) => (
+          <div key={item} className="bg-slate-50 border border-slate-100 rounded-xl p-3 flex gap-2 text-sm text-slate-700">
+            <span className="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold flex-shrink-0">{index + 1}</span>
+            <span>{item}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section className="space-y-4">
+      <div>
+        <p className="text-xs font-bold text-indigo-600 uppercase mb-1">Studio y recursos útiles</p>
+        <h4 className="text-lg font-bold text-slate-800">Herramientas que conviene enseñar dentro de NotebookLM</h4>
+        <p className="text-slate-600 text-sm mt-1">No alcanza con decir “subí documentos y preguntá”. La riqueza está en elegir la salida correcta: una matriz para controlar, una nota para conservar criterio, un informe para desarrollar, un mapa para ordenar, o un audio para repasar.</p>
+      </div>
+      <div className="grid md:grid-cols-3 gap-4">
+        {studioTools.map((tool, index) => (
+          <article key={tool.name} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm flex flex-col">
+            <div className="flex items-start justify-between gap-3 mb-2">
+              <h5 className="font-bold text-slate-800">{tool.name}</h5>
+              <span className="text-xs font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 rounded-full px-2 py-1">{index + 1}</span>
+            </div>
+            <p className="text-sm text-slate-700 mb-2"><span className="font-semibold">Para qué:</span> {tool.use}</p>
+            <p className="text-sm text-slate-600 mb-3"><span className="font-semibold">Uso cuidadoso:</span> {tool.legal}</p>
+            <div className="mt-auto bg-slate-900 rounded-xl p-3">
+              <p className="text-xs font-bold text-indigo-200 mb-1">Prompt sugerido</p>
+              <p className="text-sm text-slate-100">{tool.prompt}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section className="space-y-4">
+      <div>
+        <p className="text-xs font-bold text-emerald-600 uppercase mb-1">Prompts largos reutilizables</p>
+        <h4 className="text-lg font-bold text-slate-800">Consignas con suficiente criterio para trabajo real</h4>
+        <p className="text-slate-600 text-sm mt-1">Estos prompts están escritos para acompañar una práctica completa: delimitan fuentes, piden estructura, exigen citas, separan hechos de interpretación y fuerzan una lista de pendientes. Son mejores puntos de partida que consignas cortas como “resumí esto”.</p>
+      </div>
+      <div className="grid gap-4">
+        {deepPrompts.map((item, index) => (
+          <article key={item.title} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+              <div>
+                <p className="text-xs font-bold text-emerald-600 uppercase">{item.tag} · Prompt {index + 1}</p>
+                <h5 className="font-bold text-slate-800">{item.title}</h5>
+              </div>
+              <button onClick={() => copyNotebookPrompt(item.prompt, 'deep-' + index)} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700">
+                {copied === 'deep-' + index ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />} {copied === 'deep-' + index ? 'Copiado' : 'Copiar'}
+              </button>
+            </div>
+            <pre className="whitespace-pre-wrap text-sm font-sans bg-slate-50 border border-slate-100 rounded-xl p-4 text-slate-800">{item.prompt}</pre>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section className="bg-amber-50 border border-amber-200 rounded-2xl p-5">
+      <h4 className="font-bold text-amber-800 mb-3 flex items-center gap-2"><Share2 className="w-4 h-4" /> Qué se comparte cuando compartís</h4>
+      <p className="text-amber-900 text-sm mb-4">La prudencia no consiste en evitar NotebookLM, sino en entender el alcance de cada acción. Compartir un enlace, descargar un archivo, exportar una nota o dar feedback no tienen el mismo efecto.</p>
+      <div className="overflow-x-auto bg-white rounded-xl border border-amber-100">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="text-left text-slate-600 border-b border-amber-100 bg-amber-100/50">
+              <th className="p-3">Acción</th>
+              <th className="p-3">Qué implica</th>
+              <th className="p-3">Cuidado práctico</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sharingRules.map((row) => (
+              <tr key={row.action} className="border-b border-amber-50 align-top">
+                <td className="p-3 font-bold text-slate-800">{row.action}</td>
+                <td className="p-3 text-slate-700">{row.what}</td>
+                <td className="p-3 text-amber-900">{row.care}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+      <h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2"><Route className="w-4 h-4 text-indigo-500" /> Flujo prudente: asistente general, fuente oficial, NotebookLM</h4>
+      <ol className="list-decimal pl-5 space-y-2 text-sm text-slate-700">
+        <li>Usar ChatGPT, Gemini u otro asistente para pensar términos de búsqueda, sin tomar la respuesta como fuente.</li>
+        <li>Buscar en sitios oficiales o bases autorizadas, registrar enlace, fecha y criterio de selección.</li>
+        <li>Descargar documentos y nombrarlos de forma clara antes de cargarlos.</li>
+        <li>Cargar en NotebookLM solo fuentes elegidas; desactivar las que no correspondan a la pregunta.</li>
+        <li>Preguntar con exigencia de cita, tabla de evidencia y lista de dudas.</li>
+        <li>Volver al documento original para todo punto crítico antes de redactar o compartir.</li>
+      </ol>
+    </section>
+
+    <section className="space-y-4">
+      <div>
+        <p className="text-xs font-bold text-indigo-600 uppercase mb-1">Ejercicios guiados</p>
+        <h4 className="text-lg font-bold text-slate-800">Prácticas para incorporar NotebookLM de a poco</h4>
+      </div>
+      <div className="grid gap-5">
+        {notebookLMExercises.map((ex, index) => (
+          <article key={ex.id} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm">
+            <p className="text-xs font-bold text-indigo-600 uppercase mb-1">Ejercicio {index + 1} · {ex.level}</p>
+            <h4 className="text-lg font-bold text-slate-800">{ex.title}</h4>
+            <p className="text-slate-600 text-sm mt-1 mb-3"><span className="font-semibold">Objetivo:</span> {ex.goal}</p>
+            <p className="text-xs font-bold text-slate-500 uppercase mb-2">Paso a paso</p>
+            <ol className="list-decimal pl-5 space-y-2 text-slate-700 text-sm mb-3">{ex.steps.map((st, i) => <li key={i}>{st}</li>)}</ol>
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-start gap-2"><Lightbulb className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" /><p className="text-sm text-amber-900">{ex.tip}</p></div>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+);
+};
+
+const AudioVideoSection = () => {
+const multimediaUses = [
+{title:'Audio de reunión o capacitación',steps:['Subir solo material autorizado o no sensible.','Pedir temas, compromisos, dudas y marcas de tiempo aproximadas.','Revisar el audio original en los pasajes importantes.','Convertir la salida en minuta o lista de tareas.']},
+{title:'Video público o institucional',steps:['Cargar URL pública compatible o transcripción autorizada.','Pedir resumen por secciones y preguntas de repaso.','Recordar que muchas veces se trabaja sobre transcripción, no sobre toda la imagen.','Volver al video original si el dato depende de lo visual.']},
+{title:'Resumen en audio de NotebookLM',steps:['Crear Audio Overview desde Studio.','Personalizar foco: hechos, dudas y puntos a verificar.','Escuchar como repaso, no como documento final.','Compartir solo si corresponde y con revisión previa.']}
+];
+return (<div className="max-w-4xl mx-auto space-y-6"><section className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-2xl p-6 border border-indigo-200"><h3 className="text-xl font-bold text-indigo-800 mb-2 flex items-center gap-2"><Mic className="w-5 h-5" /> Audio y video como fuentes de trabajo</h3><p className="text-indigo-900">La utilidad multimedia no está solo en generar piezas nuevas. Para este recorrido, lo importante es convertir audios, videos, imágenes y notas escaneadas en fuentes consultables, con citas, resúmenes y pendientes de verificación. NotebookLM permite incorporar varios de esos formatos y usarlos para estudiar, preparar reuniones y colaborar.</p></section><section className="grid md:grid-cols-3 gap-4">{multimediaUses.map((u) => (<article key={u.title} className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm"><h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2"><Volume2 className="w-4 h-4 text-indigo-500" /> {u.title}</h4><ol className="list-decimal pl-5 space-y-2 text-slate-700 text-sm">{u.steps.map((st, i) => <li key={i}>{st}</li>)}</ol></article>))}</section><section className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm"><h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2"><ShieldAlert className="w-4 h-4 text-amber-500" /> Recaudos</h4><ul className="list-disc pl-5 space-y-2 text-slate-700 text-sm"><li>Una transcripción automática puede equivocarse en nombres, números o términos técnicos.</li><li>Un resumen de audio es excelente para estudiar, pero no reemplaza la lectura ni la cita.</li><li>Los materiales sensibles requieren autorización, anonimización o una decisión institucional previa.</li><li>Cuando se comparta un audio o video generado, debe estar revisado y no presentarse como fuente original.</li></ul></section></div>);
+};
+
+const InvestigadorSection = () => {
+const [frase, setFrase] = useState(''); const [sitio, setSitio] = useState(''); const [tipo, setTipo] = useState('pdf'); const [titulo, setTitulo] = useState(''); const [fecha, setFecha] = useState(''); const [copiado, setCopiado] = useState(false);
+const partes = []; if (frase.trim()) partes.push('"' + frase.trim() + '"'); if (titulo.trim()) partes.push('intitle:' + titulo.trim()); if (sitio.trim()) partes.push('site:' + sitio.trim()); if (tipo.trim()) partes.push('filetype:' + tipo.trim()); if (fecha.trim()) partes.push(fecha.trim());
+const consulta = partes.join(' '); const url = 'https://www.google.com/search?q=' + encodeURIComponent(consulta); const copiar = () => { if (!consulta) return; navigator.clipboard?.writeText(consulta); setCopiado(true); setTimeout(() => setCopiado(false), 1500); };
+const operadores = [{op:'site:',what:'Buscar dentro de un dominio oficial',ex:'site:jusrionegro.gov.ar amparo salud'},{op:'filetype:',what:'Limitar a PDF, DOCX, XLSX',ex:'filetype:pdf resolución defensoría'},{op:'"comillas"',what:'Frase exacta',ex:'"interés superior del niño"'},{op:'intitle:',what:'Palabra en el título',ex:'intitle:sentencia alimentos'},{op:'after: / before:',what:'Acotar por fecha',ex:'after:2024-01-01 before:2025-01-01'},{op:'OR',what:'Alternativas',ex:'(sentencia OR resolución) "Río Negro"'}];
+const flujo = ['Definir pregunta jurídica o documental','Pedir a la IA consultas posibles','Buscar en fuentes oficiales o bases autorizadas','Descargar documentos y registrar URL/fecha','Cargar fuentes seleccionadas en NotebookLM','Preguntar con cita obligatoria','Verificar pasajes críticos en el original'];
+return (<div className="max-w-4xl mx-auto space-y-6"><section className="bg-gradient-to-br from-sky-50 to-cyan-50 rounded-2xl p-6 border border-sky-200"><h3 className="text-xl font-bold text-sky-800 mb-2 flex items-center gap-2"><Search className="w-5 h-5" /> Investigador: buscar sin alucinar</h3><p className="text-sky-900">La IA es muy útil para diseñar búsquedas, pero la fuente final debe ser el documento oficial o autorizado. Este constructor ayuda a preparar consultas que luego pueden alimentar un cuaderno de NotebookLM con materiales reales.</p></section><section className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm"><h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2"><Filter className="w-4 h-4 text-sky-500" /> Operadores útiles</h4><div className="overflow-x-auto"><table className="w-full text-sm"><thead><tr className="text-left text-slate-500 border-b border-slate-200"><th className="py-2 pr-3">Operador</th><th className="py-2 pr-3">Qué hace</th><th className="py-2">Ejemplo</th></tr></thead><tbody>{operadores.map((o)=><tr key={o.op} className="border-b border-slate-100 align-top"><td className="py-2 pr-3 font-mono text-sky-700">{o.op}</td><td className="py-2 pr-3 text-slate-600">{o.what}</td><td className="py-2 font-mono text-xs text-slate-700">{o.ex}</td></tr>)}</tbody></table></div></section><section className="bg-sky-50 rounded-2xl border border-sky-200 p-5"><h4 className="font-bold text-sky-800 mb-3 flex items-center gap-2"><Search className="w-4 h-4" /> Constructor de búsqueda</h4><div className="grid sm:grid-cols-5 gap-3 mb-3"><input value={frase} onChange={e=>setFrase(e.target.value)} placeholder="frase exacta" className="p-2 rounded-lg border border-slate-300 text-sm" /><input value={sitio} onChange={e=>setSitio(e.target.value)} placeholder="dominio oficial" className="p-2 rounded-lg border border-slate-300 text-sm" /><input value={tipo} onChange={e=>setTipo(e.target.value)} placeholder="pdf" className="p-2 rounded-lg border border-slate-300 text-sm" /><input value={titulo} onChange={e=>setTitulo(e.target.value)} placeholder="intitle" className="p-2 rounded-lg border border-slate-300 text-sm" /><input value={fecha} onChange={e=>setFecha(e.target.value)} placeholder="after:2024-01-01" className="p-2 rounded-lg border border-slate-300 text-sm" /></div><div className="bg-white rounded-lg border border-slate-200 p-3 font-mono text-sm text-slate-800 min-h-[2.5rem] break-words">{consulta || <span className="text-slate-400">Tu consulta aparecerá acá...</span>}</div><div className="flex gap-2 mt-3"><button onClick={copiar} disabled={!consulta} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-600 text-white text-sm font-medium hover:bg-sky-700 disabled:opacity-40">{copiado ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />} {copiado ? 'Copiado' : 'Copiar'}</button>{consulta && <button onClick={() => { navigator.clipboard?.writeText(url); setCopiado(true); setTimeout(() => setCopiado(false), 1500); }} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white border border-sky-300 text-sky-700 text-sm font-medium hover:bg-sky-50"><Copy className="w-4 h-4" /> Copiar enlace</button>}</div></section><section className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm"><h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2"><ClipboardList className="w-4 h-4 text-sky-500" /> Flujo recomendado</h4><ol className="list-decimal pl-5 space-y-2 text-slate-700 text-sm">{flujo.map((f,i)=><li key={i}>{f}</li>)}</ol></section></div>);
+};
+
+const App = () => {
+const [view, setView] = useState('theory');
+const [moduleIndex, setModuleIndex] = useState(0);
+const [activeStory, setActiveStory] = useState(null);
+const mod = theoryModules[moduleIndex];
+
+const tabs = [
+{ id: 'theory', label: 'Teoría', icon:
+<BookOpen className="w-4 h-4" /> },
+{ id: 'gym', label: 'Gimnasio', icon:
+<Target className="w-4 h-4" /> },
+{ id: 'images', label: 'Imágenes y multimedia', icon:
+<ImageIcon className="w-4 h-4" /> },
+{ id: 'sheets', label: 'Planillas', icon:
+<Table2 className="w-4 h-4" /> },
+{ id: 'challenges', label: 'Desafíos', icon:
+<Zap className="w-4 h-4" /> },
+{ id: 'stories', label: 'Historias', icon:
+<MessageCircle className="w-4 h-4" /> },
+{ id: 'audio', label: 'Audio y video', icon:
+<Mic className="w-4 h-4" /> },
+{ id: 'investigador', label: 'Investigador', icon:
+<Search className="w-4 h-4" /> },
+{ id: 'notebooklm', label: 'NotebookLM', icon:
+<Library className="w-4 h-4" /> }
+];
+
+return (
+<div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50">
+    {/* Header */}
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-slate-200 shadow-sm">
+        <div className="max-w-5xl mx-auto px-4 py-3">
+            <div className="flex items-center gap-3 mb-3">
+                <div
+                    className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-md">
+                    <BrainCircuit className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                    <h1 className="text-lg font-extrabold text-slate-800 leading-tight">Laboratorio de IA para la Defensa Pública y Gestión Documental</h1>
+                    <p className="text-xs text-slate-500">Documentos, privacidad, fuentes oficiales y NotebookLM</p>
+                </div>
+            </div>
+            <div className="flex gap-1 overflow-x-auto">
+                {tabs.map(tab => (
+                <button key={tab.id} onClick={()=> { setView(tab.id); setActiveStory(null); }}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap
+                    transition-all ${
+                    view === tab.id ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 hover:bg-slate-100'
+                    }`}>
+                    {tab.icon} {tab.label}
+                </button>
+                ))}
+            </div>
+        </div>
+    </header>
+
+    <main className="max-w-5xl mx-auto px-4 py-8">
+        {/* THEORY VIEW */}
+        {view === 'theory' && (
+        <div className="flex flex-col md:flex-row gap-6">
+            {/* Sidebar - desktop */}
+            <aside className="hidden md:block md:w-64 flex-shrink-0">
+                <div className="sticky top-32 space-y-1">
+                    <p className="text-xs font-bold text-slate-400 uppercase mb-2">Módulos ({theoryModules.length})</p>
+                    {theoryModules.map((m, i) => (
+                    <button key={m.id} onClick={()=> setModuleIndex(i)}
+                        className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all ${
+                        i === moduleIndex ? 'bg-indigo-100 text-indigo-800 font-bold border-l-4 border-indigo-500' :
+                        'text-slate-600 hover:bg-slate-100'
+                        }`}>
+                        <span className="text-xs text-slate-400 mr-1">{i + 1}.</span> {m.title}
+                    </button>
+                    ))}
+                </div>
+            </aside>
+
+            {/* Sidebar - mobile dropdown */}
+            <div className="md:hidden mb-4">
+                <select value={moduleIndex} onChange={e=> setModuleIndex(Number(e.target.value))}
+                    className="w-full p-3 rounded-xl border-2 border-slate-300 bg-white text-slate-800 font-medium">
+                    {theoryModules.map((m, i) => <option key={m.id} value={i}>{i + 1}. {m.title}</option>)}
+                </select>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 max-w-3xl">
+                <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-6 md:p-8">
+                    <p className="text-xs text-indigo-600 font-bold uppercase mb-1">Módulo {moduleIndex + 1} de
+                        {theoryModules.length}</p>
+                    <h2 className="text-2xl font-extrabold text-slate-800 mb-1">{mod.title}</h2>
+                    <p className="text-slate-500 mb-6">{mod.subtitle}</p>
+
+                    <div className="space-y-4 text-slate-700 leading-relaxed mb-8">
+                        {mod.reading.map((para, i) => <p key={i}>{para}</p>)}
+                    </div>
+
+                    <div className="bg-indigo-50 rounded-xl p-5 border border-indigo-200 mb-6">
+                        <h4 className="font-bold text-indigo-800 mb-3 flex items-center gap-2">
+                            <CheckCircle2 className="w-4 h-4" /> Checklist
+                        </h4>
+                        <ul className="space-y-2">
+                            {mod.checklist.map((item, i) => (
+                            <li key={i} className="flex items-start gap-2 text-indigo-900">
+                                <CheckCircle2 className="w-4 h-4 text-indigo-500 mt-1 flex-shrink-0" />
+                                <span>{item}</span>
+                            </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div className="bg-amber-50 rounded-xl p-5 border border-amber-200 mb-8">
+                        <h4 className="font-bold text-amber-800 mb-2 flex items-center gap-2">
+                            <Lightbulb className="w-4 h-4" /> Práctica sugerida
+                        </h4>
+                        <p className="text-amber-900">{mod.practice}</p>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-4">
+                        <button onClick={()=> setModuleIndex(i => Math.max(0, i - 1))} disabled={moduleIndex === 0}
+                            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-100 text-slate-700
+                            hover:bg-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition-all">
+                            <ChevronLeft className="w-4 h-4" /> Anterior
+                        </button>
+                        {moduleIndex < theoryModules.length - 1 ? ( <button onClick={()=> setModuleIndex(i => i + 1)}
+                            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 text-white
+                            hover:bg-indigo-700 transition-all">
+                            Siguiente
+                            <ChevronRight className="w-4 h-4" />
+                            </button>
+                            ) : (
+                            <button onClick={()=> setView('gym')}
+                                className="flex items-center gap-2 px-5 py-2 rounded-lg bg-emerald-600 text-white
+                                hover:bg-emerald-700 transition-all font-medium">
+                                Continuar al Gimnasio
+                                <ArrowUpRight className="w-4 h-4" />
+                            </button>
+                            )}
+                    </div>
+                </div>
+            </div>
+        </div>
+        )}
+
+        {/* GYM VIEW */}
+        {view === 'gym' &&
+        <PromptGym />}
+
+        {/* IMAGES VIEW */}
+        {view === 'images' &&
+        <ImagesSection />}
+
+        {/* SHEETS VIEW */}
+        {view === 'sheets' &&
+        <PlanillasSection />}
+
+        {/* AUDIO Y VIDEO VIEW */}
+        {view === 'audio' &&
+        <AudioVideoSection />}
+
+        {/* INVESTIGADOR VIEW */}
+        {view === 'investigador' &&
+        <InvestigadorSection />}
+
+        {/* NOTEBOOKLM VIEW */}
+        {view === 'notebooklm' &&
+        <NotebookLMSection />}
+
+        {/* CHALLENGES VIEW */}
+        {view === 'challenges' &&
+        <ChallengesSection />}
+
+        {/* STORIES VIEW */}
+        {view === 'stories' && (
+        activeStory ? <StoryPlayer story={activeStory} onBack={()=> setActiveStory(null)} /> : (
+            <div>
+                <div
+                    className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 mb-6 border border-purple-200 max-w-3xl mx-auto">
+                    <h3 className="text-xl font-bold text-purple-800 mb-2 flex items-center gap-2">
+                        <MessageCircle className="w-5 h-5" /> Historias de uso
+                    </h3>
+                    <p className="text-purple-900">Casos reales que muestran cómo mejorar interacciones con IA, paso a
+                        paso. Cada historia incluye un prompt reutilizable al final.</p>
+                </div>
+                <StoriesGallery onSelect={setActiveStory} />
+            </div>
+            )
+            )}
+    </main>
+
+    <footer className="bg-white border-t border-slate-200 mt-12">
+        <div className="max-w-5xl mx-auto px-4 py-6 text-center text-slate-500 text-sm">
+            <p className="font-medium">Laboratorio de IA para la Defensa Pública y Gestión Documental — Material formativo</p>
+            <p className="mt-1">Recorré las secciones a tu ritmo. La meta es incorporar criterio, no velocidad.</p>
+        </div>
+    </footer>
+</div>
+);
+};
+
+createRoot(document.getElementById('root')).render(
+<App />);
+</script>
+</body>
+
+</html>
