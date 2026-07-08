@@ -167,20 +167,21 @@
     "title": "Del papel al flujo digital sin perder el hábito de pensar",
     "subtitle": "Estrategias para digitalizar y procesar tus apuntes de audiencias",
     "reading": [
-      "El apego al papel no es un obstáculo para la incorporación de tecnología; al contrario, escribir a mano es una de las mejores herramientas de análisis intelectual que existen. Escribir notas manuscritas durante una audiencia, una entrevista de defensa o una inspección ayuda a fijar la atención y estructurar ideas. La IA no viene a reemplazar el papel, sino a construir un puente digital para que esos apuntes se vuelvan consultables y útiles para todo tu equipo.",
-      "El proceso para integrar tus notas en papel al flujo de trabajo digital consta de tres pasos sencillos: captura, extracción y consulta. En primer lugar, utilizas el celular para tomar una fotografía clara o escanear la hoja (usando aplicaciones gratuitas de escaneo con buena iluminación). Luego, utilizas una herramienta de reconocimiento de texto (OCR) para extraer el contenido de la imagen a texto digital. Por último, cargas ese texto en tu cuaderno de NotebookLM para poder interrogarlo.",
-      "Para facilitar que la IA lea tus apuntes manuscritos, no es necesario que cambies tu caligrafía personal, sino que incorpores pequeños hábitos de orden visual. Intenta usar encabezados claros con fecha y tema, y separa la hoja en bloques definidos (por ejemplo, una sección para 'Hechos relatados', otra para 'Prueba mencionada' y una última para 'Pendientes de verificar'). Una estructura mínima en papel mejora drásticamente el reconocimiento digital.",
-      "Una vez que tus notas están digitalizadas en NotebookLM, puedes pedirle a la IA que realice tareas operativas que te ahorrarían horas de transcripción manual: 'Extrae los compromisos asumidos por cada parte en esta reunión', 'Arma una lista de preguntas para la próxima audiencia basándote en estas anotaciones' o 'Resume los puntos críticos que debo contrastar con el expediente judicial'.",
-      "Recuerda siempre la regla de privacidad. Al digitalizar apuntes personales que contienen datos de personas asistidas, evalúa si es necesario subir el texto completo o si es más prudente anonimizar los nombres antes de procesarlos. La digitalización inteligente te permite conservar el placer de escribir a mano sobre tu escritorio, mientras disfrutas de la velocidad de búsqueda de un archivo digital."
+      "El apego al papel no es un obstáculo para la incorporación de tecnología; al contrario, escribir a mano es una de las mejores herramientas de análisis intelectual que existen. Escribir notas manuscritas durante una audiencia, una entrevista de defensa o una inspección ayuda a fijar la atención y estructurar ideas. La IA no viene a reemplazar el papel, sino a construir un puente digital para que esos apuntes se vuelvan legibles, buscables y útiles para tu defensoría.",
+      "Los modelos de IA modernos no solo procesan texto; también tienen capacidad visual (multimodalidad). Esto significa que puedes sacarle una fotografía a una hoja manuscrita, a la pizarra de una reunión de planificación de equipo o a la foto de un documento físico, y subir esa imagen directamente al asistente. La IA puede describir la escena, transcribir el texto manuscrito o resumir los puntos clave de la pizarra.",
+      "Para procesar fotos de expedientes o documentos escaneados, la IA es excelente extrayendo texto digital mediante OCR (reconocimiento óptico de caracteres). Sin embargo, hay límites críticos de seguridad y validez: nunca utilices la IA para intentar certificar firmas, validar grafologías o realizar pericias visuales de autenticidad formal, ya que no cuenta con el rigor técnico necesario. Usa la visión de la IA para digitalizar, organizar y transcribir notas o carátulas, no para validar firmas o pericias.",
+      "Para facilitar que la IA lea tus apuntes manuscritos o las pizarras de equipo, incorpora pequeños hábitos de orden visual. Intenta usar letras claras, encabezados con fecha y tema, y separa la hoja en bloques definidos (ej. Hechos, Pendientes, Pruebas). Un esquema ordenado en papel o pizarra mejora drásticamente el reconocimiento visual de la herramienta y reduce errores de transcripción.",
+      "Una vez digitalizadas tus notas de reuniones o audiencias, puedes pedirle al asistente acciones concretas que te ahorrarían horas de trabajo: 'Arma una lista de tareas asignadas según la foto de esta pizarra', 'Extrae los puntos críticos de estas notas manuscritas' o 'Redacta un correo institucional para notificar los pendientes del equipo'. Conserva siempre el original en papel como fuente última de control."
     ],
     "checklist": [
-      "Escanear las hojas de apuntes con buena iluminación y encuadre completo.",
+      "Escanear o fotografiar las hojas de apuntes y pizarras con buena iluminación y encuadre completo.",
+      "Evitar el uso de IA para validación de firmas, pericias grafológicas o autenticaciones visuales.",
       "Revisar el texto extraído digitalmente para corregir errores de lectura de nombres o fechas.",
-      "Estructurar notas futuras con secciones separadas (hechos, dudas, tareas).",
-      "Anonimizar datos sensibles en tus apuntes antes de subirlos a la nube.",
+      "Estructurar notas futuras y pizarras de equipo con secciones separadas (hechos, dudas, tareas).",
+      "Anonimizar datos sensibles en tus apuntes e imágenes antes de subirlos a la nube.",
       "Usar la consulta digital de tus notas como apoyo, conservando el papel original como referencia."
     ],
-    "practice": "Toma una hoja de notas manuscritas que hayas tomado recently (que no contenga datos reservados). Escanéala con tu celular, extrae el texto mediante IA y pídele al asistente que organice una minuta de trabajo con base en tus anotaciones. Corrige cualquier palabra que haya sido leída de forma incorrecta."
+    "practice": "Toma una hoja de notas manuscritas que hayas tomado recientemente o una foto de una pizarra de planificación de tareas del equipo (sin datos reservados). Escanéala o sácale foto con tu celular, cárgala en un asistente multimodal y pídele que transcriba el texto, ordene los pendientes y describa los puntos críticos identificados."
   },
   {
     "id": "t4",
@@ -210,8 +211,8 @@
       "Uno de los mayores riesgos al usar IA generativa en el derecho es la alucinación de jurisprudencia y normativa: el modelo puede citar un fallo que nunca existió o inventar el número y articulado de una ley provincial con absoluta seguridad. Esto ocurre porque la IA no consulta un registro de leyes en tiempo real; simplemente genera las palabras que estadísticamente deberían ir juntas. Para evitar este riesgo en la defensa pública, debemos implementar un flujo de trabajo en dos etapas.",
       "La primera etapa consiste en usar la IA general (como ChatGPT o Gemini) no para que nos dé la ley, sino para que nos ayude a buscarla. Le describimos el problema jurídico y le pedimos: 'Ayúdame a redactar una consulta de búsqueda con operadores booleanos para encontrar fallos en el buscador del Poder Judicial de Río Negro sobre este tema' o 'Dame términos clave y leyes nacionales de referencia sobre protección de salud para buscar en InfoLEG'. La IA es excelente organizando parámetros y consultas de búsqueda complejas.",
       "La segunda etapa consiste en salir del chat de IA y realizar la búsqueda tú misma en las bases de datos oficiales y autorizadas. Copias los parámetros generados por la IA y los pegas en el portal del Poder Judicial de Río Negro, en InfoLEG o en el SAIJ. De esta manera, garantizas que los documentos que descargas son reales, vigentes y provienen de una fuente oficial del Estado.",
-      "Una vez que has descargado los PDFs oficiales de las sentencias, resoluciones o decretos, el flujo se cierra cargando esos archivos reales como fuentes en un cuaderno de NotebookLM. Ahora sí, puedes pedirle a la IA de tu cuaderno que compare las sentencias, resuma la doctrina aplicable o busque contradicciones entre los fallos oficiales. Como la herramienta solo responde a partir de las fuentes que le has cargado, el riesgo de alucinación se reduce prácticamente a cero.",
-      "Este método protege la calidad de tu trabajo técnico y el de tu equipo. En lugar de confiar ciegamente en lo que la máquina escribe en una ventana de chat, utilizas la IA como un faro para orientar tu búsqueda oficial, y luego como un motor de lectura de los documentos reales. Esta disciplina de trabajo te permite avanzar rápido, con tranquilidad y con la certeza de que tus escritos estarán respaldados por fuentes válidas."
+      "Este método es fundamental cuando necesitas analizar el articulado del Código Procesal Penal de Río Negro (Ley 5020) o la Ley Orgánica del Ministerio Público (Ley 5189). Si le pides a un chat de IA que te diga los plazos procesales o los requisitos de admisibilidad de un recurso, corres el riesgo de recibir plazos derogados o de códigos de otras provincias. Utiliza la IA para planificar tu búsqueda de la norma oficial y verificar su vigencia en InfoLEG o el portal de la Legislatura provincial.",
+      "Una vez que has descargado los PDFs oficiales de las sentencias, resoluciones o decretos, el flujo se cierra cargando esos archivos reales como fuentes en un cuaderno de NotebookLM. Ahora sí, puedes pedirle a la IA de tu cuaderno que compare las sentencias, resuma la doctrina aplicable o busque contradicciones entre los fallos oficiales. Como la herramienta solo responde a partir de las fuentes que le has cargado, el riesgo de alucinación se reduce prácticamente a cero."
     ],
     "checklist": [
       "Evitar pedirle a chats generales citas de jurisprudencia o números de leyes directamente.",
@@ -230,13 +231,14 @@
       "En el trabajo diario de la defensa pública, citar un fallo inexistente o una ley derogada puede comprometer la seriedad de una presentación judicial. Debido a que las IAs son 'máquinas de probabilidad', a menudo construyen citas de jurisprudencia mezclando nombres de jueces reales con caráturas de otros expedientes y números de fallos inventados. Por ello, toda mención normativa o jurisprudencial surgida de un asistente conversacional debe someterse a un protocolo de verificación estricto.",
       "El protocolo de control consta de tres filtros sencillos pero obligatorios. El primer filtro es la verificación de la existencia: buscar la carátula o el número de registro del fallo en las bases de datos de jurisprudencia oficiales del Superior Tribunal de Justicia (STJ) o portales nacionales. Si el fallo no figura en las bases públicas, debe asumirse que es una alucinación del modelo y descartarse de inmediato.",
       "El segundo filtro es la verificación de vigencia. Una ley puede existir, pero haber sido modificada, derogada o declarada inconstitucional. Los buscadores de InfoLEG y SAIJ son indispensables en este paso, ya que muestran el texto actualizado de las normas con sus respectivas modificaciones en tiempo real. Nunca debes citar un artículo de ley sin haber revisado su redacción vigente en estos portales.",
-      "El tercer filtro es la verificación de aplicabilidad. A veces, la IA puede citar un fallo real pero resumir su doctrina de forma sesgada o incorrecta para complacer tu prompt. Es indispensable abrir el documento original, buscar el párrafo citado y comprobar que el tribunal realmente sostuvo esa postura en el contexto fáctico de esa causa. La IA ayuda a preseleccionar argumentos, pero no reemplaza tu lectura comprensiva.",
-      "Para facilitar este proceso a tu equipo de trabajo en la defensoría, implementa la regla de registrar la trazabilidad: cada vez que guardes un borrador con jurisprudencia, añade una nota al margen con la URL del portal oficial donde se verificó el fallo y la fecha de consulta. Esto no solo previene errores, sino que facilita la revisión rápida cuando debas presentar el escrito final."
+      "Al trabajar con el Código Procesal Penal de Río Negro (Ley 5020), no dejes que la IA intente extraer plazos sin respaldo. El protocolo exige cargar el PDF del código oficial vigente en NotebookLM, solicitar la extracción del plazo exigiendo la cita literal del artículo, y luego verificar en el texto original. Los plazos de recursos y nulidades procesales no admiten margen de error, y la revisión visual directa del articulado es una obligación del defensor.",
+      "El tercer filtro es la verificación de aplicabilidad. A veces, la IA puede citar un fallo real pero resumir su doctrina de forma sesgada o incorrecta para complacer tu prompt. Es indispensable abrir el documento original, buscar el párrafo citado y comprobar que el tribunal realmente sostuvo esa postura en el contexto fáctico de esa causa. La IA ayuda a preseleccionar argumentos, pero no reemplaza tu lectura comprensiva."
     ],
     "checklist": [
       "No incorporar fallos o precedentes citados por la IA en un escrito sin verificar su existencia real.",
       "Buscar el texto completo del precedente en las bases de datos del Poder Judicial o nacionales.",
       "Comprobar en InfoLEG la vigencia de cualquier articulado normativo sugerido por el modelo.",
+      "Cargar los códigos provinciales oficiales en NotebookLM para la extracción segura de plazos procesales.",
       "Leer los párrafos clave del fallo original para asegurar que la doctrina es aplicable al caso.",
       "Añadir notas de trazabilidad (fuente y fecha de control) en los borradores de la defensoría."
     ],
@@ -285,22 +287,22 @@
   {
     "id": "t9",
     "title": "Organizar el trabajo colaborativo en la Defensoría",
-    "subtitle": "Reglas y estructuras para compartir cuadernos de NotebookLM con tu equipo",
+    "subtitle": "Reglas para cuadernos compartidos, asignación de tareas y traducción a lenguaje claro",
     "reading": [
-      "El uso del NotebookLM de manera compartida en la defensoría potencia enormemente el trabajo en equipo, siempre y cuando se establezcan directrices comunes de organización para que la mesa de consulta digital no sea caótica.",
-      "El cuaderno compartido requiere una nota de inicio clara donde se defina la finalidad, los integrantes con acceso, el responsable de control y mantenimiento, y las reglas estrictas de anonimización de datos de los asistidos antes de subirlos.",
-      "La nomenclatura de archivos es esencial para que las citas que NotebookLM genere lleven a un documento comprensible. Establezcan códigos simples como TIPO_ORGANO_TEMA_FECHA (ej. FALLO_STJ_ALIMENTOS_2025).",
-      "También deben guardarse notas internas con los prompts y preguntas modelo que mejor funcionan en la defensoría para preparar escritos y audiencias, permitiendo al equipo trabajar bajo los mismos criterios técnicos.",
-      "Por último, se debe realizar una revisión mensual para eliminar fuentes que hayan perdido vigencia o incorporar nuevos proveídos. La prolijidad del cuaderno compartido garantiza su utilidad técnica cotidiana."
+      "El verdadero impacto de la IA en la defensoría se logra al trabajar de forma colaborativa. Cuando compartes un cuaderno de NotebookLM con tus secretarios, asistentes o asesores, creas una base común de conocimiento donde todo el equipo puede consultar las mismas fuentes, unificar criterios de redacción y coordinar la preparación de audiencias de manera prolija.",
+      "La colaboración desordenada puede generar caos: archivos duplicados, fuentes desactualizadas o prompts contradictorios. Para evitar esto, es fundamental establecer reglas claras de organización antes de invitar al equipo. Un cuaderno compartido exitoso requiere tres elementos: una nota de inicio (finalidad del cuaderno, fuentes cargadas y responsables de actualización), una nomenclatura estándar de archivos (ej. TIPO_ORGANO_TEMA_FECHA) y reglas de privacidad.",
+      "La IA colaborativa facilita la distribución y el seguimiento de tareas internas en la defensoría. Si grabas una reunión de equipo o subes una lista de pendientes de un legajo complejo, puedes pedirle al asistente que estructure la delegación de roles: 'Arma una tabla con las tareas asignadas a cada integrante, los plazos acordados y las observaciones pendientes de verificar'. Esto permite que todo el equipo trabaje de manera coordinada.",
+      "Una de las funciones más valiosas de la IA en la defensa pública es actuar como 'traductora de jerga' para redactar en lenguaje claro. Las notificaciones, órdenes de alimentos o traslados de demanda suelen estar escritas en un lenguaje procesal hermético. La IA puede ayudarnos a traducirlas en comunicaciones sencillas y claras dirigidas a los asistidos, especialmente a aquellos en situación de vulnerabilidad.",
+      "Un prompt para este fin sería: 'Actúa como asistente de comunicación. Toma esta notificación de traslado de demanda y redacta una carta explicativa breve en lenguaje claro dirigida al asistido. Usa palabras sencillas, explica qué significa este paso, qué debe hacer y qué plazo tiene'. El equipo debe validar siempre que esta traducción simplificada no altere los apercibimientos procesales obligatorios ni el alcance legal del documento original."
     ],
     "checklist": [
       "Redactar una nota de inicio con el alcance, responsables y normas del cuaderno compartido.",
-      "Definir con precisión quiénes tienen permisos para editar fuentes y quiénes solo para consultar.",
       "Establecer una nomenclatura estándar y clara para nombrar todos los archivos antes de subirlos.",
-      "Guardar dentro del cuaderno notas con los prompts y preguntas modelo que funcionan bien.",
-      "Realizar un mantenimiento mensual para depurar fuentes obsoletas del panel lateral."
+      "Usar la IA para organizar actas de reuniones y delegar tareas y responsables en tablas claras.",
+      "Traducir notificaciones y términos jurídicos complejos a lenguaje claro para las personas asistidas.",
+      "Revisar siempre la traducción simplificada de la IA para asegurar que no altere el sentido procesal legal."
     ],
-    "practice": "Diseña la estructura teórica de un cuaderno compartido para tu defensoría sobre 'Criterios de Exclusión de Hogar'. Escribe la nota de inicio con las reglas, el formato de nombre para las fuentes (leyes, fallos, guías) y tres preguntas básicas que el equipo debería poder consultar de manera diaria."
+    "practice": "Diseña la estructura teórica de un cuaderno compartido para tu defensoría sobre 'Criterios de Exclusión de Hogar'. Escribe la nota de inicio con las reglas, el formato de nombre para las fuentes (leyes, fallos, guías) y diseña una plantilla en lenguaje claro para explicarle a una persona asistida los efectos de una medida cautelar de exclusión."
   },
   {
     "id": "t10",
@@ -626,6 +628,33 @@ const promptItems = [
     "objective": "Revisar si una salida es segura antes de usarla.",
     "prompt": "Actuá como revisor crítico. Evaluá esta respuesta generada por IA. Marcá: afirmaciones sin fuente, posibles alucinaciones, lenguaje demasiado seguro, datos sensibles, ambigüedades, mejoras de prompt y pasos de verificación antes de usarla.",
     "why": "Desarrolla criterio para no aceptar respuestas solo porque suenan bien."
+  },
+  {
+    "id": "p29",
+    "level": "inicio",
+    "domain": "Papel a digital",
+    "title": "Transcripción de apuntes y pizarras",
+    "objective": "Describir y transcribir notas manuscritas o capturas de pizarras de equipo.",
+    "prompt": "Actúa como asistente de transcripción y organización documental. Analiza esta imagen que te subo (foto de apuntes manuscritos o pizarra de planificación). Transcribe el texto de forma literal, señala entre corchetes las palabras dudosas o ilegibles, y organiza la información en tres secciones claras: Hechos extraídos, Dudas identificadas y Próximos pasos acordados.",
+    "why": "Permite digitalizar reuniones de equipo y apuntes sin perder estructura."
+  },
+  {
+    "id": "p30",
+    "level": "profundizar",
+    "domain": "Redacción",
+    "title": "Traducción a lenguaje claro",
+    "objective": "Explicar términos y notificaciones judiciales complejas a personas asistidas.",
+    "prompt": "Actúa como asistente de comunicación en la defensoría pública. Toma este texto judicial o notificación compleja que te pego y redacta una explicación breve y sencilla dirigida al ciudadano asistido. Ejes obligatorios: 1) Qué significa este trámite en palabras simples, 2) Qué acción concreta debe realizar la persona, 3) Qué plazo tiene y 4) Dónde debe presentarse. Usa un tono cercano y evita tecnicismos jurídicos.",
+    "why": "Mejora el acceso a la justicia y la comunicación con personas asistidas."
+  },
+  {
+    "id": "p31",
+    "level": "proyectar",
+    "domain": "Investigación",
+    "title": "Análisis de normativa de Río Negro",
+    "objective": "Extraer plazos y requisitos específicos de códigos y leyes provinciales.",
+    "prompt": "Actúa como analista técnico de normativa provincial. Basándote únicamente en el texto del Código Procesal Penal de Río Negro (o ley orgánica aplicable) que te he cargado en este cuaderno, extrae los plazos, requisitos de admisibilidad y competencias aplicables para [indicar trámite o recurso]. Exige cita textual del artículo que respalda cada dato. Si encuentras vacíos o la norma no lo aclara, escribe [VERIFICAR EN TEXTO OFICIAL] y no asumas nada.",
+    "why": "Garantiza el cumplimiento de plazos procesales provinciales con respaldo de citas."
   }
 ];
 
