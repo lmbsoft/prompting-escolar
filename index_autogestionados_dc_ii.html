@@ -125,7 +125,7 @@
     "title": "IA generativa en la defensa pública: asistente, no autoridad",
     "subtitle": "Cómo pensar la herramienta en el Ministerio Público sin delegar el criterio técnico",
     "reading": [
-      "Una IA generativa puede procesar, resumir, estructurar, redactar y proponer esquemas de trabajo con una velocidad excepcional. Sin embargo, no razona como un profesional del derecho ni asume responsabilidad por las decisiones tomadas. Su funcionamiento se basa en la predicción estadística de palabras a partir de patrones de entrenamiento. Por ello, puede sonar sumamente convincente incluso al cometer errores. En la defensa pública, este límite es fundamental: la herramienta sirve para preparar, ordenar y redactar borradores, pero el control final y la decisión estratégica son siempre del defensor.",
+      "Una IA generativa puede procesar, resumir, organizar, redactar y proponer esquemas de trabajo con una velocidad excepcional. Sin embargo, no razona como un profesional del derecho ni asume responsabilidad por las decisiones tomadas. Su funcionamiento se basa en la predicción estadística de palabras a partir de patrones de entrenamiento. Por ello, puede sonar sumamente convincente incluso al cometer errores. En la defensa pública, este límite es fundamental: la herramienta sirve para preparar, ordenar y redactar borradores, pero el control final y la decisión estratégica son siempre del defensor.",
       "Conviene ver a la IA como una asistente nueva, muy rápida y disponible, pero que no conoce la realidad de tu defensoría ni las particularidades de la provincia de Río Negro hasta que se las detallas. Si le pides una instrucción vaga como 'haceme un escrito', obtendrás una respuesta genérica y de poco valor. Si en cambio le explicas el tipo de caso, el rol de la defensa, las normas de procedimiento locales aplicables, el tono institucional y los límites de lo que no debe inventar, el borrador resultante será de alta calidad.",
       "El primer paso para trabajar de forma segura es separar la fase de generación de la fase de verificación. Generar implica usar la IA para organizar notas de audiencias, crear un esquema de argumentos o redactar borradores de oficios. Verificar implica revisar de manera exhaustiva cada norma, fecha, precedente, plazo procesal o dato del caso contra el expediente y las fuentes oficiales. La IA te ahorra tiempo en la primera etapa, pero la verificación final es una tarea profesional intransferible.",
       "Para el trabajo con expedientes y documentos de la defensa, la IA es mucho más útil y segura cuando se limita a procesar fuentes cargadas por ti mismo, en lugar de consultar su conocimiento general de internet. Aquí radica la diferencia entre asistentes de chat públicos y herramientas como NotebookLM. Mientras que los chats generales pueden alucinar respuestas basados en probabilidades, NotebookLM se ciñe a los textos que tú le provees y genera citas directas hacia esos documentos, facilitando la revisión.",
@@ -182,167 +182,183 @@
   },
   {
     "id": "t4",
-    "practice": "Tomá un párrafo inventado con datos personales ficticios. Practicá dos versiones: una completa y otra anonimizada. Pedile a la IA que explique si la versión anonimizada conserva lo necesario para trabajar."
+    "title": "Privacidad y reserva en el Ministerio Público",
+    "subtitle": "Diferencias de uso entre chats públicos y la seguridad de NotebookLM",
+    "reading": [
+      "En el ámbito de la defensa pública, la confidencialidad no es opcional; es un deber legal y ético. Por ello, la incorporación de herramientas de IA debe realizarse con un conocimiento claro de las condiciones de privacidad de cada plataforma. La regla de oro es simple: no todos los chats en internet manejan la información de la misma manera, y es vital saber dónde pones los datos de tu trabajo.",
+      "Los asistentes de chat públicos generales (como las versiones gratuitas de ChatGPT, Gemini o Copilot) suelen guardar las conversaciones para que sus equipos revisores las auditen y para utilizarlas en el reentrenamiento de sus futuros modelos de lenguaje. Si pegas un escrito con datos de un asistido o un borrador interno, esa información sale de tu control y podría ser expuesta. Por ende, estas herramientas deben usarse únicamente para tareas genéricas o con datos de práctica completamente despersonalizados.",
+      "NotebookLM de Google presenta un esquema de privacidad diferente que lo vuelve muy adecuado para la gestión documental de uso profesional. Según los términos de servicio actuales de la herramienta, las fuentes que cargas en tus cuadernos de trabajo no se utilizan para entrenar los modelos públicos de Google. Los documentos quedan restringidos a tu espacio privado y a las personas con quienes decidas compartir activamente el cuaderno, ofreciendo un entorno seguro para analizar normativa, apuntes o jurisprudencia.",
+      "A pesar de esta seguridad adicional, la prudencia exige adoptar la práctica de la anonimización u ofuscación de datos. Antes de cargar cualquier documento de trabajo, acostúmbrate a realizar un filtrado sencillo: reemplaza nombres reales por iniciales o etiquetas neutras (ej. 'Asistido A', 'Demandante B'), borra números de expedientes específicos o reemplázalos por códigos ficticios, y quita DNI, domicilios o datos de contacto. La IA conservará la lógica del problema y podrá ayudarte exactamente igual.",
+      "También es importante capacitar al equipo de la defensoría en el uso prudente de la función de 'feedback' o retroalimentación. Al calificar una respuesta con pulgar abajo y escribir un comentario sobre un error, muchas herramientas envían la última parte del chat para análisis de ingeniería. Mantener una conducta ordenada y evitar incluir datos privados en estos comentarios es una regla sencilla pero fundamental para proteger la privacidad del Ministerio Público."
+    ],
+    "checklist": [
+      "No subir expedientes, sentencias con nombres propios o datos de menores a chats públicos.",
+      "Utilizar NotebookLM como el entorno preferente para trabajar con fuentes y documentos propios.",
+      "Anonimizar nombres, documentos de identidad y números de causas antes de subirlos.",
+      "Configurar y utilizar siempre cuentas institucionales que cuenten con acuerdos de protección de datos.",
+      "Evitar enviar comentarios de error (feedback) que contengan fragmentos de información reservada."
+    ],
+    "practice": "Toma el borrador de un escrito de defensoría no sensible. Aplica un proceso manual de anonimización: reemplaza nombres por 'Asistido X', direcciones por '[Domicilio]' y fechas por '[Fecha]'. Envía este texto anonimizado a un asistente y verás que puede ayudarte a mejorar la redacción sin haber expuesto ningún dato real."
   },
   {
     "id": "t5",
-    "title": "Alucinaciones en derecho: dónde están los riesgos",
-    "subtitle": "Normas, precedentes, citas y plazos deben verificarse siempre",
+    "title": "El flujo de búsqueda seguro para evitar alucinaciones",
+    "subtitle": "Combinar la guía de la IA con InfoLEG, SAIJ y el Poder Judicial de Río Negro",
     "reading": [
-      "En derecho, una alucinación no es solo un error simpático de una herramienta. Puede ser una cita inexistente, una norma derogada presentada como vigente, un tribunal mal identificado, una fecha procesal equivocada, una doctrina inventada o una síntesis que omite un matiz decisivo. El riesgo aumenta porque la IA escribe con mucha seguridad: una referencia falsa puede sonar perfectamente verosímil.",
-      "El primer recaudo es no pedirle a un asistente general que 'busque jurisprudencia' y confiar en el resultado como si fuera una base oficial. Puede ayudar a imaginar términos de búsqueda, clasificar líneas argumentales o sugerir qué tipo de precedente podría ser relevante, pero la búsqueda real debería hacerse en sistemas oficiales o bases confiables. Una vez encontrados y descargados los documentos, NotebookLM puede ayudar a leerlos, compararlos y resumirlos con citas.",
-      "Un flujo prudente sería: pedir a la IA que proponga palabras clave y operadores de búsqueda; buscar en fuentes oficiales o bases autorizadas; descargar los fallos, resoluciones o normas; cargar esos documentos en NotebookLM; preguntar con exigencia de cita; verificar los pasajes relevantes en el original. La IA guía el camino, pero el documento fuente manda.",
-      "También conviene pedirle que exponga incertidumbre. Frases útiles: 'no completes datos ausentes', 'si una fuente no lo dice, marcá [no surge de las fuentes]', 'separá hechos, inferencias y recomendaciones', 'mostrá la cita exacta o indicá que no hay cita'. Estas instrucciones no eliminan el riesgo, pero lo reducen y educan a la herramienta a trabajar con más prudencia.",
-      "La revisión humana debe concentrarse en los puntos de mayor impacto: identidad de personas, fechas, números, competencia, estado procesal, vigencia normativa, citas textuales, sentido de una sentencia y consecuencias prácticas. Una respuesta puede ser útil aunque no sea final; lo peligroso es usarla como cierre cuando solo debería ser punto de partida."
+      "Uno de los mayores riesgos al usar IA generativa en el derecho es la alucinación de jurisprudencia y normativa: el modelo puede citar un fallo que nunca existió o inventar el número y articulado de una ley provincial con absoluta seguridad. Esto ocurre porque la IA no consulta un registro de leyes en tiempo real; simplemente genera las palabras que estadísticamente deberían ir juntas. Para evitar este riesgo en la defensa pública, debemos implementar un flujo de trabajo en dos etapas.",
+      "La primera etapa consiste en usar la IA general (como ChatGPT o Gemini) no para que nos dé la ley, sino para que nos ayude a buscarla. Le describimos el problema jurídico y le pedimos: 'Ayúdame a redactar una consulta de búsqueda con operadores booleanos para encontrar fallos en el buscador del Poder Judicial de Río Negro sobre este tema' o 'Dame términos clave y leyes nacionales de referencia sobre protección de salud para buscar en InfoLEG'. La IA es excelente organizando parámetros y consultas de búsqueda complejas.",
+      "La segunda etapa consiste en salir del chat de IA y realizar la búsqueda tú misma en las bases de datos oficiales y autorizadas. Copias los parámetros generados por la IA y los pegas en el portal del Poder Judicial de Río Negro, en InfoLEG o en el SAIJ. De esta manera, garantizas que los documentos que descargas son reales, vigentes y provienen de una fuente oficial del Estado.",
+      "Una vez que has descargado los PDFs oficiales de las sentencias, resoluciones o decretos, el flujo se cierra cargando esos archivos reales como fuentes en un cuaderno de NotebookLM. Ahora sí, puedes pedirle a la IA de tu cuaderno que compare las sentencias, resuma la doctrina aplicable o busque contradicciones entre los fallos oficiales. Como la herramienta solo responde a partir de las fuentes que le has cargado, el riesgo de alucinación se reduce prácticamente a cero.",
+      "Este método protege la calidad de tu trabajo técnico y el de tu equipo. En lugar de confiar ciegamente en lo que la máquina escribe en una ventana de chat, utilizas la IA como un faro para orientar tu búsqueda oficial, y luego como un motor de lectura de los documentos reales. Esta disciplina de trabajo te permite avanzar rápido, con tranquilidad y con la certeza de que tus escritos estarán respaldados por fuentes válidas."
     ],
     "checklist": [
-      "No confiar en citas jurídicas generadas sin fuente verificable.",
-      "Usar IA para construir búsquedas, no para inventar jurisprudencia.",
-      "Descargar documentos desde fuentes oficiales o autorizadas.",
-      "Cargar los documentos en NotebookLM y pedir respuestas con cita.",
-      "Verificar en el original todo lo que tenga impacto jurídico."
+      "Evitar pedirle a chats generales citas de jurisprudencia o números de leyes directamente.",
+      "Usar la IA como asistente para redactar términos y operadores lógicos de búsqueda (OR, AND, site:).",
+      "Realizar las búsquedas efectivas en portales oficiales (SAIJ, InfoLEG, STJ Río Negro).",
+      "Descargar los documentos en PDF y verificar su vigencia oficial.",
+      "Cargar los PDFs oficiales en NotebookLM para realizar las preguntas complejas y resúmenes."
     ],
-    "practice": "Pedile a un asistente general: 'ayudame a diseñar una búsqueda oficial sobre [tema]'. Después usá esas palabras clave en una fuente real, descargá un documento y procesalo en NotebookLM."
+    "practice": "Pídele a un asistente de chat: 'Dame 3 búsquedas avanzadas con operadores lógicos para encontrar fallos sobre exclusión de hogar en Río Negro'. Copia una de ellas, pégala en un buscador oficial o en Google, descarga el primer fallo real en PDF, y súbelo a tu NotebookLM de práctica para pedirle un resumen."
   },
   {
     "id": "t6",
-    "title": "Búsqueda jurídica asistida",
-    "subtitle": "Usar IA para buscar mejor en sitios oficiales y no depender de respuestas inventadas",
+    "title": "Alucinaciones y verificación de precedentes",
+    "subtitle": "Protocolo de control para asegurar la veracidad de la jurisprudencia",
     "reading": [
-      "La IA puede ser muy útil antes de buscar. Muchas veces el problema no es la falta de información, sino no saber con qué palabras, filtros o dominios encontrarla. Un asistente puede ayudar a transformar una necesidad difusa en una estrategia de búsqueda: sinónimos, términos técnicos, operadores, dominios oficiales, tipos de archivo y rangos de fecha.",
-      "Para búsquedas jurídicas, los operadores ayudan mucho: comillas para frase exacta, site: para limitar a un dominio oficial, filetype:pdf para encontrar documentos descargables, intitle: para localizar resoluciones o sentencias, after: y before: para acotar fechas. La IA puede construir varias consultas y explicar para qué sirve cada una.",
-      "La diferencia clave es que el asistente no debería ser la fuente final. Puede decir: 'probá buscar site:jusrionegro.gov.ar filetype:pdf amparo salud' o 'buscá en el boletín oficial con estas palabras'. Después la persona entra al sitio, revisa resultados, descarga documentos y conserva el enlace o archivo. Recién ahí el material puede ir a NotebookLM.",
-      "Cuando un buscador oficial es limitado, se puede usar Google para buscar dentro del sitio con site:. Cuando una página cambia o desaparece, conviene guardar PDF, fecha de consulta y enlace. La IA puede ayudar a armar una ficha de fuente: nombre del documento, organismo, fecha, enlace, resumen y motivo por el que se incorpora al cuaderno.",
-      "Esta práctica también enseña a no confundir 'respuesta rápida' con 'fuente'. Una respuesta rápida puede orientar; una fuente descargada y revisada respalda. Para trabajo jurídico, ese hábito vale más que cualquier truco de IA."
+      "En el trabajo diario de la defensa pública, citar un fallo inexistente o una ley derogada puede comprometer la seriedad de una presentación judicial. Debido a que las IAs son 'máquinas de probabilidad', a menudo construyen citas de jurisprudencia mezclando nombres de jueces reales con caráturas de otros expedientes y números de fallos inventados. Por ello, toda mención normativa o jurisprudencial surgida de un asistente conversacional debe someterse a un protocolo de verificación estricto.",
+      "El protocolo de control consta de tres filtros sencillos pero obligatorios. El primer filtro es la verificación de la existencia: buscar la carátula o el número de registro del fallo en las bases de datos de jurisprudencia oficiales del Superior Tribunal de Justicia (STJ) o portales nacionales. Si el fallo no figura en las bases públicas, debe asumirse que es una alucinación del modelo y descartarse de inmediato.",
+      "El segundo filtro es la verificación de vigencia. Una ley puede existir, pero haber sido modificada, derogada o declarada inconstitucional. Los buscadores de InfoLEG y SAIJ son indispensables en este paso, ya que muestran el texto actualizado de las normas con sus respectivas modificaciones en tiempo real. Nunca debes citar un artículo de ley sin haber revisado su redacción vigente en estos portales.",
+      "El tercer filtro es la verificación de aplicabilidad. A veces, la IA puede citar un fallo real pero resumir su doctrina de forma sesgada o incorrecta para complacer tu prompt. Es indispensable abrir el documento original, buscar el párrafo citado y comprobar que el tribunal realmente sostuvo esa postura en el contexto fáctico de esa causa. La IA ayuda a preseleccionar argumentos, pero no reemplaza tu lectura comprensiva.",
+      "Para facilitar este proceso a tu equipo de trabajo en la defensoría, implementa la regla de registrar la trazabilidad: cada vez que guardes un borrador con jurisprudencia, añade una nota al margen con la URL del portal oficial donde se verificó el fallo y la fecha de consulta. Esto no solo previene errores, sino que facilita la revisión rápida cuando debas presentar el escrito final."
     ],
     "checklist": [
-      "Pedir a la IA una estrategia de búsqueda, no una verdad final.",
-      "Usar operadores: site:, filetype:, comillas, intitle:, after:, before:.",
-      "Priorizar sitios oficiales y documentos primarios.",
-      "Guardar documentos, enlaces y fecha de consulta.",
-      "Cargar a NotebookLM solo fuentes seleccionadas y revisadas."
+      "No incorporar fallos o precedentes citados por la IA en un escrito sin verificar su existencia real.",
+      "Buscar el texto completo del precedente en las bases de datos del Poder Judicial o nacionales.",
+      "Comprobar en InfoLEG la vigencia de cualquier articulado normativo sugerido por el modelo.",
+      "Leer los párrafos clave del fallo original para asegurar que la doctrina es aplicable al caso.",
+      "Añadir notas de trazabilidad (fuente y fecha de control) en los borradores de la defensoría."
     ],
-    "practice": "Pedile a la IA cinco consultas distintas para encontrar normativa o jurisprudencia sobre un tema. Ejecutá al menos una, descargá un PDF y armá una ficha de fuente."
+    "practice": "Pídele a un asistente de chat general: 'Dame tres fallos del Superior Tribunal de Río Negro sobre posesión veinteañal con sus datos de registro'. Intenta buscar esos fallos en la base oficial de jurisprudencia de la provincia. Registra cuántos de ellos son reales y cuántos fueron alucinados o mezclados por el modelo."
   },
   {
     "id": "t7",
-    "title": "NotebookLM como mesa de trabajo documental",
-    "subtitle": "Cuadernos, fuentes, citas, notas y preguntas recurrentes",
+    "title": "Procesar audios de audiencias y testimonios con seguridad",
+    "subtitle": "Convertir grabaciones en material de estudio y actas de trabajo en la Defensoría",
     "reading": [
-      "NotebookLM funciona mejor cuando se lo piensa como una mesa de trabajo documental, no como un chat suelto. Cada cuaderno debería tener un propósito claro: un tema, un conjunto de normativa, una carpeta de jurisprudencia, un expediente preparado para estudio, una capacitación interna o una base de consulta del equipo. El nombre del cuaderno importa porque ayuda a no mezclar materiales.",
-      "Las fuentes son el corazón del cuaderno. Pueden ser PDFs, documentos, planillas, presentaciones, textos pegados, imágenes, archivos de audio, URLs web y videos públicos de YouTube con transcripción disponible. Cada fuente debe tener un nombre claro. Si se cargan diez documentos llamados 'descarga.pdf', el cuaderno se vuelve confuso; si se renombran como 'Ley X - texto vigente', 'Fallo A - cámara - fecha', 'Informe pericial - versión 2', la consulta mejora.",
-      "La potencia aparece cuando se pregunta con precisión: 'respondé solo con base en las fuentes cargadas', 'citá cada afirmación', 'si no surge de las fuentes, decilo', 'armá una tabla con fuente, pasaje y conclusión'. NotebookLM muestra citas hacia los documentos, lo que permite volver al párrafo original. Esa vuelta al original es la diferencia entre usar IA como atajo riesgoso y usarla como índice inteligente.",
-      "También se pueden guardar notas dentro del cuaderno. Una nota puede ser una conclusión preliminar, una lista de pendientes, un criterio de lectura o una pregunta que quedó abierta. Con el tiempo, el cuaderno no solo contiene fuentes: contiene una memoria de trabajo. Para equipos, esto evita que cada persona vuelva a reconstruir desde cero lo que ya se leyó.",
-      "La disciplina de mantenimiento es sencilla: separar cuadernos por tema, revisar fuentes viejas, eliminar duplicados, actualizar versiones y dejar una nota inicial que explique para qué existe el cuaderno y qué no debe hacerse con él. Esa nota inicial funciona como instrucciones de uso para la persona y para el equipo."
+      "Con la oralidad de los procesos judiciales, el uso del audio se ha vuelto una constante en la defensoría: registros de audiencias, declaraciones de testigos, grabaciones de reuniones de equipo o notas de voz con instrucciones de trabajo. La IA, integrada en herramientas de análisis documental como NotebookLM, permite incorporar estos archivos de audio como fuentes directas, facilitando su consulta sin tener que escuchar horas de grabación de forma continua.",
+      "Al subir un archivo de audio (formatos comunes como MP3 o WAV) a un cuaderno de trabajo en NotebookLM, el sistema genera automáticamente una transcripción textual del contenido. A partir de ese momento, puedes interrogar el audio realizando preguntas directas en el chat: '¿En qué minuto el testigo menciona que no recordaba la fecha?', '¿Qué explicaciones dio el perito sobre el informe técnico?' o 'Haz una lista de las contradicciones entre lo declarado por el demandante en este audio'.",
+      "Este recurso agiliza notablemente la preparación de tus casos, pero exige mantener recaudos profesionales. Una transcripción automática realizada por IA puede cometer errores en la interpretación de términos jurídicos, nombres propios de la provincia o números de DNI y fechas. Por lo tanto, cuando identifiques un pasaje crítico o una declaración clave para tu defensa, debes utilizar las marcas de tiempo provistas por la IA para escuchar el audio original en ese minuto exacto y verificar la literalidad.",
+      "Además de interrogar testimonios, esta tecnología es de gran ayuda para la organización interna de la defensoría. Si grabas una reunión de equipo de 30 minutos donde se discute la distribución de causas y las tareas pendientes, puedes subir ese audio al cuaderno del equipo y pedir: 'Redacta una minuta con las tareas asignadas a cada integrante, los plazos acordados y las dudas que debemos consultar con el área administrativa'.",
+      "Mantén siempre presente el control de la información. Los audios de audiencias privadas o declaraciones confidenciales contienen voces e historias sensibles. Asegúrate de procesar estos archivos en entornos que cumplan con las directivas de seguridad de la institución, o despersonaliza el contenido si es posible. La voz es una huella digital; tratarla con el mismo cuidado que un expediente escrito es una regla básica de la función pública."
     ],
     "checklist": [
-      "Crear un cuaderno por tema o finalidad, no uno gigante para todo.",
-      "Nombrar fuentes con claridad antes de cargarlas.",
-      "Preguntar siempre con exigencia de cita.",
-      "Guardar notas de conclusiones, dudas y pendientes.",
-      "Actualizar fuentes cuando cambie una versión o aparezca material nuevo."
+      "Someter los audios de testimonios a transcripción automática en entornos privados.",
+      "Interrogar la transcripción para buscar marcas de tiempo y pasajes clave de las declaraciones.",
+      "Escuchar el audio original en los minutos señalados por la IA para validar las citas textuales.",
+      "Usar audios de reuniones internas de equipo para generar minutas y listas de tareas pendientes.",
+      "Asegurar el cumplimiento de las políticas de confidencialidad al manejar registros de voz de asistidos."
     ],
-    "practice": "Diseñá la estructura de tres cuadernos posibles: uno de normativa, uno de jurisprudencia y uno de preparación de reunión. Para cada uno, listá fuentes, preguntas típicas y cuidados de privacidad."
+    "practice": "Graba una nota de voz corta de 3 minutos describiendo un caso ficticio de la defensoría (hechos, normativa aplicable y pasos a seguir). Sube ese audio a tu NotebookLM de práctica y pídele que extraiga una tabla de hechos y una lista de tareas pendientes. Compara la precisión del resumen con tu idea original."
   },
   {
     "id": "t8",
-    "title": "Multimedia dentro del trabajo documental",
-    "subtitle": "Audios, videos, imágenes y transcripciones como fuentes consultables",
+    "title": "Aprovechar videos de capacitaciones y debates procesales",
+    "subtitle": "Convertir conferencias y exposiciones en herramientas de consulta para el equipo",
     "reading": [
-      "NotebookLM no se limita a PDFs. Puede trabajar con archivos de audio, imágenes, documentos, planillas, URLs y videos públicos de YouTube cuando tienen transcripción. Esto es muy importante para equipos que reciben explicaciones orales, grabaciones de reuniones, capacitaciones, entrevistas, audiencias públicas, conferencias o videos institucionales. Un material que antes quedaba como 'hay que escucharlo entero' puede convertirse en una fuente consultable.",
-      "Con audios, la herramienta transcribe al importar y permite preguntar sobre el contenido. El valor no está solo en obtener una desgrabación, sino en cruzarla con documentos escritos: '¿qué puntos del audio coinciden con el informe?', '¿qué temas se mencionan oralmente pero no aparecen en el documento?', 'armá una lista de compromisos asumidos', 'extraé marcas de tiempo aproximadas para revisar'.",
-      "Con videos públicos, la fuente suele ser la transcripción disponible. Eso significa que no analiza necesariamente toda la imagen del video, sino el texto asociado. Para capacitaciones o exposiciones, alcanza para resumir conceptos, extraer definiciones y preparar preguntas. Para hechos visuales o evidencia audiovisual, siempre hay que revisar el video original.",
-      "Con imágenes, puede ser útil para notas manuscritas, capturas, fotos de pizarras o documentos escaneados. Pero la lectura de imagen puede fallar. En nombres, fechas, números y abreviaturas, hay que controlar contra el original. La imagen sirve como puerta de entrada, no como garantía.",
-      "La producción multimedia de NotebookLM, como resúmenes de audio o video, puede ayudar a estudiar y compartir internamente. Un resumen en audio de fuentes cargadas sirve para repasar mientras se viaja o antes de una reunión. Un video overview o una presentación puede servir para explicar un conjunto de documentos. Pero si el contenido va a circular formalmente, debe revisarse, editarse y validarse."
+      "La capacitación constante es parte de la vida profesional en el Ministerio Público, y gran parte de ese conocimiento hoy se transmite en formato de video: grabaciones de debates en congresos, exposiciones de reformas procesales del Superior Tribunal de Justicia (STJ) o conferencias académicas sobre nuevos criterios de jurisprudencia. Sostener la atención en videos de varias horas o encontrar un dato específico puede ser difícil; la IA permite transformar estos videos en fuentes de estudio interactivas.",
+      "Si el video está alojado en plataformas públicas (como YouTube) y cuenta con transcripción disponible, o si dispones del archivo de video de una capacitación interna, puedes cargar esa transcripción o archivo como fuente en tu cuaderno de NotebookLM. A partir de allí, el video deja de ser un recurso de visualización pasiva y se convierte en un documento consultable mediante preguntas de texto.",
+      "En tu cuaderno de estudio, puedes pedirle a la IA: 'Resume las tres posturas expuestas por los disertantes respecto a la aplicación del principio de especialidad en el proceso de menores', 'Haz una lista de definiciones técnicas dadas sobre ciberdelito' o 'Genera 5 preguntas de autoevaluación basadas en esta clase para repasar con el equipo de la defensoría'. Esto te permite asimilar la información de forma activa.",
+      "Es importante entender el funcionamiento técnico detrás de esto: la IA no está 'viendo' las imágenes ni analizando los gestos del expositor; está procesando el texto de lo que se habla (la transcripción). Por lo tanto, si un disertante dice 'como se ve en este gráfico de pantalla' sin describirlo verbalmente, la IA no podrá recuperar esa información. En esos casos, debes usar la marca de tiempo para ir al video real y mirar la pantalla.",
+      "Compartir estos cuadernos de capacitación con tu equipo de trabajo en la defensoría multiplica la utilidad del recurso. Puedes crear una nota dentro del cuaderno con el esquema conceptual de la clase y las conclusiones del equipo. De este modo, un solo video extenso se transforma en una base de consulta permanente para resolver dudas operativas sobre reformas procesales o criterios institucionales."
     ],
     "checklist": [
-      "Usar audios para transcribir y preguntar sobre reuniones o capacitaciones.",
-      "Cruzar audio con documentos escritos para detectar coincidencias y huecos.",
-      "Recordar que YouTube aporta principalmente transcripción, no verificación visual completa.",
-      "Revisar imágenes y OCR contra el original cuando haya datos críticos.",
-      "Usar resúmenes multimedia para estudiar, no como documento final sin revisión."
+      "Cargar transcripciones de videos académicos o de capacitación como fuentes de estudio.",
+      "Pedir a la IA resúmenes estructurados de las exposiciones y listas de conceptos técnicos.",
+      "Generar cuestionarios de repaso para fijar los contenidos clave de las clases.",
+      "Verificar directamente en el video real los pasajes donde la explicación dependa de apoyos visuales.",
+      "Compartir los cuadernos de estudio con los integrantes del equipo para unificar criterios."
     ],
-    "practice": "Subí un audio no sensible o un video público de capacitación. Pedí resumen, lista de conceptos, preguntas pendientes y una tabla de marcas de tiempo aproximadas para revisar."
+    "practice": "Busca la transcripción de una exposición pública corta sobre derecho procesal o civil. Cárgala en tu NotebookLM de práctica y pídele que estructure un cuadro comparativo con las tesis de los expositores y 3 preguntas críticas para debatir en tu defensoría."
   },
   {
     "id": "t9",
-    "title": "Colaboración de equipo con IA",
-    "subtitle": "Compartir cuadernos, distribuir tareas y conservar trazabilidad",
+    "title": "Organizar el trabajo colaborativo en la Defensoría",
+    "subtitle": "Reglas y estructuras para compartir cuadernos de NotebookLM con tu equipo",
     "reading": [
-      "La IA se vuelve más útil cuando deja de ser una herramienta individual y pasa a formar parte de una rutina de equipo. No significa que todos hagan todo en IA, sino que haya acuerdos mínimos: qué herramienta se usa para cada tarea, qué datos pueden cargarse, cómo se nombran fuentes, quién verifica, dónde queda la versión final y qué se comparte.",
-      "NotebookLM puede funcionar como base común. Un cuaderno compartido permite que varias personas consulten las mismas fuentes, vean citas y eviten repetir preguntas. Para que eso no sea caótico, conviene crear una nota inicial con reglas: finalidad del cuaderno, fuentes incluidas, responsable de actualización, criterios de privacidad y usos permitidos.",
-      "Un flujo colaborativo posible: una persona reúne documentos oficiales; otra los revisa y renombra; otra carga fuentes y hace preguntas preliminares; otra valida citas; otra redacta una minuta. La IA ayuda a ordenar el proceso, pero el equipo conserva roles claros. La herramienta no reemplaza el acuerdo de trabajo.",
-      "También conviene distinguir permisos. No todo cuaderno debe ser público ni compartido ampliamente. Algunos pueden ser de lectura para el equipo; otros solo de edición para responsables. Si se generan audios, presentaciones o infografías, hay que decidir si son materiales internos de estudio o piezas que requieren revisión formal antes de circular.",
-      "La colaboración también incluye capacitación. Una persona con más práctica puede crear prompts modelo, plantillas de cuadernos y listas de chequeo para que el resto no empiece de cero. El objetivo no es que todos sean expertos en IA, sino que el equipo tenga una forma común y prudente de trabajar."
+      "El uso del NotebookLM de manera compartida en la defensoría potencia enormemente el trabajo en equipo, siempre y cuando se establezcan directrices comunes de organización para que la mesa de consulta digital no sea caótica.",
+      "El cuaderno compartido requiere una nota de inicio clara donde se defina la finalidad, los integrantes con acceso, el responsable de control y mantenimiento, y las reglas estrictas de anonimización de datos de los asistidos antes de subirlos.",
+      "La nomenclatura de archivos es esencial para que las citas que NotebookLM genere lleven a un documento comprensible. Establezcan códigos simples como TIPO_ORGANO_TEMA_FECHA (ej. FALLO_STJ_ALIMENTOS_2025).",
+      "También deben guardarse notas internas con los prompts y preguntas modelo que mejor funcionan en la defensoría para preparar escritos y audiencias, permitiendo al equipo trabajar bajo los mismos criterios técnicos.",
+      "Por último, se debe realizar una revisión mensual para eliminar fuentes que hayan perdido vigencia o incorporar nuevos proveídos. La prolijidad del cuaderno compartido garantiza su utilidad técnica cotidiana."
     ],
     "checklist": [
-      "Definir qué herramienta se usa para cada tipo de tarea.",
-      "Crear reglas de privacidad y nombrado de fuentes.",
-      "Asignar responsable de carga, revisión y actualización.",
-      "Separar permisos de lectura y edición según necesidad.",
-      "Guardar prompts y plantillas útiles para el equipo."
+      "Redactar una nota de inicio con el alcance, responsables y normas del cuaderno compartido.",
+      "Definir con precisión quiénes tienen permisos para editar fuentes y quiénes solo para consultar.",
+      "Establecer una nomenclatura estándar y clara para nombrar todos los archivos antes de subirlos.",
+      "Guardar dentro del cuaderno notas con los prompts y preguntas modelo que funcionan bien.",
+      "Realizar un mantenimiento mensual para depurar fuentes obsoletas del panel lateral."
     ],
-    "practice": "Diseñá una rutina de equipo de 30 minutos para crear un cuaderno compartido: quién trae fuentes, quién carga, quién pregunta, quién verifica y qué queda documentado."
+    "practice": "Diseña la estructura teórica de un cuaderno compartido para tu defensoría sobre 'Criterios de Exclusión de Hogar'. Escribe la nota de inicio con las reglas, el formato de nombre para las fuentes (leyes, fallos, guías) y tres preguntas básicas que el equipo debería poder consultar de manera diaria."
   },
   {
     "id": "t10",
-    "title": "Borradores, escritos y estilo institucional",
-    "subtitle": "Cómo usar IA para redactar sin perder voz, rigor ni control",
+    "title": "Técnicas para resumir expedientes extensos en la Defensoría",
+    "subtitle": "Extraer hechos clave, pretensiones y pruebas sin omitir las advertencias",
     "reading": [
-      "La IA puede redactar rápido, pero la velocidad no debe confundirse con calidad. En documentos jurídicos o institucionales, el objetivo inicial puede ser ordenar ideas, convertir notas en estructura, simplificar lenguaje, detectar repeticiones o preparar una primera versión. La versión final requiere lectura humana, revisión técnica y adecuación al estilo del organismo o del equipo.",
-      "Para pedir un borrador, conviene evitar que la IA invente hechos o fundamentos. Una instrucción prudente sería: 'no agregues hechos, normas ni jurisprudencia que no estén en mis fuentes; cuando falte algo, dejá [completar] o [verificar]'. Esto permite aprovechar la redacción sin abrir la puerta a contenido falso.",
-      "Una técnica útil es trabajar en capas. Primero pedir un esquema. Después revisar ese esquema. Luego pedir desarrollo de una sección. Después pedir mejora de claridad. Finalmente pedir una checklist de verificación. Cada capa tiene control humano. Pedir 'hacé todo el escrito' en un solo paso suele producir textos más largos, genéricos y difíciles de revisar.",
-      "También puede usarse para adaptar tono: de una nota informal a una minuta institucional; de un informe técnico a lenguaje claro; de una lista de apuntes a un correo breve; de una explicación larga a un resumen ejecutivo. En esos casos, el contenido ya existe y la IA ayuda a mejorar forma, orden y comprensión.",
-      "La regla práctica: cuanto más se acerque el resultado a una decisión formal, más estricta debe ser la revisión. La IA puede ser excelente para preparar el terreno y ahorrar tiempo de escritura, pero la firma, el criterio y la responsabilidad no se automatizan."
+      "Una de las tareas que más tiempo demanda en el Ministerio Público es la lectura y síntesis de expedientes voluminosos. Frente a cientos de páginas que contienen informes, declaraciones, actas y resoluciones, la IA puede actuar como un excelente tamiz de primera lectura. Sin embargo, resumir material jurídico complejo requiere técnicas específicas para evitar que el asistente simplifique de más u omita advertencias críticas.",
+      "En lugar de pedirle a la IA un resumen general de todo el expediente (lo que suele producir un texto vago y poco útil), acostúmbrate a solicitar resúmenes por secciones o dimensiones concretas. Por ejemplo, puedes pedirle a NotebookLM: 'Resume por separado: 1) los hechos alegados por la contraparte, 2) los medios de prueba ofrecidos y 3) los plazos procesales en curso. Mantenlo estructurado con subtítulos'. Esto te dará una radiografía ordenada del legajo.",
+      "Al resumir, es vital exigirle a la IA que distinga lo que surge con certeza de lo que es meramente alegado o contradictorio. Un prompt estructurado para este fin es: 'Genera un resumen de este informe social. Separa con claridad: A) Hechos objetivos constatados por el profesional, B) Manifestaciones de las partes y C) Conclusiones técnicas. Si hay contradicciones en el texto, destácalas en un bloque de advertencias'.",
+      "Las advertencias de la IA son tan importantes como sus síntesis. Si la herramienta encuentra inconsistencias en las fechas de notificación, discrepancias entre dos declaraciones o vacíos de información en el expediente, debe informarlo. Pedir explícitamente: 'Señala cualquier inconsistencia temporal o fáctica en este expediente y márcala con la etiqueta [VERIFICAR]', es una medida de control indispensable.",
+      "Usa los resúmenes generados por la IA únicamente como borradores de trabajo, guías de lectura rápida o minutas para tu equipo de la defensoría. El verdadero análisis jurídico de fondo, la valoración de la prueba y la firma del escrito final son responsabilidades que recaen en el profesional. La IA te ahorra tiempo en la extracción inicial de datos; tu experiencia define la estrategia de defensa."
     ],
     "checklist": [
-      "Pedir primero estructura y después desarrollo por partes.",
-      "Prohibir expresamente inventar hechos, normas o precedentes.",
-      "Usar [completar] y [verificar] para datos ausentes.",
-      "Mejorar claridad y estilo sin cambiar el sentido jurídico.",
-      "Hacer revisión técnica antes de cualquier uso formal."
+      "Solicitar resúmenes de expedientes estructurados por secciones y no de forma genérica.",
+      "Exigir que la IA separe los hechos objetivos de las manifestaciones de las partes.",
+      "Pedir la identificación explícita de contradicciones o vacíos temporales en las fuentes.",
+      "Utilizar la etiqueta [VERIFICAR] para señalar cualquier inconsistencia detectada por el modelo.",
+      "Revisar siempre las citas del resumen contra las páginas originales del expediente en PDF."
     ],
-    "practice": "Tomá notas ficticias de un caso simple. Pedí primero un esquema, corregilo, y recién después pedí una minuta institucional de una página con campos [verificar]."
+    "practice": "Toma un informe técnico o pericial público y no sensible. Cárgalo en tu NotebookLM de práctica y pídele un resumen que separe los hechos objetivos de las suposiciones o recomendaciones del perito, solicitando además que liste tres preguntas de aclaración sobre los puntos débiles."
   },
   {
     "id": "t11",
-    "title": "Planillas y registros para controlar trabajo",
-    "subtitle": "Datos mínimos, seguimiento de pendientes y uso prudente de información",
+    "title": "Construir líneas de tiempo precisas y verificables",
+    "subtitle": "Ordenar las actuaciones procesales y hechos sin margen para alucinaciones",
     "reading": [
-      "Aunque el trabajo principal esté en sistemas de gestión institucionales, muchas tareas previas o complementarias se ordenan mejor con planillas simples: seguimiento de documentos, agenda de audiencias, fuentes descargadas, normativa relevante, pedidos pendientes, control de versiones, tareas del equipo. La IA puede ayudar a diseñar esas planillas sin exigir conocimientos avanzados.",
-      "Una buena planilla no es una colección de textos sueltos. Cada fila debe representar un registro y cada columna un tipo de dato. Por ejemplo: fecha, tema, fuente, estado, responsable, próximo paso, vencimiento, observaciones no sensibles. Esa estructura permite filtrar, ordenar y convertir el seguimiento en rutina.",
-      "La IA puede proponer columnas, fórmulas simples y formatos condicionales. Por ejemplo, colorear tareas vencidas, contar pendientes por responsable o separar fuentes verificadas de fuentes por revisar. Lo importante es que la planilla no duplique información sensible innecesaria ni compita con el sistema oficial. Debe ser apoyo de organización, no repositorio paralelo descontrolado.",
-      "Para equipos, una planilla compartida con permisos adecuados puede reducir mensajes dispersos. Pero hay que definir qué datos van y cuáles no. A veces alcanza con códigos, etiquetas y estados sin incluir nombres completos o detalles sensibles. El diseño debe cuidar tanto la eficiencia como la confidencialidad.",
-      "El hábito clave es actualizar poco y seguido. Cinco minutos al cierre del día para marcar qué se hizo, qué falta y quién sigue pueden ahorrar mucho tiempo. La IA puede ayudar a revisar la planilla y preguntar: '¿qué está atrasado?', '¿qué fuente falta?', '¿qué tareas conviene priorizar mañana?'."
+      "En el ejercicio de la defensa pública, el orden cronológico de los hechos y las actuaciones procesales es determinante para verificar plazos de prescripción, validez de las notificaciones o la coherencia de los relatos. Reconstruir estas secuencias a partir de múltiples documentos puede ser una tarea compleja; la IA es muy eficiente para consolidar estas cronologías siempre que se le obligue a respaldar cada hito.",
+      "Al pedirle a NotebookLM una línea de tiempo basada en tus fuentes cargadas, debes establecer la regla de la cita obligatoria. Tu instrucción debe ser: 'Genera una tabla cronológica con los hechos y actuaciones del caso. Columnas requeridas: Fecha, Acontecimiento, Documento fuente y Cita textual o número de página. Si una fecha no está clara en el texto, indícalo como [Fecha aproximada] y no asumas el día exacto'.",
+      "Esta estructura te permite auditar de inmediato la validez de la cronología. Si la IA sitúa una notificación de traslado en una fecha específica, puedes hacer clic en la cita del panel de NotebookLM para ir directamente a la página del PDF original y comprobar que el dato es correcto. Si no puedes verificar el hito, no debe formar parte de tu estrategia de defensa.",
+      "Además, es muy útil clasificar los hitos de la línea de tiempo en diferentes categorías visuales para mejorar el análisis. Puedes pedirle a la IA que separe con colores o secciones las 'Actuaciones judiciales directas' (notificaciones, resoluciones), los 'Hechos materiales de la causa' (incidentes, llamadas, reuniones) y las 'Presentaciones de la defensa'. Esto te dará un mapa temporal del conflicto.",
+      "La cronología generada por la IA no debe tomarse como un documento procesal definitivo. Es una herramienta de control interno, un borrador para preparar alegatos o una guía para coordinar con tu equipo de trabajo. Mantener el rigor en la verificación de las fechas críticas es lo que asegura que tu defensa esté construida sobre bases procesales sólidas."
     ],
     "checklist": [
-      "Diseñar columnas claras y estables.",
-      "No duplicar datos sensibles si no son necesarios.",
-      "Usar estados simples: pendiente, en revisión, verificado, cerrado.",
-      "Agregar responsable y próximo paso para cada fila.",
-      "Revisar la planilla semanalmente con ayuda de IA."
+      "Solicitar líneas de tiempo estructuradas en tablas con columnas para fuentes y citas.",
+      "Prohibir que la IA asuma fechas exactas cuando no surjan claramente de los textos.",
+      "Verificar de forma obligatoria las fechas de notificaciones y plazos procesales en los PDF originales.",
+      "Clasificar los hitos cronológicos por categorías (actuaciones, hechos, presentaciones).",
+      "Usar la línea de tiempo como guía de trabajo interna para la preparación de audiencias."
     ],
-    "practice": "Pedile a la IA una planilla de seguimiento documental con 10 columnas, fórmula para contar pendientes y reglas de privacidad sobre qué no registrar."
+    "practice": "Carga en tu NotebookLM de práctica tres resoluciones o proveídos públicos de una misma causa. Pídele al modelo que construya una tabla cronológica con las resoluciones, indicando fecha, decisión, foja/página y la cita textual que lo respalda."
   },
   {
     "id": "t12",
-    "title": "Aprender IA con paciencia adulta",
-    "subtitle": "Una habilidad por vez, con práctica real y sin sentirse fuera de tiempo",
+    "title": "Audio de repaso para preparación de alegatos",
+    "subtitle": "Uso de Audio Overview (Studio) como herramienta de estudio y análisis crítico",
     "reading": [
-      "Aprender IA no exige volverse técnica ni abandonar formas de trabajo que ya funcionan. Exige construir algunas rutinas nuevas: formular pedidos claros, revisar resultados, distinguir herramientas, cuidar datos y practicar con casos reales. Esa curva se puede transitar de manera tranquila, especialmente si se empieza por tareas que ya forman parte del día laboral.",
-      "La sensación de 'ya soy grande para aprender esto' suele aparecer cuando la tecnología se presenta como un mundo cerrado. Pero en IA, muchas habilidades valiosas son habilidades profesionales conocidas: preguntar bien, dar contexto, detectar inconsistencias, organizar información, pedir fuentes, revisar borradores. La diferencia es que ahora esas habilidades se aplican en conversación con una herramienta.",
-      "Un plan razonable es aprender por semanas. Semana uno: prompts básicos y privacidad. Semana dos: papel a digital y NotebookLM. Semana tres: búsqueda oficial y verificación. Semana cuatro: colaboración y planillas. No hace falta dominar todo. Hace falta incorporar una rutina útil que ahorre tiempo y mejore el control del trabajo.",
-      "La práctica debe ser segura. Usar ejemplos ficticios o documentos públicos al principio permite equivocarse sin consecuencias. Después se avanza a materiales propios de baja sensibilidad. Recién cuando hay criterio, se evalúa qué información sensible puede o no puede cargarse, bajo qué cuenta y con qué autorización.",
-      "La medida del éxito no es usar IA para todo. Es saber cuándo conviene usarla, cuándo no, qué herramienta elegir y cómo revisar. Esa combinación de prudencia y utilidad es la que puede ayudar a una persona y a su equipo a incorporar IA sin perder identidad profesional ni control del trabajo."
+      "La preparación final para una audiencia oral, un alegato o una visita institucional requiere un nivel de concentración alto y la capacidad de revisar las ideas principales desde diferentes ángulos. La función de Audio Overview (disponible en Studio dentro de NotebookLM) permite generar una conversación de audio sintetizada en español entre dos voces de IA que debaten y resumen las fuentes cargadas en tu cuaderno de trabajo.",
+      "Esta herramienta es de gran utilidad para el estudio de tus casos, pero debe usarse con el criterio adecuado. La conversación generada no es un dictamen jurídico, una pieza procesal ni un asesoramiento oficial; es una síntesis auditiva informal estructurada en un tono conversacional. Te permite repasar la lógica de tu caso y escuchar los argumentos principales mientras caminas, descansas la vista de las pantallas o te trasladas a la defensoría.",
+      "Para que el audio de repaso sea verdaderamente útil, puedes personalizar el foco de la conversación antes de generarlo. En el panel de configuración de Audio Overview, ingresa una instrucción clara: 'Enfoquen la discusión en los argumentos de la defensa, las debilidades de la prueba de cargo y las preguntas de verificación que el equipo debe resolver. Mantengan un tono profesional y en español'. Esto evitará charlas generales.",
+      "Mientras escuchas el audio, mantén una actitud crítica y de contraste. Si notas que las voces de IA afirman algo con excesiva seguridad, o si presentan una conclusión que te genera dudas, detén el audio y vuelve de inmediato al cuaderno para revisar las citas y los documentos originales en PDF. El audio sirve para activar la memoria y el debate, no para fijar verdades procesales.",
+      "Por cuestiones de reserva y confidencialidad del Ministerio Público, evita generar estos audios sobre materiales que contengan datos de personas asistidas o información interna sensible si utilizas cuentas públicas generales. Utiliza esta función principalmente para repasar normativa compleja, fallos doctrinales extensos o resúmenes de capacitaciones teóricas que hayas cargado como fuentes de estudio."
     ],
     "checklist": [
-      "Aprender una habilidad por semana, no todo junto.",
-      "Practicar primero con documentos públicos o ficticios.",
-      "Guardar prompts que funcionaron como plantillas.",
-      "Elegir herramienta según tarea: asistente general, buscador oficial o NotebookLM.",
-      "Medir utilidad por tiempo ahorrado y mejor control, no por novedad."
+      "Utilizar Audio Overview como un recurso de estudio auditivo complementario, no como fuente oficial.",
+      "Personalizar la guía de generación del audio con las prioridades de la defensa pública.",
+      "Escuchar la conversación con actitud crítica, anotando dudas para contrastar con las fuentes.",
+      "Verificar en los PDFs del cuaderno cualquier afirmación del audio que parezca dudosa.",
+      "Cumplir con las normas de confidencialidad y evitar generar audios con datos personales reservados."
     ],
-    "practice": "Armá un plan personal de cuatro semanas con sesiones de 30 minutos. Cada sesión debe terminar con un resultado concreto: un prompt guardado, un cuaderno creado, una búsqueda oficial o una plantilla de equipo."
+    "practice": "Carga la normativa de una ley provincial y un resumen doctrinal en tu NotebookLM de práctica. Genera un Audio Overview en español pidiendo que enfoquen la charla en los puntos débiles de la aplicación de esa ley, escúchalo completo y anota dos dudas para verificar en el articulado."
   }
 ];
 
